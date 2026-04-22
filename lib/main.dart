@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'color/theme/app_theme.dart';
+import 'color/widgets/glass_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,26 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'GrowthPilotAI',
+      themeMode: ThemeMode.system, // تشخیص خودکار سیستم عامل (لایت/دارک)
+      theme: AppTheme.light(), // تم روشن
+      darkTheme: AppTheme.dark(), // تم تاریک
+      home: const MyHomePage(title: 'GrowthPilotAI Home'),
     );
   }
 }
@@ -77,39 +64,29 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        // این کد باعث می‌شود از تنظیمات AppTheme که نوشتیم استفاده کند
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: GlassCard(
+          // استفاده از کارت شیشه‌ای طراحی شده در Issue #1
+          width: 300,
+          height: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Total Requirements Tracked:',
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              Text(
+                '$_counter',
+                // استفاده از استایل تیتر که در AppTypography تعریف کردیم
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
