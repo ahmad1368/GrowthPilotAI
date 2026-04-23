@@ -15,7 +15,7 @@ class AppTypography {
     ),
     labelSmall: GoogleFonts.plusJakartaSans(
       fontSize: 12,
-      fontWeight: FontWeight.w500, // بهینه شده برای اعداد و جداول
+      fontWeight: FontWeight.w500,
     ),
   );
 }

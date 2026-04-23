@@ -26,10 +26,11 @@ class GlassCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             // استفاده از رنگ سطحی تم با شفافیت برای ایجاد حالت شیشه‌ای
-            color: Theme.of(context).colorScheme.surface.withOpacity(0.6),
+            // مقدار شفافیت را بین 0.0 تا 1.0 در alpha وارد کنید
+color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.6),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha:0.1),
             ),
           ),
           child: child,

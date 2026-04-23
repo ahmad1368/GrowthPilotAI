@@ -1,4 +1,4 @@
-# my_first_app
+# growth_pilot_ai
 
 A new Flutter project.
 
