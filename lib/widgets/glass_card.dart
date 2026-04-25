@@ -4,33 +4,44 @@ import 'package:flutter/material.dart';
 
 class GlassCard extends StatelessWidget {
   final Widget child;
+  final double blur;
+  final double? opacity; // تغییر به double اختیاری
+  final double borderRadius;
+  final EdgeInsetsGeometry? padding;
   final double? width;
-  final double? height;
 
   const GlassCard({
     super.key,
     required this.child,
+    this.blur = 10.0,
+    this.opacity, // حالا اختیاری است
+    this.borderRadius = 16.0,
+    this.padding,
     this.width,
-    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    // منطق اولویت‌بندی: 
+    // ۱. اگر کاربر مقداری پاس داده بود، همان را استفاده کن.
+    // ۲. در غیر این صورت، بر اساس تم (0.05 برای دارک، 0.1 برای لایت) تصمیم بگیر.
+    final double effectiveAlpha = opacity ?? (isDark ? 0.05 : 0.1);
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(borderRadius),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
         child: Container(
           width: width,
-          height: height,
-          padding: const EdgeInsets.all(20),
+          padding: padding ?? const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            // استفاده از رنگ سطحی تم با شفافیت برای ایجاد حالت شیشه‌ای
-            // مقدار شفافیت را بین 0.0 تا 1.0 در alpha وارد کنید
-color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.6),
-            borderRadius: BorderRadius.circular(16),
+            color: Theme.of(context).colorScheme.surface.withValues(alpha: effectiveAlpha),
+            borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha:0.1),
+              width: 1.5,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.12),
             ),
           ),
           child: child,

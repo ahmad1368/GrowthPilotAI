@@ -20,3 +20,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # اضافه کردن بخش دارایی‌ها (Assets)
+  assets:
+    - assets/images/bg_pilot.png
