@@ -103,7 +103,7 @@ class NotificationSheet extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          item.message,
+          item.body,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -157,7 +157,7 @@ class NotificationSheet extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        item.message,
+                        item.body,
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white70, fontSize: 15),
                       ),

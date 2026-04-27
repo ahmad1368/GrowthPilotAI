@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// ایمپورت‌های اختصاصی پروژه طبق آدرس‌های شما
-import 'package:growth_pilot_ai/widgets/glass_card.dart';
-import 'package:growth_pilot_ai/widgets/neon_icon.dart';
-import 'package:growth_pilot_ai/widgets/dynamic_app_bar.dart';
-import 'package:growth_pilot_ai/widgets/app_drawer.dart';
+import 'app_drawer.dart';
+import 'adaptive_text.dart';
+import 'omni_glass_container.dart';
+import '../models/notification_model.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -14,141 +12,223 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  int _currentIndex = 0;
-  final ScrollController _scrollController = ScrollController();
-  double _scrollOffset = 0.0;
+  int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    // گوش دادن به اسکرول برای تغییر ظاهر DynamicAppBar
-    _scrollController.addListener(() {
-      if (_scrollController.offset != _scrollOffset) {
-        setState(() {
-          _scrollOffset = _scrollController.offset;
-        });
-      }
-    });
+  // ۱. لیست ۱۱تایی نوتیفیکیشن‌ها به صورت مستقیم
+  final List<AppNotification> _notifications = [
+    AppNotification(
+      id: "1",
+      title: "AI Analysis",
+      body: "گزارش هفتگی شما آماده است. تمام شاخص‌ها رشد ۱۵ درصدی را نشان می‌دهند.",
+      footer: "System Engine • Analytics",
+      date: DateTime.now().subtract(const Duration(minutes: 5)),
+    ),
+    AppNotification(
+      id: "2",
+      title: "Security Update",
+      body: "ورود جدید در منطقه کوکیتلام شناسایی شد. اگر این شما نیستید، حساب خود را ایمن کنید.",
+      footer: "Security Center",
+      date: DateTime.now().subtract(const Duration(hours: 1)),
+    ),
+    AppNotification(
+      id: "3",
+      title: "Marketplace",
+      body: "یک مشتری جدید به پروژه شما علاقه‌مند شده است.",
+      footer: "Surrey Professional Market",
+      date: DateTime.now().subtract(const Duration(hours: 3)),
+    ),
+    // تولید باقی‌مانده نوتیفیکیشن‌ها تا ۱۱ مورد
+    ...List.generate(8, (index) => AppNotification(
+      id: (index + 4).toString(),
+      title: "Notification #${index + 4}",
+      body: "سیستم GrowthPilot AI در حال بهینه‌سازی پردازش‌های پس‌زمینه است.",
+      footer: "Internal Core v1.0.8",
+      date: DateTime.now().subtract(Duration(days: index + 1)),
+    )),
+  ];
+
+  // متد نمایش لیست نوتیفیکیشن‌ها (منوی استاندارد)
+  void _showNotificationMenu() {
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => Center(
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.7,
+              maxWidth: MediaQuery.of(context).size.width * 0.9,
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: OmniGlassContainer(
+                borderRadius: 20,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: AdaptiveText("Notifications", fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    const Divider(color: Colors.white12, height: 1),
+                    Flexible(
+                      child: _notifications.isEmpty
+                          ? const Padding(
+                              padding: EdgeInsets.all(40),
+                              child: AdaptiveText("No notifications"),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _notifications.length,
+                              itemBuilder: (context, index) {
+                                final item = _notifications[index];
+                                return Dismissible(
+                                  key: Key(item.id),
+                                  background: Container(color: Colors.redAccent.withOpacity(0.1)),
+                                  onDismissed: (direction) {
+                                    setState(() => _notifications.removeAt(index));
+                                    setDialogState(() {});
+                                  },
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.circle,
+                                      size: 10,
+                                      color: item.isRead ? Colors.transparent : Colors.blueAccent,
+                                    ),
+                                    title: AdaptiveText(item.title, 
+                                        fontWeight: item.isRead ? FontWeight.normal : FontWeight.bold),
+                                    subtitle: AdaptiveText("${item.date.hour}:${item.date.minute}", fontSize: 10),
+                                    trailing: IconButton(
+                                      icon: const Icon(Icons.close, size: 18, color: Colors.redAccent),
+                                      onPressed: () {
+                                        setState(() => _notifications.removeAt(index));
+                                        setDialogState(() {});
+                                      },
+                                    ),
+                                    onTap: () {
+                                      setState(() => item.isRead = true);
+                                      setDialogState(() {});
+                                      _showNotificationDetail(item);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose(); // جلوگیری از نشت حافظه
-    super.dispose();
+  // متد نمایش جزئیات نوتیفیکیشن در وسط صفحه
+  void _showNotificationDetail(AppNotification item) {
+    showDialog(
+      context: context,
+      builder: (context) => Center(
+        child: Material(
+          color: Colors.transparent,
+          child: OmniGlassContainer(
+            margin: const EdgeInsets.all(30),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.info_outline_rounded, size: 48, color: Colors.blueAccent),
+                const SizedBox(height: 16),
+                AdaptiveText(item.title, fontSize: 20, fontWeight: FontWeight.bold),
+                const SizedBox(height: 12),
+                AdaptiveText(item.body, textAlign: TextAlign.center),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: Divider(color: Colors.white12),
+                ),
+                AdaptiveText(item.footer, fontSize: 12),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const AdaptiveText("Got it", fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // لیست صفحات برای جابجایی در BottomNavigationBar
-    final List<Widget> pages = [
-      _buildHomeContent(), // صفحه اول با لیست اسکرول‌شونده
-      const Center(child: Text("AI insights Page", style: TextStyle(color: Colors.white))),
-      const Center(child: Text("B2B Marketplace", style: TextStyle(color: Colors.white))),
-      const Center(child: Text("App Settings", style: TextStyle(color: Colors.white))),
-    ];
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    // محاسبه تعداد نوتیفیکیشن‌های خوانده نشده برای Badge
+    int unreadCount = _notifications.where((n) => !n.isRead).length;
 
     return Scaffold(
-      // اجازه دادن به محتوا برای رفتن زیر AppBar و BottomBar
-      extendBody: true, 
-      extendBodyBehindAppBar: true,
-      
-      // منوی همبرگری که در فایل app_drawer.dart ساختیم
+      backgroundColor: theme.scaffoldBackgroundColor,
       drawer: const AppDrawer(),
-
-      // نوار بالای داینامیک که به اسکرول حساس است
-      appBar: DynamicAppBar(
-        scrollOffset: _scrollOffset,
-        title: "GrowthPilot AI",
-      ),
-
-      body: Stack(
-        children: [
-          // ۱. پس‌زمینه ثابت اپلیکیشن
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/bg_pilot.png',
-              fit: BoxFit.cover,
-            ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: theme.colorScheme.onSurface),
+        title: const AdaptiveText("GrowthPilot AI", fontWeight: FontWeight.bold),
+        actions: [
+          // بخش زنگوله با شمارنده هوشمند (فقط خوانده‌نشده‌ها)
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.notifications_none_rounded, size: 28),
+                onPressed: _showNotificationMenu,
+              ),
+              if (unreadCount > 0)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                    constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                    child: Center(
+                      child: Text(
+                        unreadCount > 9 ? "9+" : "$unreadCount",
+                        style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
-          
-          // ۲. نمایش صفحات با حفظ وضعیت (State)
-          IndexedStack(
-            index: _currentIndex,
-            children: pages,
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => Navigator.pushNamed(context, '/settings'),
           ),
         ],
       ),
-
-      // ۳. نوار ناوبری پایین با طراحی شیشه‌ای (Issue #5)
-      bottomNavigationBar: _buildBottomNav(),
-    );
-  }
-
-  // محتوای نمونه برای صفحه Home (لیستی که باعث اسکرول و تغییر AppBar می‌شود)
-  Widget _buildHomeContent() {
-    return ListView.builder(
-      controller: _scrollController, // بسیار مهم: وصل کردن کنترلر به لیست
-      padding: const EdgeInsets.only(top: 120, bottom: 100),
-      itemCount: 15,
-      itemBuilder: (context, index) => GlassCard(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        borderRadius: 20,
-        child: ListTile(
-          leading: const NeonIcon(icon: Icons.auto_graph, size: 30),
-          title: Text("Financial Report #$index", 
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          subtitle: Text("AI Analysis completed successfully", 
-            style: TextStyle(color: Colors.white.withOpacity(0.6))),
-          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white24, size: 16),
-        ),
-      ),
-    );
-  }
-
-  // ویجت اختصاصی برای نوار ناوبری پایین جهت تمیز ماندن متد Build
-  Widget _buildBottomNav() {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-        child: GlassCard(
+      body: Center(child: AdaptiveText("Page Content: $_selectedIndex")),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        child: OmniGlassContainer(
           borderRadius: 30,
-          opacity: 0.1,
-          blur: 15,
-          padding: EdgeInsets.zero, // حذف پدینگ داخلی برای فیت شدن Nav
+          padding: EdgeInsets.zero,
           child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              HapticFeedback.lightImpact(); // لرزش ملایم هنگام کلیک
-              setState(() => _currentIndex = index);
-            },
+            currentIndex: _selectedIndex,
+            onTap: (index) => setState(() => _selectedIndex = index),
             backgroundColor: Colors.transparent,
             elevation: 0,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.cyanAccent,
-            unselectedItemColor: Colors.white.withOpacity(0.3),
-            showSelectedLabels: true,
-            showUnselectedLabels: false,
-            items: [
-              _buildNavItem(Icons.home_filled, 'Home', 0),
-              _buildNavItem(Icons.insights, 'Insights', 1),
-              _buildNavItem(Icons.store_mall_directory, 'B2B', 2),
-              _buildNavItem(Icons.person_pin, 'Profile', 3),
+            selectedItemColor: isDark ? Colors.cyanAccent : Colors.blueAccent,
+            unselectedItemColor: theme.colorScheme.onSurface.withOpacity(0.4),
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.bar_chart_rounded), label: 'Insights'),
+              BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  // متد کمکی برای ساخت آیتم‌های نوار ناوبری
-  BottomNavigationBarItem _buildNavItem(IconData icon, String label, int index) {
-    return BottomNavigationBarItem(
-      icon: NeonIcon(
-        icon: icon,
-        isAnimated: false, // جلوگیری از تداخل کلیک که قبلاً صحبت کردیم
-        opacity: _currentIndex == index ? 1.0 : 0.3,
-      ),
-      label: label,
     );
   }
 }

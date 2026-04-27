@@ -24,18 +24,84 @@ class DynamicAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _DynamicAppBarState extends State<DynamicAppBar> {
   // لیست نوتیفیکیشن‌ها با مدل واحد
   final List<AppNotification> _notifications = [
-    AppNotification(title: "AI Analysis", message: "Your weekly report is ready."),
-    AppNotification(title: "Security Update", message: "New login detected in Coquitlam."),
-    AppNotification(title: "Marketplace", message: "A new client is interested in your project."),
-    AppNotification(title: "System", message: "GrowthPilot v1.0.5 is now stable."),
-    AppNotification(title: "Billing", message: "Invoice for April has been generated."),
-    AppNotification(title: "Reminder", message: "Don't forget to check your daily insights."),
-    AppNotification(title: "New Lead", message: "Someone viewed your professional profile."),
-    AppNotification(title: "Cloud Summit", message: "New updates available for the mobile app."),
-    AppNotification(title: "Azure Info", message: "AZ-900 study materials updated."),
-    AppNotification(title: "Notification 10", message: "Example notification number 10"),
-    AppNotification(title: "Notification 11", message: "Example notification number 11"),
-  ];
+  AppNotification(
+    id: "1",
+    title: "AI Analysis",
+    body: "Your weekly report is ready. All metrics show a 15% growth in performance.",
+    footer: "System Engine • Analytics",
+    date: DateTime.now().subtract(const Duration(minutes: 5)),
+  ),
+  AppNotification(
+    id: "2",
+    title: "Security Update",
+    body: "New login detected in Coquitlam. If this wasn't you, please secure your account.",
+    footer: "Security Center",
+    date: DateTime.now().subtract(const Duration(hours: 1)),
+  ),
+  AppNotification(
+    id: "3",
+    title: "Marketplace",
+    body: "A new client is interested in your project. Check the 'Leads' section for details.",
+    footer: "Surrey Professional Market",
+    date: DateTime.now().subtract(const Duration(hours: 3)),
+  ),
+  AppNotification(
+    id: "4",
+    title: "System",
+    body: "GrowthPilot v1.0.8 is now stable. All themes and glass widgets are optimized.",
+    footer: "Release Notes",
+    date: DateTime.now().subtract(const Duration(days: 1)),
+  ),
+  AppNotification(
+    id: "5",
+    title: "Billing",
+    body: "Invoice for April has been generated. You can download the PDF in settings.",
+    footer: "Accounts",
+    date: DateTime.now().subtract(const Duration(days: 2)),
+  ),
+  AppNotification(
+    id: "6",
+    title: "Reminder",
+    body: "Don't forget to check your daily insights. Today's target is 500 units.",
+    footer: "Daily Tasks",
+    date: DateTime.now().subtract(const Duration(days: 2)),
+  ),
+  AppNotification(
+    id: "7",
+    title: "New Lead",
+    body: "Someone viewed your professional profile. They searched for 'Flutter Developer'.",
+    footer: "Profiles",
+    date: DateTime.now().subtract(const Duration(days: 3)),
+  ),
+  AppNotification(
+    id: "8",
+    title: "Cloud Summit",
+    body: "New updates available for the mobile app. Version 1.0.9 is ready for testing.",
+    footer: "GitHub Repository",
+    date: DateTime.now().subtract(const Duration(days: 4)),
+  ),
+  AppNotification(
+    id: "9",
+    title: "Azure Info",
+    body: "AZ-900 study materials updated. New module on ExpressRoute is now available.",
+    footer: "Microsoft Learn",
+    date: DateTime.now().subtract(const Duration(days: 5)),
+  ),
+  AppNotification(
+    id: "10",
+    title: "Update Required",
+    body: "Please update your Fair PharmaCare documentation for BC health coverage.",
+    footer: "Administration",
+    date: DateTime.now().subtract(const Duration(days: 6)),
+  ),
+  AppNotification(
+    id: "11",
+    title: "Final Sync",
+    body: "Database synchronization completed successfully. 1.2GB of assets moved.",
+    footer: "Asset Management",
+    date: DateTime.now().subtract(const Duration(days: 7)),
+  ),
+];
 
   @override
   Widget build(BuildContext context) {
