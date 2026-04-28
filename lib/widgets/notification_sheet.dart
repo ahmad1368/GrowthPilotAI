@@ -4,6 +4,7 @@ import '../models/notification_model.dart';
 import 'notification_card.dart';
 import 'adaptive_text.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import '../utils/responsive_helper.dart';
 
 class NotificationSheet extends StatelessWidget {
   final List<AppNotification> notifications;
@@ -19,48 +20,78 @@ class NotificationSheet extends StatelessWidget {
 
   // متد نمایش جزئیات کامل نوتیفیکیشن
   void _showDetails(BuildContext context, AppNotification item) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      barrierDismissible: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (context) => BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: AlertDialog(
-          backgroundColor:
-              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(color: Colors.white.withOpacity(0.1)),
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          // ۱. محاسبه ارتفاع دقیق: کل صفحه منهای ارتفاع نوار عنوان و نوار ابزار
+          height: MediaQuery.of(context).size.height -
+              (kToolbarHeight +
+                  MediaQuery.of(context).padding.top +
+                  kBottomNavigationBarHeight),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.85),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+            border: Border.all(color: Colors.white.withOpacity(0.1)),
           ),
-          title: AdaptiveText(
-            item.title,
-            fontWeight: FontWeight.bold,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
             children: [
-              AdaptiveText(
-                item.body,
-                style: const TextStyle(height: 1.6),
+              // نوار کوچک بالای دراور برای بستن
+              Container(
+                margin: const EdgeInsets.only(top: 12),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-              const SizedBox(height: 20),
-              AdaptiveText(
-                "Source: ${item.footer}",
-                fontSize: 10,
-                style: const TextStyle(color: Colors.grey),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AdaptiveText(
+                          item.title,
+                          style: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 16),
+                        const Divider(color: Colors.white10),
+                        const SizedBox(height: 16),
+                        AdaptiveText(
+                          item.body,
+                          style: const TextStyle(fontSize: 16, height: 1.8),
+                        ),
+                        const SizedBox(height: 40),
+                        AdaptiveText(
+                          "Info: ${item.footer}",
+                          fontSize: 12,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // دکمه خروج در انتهای محتوا
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const AdaptiveText("Back to List",
+                      style: TextStyle(
+                          color: Colors.cyanAccent,
+                          fontWeight: FontWeight.bold)),
+                ),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const AdaptiveText(
-                "Close",
-                style: TextStyle(
-                    color: Colors.cyanAccent, fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
         ),
       ),
     );
@@ -129,24 +160,45 @@ class NotificationSheet extends StatelessWidget {
                           style: TextStyle(color: theme.hintColor),
                         ),
                       )
-                    : ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.only(bottom: 20, top: 10),
-                        itemCount: notifications.length,
-                        itemBuilder: (context, index) {
-                          final item = notifications[index];
-                          return NotificationCard(
-                            item: item,
-                            onTap: () {
-                              onRead(item);
-                              _showDetails(context, item);
+                    : ResponsiveHelper.isMobile(context)
+                        ? ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.only(bottom: 20, top: 10),
+                            itemCount: notifications.length,
+                            itemBuilder: (context, index) {
+                              final item = notifications[index];
+                              return NotificationCard(
+                                item: item,
+                                onTap: () {
+                                  onRead(item);
+                                  _showDetails(context, item);
+                                },
+                                onDelete: () => onDelete(item),
+                              );
                             },
-                            onDelete: () {
-                              onDelete(item);
+                          )
+                        : GridView.builder(
+                            padding: const EdgeInsets.all(16),
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 400,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              mainAxisExtent: 90,
+                            ),
+                            itemCount: notifications.length,
+                            itemBuilder: (context, index) {
+                              final item = notifications[index];
+                              return NotificationCard(
+                                item: item,
+                                onTap: () {
+                                  onRead(item);
+                                  _showDetails(context, item);
+                                },
+                                onDelete: () => onDelete(item),
+                              );
                             },
-                          );
-                        },
-                      ),
+                          ),
               ),
             ],
           ),

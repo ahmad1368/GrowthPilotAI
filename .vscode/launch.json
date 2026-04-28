@@ -1,26 +1,43 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-    
-        {
-            "name": "GrowthPilotAI",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "GrowthPilotAI (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "GrowthPilotAI (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "GrowthPilotAI",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "GrowthPilotAI (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "GrowthPilotAI (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Pixel 7 (Emulator 5554)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
+    },
+    {
+      "name": "Pixel Tablet (Emulator 5556)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5556"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "All Devices (Mobile & Tablet)",
+      "configurations": [
+        "Pixel 7 (Emulator 5554)",
+        "Pixel Tablet (Emulator 5556)"
+      ]
+    }
+  ]
 }
