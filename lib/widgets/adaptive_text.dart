@@ -2,35 +2,42 @@ import 'package:flutter/material.dart';
 
 class AdaptiveText extends StatelessWidget {
   final String text;
+  final TextStyle? style;
   final double? fontSize;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
-  final TextStyle? style; // پارامتر جدید برای استایل سفارشی
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   const AdaptiveText(
     this.text, {
     super.key,
+    this.style,
     this.fontSize,
     this.fontWeight,
     this.textAlign,
-    this.style,
+    this.maxLines,
+    this.overflow,
   });
 
   @override
   Widget build(BuildContext context) {
-    // ۱. استایل پیش‌فرض که به شب و روز واکنش نشان می‌دهد
-    final defaultStyle = TextStyle(
-      color: Theme.of(context).colorScheme.onSurface,
-      fontSize: fontSize ?? 16,
-      fontWeight: fontWeight ?? FontWeight.normal,
-    );
+    final theme = Theme.of(context);
+
+    // انتخاب استایل پایه بر اساس اینکه آیا استایلی پاس داده شده یا خیر
+    final baseStyle = style ?? theme.textTheme.bodyMedium;
 
     return Text(
       text,
       textAlign: textAlign,
-      // ۲. ترکیب استایل پیش‌فرض با استایل سفارشی (اگر وجود داشته باشد)
-      // متد merge باعث می‌شود مقادیر style بر مقادیر defaultStyle اولویت پیدا کنند
-      style: style != null ? defaultStyle.merge(style) : defaultStyle,
+      maxLines: maxLines,
+      overflow: overflow,
+      style: baseStyle?.copyWith(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        // اگر رنگ در style مشخص نشده، از رنگ پیش‌فرض تم استفاده کن
+        color: style?.color ?? theme.textTheme.bodyLarge?.color,
+      ),
     );
   }
 }

@@ -14,10 +14,10 @@ mixin HomeLogic {
       (index) => AppNotification(
             id: index.toString(),
             title: 'اعلان سیستم ${index + 1}',
-            body: 'گزارش تحلیلی شماره ${index + 1} آماده بررسی است.',
-            footer: 'System • AI Engine',
-            date: DateTime.now().subtract(Duration(hours: index)),
-            isRead: false,
+            body: 'توضیحات کامل این بخش برای پروژه GrowthPilotAI...',
+            footer: 'Version 1.0.8',
+            date: DateTime.now(),
+            type: NotificationType.values[index % 5], // توزیع انواع مختلف
           ));
 
   int get unreadCount => notifications.where((n) => !n.isRead).length;

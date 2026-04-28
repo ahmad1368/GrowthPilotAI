@@ -1,11 +1,14 @@
-// lib/models/notification_model.dart
+import 'package:flutter/material.dart';
+
+enum NotificationType { alert, danger, warning, reminder, info }
 
 class AppNotification {
   final String id;
   final String title;
-  final String body; // محتوای اصلی نوتیفیکیشن
-  final String footer; // پاورقی (مثل بخش مربوطه)
-  final DateTime date; // استفاده از DateTime برای مدیریت بهتر زمان
+  final String body;
+  final String footer;
+  final DateTime date;
+  final NotificationType type; // نوع نوتیفیکیشن
   bool isRead;
 
   AppNotification({
@@ -14,20 +17,7 @@ class AppNotification {
     required this.body,
     required this.footer,
     required this.date,
+    this.type = NotificationType.info,
     this.isRead = false,
   });
 }
-
-// دیتای پایه ۱۲ تایی هماهنگ با مدل جدید
-List<AppNotification> dummyNotifications = List.generate(
-  12,
-  (index) => AppNotification(
-    id: index.toString(),
-    title: 'اعلان سیستم ${index + 1}',
-    body:
-        'این یک پیام آزمایشی برای بررسی وضعیت نوتیفیکیشن در GrowthPilotAI است.',
-    footer: 'System • Analytics',
-    date: DateTime.now().subtract(Duration(hours: index)),
-    isRead: false,
-  ),
-);

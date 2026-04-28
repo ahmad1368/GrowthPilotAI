@@ -13,7 +13,7 @@ class NotificationService {
           id: (index + 1).toString(),
           title: _getMockTitle(index),
           body:
-              'گزارش تحلیلی شماره ${index + 1} در سیستم GrowthPilotAI آماده شد. لطفا جزئیات را در پنل مدیریت بررسی کنید.',
+              'گگگگگگزارش تحلیلی شماره ${index + 1} در سیستم GrowthPilotAI آماده شد. لطفا جزئیات را در پنل مدیریت بررسی کنید.',
           footer: _getMockFooter(index),
           date: DateTime.now().subtract(Duration(hours: index, minutes: 15)),
           isRead: false,

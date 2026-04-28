@@ -1,47 +1,96 @@
 import 'package:flutter/material.dart';
 import '../models/notification_model.dart';
+import 'adaptive_text.dart';
 
 class NotificationCard extends StatelessWidget {
   final AppNotification item;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
 
-  const NotificationCard({super.key, required this.item, this.onTap});
+  const NotificationCard({super.key, required this.item, required this.onTap});
+
+  // متد کمکی برای انتخاب آیکون و رنگ بر اساس نوع نوتیفیکیشن
+  Map<String, dynamic> _getStyle(NotificationType type) {
+    switch (type) {
+      case NotificationType.danger:
+        return {'icon': Icons.dangerous_rounded, 'color': Colors.redAccent};
+      case NotificationType.warning:
+        return {
+          'icon': Icons.warning_amber_rounded,
+          'color': Colors.orangeAccent
+        };
+      case NotificationType.reminder:
+        return {
+          'icon': Icons.notifications_active_rounded,
+          'color': Colors.lightBlueAccent
+        };
+      case NotificationType.alert:
+        return {'icon': Icons.emergency_rounded, 'color': Colors.cyanAccent};
+      default:
+        return {'icon': Icons.info_outline_rounded, 'color': Colors.grey};
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.white10, width: 0.5)),
+    final theme = Theme.of(context);
+    final style = _getStyle(item.type);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      decoration: BoxDecoration(
+        color: theme.cardColor.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: theme.dividerColor.withOpacity(0.05)),
+      ),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.all(12),
+        // آیکون وضعیت (خوانده شده یا نشده)
+        leading: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            CircleAvatar(
+              backgroundColor: (style['color'] as Color).withOpacity(0.1),
+              child: Icon(style['icon'], color: style['color']),
+            ),
+            if (!item.isRead)
+              Container(
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: Colors.cyanAccent,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: theme.scaffoldBackgroundColor, width: 2),
+                ),
+              ),
+          ],
         ),
-        child: Column(
+        title: AdaptiveText(
+          item.title,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+        subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(item.title,
-                    style: const TextStyle(
-                        color: Colors.cyanAccent, fontWeight: FontWeight.bold)),
-                // نمایش ساعت از روی فیلد DateTime
-                Text(
-                    "${item.date.hour}:${item.date.minute.toString().padLeft(2, '0')}",
-                    style: const TextStyle(color: Colors.grey, fontSize: 10)),
-              ],
+            const SizedBox(height: 4),
+            AdaptiveText(
+              item.body,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              fontSize: 12,
+              style: TextStyle(
+                  color: theme.textTheme.bodyMedium?.color?.withOpacity(0.6)),
             ),
-            const SizedBox(height: 8),
-            // حتما از فیلد body استفاده کن (نه message)
-            Text(item.body,
-                style: const TextStyle(
-                    color: Colors.white70, fontSize: 13, height: 1.4)),
-            if (item.footer.isNotEmpty) ...[
-              const SizedBox(height: 6),
-              Text(item.footer,
-                  style: const TextStyle(color: Colors.white24, fontSize: 10)),
-            ]
           ],
+        ),
+        trailing: Icon(
+          item.isRead
+              ? Icons.drafts_outlined
+              : Icons.mark_email_unread_outlined,
+          size: 18,
+          color: item.isRead ? Colors.grey : Colors.cyanAccent,
         ),
       ),
     );
