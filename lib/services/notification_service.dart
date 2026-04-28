@@ -1,107 +1,58 @@
-import 'package:flutter/material.dart';
 import '../models/notification_model.dart';
-import '../widgets/omni_glass_container.dart';
-import '../widgets/adaptive_text.dart';
 
 class NotificationService {
-  static void showMenu({
-    required BuildContext context,
-    required List<AppNotification> notifications,
-    required Function(AppNotification) onRead,
-    required Function(int) onDelete,
-  }) {
-    showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setDialogState) => Center(
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.7,
-              maxWidth: MediaQuery.of(context).size.width * 0.9,
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: OmniGlassContainer(
-                borderRadius: 20,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      child: AdaptiveText("Notifications", fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                    const Divider(color: Colors.white12, height: 1),
-                    Flexible(
-                      child: notifications.isEmpty
-                          ? const Padding(
-                              padding: EdgeInsets.all(40),
-                              child: AdaptiveText("No notifications"),
-                            )
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: notifications.length,
-                              itemBuilder: (context, index) {
-                                final item = notifications[index];
-                                return ListTile(
-                                  leading: Icon(Icons.circle, size: 10, 
-                                    color: item.isRead ? Colors.transparent : Colors.blueAccent),
-                                  title: AdaptiveText(item.title, 
-                                    fontWeight: item.isRead ? FontWeight.normal : FontWeight.bold),
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.close, size: 16, color: Colors.redAccent),
-                                    onPressed: () {
-                                      onDelete(index);
-                                      setDialogState(() {});
-                                    },
-                                  ),
-                                  onTap: () {
-                                    onRead(item);
-                                    setDialogState(() {});
-                                    Navigator.pop(context);
-                                    showDetail(context: context, item: item);
-                                  },
-                                );
-                              },
-                            ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+  // ۱. متد اصلی برای دریافت نوتیفیکیشن‌ها از منبع (فعلاً Mock، بعداً API)
+  Future<List<AppNotification>> fetchNotifications() async {
+    // شبیه‌سازی تاخیر شبکه برای واقعی‌تر شدن تجربه کاربری
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    try {
+      // ایجاد ۱۲ آیتم به صورت داینامیک برای تست (بند ۱ درخواست شما)
+      return List.generate(12, (index) {
+        return AppNotification(
+          id: (index + 1).toString(),
+          title: _getMockTitle(index),
+          body:
+              'گزارش تحلیلی شماره ${index + 1} در سیستم GrowthPilotAI آماده شد. لطفا جزئیات را در پنل مدیریت بررسی کنید.',
+          footer: _getMockFooter(index),
+          date: DateTime.now().subtract(Duration(hours: index, minutes: 15)),
+          isRead: false,
+        );
+      });
+    } catch (e) {
+      // در صورت بروز خطا، یک لیست خالی برمی‌گردانیم تا برنامه کرش نکند
+      print("Error in NotificationService: $e");
+      return [];
+    }
   }
 
-  static void showDetail({required BuildContext context, required AppNotification item}) {
-    showDialog(
-      context: context,
-      builder: (context) => Center(
-        child: Material(
-          color: Colors.transparent,
-          child: OmniGlassContainer(
-            margin: const EdgeInsets.all(30),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.info_outline_rounded, size: 48, color: Colors.blueAccent),
-                const SizedBox(height: 16),
-                AdaptiveText(item.title, fontSize: 20, fontWeight: FontWeight.bold),
-                const SizedBox(height: 12),
-                AdaptiveText(item.body, textAlign: TextAlign.center),
-                const Divider(height: 30, color: Colors.white12),
-                AdaptiveText(item.footer, fontSize: 12),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () => Navigator.pop(context), 
-                  child: const AdaptiveText("Got it", fontWeight: FontWeight.bold)
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+  // ۲. متد برای تغییر وضعیت خوانده شدن (بدون بستن منو - بند ۴)
+  Future<void> markAsRead(AppNotification notification) async {
+    // اینجا در آینده دستور آپدیت به API فرستاده می‌شود:
+    // await http.patch('api/notifications/${notification.id}', data: {'isRead': true});
+
+    notification.isRead = true;
+    print("Notification ${notification.id} marked as read in Service.");
+  }
+
+  // متدهای کمکی برای تولید دیتای متنوع
+  String _getMockTitle(int i) {
+    const titles = [
+      "AI Analysis",
+      "System Security",
+      "Marketplace",
+      "Cloud Sync"
+    ];
+    return titles[i % titles.length];
+  }
+
+  String _getMockFooter(int i) {
+    const footers = [
+      "Analytics Engine",
+      "Security Center",
+      "Sales Team",
+      "Infrastructure"
+    ];
+    return footers[i % footers.length];
   }
 }

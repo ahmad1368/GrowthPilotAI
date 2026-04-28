@@ -1,100 +1,87 @@
 import 'package:flutter/material.dart';
 import 'app_drawer.dart';
 import 'glass_app_bar.dart';
-import 'insight_card.dart';
+import 'home_body.dart';
+import 'home_bottom_nav.dart';
 import 'notification_badge.dart';
-import 'omni_glass_container.dart';
-import '../services/notification_service.dart';
-import '../models/notification_model.dart';
+import 'home_logic.dart';
+import 'notification_sheet.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
-
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
 }
 
-class _HomeLayoutState extends State<HomeLayout> {
+class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
   int _selectedIndex = 0;
-  late ScrollController _scrollController;
-  double _appBarOpacity = 0.0;
-
-  final List<AppNotification> _notifications = [
-    AppNotification(id: "1", title: "AI Core", body: "سیستم بهینه شد.", footer: "System", date: DateTime.now()),
-    // ۱۰ مورد دیگر در اینجا قرار می‌گیرد...
-  ];
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController()..addListener(() {
-      setState(() => _appBarOpacity = (_scrollController.offset / 200).clamp(0.0, 1.0));
+
+    // به جای ()initLogic خالی، این عبارت را بنویسید:
+    initLogic(() {
+      if (mounted) setState(() {});
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    int unreadCount = _notifications.where((n) => !n.isRead).length;
+  void dispose() {
+    disposeLogic();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
       drawer: const AppDrawer(),
       appBar: GlassAppBar(
         title: "GrowthPilot AI",
-        opacity: _appBarOpacity,
+        opacity: appBarOpacity,
         actions: [
-          NotificationBadge(
-            count: unreadCount,
-            onTap: () => NotificationService.showMenu(
-              context: context,
-              notifications: _notifications,
-              onDelete: (index) => setState(() => _notifications.removeAt(index)),
-              onRead: (item) => setState(() => item.isRead = true),
-            ),
-          ),
+          NotificationBadge(count: unreadCount, onTap: _openNotifications),
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => Navigator.pushNamed(context, '/settings'),
-          ),
+              icon: const Icon(Icons.settings_outlined),
+              onPressed: () => Navigator.pushNamed(context, '/settings')),
         ],
       ),
-      body: _buildBody(),
-      bottomNavigationBar: _buildBottomNav(),
-    );
-  }
-
-  Widget _buildBody() {
-    return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.fromLTRB(20, kToolbarHeight + 40, 20, 100),
-      itemCount: 15,
-      itemBuilder: (context, index) => InsightCard(
-        title: "Insight #$index",
-        description: "تحلیل لحظه‌ای سیستم برای بهبود عملکرد دارایی‌های دیجیتال شما.",
-        efficiency: "${(index + 1) * 7}% Efficiency",
+      body: HomeBody(controller: scrollController),
+      bottomNavigationBar: HomeBottomNav(
+        currentIndex: _selectedIndex,
+        onTap: (index) => setState(() => _selectedIndex = index),
       ),
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      child: OmniGlassContainer(
-        borderRadius: 30,
-        padding: EdgeInsets.zero,
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: (index) => setState(() => _selectedIndex = index),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.bar_chart_rounded), label: 'Insights'),
-            BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profile'),
-          ],
-        ),
-      ),
+  void _openNotifications() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      barrierColor: Colors.black54, // برای اینکه با کلیک بیرون بسته شود (بند ۴)
+      builder: (context) {
+        // استفاده از StatefulBuilder برای اینکه تغییرات (مثل خوانده شدن)
+        // بلافاصله درون شیت دیده شود
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setSheetState) {
+            return NotificationSheet(
+              notifications:
+                  notifications, // لیست نوتیفیکیشن‌ها که در HomeLogic دارید
+              // در فایل home_layout.dart
+              onRead: (item) {
+                setState(() {
+                  item.isRead =
+                      true; // این تغییر در لیست موجود در HomeLogic اعمال می‌شود
+                });
+                setSheetState(() {}); // این برای آپدیت شدن ظاهر خودِ منو است
+              },
+            );
+          },
+        );
+      },
     );
   }
 }
