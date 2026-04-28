@@ -22,6 +22,11 @@ mixin HomeLogic {
 
   int get unreadCount => notifications.where((n) => !n.isRead).length;
 
+  void deleteNotification(String id, VoidCallback onUpdate) {
+    notifications.removeWhere((n) => n.id == id);
+    onUpdate(); // برای بروزرسانی UI
+  }
+
   // ۳. متد مقداردهی اولیه برای گوش دادن به اسکرول
   void initLogic(VoidCallback onUpdate) {
     scrollController.addListener(() {

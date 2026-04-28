@@ -8,14 +8,16 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 class NotificationSheet extends StatelessWidget {
   final List<AppNotification> notifications;
   final Function(AppNotification) onRead;
+  final Function(AppNotification) onDelete; // قابلیت حذف اضافه شد
 
   const NotificationSheet({
     super.key,
     required this.notifications,
     required this.onRead,
+    required this.onDelete,
   });
 
-  // متد نمایش جزئیات کامل نوتیفیکیشن در یک Dialog شیشه‌ای
+  // متد نمایش جزئیات کامل نوتیفیکیشن
   void _showDetails(BuildContext context, AppNotification item) {
     showDialog(
       context: context,
@@ -89,7 +91,7 @@ class NotificationSheet extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // دسته بالای منو (Drag Handle)
+              // دسته بالای منو (Handle)
               Container(
                 margin: const EdgeInsets.only(top: 12),
                 width: 45,
@@ -123,7 +125,7 @@ class NotificationSheet extends StatelessWidget {
                 child: notifications.isEmpty
                     ? Center(
                         child: AdaptiveText(
-                          "No new notifications",
+                          "No messages yet",
                           style: TextStyle(color: theme.hintColor),
                         ),
                       )
@@ -136,10 +138,11 @@ class NotificationSheet extends StatelessWidget {
                           return NotificationCard(
                             item: item,
                             onTap: () {
-                              // ۱. علامت‌گذاری به عنوان خوانده شده
                               onRead(item);
-                              // ۲. نمایش پنجره جزئیات
                               _showDetails(context, item);
+                            },
+                            onDelete: () {
+                              onDelete(item);
                             },
                           );
                         },

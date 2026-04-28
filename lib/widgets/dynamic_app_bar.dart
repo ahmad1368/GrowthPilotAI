@@ -120,13 +120,14 @@ class _DynamicAppBarState extends State<DynamicAppBar> {
       isScrollControlled: true,
       builder: (context) {
         return NotificationSheet(
-          notifications: _notifications, // لیست نوتیفیکیشن‌ها که در AppBar داری
-          onRead: (notification) {
-            setState(() {
-              notification.isRead = true;
-            });
-          },
-        );
+            notifications:
+                _notifications, // لیست نوتیفیکیشن‌ها که در AppBar داری
+            onRead: (notification) {
+              setState(() {
+                notification.isRead = true;
+              });
+            },
+            onDelete: (item) {});
       },
     );
   }

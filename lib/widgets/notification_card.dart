@@ -5,10 +5,14 @@ import 'adaptive_text.dart';
 class NotificationCard extends StatelessWidget {
   final AppNotification item;
   final VoidCallback onTap;
+  final VoidCallback onDelete; // پارامتر جدید برای حذف
 
-  const NotificationCard({super.key, required this.item, required this.onTap});
+  const NotificationCard(
+      {super.key,
+      required this.item,
+      required this.onTap,
+      required this.onDelete});
 
-  // متد کمکی برای انتخاب آیکون و رنگ بر اساس نوع نوتیفیکیشن
   Map<String, dynamic> _getStyle(NotificationType type) {
     switch (type) {
       case NotificationType.danger:
@@ -24,7 +28,10 @@ class NotificationCard extends StatelessWidget {
           'color': Colors.lightBlueAccent
         };
       case NotificationType.alert:
-        return {'icon': Icons.emergency_rounded, 'color': Colors.cyanAccent};
+        return {
+          'icon': Icons.emergency_share_rounded,
+          'color': Colors.cyanAccent
+        };
       default:
         return {'icon': Icons.info_outline_rounded, 'color': Colors.grey};
     }
@@ -44,8 +51,7 @@ class NotificationCard extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
-        contentPadding: const EdgeInsets.all(12),
-        // آیکون وضعیت (خوانده شده یا نشده)
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         leading: Stack(
           alignment: Alignment.topRight,
           children: [
@@ -66,31 +72,36 @@ class NotificationCard extends StatelessWidget {
               ),
           ],
         ),
-        title: AdaptiveText(
-          item.title,
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
+        title:
+            AdaptiveText(item.title, fontWeight: FontWeight.bold, fontSize: 14),
+        subtitle: AdaptiveText(
+          item.body,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          fontSize: 12,
+          style: TextStyle(
+              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.6)),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        // بخش دکمه‌ها در سمت راست
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 4),
-            AdaptiveText(
-              item.body,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              fontSize: 12,
-              style: TextStyle(
-                  color: theme.textTheme.bodyMedium?.color?.withOpacity(0.6)),
+            Icon(
+              item.isRead
+                  ? Icons.drafts_outlined
+                  : Icons.mark_email_unread_outlined,
+              size: 18,
+              color: item.isRead ? Colors.grey : Colors.cyanAccent,
+            ),
+            const SizedBox(width: 8),
+            // دکمه ضربدر برای حذف
+            IconButton(
+              icon: const Icon(Icons.close_rounded,
+                  size: 20, color: Colors.redAccent),
+              onPressed: onDelete,
+              visualDensity: VisualDensity.compact,
             ),
           ],
-        ),
-        trailing: Icon(
-          item.isRead
-              ? Icons.drafts_outlined
-              : Icons.mark_email_unread_outlined,
-          size: 18,
-          color: item.isRead ? Colors.grey : Colors.cyanAccent,
         ),
       ),
     );

@@ -61,22 +61,27 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      barrierColor: Colors.black54, // برای اینکه با کلیک بیرون بسته شود (بند ۴)
+      barrierColor: Colors.black54,
       builder: (context) {
-        // استفاده از StatefulBuilder برای اینکه تغییرات (مثل خوانده شدن)
-        // بلافاصله درون شیت دیده شود
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setSheetState) {
             return NotificationSheet(
-              notifications:
-                  notifications, // لیست نوتیفیکیشن‌ها که در HomeLogic دارید
-              // در فایل home_layout.dart
+              notifications: notifications,
               onRead: (item) {
+                // آپدیت کردن وضعیت خوانده شده در هر دو سطح
+                setState(() => item.isRead = true);
+                setSheetState(() {});
+              },
+              onDelete: (item) {
+                // ۱. آپدیت لیست اصلی در HomeLogic و بازسازی Layout اصلی
                 setState(() {
-                  item.isRead =
-                      true; // این تغییر در لیست موجود در HomeLogic اعمال می‌شود
+                  deleteNotification(item.id, () {});
                 });
-                setSheetState(() {}); // این برای آپدیت شدن ظاهر خودِ منو است
+
+                // ۲. بسیار مهم: آپدیت کردن وضعیتِ خودِ منوی باز شده
+                setSheetState(() {
+                  // این کار باعث می‌شود کارت بلافاصله از شیت غیب شود
+                });
               },
             );
           },
