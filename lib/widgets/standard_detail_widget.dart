@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/insight_model.dart'; // مدل را ایمپورت کنید
+import '../models/insight_model.dart';
+import 'adaptive_text.dart'; // مدل را ایمپورت کنید
 
 class StandardDetailWidget extends StatelessWidget {
   final InsightModel insight; // دریافت مدل به جای متغیرهای تکی
@@ -19,11 +20,12 @@ class StandardDetailWidget extends StatelessWidget {
           horizontal: 16,
           vertical: 20), // فاصله از لبه‌های نوار ابزار بالا و پایین
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16), // گرد کردن تمام گوشه‌ها
+        // استفاده از رنگ‌های تم برای پشتیبانی از Dark Mode
+        color: Theme.of(context).colorScheme.surface,
         border: Border.all(
-            color: Colors.blueAccent.withOpacity(0.5),
-            width: 2), // ایجاد Border واضح
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
               color: Colors.black12,
@@ -39,9 +41,14 @@ class StandardDetailWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(insight.title,
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold)),
+              Expanded(
+                child: AdaptiveText(
+                  insight.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
               _buildBadge(insight.efficiency),
             ],
           ),
@@ -52,11 +59,18 @@ class StandardDetailWidget extends StatelessWidget {
             child: ListView(
               controller: scrollController,
               children: [
-                const Text("Detailed Analysis",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const AdaptiveText(
+                  "Detailed Analysis",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 8),
-                Text(insight.description,
-                    style: const TextStyle(color: Colors.black54)),
+
+                AdaptiveText(
+                  insight.description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                ),
                 const SizedBox(height: 24),
                 // در آینده این بخش را با منطق بارگذاری داده از API جایگزین کنید
                 insight.description.isEmpty
@@ -99,7 +113,10 @@ class StandardDetailWidget extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue[700],
                 foregroundColor: Colors.white),
-            child: const Text("Understand Insight"),
+            child: AdaptiveText(
+              "Understand Insight",
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ],
