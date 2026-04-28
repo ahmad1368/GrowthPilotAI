@@ -1,10 +1,10 @@
 name: growth_pilot_ai
 description: "AI-powered mobile platform for small business growth."
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -21,7 +21,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # اضافه کردن بخش دارایی‌ها (Assets)
-  assets:
-    - assets/images/bg_pilot.png
