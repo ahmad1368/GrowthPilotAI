@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/notification_model.dart';
 import 'notification_card.dart';
 import 'adaptive_text.dart';
+import 'dart:ui';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import '../utils/responsive_helper.dart';
 
@@ -23,75 +24,185 @@ class NotificationSheet extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      // ۱. این خط باعث می‌شود کادر مستطیلی و کدرِ پیش‌فرض حذف شود
       backgroundColor: Colors.transparent,
-      builder: (context) => BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          // ۱. محاسبه ارتفاع دقیق: کل صفحه منهای ارتفاع نوار عنوان و نوار ابزار
-          height: MediaQuery.of(context).size.height -
-              (kToolbarHeight +
-                  MediaQuery.of(context).padding.top +
-                  kBottomNavigationBarHeight),
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.85),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
-          ),
-          child: Column(
-            children: [
-              // نوار کوچک بالای دراور برای بستن
-              Container(
-                margin: const EdgeInsets.only(top: 12),
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+
+      // ۲. این خط فضای بیرون از منو را به صورت نیمه‌شفاف تیره می‌کند تا منوی شیشه‌ای بهتر دیده شود
+      barrierColor: Colors.black.withValues(alpha: 0.9),
+      builder: (context) => Container(
+        // تنظیم ارتفاع دقیق بین نوار عنوان و نوار ابزار
+        height: MediaQuery.of(context).size.height -
+            (kToolbarHeight +
+                MediaQuery.of(context).padding.top +
+                kBottomNavigationBarHeight),
+        child: Stack(
+          children: [
+            // ۱. لایه مات‌کننده (بلر) پشت پنل (اختیاری، برای عمق بیشتر)
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Container(color: Colors.transparent),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: SingleChildScrollView(
+            ),
+
+            // ۲. خودِ پنل شیشه‌ای (این بخش حس قدیمی را از بین می‌برد)
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(30)),
+                child: BackdropFilter(
+                  filter:
+                      ImageFilter.blur(sigmaX: 15, sigmaY: 15), // بلر داخلی پنل
+                  child: Container(
+                    decoration: BoxDecoration(
+                      // استفاده از گرادینت نیمه‌شفاف به جای رنگ تخت
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.white
+                              .withValues(alpha: 0.08), // درخشش بیشتر در بالا
+                          Colors.white
+                              .withValues(alpha: 0.03), // شفاف‌تر در پایین
+                        ],
+                      ),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(30)),
+                      border: Border.all(
+                        color: Colors.white
+                            .withValues(alpha: 0.15), // حاشیه باریک شیشه‌ای
+                        width: 0.5,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                          spreadRadius: -2,
+                        )
+                      ],
+                    ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AdaptiveText(
-                          item.title,
-                          style: const TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
+                        const SizedBox(height: 15),
+                        // دستگیره مدرن بالای صفحه
+                        Container(
+                          width: 50,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        const SizedBox(height: 16),
-                        const Divider(color: Colors.white10),
-                        const SizedBox(height: 16),
-                        AdaptiveText(
-                          item.body,
-                          style: const TextStyle(fontSize: 16, height: 1.8),
-                        ),
-                        const SizedBox(height: 40),
-                        AdaptiveText(
-                          "Info: ${item.footer}",
-                          fontSize: 12,
-                          style: const TextStyle(color: Colors.grey),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 28, vertical: 20),
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 15),
+                                  // تیتر مدرن
+                                  Text(
+                                    item.title,
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w800,
+                                      color:
+                                          Colors.white.withValues(alpha: 0.9),
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15),
+                                  // خط دکوراتیو نئونی
+                                  Container(
+                                    height: 2,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(2),
+                                        gradient: const LinearGradient(colors: [
+                                          Colors.cyanAccent,
+                                          Colors.transparent
+                                        ])),
+                                  ),
+                                  const SizedBox(height: 25),
+                                  // متن اصلی
+                                  Text(
+                                    item.body,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      height: 1.7,
+                                      color:
+                                          Colors.white.withValues(alpha: 0.8),
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height: 100), // فضا برای دکمه ثابت پایین
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              // دکمه خروج در انتهای محتوا
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const AdaptiveText("Back to List",
-                      style: TextStyle(
-                          color: Colors.cyanAccent,
-                          fontWeight: FontWeight.bold)),
+            ),
+
+            // ۳. دکمه ضربدر خروج ثابت (بالا سمت راست)
+            Positioned(
+              top: 15,
+              right: 15,
+              child: IconButton(
+                icon: Icon(Icons.close_rounded,
+                    color: Colors.white.withValues(alpha: 0.5), size: 24),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+
+            // ۴. دکمه "Got it" شیشه‌ای ثابت در پایین (شیک و نئونی)
+            Positioned(
+              bottom: 30,
+              left: 40,
+              right: 40,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                        sigmaX: 5, sigmaY: 5), // بلر اختصاصی دکمه
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.cyanAccent.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                            color: Colors.cyanAccent.withValues(alpha: 0.3)),
+                      ),
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 12),
+                        ),
+                        child: const Text(
+                          "Understood",
+                          style: TextStyle(
+                            color: Colors.cyanAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 1.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -110,13 +221,13 @@ class NotificationSheet extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.75,
           decoration: BoxDecoration(
             color: isDarkMode
-                ? Colors.black.withOpacity(0.6)
-                : Colors.white.withOpacity(0.6),
+                ? Colors.black.withValues(alpha: 0.6)
+                : Colors.white.withValues(alpha: 0.6),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
             border: Border.all(
               color: isDarkMode
-                  ? Colors.white.withOpacity(0.1)
-                  : Colors.black.withOpacity(0.05),
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.black.withValues(alpha: 0.05),
               width: 1.5,
             ),
           ),
@@ -129,8 +240,8 @@ class NotificationSheet extends StatelessWidget {
                 height: 4,
                 decoration: BoxDecoration(
                   color: isDarkMode
-                      ? Colors.white.withOpacity(0.2)
-                      : Colors.black.withOpacity(0.1),
+                      ? Colors.white.withValues(alpha: 0.2)
+                      : Colors.black.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
