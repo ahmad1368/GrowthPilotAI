@@ -18,6 +18,8 @@ class AppDrawer extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: OmniGlassPanel(
                 opacity: 0.12,
+                isInteractive: true, // با رفتن موس بزرگ می‌شود و سایه می‌گیرد
+                // fullBorderRadius: true, // هر ۴ گوشه گرد می‌شود
                 // دادن ارتفاع صریح بر اساس فضای موجود برای حل قطعی خطای Unbounded
                 height: constraints.maxHeight,
                 child: Column(
