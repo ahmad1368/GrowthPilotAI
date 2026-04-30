@@ -24,6 +24,10 @@ class TransactionEntity {
   int dbType;
   int dbSyncStatus;
 
+  // --- Relations (Issue #14) ---
+  final category = ToOne<CategoryEntity>();
+  final vendor = ToOne<VendorEntity>();
+
   TransactionEntity({
     this.id = 0,
     required this.amount,
