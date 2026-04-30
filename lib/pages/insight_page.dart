@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/insight_card.dart'; // مسیر را چک کنید
-import '../widgets/standard_detail_widget.dart'; // ویجت مشترکی که صحبت کردیم
 import '../models/insight_model.dart';
+import '../widgets/omni_glass_panel.dart';
 
 class InsightPage extends StatefulWidget {
   final ScrollController controller;
@@ -44,16 +43,25 @@ class _InsightPageState extends State<InsightPage> {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        backgroundColor:
-            Colors.transparent, // شفاف کردن پشت برای دیدن Margin ویجت
-        useSafeArea: true, // جلوگیری از رفتن زیر نوار وضعیت (Status Bar)
-        builder: (context) => Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context)
-                .viewInsets
-                .bottom, // جلوگیری از تداخل با کیبورد
-          ),
-          child: StandardDetailWidget(insight: selectedData),
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.black.withValues(alpha: 0.5),
+        builder: (context) => OmniGlassPanel(
+          title: selectedData.title,
+          description: selectedData.description,
+          showCloseButton: true,
+          avoidSystemBars: true,
+          actionButtons: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+              ),
+              child: const Text("Understand"),
+            ),
+          ],
         ),
       );
     }
@@ -75,10 +83,23 @@ class _InsightPageState extends State<InsightPage> {
               Expanded(
                 flex: 3,
                 child: selectedIndex == null
-                    ? const Center(child: Text("یک مورد را انتخاب کنید"))
-                    : StandardDetailWidget(
-                        insight: dummyInsights[
-                            selectedIndex!], // داده از آرایه بر اساس انتخاب
+                    ? const Center(
+                        child: Text("Select an insight to view details"))
+                    : Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: OmniGlassPanel(
+                          title: dummyInsights[selectedIndex!].title,
+                          description:
+                              dummyInsights[selectedIndex!].description,
+                          opacity:
+                              0.05, // شفافیت کمتر برای هماهنگی با پس‌زمینه تبلت
+                          actionButtons: [
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text("Analyze Further"),
+                            ),
+                          ],
+                        ),
                       ),
               ),
             ],
@@ -99,10 +120,14 @@ class _InsightPageState extends State<InsightPage> {
       itemCount: 15,
       itemBuilder: (context, index) => GestureDetector(
         onTap: () => _handleOnTap(index),
-        child: InsightCard(
-          title: dummyInsights[index].title,
-          description: dummyInsights[index].description,
-          efficiency: dummyInsights[index].efficiency,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: OmniGlassPanel(
+            title: dummyInsights[index].title,
+            description: dummyInsights[index].description,
+            height: 120, // ارتفاع ثابت برای کارت‌های لیست
+            opacity: 0.1,
+          ),
         ),
       ),
     );

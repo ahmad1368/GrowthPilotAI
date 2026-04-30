@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'omni_glass_container.dart';
+import 'omni_glass_panel.dart';
 
 class HomeBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -12,14 +12,20 @@ class HomeBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      child: OmniGlassContainer(
-        borderRadius: 30,
-        padding: EdgeInsets.zero,
+      child: OmniGlassPanel(
+        opacity: 0.12, // کمی غلظت بیشتر برای خوانایی بهتر آیکون‌ها
+        // چون BottomNavigationBar خودش فضای داخلی دارد، فرزند را مستقیم می‌فرستیم
         child: BottomNavigationBar(
           currentIndex: currentIndex,
           onTap: onTap,
           backgroundColor: Colors.transparent,
           elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          selectedItemColor: Colors.blueAccent,
+          unselectedItemColor:
+              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
           items: _buildItems(),
         ),
       ),
