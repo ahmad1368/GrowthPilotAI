@@ -1,22 +1,30 @@
 name: growth_pilot_ai
-description: "AI-powered mobile platform for small business growth."
+description: "A high-performance B2B ecosystem and cloud management mobile application."
 publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
+  # --- UI, Fonts & Themes ---
   cupertino_icons: ^1.0.6
-  google_fonts: ^8.0.2
-  path_provider: ^2.1.5
-  adaptive_theme: ^3.7.2
+  google_fonts: ^6.1.0
+  adaptive_theme: ^3.7.0 # این خط باید دقیقاً با دو فاصله از لبه باشد
+
+  # --- Database & Persistence ---
+  objectbox: ^2.5.0
+  objectbox_flutter_libs: any
+  path_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.4.0
+  objectbox_generator: ^2.5.0
   flutter_lints: ^3.0.0
 
 flutter:

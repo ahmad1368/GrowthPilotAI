@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart'; // حتماً این خط را چک کن که غلط املایی نداشته باشد
 
 class AppTypography {
-  static TextTheme get textTheme => TextTheme(
-    headlineLarge: GoogleFonts.plusJakartaSans(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      letterSpacing: -0.5,
-    ),
-    bodyMedium: GoogleFonts.plusJakartaSans(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      height: 1.5,
-    ),
-    labelSmall: GoogleFonts.plusJakartaSans(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-    ),
-  );
+  // استایل مخصوص تیترها با تم مدرن
+  static TextStyle get headerStyle => GoogleFonts.inter(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        letterSpacing: -0.5,
+      );
+
+  // استایل بدنه با آیکون مجازی (برای راهنمایی در کد)
+  // 🖋️ Use for standard descriptions
+  static TextStyle get bodyStyle => GoogleFonts.plusJakartaSans(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      );
 }

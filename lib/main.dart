@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
       light: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: const Color(0xFFF5F5F7),
+        useMaterial3: true, // فعال کردن متریال ۳ برای ظاهر ملموس‌تر
+        colorSchemeSeed:
+            Colors.blueAccent, // تنظیم رنگ پایه برای آیکون‌ها و دکمه‌ها
         // سایر تنظیمات تم لایت
       ),
       dark: ThemeData(
