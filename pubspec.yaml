@@ -13,12 +13,17 @@ dependencies:
   # --- UI, Fonts & Themes ---
   cupertino_icons: ^1.0.6
   google_fonts: ^6.1.0
-  adaptive_theme: ^3.7.0 # این خط باید دقیقاً با دو فاصله از لبه باشد
+  adaptive_theme: ^3.7.0
+  fl_chart: ^0.66.0
+
+  # --- State Management & Navigation ---
+  get: ^4.6.6
 
   # --- Database & Persistence ---
   objectbox: ^2.5.0
   objectbox_flutter_libs: any
   path_provider: ^2.1.0
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:

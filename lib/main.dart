@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:get/get.dart'; // اضافه شدن GetX برای مدیریت وضعیت
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
-
 import 'core/data/objectbox_provider.dart';
 
-// تعریف متغیر سراسری برای دسترسی راحت در کل اپ
+// تعریف متغیر سراسری برای دسترسی به دیتابیس در کل اپلیکیشن
 late ObjectBox objectbox;
 
 void main() async {
+  // اطمینان از مقداردهی اولیه فلاتر
   WidgetsFlutterBinding.ensureInitialized();
 
   // ۱. راه‌اندازی دیتابیس قبل از شروع رابط کاربری
   objectbox = await ObjectBox.create();
 
-  // ۲. دریافت تم (کدی که قبلاً داشتی)
+  // ۲. دریافت تم ذخیره شده از حافظه
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
   runApp(MyApp(savedThemeMode: savedThemeMode));
@@ -30,39 +31,41 @@ class MyApp extends StatelessWidget {
       light: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: const Color(0xFFF5F5F7),
-        useMaterial3: true, // فعال کردن متریال ۳ برای ظاهر ملموس‌تر
-        colorSchemeSeed:
-            Colors.blueAccent, // تنظیم رنگ پایه برای آیکون‌ها و دکمه‌ها
-        // سایر تنظیمات تم لایت
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blueAccent,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: const Color(0xFF0A0A0A),
-        // سایر تنظیمات تم دارک
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blueAccent,
       ),
       initial: savedThemeMode ?? AdaptiveThemeMode.system,
       builder: (theme, darkTheme) {
-        return MaterialApp(
+        // استفاده از GetMaterialApp به جای MaterialApp برای فعالسازی قابلیت‌های GetX
+        return GetMaterialApp(
           title: 'GrowthPilot AI',
           debugShowCheckedModeBanner: false,
           theme: theme,
           darkTheme: darkTheme,
-          // نکته کلیدی: انیمیشن را اینجا و به کمک builderِ مسیرها اعمال می‌کنیم
+
+          // مدیریت مسیرها (Routing) با GetX
+          home: const HomeLayout(),
+          getPages: [
+            GetPage(name: '/settings', page: () => const SettingsScreen()),
+          ],
+
+          // حفظ انیمیشن تعویض تم که قبلاً داشتی
           builder: (context, child) {
             return AnimatedSwitcher(
               duration: const Duration(milliseconds: 600),
               switchInCurve: Curves.easeIn,
               switchOutCurve: Curves.easeOut,
-              // این بخش باعث می‌شود وقتی تم عوض شد، محتوای صفحه فعلی (child) انیمیت شود
               child: Container(
                 key: ValueKey(theme.brightness),
                 child: child,
               ),
             );
-          },
-          home: const HomeLayout(),
-          routes: {
-            '/settings': (context) => const SettingsScreen(),
           },
         );
       },
