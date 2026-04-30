@@ -3,9 +3,20 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
+import 'core/data/objectbox_provider.dart';
+
+// تعریف متغیر سراسری برای دسترسی راحت در کل اپ
+late ObjectBox objectbox;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ۱. راه‌اندازی دیتابیس قبل از شروع رابط کاربری
+  objectbox = await ObjectBox.create();
+
+  // ۲. دریافت تم (کدی که قبلاً داشتی)
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
+
   runApp(MyApp(savedThemeMode: savedThemeMode));
 }
 
