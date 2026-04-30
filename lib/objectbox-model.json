@@ -24,7 +24,7 @@
     },
     {
       "id": "2:1174740264999713832",
-      "lastPropertyId": "7:2385658356732858890",
+      "lastPropertyId": "9:6400372292870148815",
       "name": "TransactionEntity",
       "properties": [
         {
@@ -66,13 +66,86 @@
           "id": "7:2385658356732858890",
           "name": "dbSyncStatus",
           "type": 6
+        },
+        {
+          "id": "8:719912908538945673",
+          "name": "categoryId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:3249461905516396650",
+          "relationTarget": "CategoryEntity"
+        },
+        {
+          "id": "9:6400372292870148815",
+          "name": "vendorId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:1510582073196436695",
+          "relationTarget": "VendorEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8819637758054597445",
+      "lastPropertyId": "4:1657266967055710644",
+      "name": "CategoryEntity",
+      "properties": [
+        {
+          "id": "1:2148477426849493168",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5972478490283912979",
+          "name": "name",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "3:4779792483439617371"
+        },
+        {
+          "id": "3:3300967026362909282",
+          "name": "icon",
+          "type": 9
+        },
+        {
+          "id": "4:1657266967055710644",
+          "name": "color",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:423798553179985044",
+      "lastPropertyId": "3:6242450742222365948",
+      "name": "VendorEntity",
+      "properties": [
+        {
+          "id": "1:7199356901433504403",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6017401882564850810",
+          "name": "name",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "6:8228385944914176999"
+        },
+        {
+          "id": "3:6242450742222365948",
+          "name": "taxId",
+          "type": 9
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "2:1174740264999713832",
-  "lastIndexId": "2:4915629178925196983",
+  "lastEntityId": "4:423798553179985044",
+  "lastIndexId": "6:8228385944914176999",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

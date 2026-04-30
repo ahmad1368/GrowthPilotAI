@@ -1,4 +1,6 @@
 import 'package:objectbox/objectbox.dart';
+import 'category_entity.dart'; // حتماً اضافه شود
+import 'vendor_entity.dart'; // حتماً اضافه شود
 
 // تعریف انواع تراکنش و وضعیت همگام‌سازی
 enum TransactionType { expense, income }
