@@ -21,10 +21,58 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:1174740264999713832",
+      "lastPropertyId": "7:2385658356732858890",
+      "name": "TransactionEntity",
+      "properties": [
+        {
+          "id": "1:3789422012756364590",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6189674884955974714",
+          "name": "remoteId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "1:7830325081359151234"
+        },
+        {
+          "id": "3:7113379022415804864",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "4:2738589454532399497",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "2:4915629178925196983"
+        },
+        {
+          "id": "5:654865347946668006",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:861393444512325952",
+          "name": "dbType",
+          "type": 6
+        },
+        {
+          "id": "7:2385658356732858890",
+          "name": "dbSyncStatus",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:67337174511996417",
-  "lastIndexId": "0:0",
+  "lastEntityId": "2:1174740264999713832",
+  "lastIndexId": "2:4915629178925196983",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
