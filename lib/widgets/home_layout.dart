@@ -36,9 +36,9 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
 
   @override
   Widget build(BuildContext context) {
-    // ۱. تزریق کنترلر تراکنش‌ها برای دسترسی در تمام بخش‌های لایه اصلی
-    final TransactionController transactionController =
-        Get.put(TransactionController());
+    // تزریق کنترلر تراکنش‌ها برای دسترسی در تمام بخش‌های لایه اصلی
+    // نکته: Get.put تضمین می‌کند که کنترلر در حافظه لود شده است
+    Get.put(TransactionController());
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -55,58 +55,10 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
           ),
         ],
       ),
-      // استفاده از Stack برای اینکه ویجت تست روی HomeBody قرار بگیرد یا ترکیب شود
-      body: Stack(
-        children: [
-          // محتوای اصلی اپلیکیشن
-          HomeBody(controller: scrollController),
+      // حذف Stack و Positioned اضافی که باعث خطا می‌شد
+      // حالا مستقیماً محتوای اصلی نمایش داده می‌شود
+      body: HomeBody(controller: scrollController),
 
-          // ۲. ویجت تست لایه AI و دیتابیس (نمایش به صورت شناور برای تست)
-          Positioned(
-            top: 120, // زیر AppBar قرار بگیرد
-            left: 20,
-            right: 20,
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(color: Colors.white.withOpacity(0.2)),
-              ),
-              child: Column(
-                children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.analytics_outlined),
-                    onPressed: () => transactionController.loadLastMonthData(),
-                    label: const Text("Filter Last Month (AI Test)"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent.withOpacity(0.8),
-                      foregroundColor: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  // استفاده از Obx برای به‌روزرسانی آنی تعداد تراکنش‌ها
-                  // داخل متد build و در بخشی که دکمه را گذاشتی:
-                  Obx(() {
-                    // این پرینت به تو می‌گوید که آیا Obx اصلاً دوباره اجرا می‌شود یا نه
-                    print(
-                        "UI در حال بازسازی با تعداد: ${transactionController.filteredTransactions.length}");
-
-                    return Text(
-                      "Found: Ahmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmad ${transactionController.filteredTransactions.length} Transactions",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    );
-                  })
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
       bottomNavigationBar: HomeBottomNav(
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),

@@ -1,7 +1,5 @@
-import 'package:objectbox/objectbox.dart';
 import '../../../../objectbox.g.dart';
 import '../entities/transaction_entity.dart';
-import '../entities/category_entity.dart';
 
 class TransactionRepository {
   final Box<TransactionEntity> _box;

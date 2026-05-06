@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 enum NotificationType { alert, danger, warning, reminder, info }
 

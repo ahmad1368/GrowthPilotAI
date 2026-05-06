@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart'; // اضافه کردن این خط برای رفع خطای RendererBinding
+// اضافه کردن این خط برای رفع خطای RendererBinding
 
 class OmniGlassPanel extends StatelessWidget {
   final String? title;
@@ -15,8 +15,9 @@ class OmniGlassPanel extends StatelessWidget {
   final double blurSigma;
   final bool showCloseButton;
   final bool avoidSystemBars;
-  final bool isInteractive; // قابلیت جدید: واکنش به حرکت موس
-  final bool fullBorderRadius; // قابلیت جدید: گرد کردن هر ۴ گوشه
+  final bool isInteractive;
+  final bool fullBorderRadius;
+  final IconData? leadingIcon;
 
   const OmniGlassPanel({
     super.key,
@@ -34,25 +35,30 @@ class OmniGlassPanel extends StatelessWidget {
     this.avoidSystemBars = true,
     this.isInteractive = false,
     this.fullBorderRadius = false,
+    this.leadingIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final baseColor = isDark ? Colors.grey[900]! : Colors.white;
+
+    // استفاده از تم پروژه برای هماهنگی بیشتر
+    final baseColor = isDark ? Colors.black : Colors.white;
     final onSurfaceColor = isDark ? Colors.white : Colors.black87;
 
     final borderStyle = fullBorderRadius
         ? BorderRadius.circular(borderRadius)
         : BorderRadius.vertical(top: Radius.circular(borderRadius));
 
-    // یک متغیر برای نگه داشتن وضعیت هوور بصورت محلی
     bool localHovered = false;
 
     return StatefulBuilder(
       builder: (context, setState) {
         return MouseRegion(
+          cursor: isInteractive
+              ? SystemMouseCursors.click
+              : SystemMouseCursors.basic,
           onEnter: (_) {
             if (isInteractive) setState(() => localHovered = true);
           },
@@ -60,10 +66,9 @@ class OmniGlassPanel extends StatelessWidget {
             if (isInteractive) setState(() => localHovered = false);
           },
           child: AnimatedScale(
-            scale: (isInteractive && localHovered)
-                ? 1.03
-                : 1.0, // کمی بزرگتر برای ملموس بودن
+            scale: (isInteractive && localHovered) ? 1.02 : 1.0,
             duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOutCubic,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
@@ -71,19 +76,21 @@ class OmniGlassPanel extends StatelessWidget {
                 boxShadow: (isInteractive && localHovered)
                     ? [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.2),
-                          blurRadius: 30,
-                          spreadRadius: 2,
+                          color: Colors.black.withValues(alpha: 0.15),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
                         )
                       ]
                     : [],
               ),
               child: ClipRRect(
-                borderRadius: borderStyle,
+                borderRadius:
+                    borderStyle, // حتماً باید با BoxDecoration هماهنگ باشد
                 child: BackdropFilter(
                   filter:
                       ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
-                  child: Container(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
                     decoration: BoxDecoration(
                       color: baseColor.withValues(
                         alpha: (isInteractive && localHovered)
@@ -93,9 +100,9 @@ class OmniGlassPanel extends StatelessWidget {
                       borderRadius: borderStyle,
                       border: Border.all(
                         color: (isInteractive && localHovered)
-                            ? theme.colorScheme.primary.withValues(alpha: 0.6)
+                            ? theme.colorScheme.primary.withValues(alpha: 0.5)
                             : onSurfaceColor.withValues(alpha: 0.1),
-                        width: (isInteractive && localHovered) ? 1.5 : 0.5,
+                        width: (isInteractive && localHovered) ? 1.5 : 0.8,
                       ),
                     ),
                     child: _buildContent(context, onSurfaceColor),
@@ -109,10 +116,10 @@ class OmniGlassPanel extends StatelessWidget {
     );
   }
 
+  // متد کمکی برای ساختار داخلی (بدون تغییر در منطق شما)
   Widget _buildContent(BuildContext context, Color onSurfaceColor) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // مدیریت عرض برای نمایشگرهای عریض
         double finalWidth =
             width ?? (constraints.maxWidth > 600 ? 500 : double.infinity);
 
@@ -124,19 +131,29 @@ class OmniGlassPanel extends StatelessWidget {
             mainAxisSize: height == null ? MainAxisSize.min : MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // --- هدر پنل (عنوان و دکمه بستن) ---
               if (title != null || showCloseButton)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
                     children: [
+                      // --- اضافه کردن بخش Leading Icon با استایل هماهنگ ---
+                      if (leadingIcon != null) ...[
+                        Icon(
+                          leadingIcon,
+                          color: onSurfaceColor.withValues(
+                              alpha: 0.8), // هماهنگی با تم روشن/تاریک
+                          size: 24,
+                        ),
+                        const SizedBox(width: 12),
+                      ],
+                      // ------------------------------------------------
                       if (title != null)
                         Expanded(
                           child: Text(
                             title!,
                             style: Theme.of(context)
                                 .textTheme
-                                .headlineSmall
+                                .titleLarge
                                 ?.copyWith(
                                   fontWeight: FontWeight.w800,
                                   color: onSurfaceColor.withValues(alpha: 0.9),
@@ -145,6 +162,7 @@ class OmniGlassPanel extends StatelessWidget {
                         ),
                       if (showCloseButton)
                         IconButton(
+                          visualDensity: VisualDensity.compact,
                           icon: const Icon(Icons.close_rounded),
                           onPressed: () => Navigator.pop(context),
                           color: onSurfaceColor.withValues(alpha: 0.5),
@@ -152,8 +170,6 @@ class OmniGlassPanel extends StatelessWidget {
                     ],
                   ),
                 ),
-
-              // --- بخش بدنه اصلی ---
               if (child != null)
                 Flexible(
                   fit: height != null ? FlexFit.tight : FlexFit.loose,
@@ -167,28 +183,28 @@ class OmniGlassPanel extends StatelessWidget {
                     style: TextStyle(
                       color: onSurfaceColor.withValues(alpha: 0.7),
                       fontSize: 15,
-                      height: 1.5,
+                      height: 1.6,
                     ),
                   ),
                 ),
-
-              // --- بخش دکمه‌های عملیاتی و فوتر ---
               if (actionButtons != null || footer != null)
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Divider(
-                          color: onSurfaceColor.withValues(alpha: 0.1),
+                          color: onSurfaceColor.withValues(alpha: 0.05),
                           height: 1),
                       const SizedBox(height: 20),
                       if (actionButtons != null)
-                        Wrap(
-                          alignment: WrapAlignment.end,
-                          spacing: 12,
-                          runSpacing: 12,
-                          children: actionButtons!,
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Wrap(
+                            spacing: 12,
+                            runSpacing: 12,
+                            children: actionButtons!,
+                          ),
                         ),
                       if (footer != null) footer!,
                     ],
@@ -198,7 +214,6 @@ class OmniGlassPanel extends StatelessWidget {
           ),
         );
 
-        // اعمال SafeArea اگر درخواست شده بود
         return avoidSystemBars ? SafeArea(child: body) : body;
       },
     );

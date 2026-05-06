@@ -1,6 +1,6 @@
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:objectbox/objectbox.dart'; // این خط را حتماً برگردان تا Store شناسایی شود
+// این خط را حتماً برگردان تا Store شناسایی شود
 import '../../objectbox.g.dart'; // این خط تا زمانی که دستور ترمینال تمام نشود، قرمز می‌ماند
 
 class ObjectBox {

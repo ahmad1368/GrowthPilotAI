@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/controllers/transaction_controller.dart';
+import 'package:growth_pilot_ai/utils/ui_helper.dart'; // اضافه شد
+import '../widgets/adaptive_text.dart'; // اضافه شد
 import '../models/insight_model.dart';
 import '../widgets/omni_glass_panel.dart';
+import 'package:get/get.dart';
 
 class InsightPage extends StatefulWidget {
   final ScrollController controller;
@@ -12,123 +16,247 @@ class InsightPage extends StatefulWidget {
 }
 
 class _InsightPageState extends State<InsightPage> {
-// لیست داده‌های فرضی که در آینده از API گرفته خواهد شد
+  final TransactionController transactionController =
+      Get.find<TransactionController>();
+
   final List<InsightModel> dummyInsights = List.generate(
     15,
     (index) => InsightModel(
       id: index,
-      title: "Insight #$index",
+      title: "تحلیل هوشمند شماره $index",
       description:
-          "This is a dummy description for analysis index $index. In the future, this data will come from your API.",
+          "این یک توضیح برای تحلیل شماره $index است. اگر متن طولانی شود، ارتفاع کارت به صورت خودکار افزایش می‌یابد تا تمام جزئیات نمایش داده شود.",
       efficiency: "${(index + 1) * 5}%",
     ),
   );
 
-  // این متغیر برای نگهداری آیتم انتخاب شده در حالت تبلت است
   int? selectedIndex;
 
   void _handleOnTap(int index) {
-    final selectedData =
-        dummyInsights[index]; // انتخاب داده بر اساس ایندکس کلیک شده
-
-    double width = MediaQuery.of(context).size.width;
-
-    if (width > 600) {
-      // حالت تبلت: آپدیت ایندکس برای نمایش در سمت راست
+    final selectedData = dummyInsights[index];
+    if (UIHelper.isWide(context)) {
       setState(() {
         selectedIndex = index;
       });
     } else {
-      // حالت گوشی: باز کردن ویجت استاندارد با داده‌های انتخابی
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        barrierColor: Colors.black.withValues(alpha: 0.5),
-        builder: (context) => OmniGlassPanel(
-          title: selectedData.title,
-          description: selectedData.description,
-          showCloseButton: true,
-          avoidSystemBars: true,
-          actionButtons: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-              ),
-              child: const Text("Understand"),
-            ),
-          ],
-        ),
-      );
+      _showMobileDetails(selectedData);
     }
+  }
+
+  void _showMobileDetails(InsightModel data) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withAlpha(128),
+      builder: (context) => OmniGlassPanel(
+        title: data.title,
+        description: data.description,
+        showCloseButton: true,
+        avoidSystemBars: true,
+        // استفاده از آیکون ملموس در شیت موبایل
+        leadingIcon: Icons.insights_rounded,
+        actionButtons: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+            ),
+            child: const AdaptiveText("متوجه شدم"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
-          // --- ساختار تبلت (کنار هم) ---
-          return Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: _buildListView(),
-              ),
-              const VerticalDivider(width: 1),
-              Expanded(
-                flex: 3,
-                child: selectedIndex == null
-                    ? const Center(
-                        child: Text("Select an insight to view details"))
-                    : Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: OmniGlassPanel(
-                          title: dummyInsights[selectedIndex!].title,
-                          description:
-                              dummyInsights[selectedIndex!].description,
-                          opacity:
-                              0.05, // شفافیت کمتر برای هماهنگی با پس‌زمینه تبلت
-                          actionButtons: [
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text("Analyze Further"),
+    bool wideMode = UIHelper.isWide(context);
+
+    if (wideMode) {
+      return Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: _buildListView(),
+          ),
+          const VerticalDivider(width: 1, color: Colors.white10),
+          Expanded(
+            flex: 3,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: selectedIndex == null
+                  ? Center(
+                      child: const AdaptiveText(
+                        "یک مورد را برای مشاهده جزئیات انتخاب کنید",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    )
+                  : Padding(
+                      key: ValueKey(selectedIndex),
+                      padding: const EdgeInsets.all(24.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: SizedBox(
+                          width: UIHelper.getAdaptiveWidth(context),
+                          // بخش جزئیات در سمت راست (تبلت)
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(minHeight: 100),
+                            child: OmniGlassPanel(
+                              title: dummyInsights[selectedIndex!].title,
+                              description:
+                                  dummyInsights[selectedIndex!].description,
+                              opacity: 0.05,
+                              leadingIcon: Icons
+                                  .psychology_alt_rounded, // آیکون هوش مصنوعی
+                              actionButtons: [
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.troubleshoot_rounded),
+                                  label: const AdaptiveText("تحلیل عمیق‌تر"),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-              ),
-            ],
-          );
-        } else {
-          // --- ساختار موبایل (فقط لیست) ---
-          return _buildListView();
-        }
-      },
+                    ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return _buildListView();
+    }
+  }
+
+  Widget _buildListView() {
+    return CustomScrollView(
+      controller: widget.controller,
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Obx(() {
+              final transactions = transactionController.filteredTransactions;
+              final int count = transactions.length;
+              final double total =
+                  transactions.fold(0, (sum, item) => sum + item.amount);
+
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: UIHelper.isWide(context)
+                    ? _buildTabletHeader(count, total)
+                    : _buildMobileHeader(count, total),
+              );
+            }),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 100),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final isSelected = selectedIndex == index;
+                return GestureDetector(
+                  onTap: () => _handleOnTap(index),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: isSelected
+                              ? Colors.blueAccent
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                      ),
+                      // اعمال محدودیت ارتفاع ۴۰ پیکسل و رشد خودکار
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(minHeight: 40),
+                        child: OmniGlassPanel(
+                          title: dummyInsights[index].title,
+                          description: dummyInsights[index].description,
+                          opacity: isSelected ? 0.2 : 0.1,
+                          leadingIcon:
+                              Icons.auto_graph_rounded, // آیکون ملموس روند مالی
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              childCount: dummyInsights.length,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  // متد کمکی برای جلوگیری از تکرار کد لیست
-  Widget _buildListView() {
-    return ListView.builder(
-      controller: widget.controller,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
-      itemCount: 15,
-      itemBuilder: (context, index) => GestureDetector(
-        onTap: () => _handleOnTap(index),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: OmniGlassPanel(
-            title: dummyInsights[index].title,
-            description: dummyInsights[index].description,
-            height: 120, // ارتفاع ثابت برای کارت‌های لیست
-            opacity: 0.1,
+  Widget _buildTabletHeader(int count, double total) {
+    return Row(
+      children: [
+        Expanded(
+            child: _infoCard("مجموع هزینه", "${total.toStringAsFixed(0)} \$",
+                Icons.account_balance_wallet, Colors.greenAccent)),
+        const SizedBox(width: 12),
+        Expanded(
+            child: _infoCard("پیش‌بینی AI", "در حال تحلیل...", Icons.psychology,
+                Colors.purpleAccent)),
+      ],
+    );
+  }
+
+  Widget _buildMobileHeader(int count, double total) {
+    return Column(
+      children: [
+        _infoCard("مجموع هزینه‌ها", "${total.toStringAsFixed(0)} \$",
+            Icons.account_balance_wallet, Colors.greenAccent),
+      ],
+    );
+  }
+
+  Widget _infoCard(String title, String value, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withAlpha(20),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withAlpha(30)),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: color.withAlpha(40),
+            child: Icon(icon, color: color, size: 20),
           ),
-        ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AdaptiveText(title,
+                    style:
+                        const TextStyle(color: Colors.white60, fontSize: 11)),
+                AdaptiveText(value,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -49,28 +49,28 @@ class TransactionController extends GetxController {
     }
   }
 
-  /// متد اصلی برای بارگذاری و فیلتر تراکنش‌های ۳۰ روز گذشته
-  void loadLastMonthData() {
-    final now = DateTime.now();
-    final lastMonth = now.subtract(const Duration(days: 30));
+  // /// متد اصلی برای بارگذاری و فیلتر تراکنش‌های ۳۰ روز گذشته
+  // void loadLastMonthData() {
+  //   final now = DateTime.now();
+  //   final lastMonth = now.subtract(const Duration(days: 30));
 
-    // فراخوانی متد ریپازیتوری با اشیاء DateTime
-    final results = _repository.getByDateRange(lastMonth, now);
+  //   // فراخوانی متد ریپازیتوری با اشیاء DateTime
+  //   final results = _repository.getByDateRange(lastMonth, now);
 
-    // به‌روزرسانی لیست و اطلاع‌رسانی به UI (ویجت‌های Obx)
-    filteredTransactions.assignAll(results);
+  //   // به‌روزرسانی لیست و اطلاع‌رسانی به UI (ویجت‌های Obx)
+  //   filteredTransactions.assignAll(results);
 
-    print("تعداد تراکنش‌های یافت شده در ۳۰ روز اخیر: ${results.length}");
-  }
+  //   print("تعداد تراکنش‌های یافت شده در ۳۰ روز اخیر: ${results.length}");
+  // }
 
-  /// متد جستجوی متنی (آماده‌سازی برای قابلیت‌های هوش مصنوعی)
-  void searchTransactions(String query) {
-    if (query.isEmpty) {
-      loadLastMonthData();
-      return;
-    }
+  // /// متد جستجوی متنی (آماده‌سازی برای قابلیت‌های هوش مصنوعی)
+  // void searchTransactions(String query) {
+  //   if (query.isEmpty) {
+  //     loadLastMonthData();
+  //     return;
+  //   }
 
-    final results = _repository.search(query);
-    filteredTransactions.assignAll(results);
-  }
+  //   final results = _repository.search(query);
+  //   filteredTransactions.assignAll(results);
+  // }
 }
