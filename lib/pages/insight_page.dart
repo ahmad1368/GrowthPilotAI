@@ -161,38 +161,8 @@ class _InsightPageState extends State<InsightPage> {
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 100),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final isSelected = selectedIndex == index;
-                return GestureDetector(
-                  onTap: () => _handleOnTap(index),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: isSelected
-                              ? Colors.blueAccent
-                              : Colors.transparent,
-                          width: 2,
-                        ),
-                      ),
-                      // اعمال محدودیت ارتفاع ۴۰ پیکسل و رشد خودکار
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(minHeight: 40),
-                        child: OmniGlassPanel(
-                          title: dummyInsights[index].title,
-                          description: dummyInsights[index].description,
-                          opacity: isSelected ? 0.2 : 0.1,
-                          leadingIcon:
-                              Icons.auto_graph_rounded, // آیکون ملموس روند مالی
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
+              (context, index) => _buildInsightCard(index,
+                  defaultHeight: 20.0), // فراخوانی متد جدید
               childCount: dummyInsights.length,
             ),
           ),
@@ -257,6 +227,45 @@ class _InsightPageState extends State<InsightPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildInsightCard(int index, {double defaultHeight = 20.0}) {
+    final isSelected = selectedIndex == index;
+
+    // محاسبه ارتفاع: در مانیتور ارتفاع کل تقسیم بر 3.5 تا حداقل 3 کارت جا شود
+    double? maxHeight = UIHelper.isWide(context)
+        ? (MediaQuery.of(context).size.height / 3.5)
+        : null;
+
+    return GestureDetector(
+      onTap: () => _handleOnTap(index),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: isSelected ? Colors.blueAccent : Colors.transparent,
+              width: 2,
+            ),
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: 20, // حداقل ارتفاع مورد نظر شما
+              maxHeight: maxHeight ?? double.infinity,
+            ),
+            child: OmniGlassPanel(
+              title: dummyInsights[index].title,
+              description: dummyInsights[index].description,
+              leadingIcon: Icons.auto_graph_rounded,
+              height: null, // حتما null باشد تا FlexFit.loose فعال شود
+              // سایر پارامترها...
+            ),
+          ),
+        ),
       ),
     );
   }

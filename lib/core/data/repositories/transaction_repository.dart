@@ -5,6 +5,23 @@ class TransactionRepository {
   final Box<TransactionEntity> _box;
 
   TransactionRepository(this._box);
+// زیر خط: TransactionRepository(this._box);
+// بالای خط: List<TransactionEntity> getByDateRange(DateTime start, DateTime end) {
+
+  /// Provides a real-time stream of all transactions sorted by date.
+  /// This automatically triggers whenever the Transaction box changes (Reactive UI).
+  Stream<List<TransactionEntity>> watchAll() {
+    // ایجاد کوئری برای تمام تراکنش‌ها به ترتیب تاریخ (نزولی)
+    final queryBuilder = _box.query()
+      ..order(TransactionEntity_.date, flags: Order.descending);
+
+    // تبدیل کوئری به استریم برای تزریق مستقیم به لایه UI
+    return queryBuilder.watch(triggerImmediately: true).map((query) {
+      final list = query.find();
+      // توجه: استریم‌های ObjectBox مدیریت بستن کوئری را داخلی انجام می‌دهند
+      return list;
+    });
+  }
 
   List<TransactionEntity> getByDateRange(DateTime start, DateTime end) {
     if (start.isAfter(end)) return [];
