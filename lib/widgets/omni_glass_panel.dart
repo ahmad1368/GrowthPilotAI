@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-// اضافه کردن این خط برای رفع خطای RendererBinding
 
 class OmniGlassPanel extends StatelessWidget {
   final String? title;
@@ -28,13 +27,14 @@ class OmniGlassPanel extends StatelessWidget {
     this.footer,
     this.width,
     this.height,
-    this.opacity = 0.2,
+    this.opacity = 0.1, // مقدار پیش‌فرض بهینه برای شیشه
     this.borderRadius = 24.0,
     this.blurSigma = 15.0,
     this.showCloseButton = false,
     this.avoidSystemBars = true,
     this.isInteractive = false,
-    this.fullBorderRadius = false,
+    this.fullBorderRadius =
+        true, // تغییر به true برای انطباق با کارت‌های Insight
     this.leadingIcon,
   });
 
@@ -43,7 +43,7 @@ class OmniGlassPanel extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // استفاده از تم پروژه برای هماهنگی بیشتر
+    // انتخاب رنگ پایه بر اساس تم سیستم
     final baseColor = isDark ? Colors.black : Colors.white;
     final onSurfaceColor = isDark ? Colors.white : Colors.black87;
 
@@ -51,6 +51,7 @@ class OmniGlassPanel extends StatelessWidget {
         ? BorderRadius.circular(borderRadius)
         : BorderRadius.vertical(top: Radius.circular(borderRadius));
 
+    // برای مدیریت وضعیت Hover در یک Stateless Widget از StatefulBuilder استفاده می‌کنیم
     bool localHovered = false;
 
     return StatefulBuilder(
@@ -59,12 +60,10 @@ class OmniGlassPanel extends StatelessWidget {
           cursor: isInteractive
               ? SystemMouseCursors.click
               : SystemMouseCursors.basic,
-          onEnter: (_) {
-            if (isInteractive) setState(() => localHovered = true);
-          },
-          onExit: (_) {
-            if (isInteractive) setState(() => localHovered = false);
-          },
+          onEnter: (_) =>
+              isInteractive ? setState(() => localHovered = true) : null,
+          onExit: (_) =>
+              isInteractive ? setState(() => localHovered = false) : null,
           child: AnimatedScale(
             scale: (isInteractive && localHovered) ? 1.02 : 1.0,
             duration: const Duration(milliseconds: 200),
@@ -84,17 +83,17 @@ class OmniGlassPanel extends StatelessWidget {
                     : [],
               ),
               child: ClipRRect(
-                borderRadius:
-                    borderStyle, // حتماً باید با BoxDecoration هماهنگ باشد
+                borderRadius: borderStyle,
                 child: BackdropFilter(
                   filter:
                       ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     decoration: BoxDecoration(
+                      // اعمال شفافیت هوشمند: در حالت Hover کمی غلیظ‌تر می‌شود
                       color: baseColor.withValues(
                         alpha: (isInteractive && localHovered)
-                            ? opacity + 0.1
+                            ? (opacity + 0.1).clamp(0.0, 1.0)
                             : opacity,
                       ),
                       borderRadius: borderStyle,
@@ -116,7 +115,6 @@ class OmniGlassPanel extends StatelessWidget {
     );
   }
 
-  // متد کمکی برای ساختار داخلی (بدون تغییر در منطق شما)
   Widget _buildContent(BuildContext context, Color onSurfaceColor) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -136,17 +134,14 @@ class OmniGlassPanel extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
                     children: [
-                      // --- اضافه کردن بخش Leading Icon با استایل هماهنگ ---
                       if (leadingIcon != null) ...[
                         Icon(
                           leadingIcon,
-                          color: onSurfaceColor.withValues(
-                              alpha: 0.8), // هماهنگی با تم روشن/تاریک
+                          color: onSurfaceColor.withValues(alpha: 0.8),
                           size: 24,
                         ),
                         const SizedBox(width: 12),
                       ],
-                      // ------------------------------------------------
                       if (title != null)
                         Expanded(
                           child: Text(
@@ -194,8 +189,9 @@ class OmniGlassPanel extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Divider(
-                          color: onSurfaceColor.withValues(alpha: 0.05),
-                          height: 1),
+                        color: onSurfaceColor.withValues(alpha: 0.05),
+                        height: 1,
+                      ),
                       const SizedBox(height: 20),
                       if (actionButtons != null)
                         Align(

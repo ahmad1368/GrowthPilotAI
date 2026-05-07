@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/controllers/transaction_controller.dart';
-import 'package:growth_pilot_ai/utils/ui_helper.dart'; // اضافه شد
-import '../widgets/adaptive_text.dart'; // اضافه شد
+import 'package:growth_pilot_ai/utils/ui_helper.dart';
+import '../widgets/adaptive_text.dart';
 import '../models/insight_model.dart';
 import '../widgets/omni_glass_panel.dart';
 import 'package:get/get.dart';
 
 class InsightPage extends StatefulWidget {
-  final ScrollController controller;
+  final ScrollController? controller;
+  final String? title;
+  final IconData? icon;
+  final Widget? child;
 
-  const InsightPage({super.key, required this.controller});
+  const InsightPage({
+    super.key,
+    this.controller,
+    this.title,
+    this.icon,
+    this.child,
+  });
 
   @override
   State<InsightPage> createState() => _InsightPageState();
@@ -19,62 +28,28 @@ class _InsightPageState extends State<InsightPage> {
   final TransactionController transactionController =
       Get.find<TransactionController>();
 
+  // داده‌های نمونه برای نمایش در لیست
   final List<InsightModel> dummyInsights = List.generate(
     15,
     (index) => InsightModel(
       id: index,
-      title: "تحلیل هوشمند شماره $index",
+      title: "تحلیل هوشمند شماره ${index + 1}",
       description:
-          "این یک توضیح برای تحلیل شماره $index است. اگر متن طولانی شود، ارتفاع کارت به صورت خودکار افزایش می‌یابد تا تمام جزئیات نمایش داده شود.",
+          "این یک توضیح خودکار برای تحلیل وضعیت مالی شماست. در این بخش جزئیات مربوط به تراکنش‌های اخیر و الگوهای مصرفی نمایش داده می‌شود.",
       efficiency: "${(index + 1) * 5}%",
     ),
   );
 
   int? selectedIndex;
 
-  void _handleOnTap(int index) {
-    final selectedData = dummyInsights[index];
-    if (UIHelper.isWide(context)) {
-      setState(() {
-        selectedIndex = index;
-      });
-    } else {
-      _showMobileDetails(selectedData);
-    }
-  }
-
-  void _showMobileDetails(InsightModel data) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withAlpha(128),
-      builder: (context) => OmniGlassPanel(
-        title: data.title,
-        description: data.description,
-        showCloseButton: true,
-        avoidSystemBars: true,
-        // استفاده از آیکون ملموس در شیت موبایل
-        leadingIcon: Icons.insights_rounded,
-        actionButtons: [
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-            ),
-            child: const AdaptiveText("متوجه شدم"),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     bool wideMode = UIHelper.isWide(context);
+
+    // اولویت با child سفارشی است
+    if (widget.child != null) {
+      return widget.child!;
+    }
 
     if (wideMode) {
       return Row(
@@ -83,54 +58,57 @@ class _InsightPageState extends State<InsightPage> {
             flex: 2,
             child: _buildListView(),
           ),
-          const VerticalDivider(width: 1, color: Colors.white10),
+          VerticalDivider(
+            width: 1,
+            color: Colors.white.withValues(alpha: 0.05),
+          ),
           Expanded(
             flex: 3,
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: selectedIndex == null
-                  ? Center(
-                      child: const AdaptiveText(
-                        "یک مورد را برای مشاهده جزئیات انتخاب کنید",
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                    )
-                  : Padding(
-                      key: ValueKey(selectedIndex),
-                      padding: const EdgeInsets.all(24.0),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
-                          width: UIHelper.getAdaptiveWidth(context),
-                          // بخش جزئیات در سمت راست (تبلت)
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(minHeight: 100),
-                            child: OmniGlassPanel(
-                              title: dummyInsights[selectedIndex!].title,
-                              description:
-                                  dummyInsights[selectedIndex!].description,
-                              opacity: 0.05,
-                              leadingIcon: Icons
-                                  .psychology_alt_rounded, // آیکون هوش مصنوعی
-                              actionButtons: [
-                                TextButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.troubleshoot_rounded),
-                                  label: const AdaptiveText("تحلیل عمیق‌تر"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-            ),
+            child: _buildDetailsView(),
           ),
         ],
       );
     } else {
       return _buildListView();
     }
+  }
+
+  // نمایش جزئیات در سمت راست (مخصوص تبلت و دسکتاپ)
+  Widget _buildDetailsView() {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300),
+      child: selectedIndex == null
+          ? Center(
+              child: AdaptiveText(
+                "یک مورد را برای مشاهده جزئیات انتخاب کنید",
+                style: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
+              ),
+            )
+          : Padding(
+              key: ValueKey(selectedIndex),
+              padding: const EdgeInsets.all(24.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  width: UIHelper.getAdaptiveWidth(context),
+                  child: OmniGlassPanel(
+                    title: dummyInsights[selectedIndex!].title,
+                    description: dummyInsights[selectedIndex!].description,
+                    leadingIcon: widget.icon ?? Icons.psychology_alt_rounded,
+                    opacity:
+                        0.08, // شفافیت کمتر برای پنل بزرگتر جهت خوانایی بیشتر
+                    actionButtons: [
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.troubleshoot_rounded),
+                        label: const AdaptiveText("تحلیل عمیق‌تر"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+    );
   }
 
   Widget _buildListView() {
@@ -140,29 +118,50 @@ class _InsightPageState extends State<InsightPage> {
       slivers: [
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Obx(() {
-              final transactions = transactionController.filteredTransactions;
-              final int count = transactions.length;
-              final double total =
-                  transactions.fold(0, (sum, item) => sum + item.amount);
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // نمایش عنوان و آیکون در صورت وجود
+                if (widget.title != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      children: [
+                        if (widget.icon != null) ...[
+                          Icon(widget.icon, color: Colors.blueAccent, size: 28),
+                          const SizedBox(width: 12),
+                        ],
+                        AdaptiveText(
+                          widget.title!,
+                          style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
 
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: UIHelper.isWide(context)
-                    ? _buildTabletHeader(count, total)
-                    : _buildMobileHeader(count, total),
-              );
-            }),
+                Obx(() {
+                  final transactions =
+                      transactionController.filteredTransactions;
+                  final double total =
+                      transactions.fold(0, (sum, item) => sum + item.amount);
+
+                  return UIHelper.isWide(context)
+                      ? _buildTabletHeader(total)
+                      : _buildMobileHeader(total);
+                }),
+              ],
+            ),
           ),
         ),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 100),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => _buildInsightCard(index,
-                  defaultHeight: 20.0), // فراخوانی متد جدید
+              (context, index) => _buildInsightCard(index),
               childCount: dummyInsights.length,
             ),
           ),
@@ -171,7 +170,7 @@ class _InsightPageState extends State<InsightPage> {
     );
   }
 
-  Widget _buildTabletHeader(int count, double total) {
+  Widget _buildTabletHeader(double total) {
     return Row(
       children: [
         Expanded(
@@ -185,62 +184,56 @@ class _InsightPageState extends State<InsightPage> {
     );
   }
 
-  Widget _buildMobileHeader(int count, double total) {
-    return Column(
-      children: [
-        _infoCard("مجموع هزینه‌ها", "${total.toStringAsFixed(0)} \$",
-            Icons.account_balance_wallet, Colors.greenAccent),
-      ],
-    );
+  Widget _buildMobileHeader(double total) {
+    return _infoCard("مجموع هزینه‌ها", "${total.toStringAsFixed(0)} \$",
+        Icons.account_balance_wallet, Colors.greenAccent);
   }
 
   Widget _infoCard(String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withAlpha(20),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withAlpha(30)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundColor: color.withAlpha(40),
+            backgroundColor: color.withValues(alpha: 0.15),
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AdaptiveText(title,
-                    style:
-                        const TextStyle(color: Colors.white60, fontSize: 11)),
-                AdaptiveText(value,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AdaptiveText(title,
+                  style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.5),
+                      fontSize: 11)),
+              AdaptiveText(value,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildInsightCard(int index, {double defaultHeight = 20.0}) {
+  Widget _buildInsightCard(int index) {
     final isSelected = selectedIndex == index;
-
-    // محاسبه ارتفاع: در مانیتور ارتفاع کل تقسیم بر 3.5 تا حداقل 3 کارت جا شود
-    double? maxHeight = UIHelper.isWide(context)
-        ? (MediaQuery.of(context).size.height / 3.5)
-        : null;
-
     return GestureDetector(
-      onTap: () => _handleOnTap(index),
+      onTap: () {
+        if (UIHelper.isWide(context)) {
+          setState(() => selectedIndex = index);
+        } else {
+          _showMobileDetails(dummyInsights[index]);
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: AnimatedContainer(
@@ -248,24 +241,33 @@ class _InsightPageState extends State<InsightPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: isSelected ? Colors.blueAccent : Colors.transparent,
-              width: 2,
-            ),
+                color: isSelected ? Colors.blueAccent : Colors.transparent,
+                width: 2),
           ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: 20, // حداقل ارتفاع مورد نظر شما
-              maxHeight: maxHeight ?? double.infinity,
-            ),
-            child: OmniGlassPanel(
-              title: dummyInsights[index].title,
-              description: dummyInsights[index].description,
-              leadingIcon: Icons.auto_graph_rounded,
-              height: null, // حتما null باشد تا FlexFit.loose فعال شود
-              // سایر پارامترها...
-            ),
+          child: OmniGlassPanel(
+            title: dummyInsights[index].title,
+            description: dummyInsights[index].description,
+            leadingIcon: Icons.auto_graph_rounded,
+            isInteractive: true, // فعال کردن افکت Hover و Scale
+            opacity:
+                isSelected ? 0.2 : 0.05, // کارت انتخاب شده پررنگ‌تر دیده شود
           ),
         ),
+      ),
+    );
+  }
+
+  void _showMobileDetails(InsightModel data) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => OmniGlassPanel(
+        title: data.title,
+        description: data.description,
+        showCloseButton: true,
+        fullBorderRadius: false, // لبه‌های پایین صاف برای چسبیدن به پایین صفحه
+        leadingIcon: widget.icon ?? Icons.insights_rounded,
       ),
     );
   }
