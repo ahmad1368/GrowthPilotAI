@@ -29,6 +29,17 @@ class TransactionEntity {
   // --- Relations (Issue #14) ---
   final category = ToOne<CategoryEntity>();
   final vendor = ToOne<VendorEntity>();
+  // زیر خط مربوط به آخرین فیلد (مثلاً amount)
+// بالای خط TransactionEntity({ ...
+
+  /// [Issue #19] فیلد جدید برای یادداشت‌ها - اضافه شده در نسخه مهاجرت ۱.۱.۰
+  /// این فیلد نال‌پذیر است تا داده‌های قدیمی دچار مشکل نشوند.
+  String? memo;
+
+  /// مثال تغییر نام فیلد با حفظ داده‌های قبلی
+  /// @Property(uid: 456789123)
+  /// String? updatedDescription;
+  ///
 
   TransactionEntity({
     this.id = 0,
