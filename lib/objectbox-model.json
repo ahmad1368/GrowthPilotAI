@@ -24,7 +24,7 @@
     },
     {
       "id": "2:1174740264999713832",
-      "lastPropertyId": "9:6400372292870148815",
+      "lastPropertyId": "10:6135345771449429271",
       "name": "TransactionEntity",
       "properties": [
         {
@@ -82,6 +82,11 @@
           "flags": 520,
           "indexId": "5:1510582073196436695",
           "relationTarget": "VendorEntity"
+        },
+        {
+          "id": "10:6135345771449429271",
+          "name": "memo",
+          "type": 9
         }
       ],
       "relations": []

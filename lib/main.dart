@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart'; // اضافه شدن GetX برای مدیریت وضعیت
+import 'package:growth_pilot_ai/services/connectivity_service.dart';
+import 'package:growth_pilot_ai/services/environment_service.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 import 'core/data/objectbox_provider.dart';
@@ -18,6 +20,8 @@ void main() async {
   // ۲. دریافت تم ذخیره شده از حافظه
   final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
+  Get.put(EnvironmentService()); // این خط حتماً باید باشد
+  Get.put(ConnectivityService());
   runApp(MyApp(savedThemeMode: savedThemeMode));
 }
 

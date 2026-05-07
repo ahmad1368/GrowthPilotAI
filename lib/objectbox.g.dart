@@ -45,7 +45,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(2, 1174740264999713832),
       name: 'TransactionEntity',
-      lastPropertyId: const obx_int.IdUid(9, 6400372292870148815),
+      lastPropertyId: const obx_int.IdUid(10, 6135345771449429271),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -98,7 +98,12 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(5, 1510582073196436695),
-            relationTarget: 'VendorEntity')
+            relationTarget: 'VendorEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 6135345771449429271),
+            name: 'memo',
+            type: 9,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -259,7 +264,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeString(object.remoteId!);
           final descriptionOffset = fbb.writeString(object.description);
-          fbb.startTable(10);
+          final memoOffset =
+              object.memo == null ? null : fbb.writeString(object.memo!);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, remoteIdOffset);
           fbb.addFloat64(2, object.amount);
@@ -269,6 +276,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(6, object.dbSyncStatus);
           fbb.addInt64(7, object.category.targetId);
           fbb.addInt64(8, object.vendor.targetId);
+          fbb.addOffset(9, memoOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -296,7 +304,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbType: dbTypeParam,
               dbSyncStatus: dbSyncStatusParam)
             ..remoteId = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 6);
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..memo = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 22);
           object.category.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
           object.category.attach(store);
@@ -443,6 +453,10 @@ class TransactionEntity_ {
   /// see [TransactionEntity.vendor]
   static final vendor = obx.QueryRelationToOne<TransactionEntity, VendorEntity>(
       _entities[1].properties[8]);
+
+  /// see [TransactionEntity.memo]
+  static final memo =
+      obx.QueryStringProperty<TransactionEntity>(_entities[1].properties[9]);
 }
 
 /// [CategoryEntity] entity fields to define ObjectBox queries.

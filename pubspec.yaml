@@ -9,29 +9,40 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_secure_storage: ^9.0.0 # این خط را اضافه کنید
+
+  # --- Core & Security ---
+  get: ^4.6.6
+  flutter_secure_storage: ^9.0.0
+
   # --- UI, Fonts & Themes ---
   cupertino_icons: ^1.0.6
   google_fonts: ^6.1.0
   adaptive_theme: ^3.7.0
   fl_chart: ^0.66.0
-
-  # --- State Management & Navigation ---
-  get: ^4.6.6
+  flutter_animate: ^4.5.0
 
   # --- Database & Persistence ---
-  objectbox: ^2.5.0
+  objectbox: ^2.5.1
   objectbox_flutter_libs: any
-  path_provider: ^2.1.0
+  path_provider: ^2.1.2
   path: ^1.9.0
+
+  # --- Networking & Connectivity ---
+  connectivity_plus: ^6.0.3
+
+  # --- AI & Machine Learning ---
   google_mlkit_text_recognition: ^0.15.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.0
-  objectbox_generator: ^2.5.0
+  build_runner: ^2.4.9
+  objectbox_generator: ^2.5.1
   flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
+
+  # بخش فونت‌ها یا دارایی‌ها را اگر دارید اینجا اضافه کنید
+  # assets:
+  #   - assets/images/
