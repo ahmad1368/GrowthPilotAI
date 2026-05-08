@@ -4,34 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
 import 'package:growth_pilot_ai/utils/workflow/scanner_workflow.dart';
+import 'package:growth_pilot_ai/widgets/adaptive_text.dart';
 import 'package:growth_pilot_ai/widgets/home_bottom_nav.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NavigationController extends GetxController {
   var currentIndex = 0.obs;
 
-  // ۱. تعریف سرویس اسکنر (این خط همان تکه گمشده پازل است)
-  final ScannerService _scanner = ScannerService();
+  // ۱. ایجاد نمونه از ورک‌فلو جدید (جایگزین متد استاتیک قدیمی)
+  final ScannerWorkflow _scannerWorkflow = ScannerWorkflow();
 
   void handleNavigation(int index) {
     if (index == 2) {
-      // داخل متد handleNavigation
-      ScannerWorkflow.open(Get.context!, (ImageSource source) async {
-        // نمایش لودینگ ساده (اختیاری اما حرفه‌ای)
-        debugPrint("Processing image...");
-
-        final File? processedFile =
-            await _scanner.pickAndCrop(source, Get.context!);
-
-        if (processedFile != null) {
-          debugPrint("✅ تصویر نهایی آماده است: ${processedFile.path}");
-          // حالا اینجا می‌توانید به مرحله بعد (OCR) بروید
-          Get.snackbar("Success", "Receipt aligned successfully!");
-        }
+      // استفاده از متد start به جای open
+      _scannerWorkflow.start(Get.context!, (String extractedText) {
+        // این کالبک وقتی اجرا می‌شود که OCR با موفقیت تمام شده باشد
+        Get.snackbar(
+          "Success",
+          "OCR Completed: ${extractedText.length} characters found",
+          backgroundColor: Colors.cyanAccent.withValues(alpha: 0.1),
+          colorText: Colors.cyanAccent,
+        );
       });
     } else {
       currentIndex.value = index;
     }
+  }
+
+  @override
+  void onClose() {
+    // ۲. حتماً منابع را آزاد می‌کنیم (بسیار مهم برای Issue #22)
+    _scannerWorkflow.dispose();
+    super.onClose();
   }
 }
 
@@ -51,19 +55,11 @@ class MainWrapper extends StatelessWidget {
           Obx(() => IndexedStack(
                 index: controller.currentIndex.value,
                 children: [
-                  const Center(
-                      child:
-                          Text("Home", style: TextStyle(color: Colors.white))),
-                  const Center(
-                      child: Text("Insights",
-                          style: TextStyle(color: Colors.white))),
+                  const Center(child: AdaptiveText("Home")),
+                  const Center(child: AdaptiveText("Insights")),
                   const SizedBox.shrink(),
-                  const Center(
-                      child: Text("Profile",
-                          style: TextStyle(color: Colors.white))),
-                  const Center(
-                      child: Text("Settings",
-                          style: TextStyle(color: Colors.white))),
+                  const Center(child: AdaptiveText("Profile")),
+                  const Center(child: AdaptiveText("Settings")),
                 ],
               )),
 
