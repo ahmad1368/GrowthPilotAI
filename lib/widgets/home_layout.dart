@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // اضافه شده برای مدیریت وضعیت GetX
-import '../controllers/transaction_controller.dart'; // کنترلر تراکنش‌ها
+import 'package:get/get.dart';
+import '../controllers/transaction_controller.dart';
+import '../pages/main_wrapper.dart'; // حتما این را اضافه کنید
 import 'app_drawer.dart';
 import 'glass_app_bar.dart';
 import 'home_body.dart';
@@ -17,12 +18,9 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
-  int _selectedIndex = 0;
-
   @override
   void initState() {
     super.initState();
-    // راه‌اندازی منطق نوتیفیکیشن‌ها و اسکرول
     initLogic(() {
       if (mounted) setState(() {});
     });
@@ -36,9 +34,11 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
 
   @override
   Widget build(BuildContext context) {
-    // تزریق کنترلر تراکنش‌ها برای دسترسی در تمام بخش‌های لایه اصلی
-    // نکته: Get.put تضمین می‌کند که کنترلر در حافظه لود شده است
     Get.put(TransactionController());
+
+    // پیدا کردن کنترلر ناوبری که در مراحل قبل ساختیم
+    // اگر MainWrapper را هنوز در خروجی اصلی قرار ندادید، اینجا این خط را بگذارید:
+    final navControl = Get.put(NavigationController());
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -55,14 +55,22 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
           ),
         ],
       ),
-      // حذف Stack و Positioned اضافی که باعث خطا می‌شد
-      // حالا مستقیماً محتوای اصلی نمایش داده می‌شود
-      body: HomeBody(controller: scrollController),
+      // محتوا را بر اساس انتخاب منو نمایش می‌دهیم
+      body: Obx(() {
+        if (navControl.currentIndex.value == 0) {
+          return HomeBody(controller: scrollController);
+        } else {
+          // اگر ایندکس تغییر کرد، اجازه دهید MainWrapper صفحات را مدیریت کند
+          // یا فعلاً برای تست همان HomeBody را برگردانید
+          return HomeBody(controller: scrollController);
+        }
+      }),
 
-      bottomNavigationBar: HomeBottomNav(
-        currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
-      ),
+      // اصلاح بخش خطا: حذف onTap و استفاده از Obx
+      bottomNavigationBar: Obx(() => HomeBottomNav(
+            currentIndex: navControl.currentIndex.value,
+            // دیگر پارامتر onTap نمی‌دهیم چون داخل خودِ HomeBottomNav تعریف شده است
+          )),
     );
   }
 

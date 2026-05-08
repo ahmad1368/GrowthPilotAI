@@ -72,5 +72,9 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>NSCameraUsageDescription</key>
+    <string>GrowthPilotAI uses the camera to scan financial receipts for local OCR processing.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Photos are used to import receipt images for expense tracking.</string>
 </dict>
 </plist>

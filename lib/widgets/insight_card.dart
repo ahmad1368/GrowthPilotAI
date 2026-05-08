@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/pages/settings_page.dart';
+import 'package:growth_pilot_ai/utils/image_workflow_helper.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 
 // وارد کردن ویجت‌ها و سرویس‌های داخلی
@@ -20,6 +21,9 @@ class InsightPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final connectivityService = Get.find<ConnectivityService>();
     final envService = Get.find<EnvironmentService>();
+
+    // افزودن دکمه شناور اسکن با قابلیت ریسپانسیو
+    final bool isWide = UIHelper.isWide(context);
 
     return Listener(
       // محو کردن آیکون سینک با اولین تعامل کاربر (لمس صفحه)
@@ -81,6 +85,16 @@ class InsightPage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => ImageWorkflowHelper.showPicker(context, (file) {}),
+            backgroundColor: Colors.cyanAccent,
+            icon:
+                const Icon(Icons.document_scanner_rounded, color: Colors.black),
+            label: isWide
+                ? const AdaptiveText("Scan New Receipt",
+                    style: TextStyle(color: Colors.black))
+                : const SizedBox.shrink(), // در موبایل فقط آیکون
           ),
         );
       }),
