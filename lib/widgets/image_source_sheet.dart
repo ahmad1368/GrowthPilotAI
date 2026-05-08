@@ -69,7 +69,10 @@ class ImageSourceSheet extends StatelessWidget {
           style: const TextStyle(color: Colors.white, fontSize: 16)),
       trailing:
           const Icon(Icons.arrow_forward_ios, color: Colors.white24, size: 16),
-      onTap: () => onSourceSelected(source),
+      onTap: () {
+        debugPrint("🟡 Clicked on: $label with source: $source");
+        onSourceSelected(source);
+      },
     );
   }
 }

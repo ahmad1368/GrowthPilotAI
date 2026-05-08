@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
 import 'package:growth_pilot_ai/utils/workflow/scanner_workflow.dart';
 import 'package:growth_pilot_ai/widgets/home_bottom_nav.dart';
+import 'package:image_picker/image_picker.dart';
 
 class NavigationController extends GetxController {
   var currentIndex = 0.obs;
 
-  // متد را ساده‌تر کردیم برای تست
-  void handleNavigation(int index) {
-    debugPrint(
-        "🔵 Controller Level: Index $index received"); // اگر این چاپ شود، یعنی اتصال برقرار شد
+  // ۱. تعریف سرویس اسکنر (این خط همان تکه گمشده پازل است)
+  final ScannerService _scanner = ScannerService();
 
+  void handleNavigation(int index) {
     if (index == 2) {
-      debugPrint("🚀 Triggering Scanner Workflow...");
-      ScannerWorkflow.open(Get.context!, (source) {
-        debugPrint("Final Source: $source");
+      ScannerWorkflow.open(Get.context!, (ImageSource source) async {
+        debugPrint("📸 Source Received in Controller: $source");
+
+        // ۲. حالا _scanner شناخته شده است و متد اجرا می‌شود
+        try {
+          final file = await _scanner.pickAndCrop(source, Get.context!);
+
+          if (file != null) {
+            debugPrint("✅ تصویر با موفقیت ذخیره شد: ${file.path}");
+            Get.snackbar(
+              "موفقیت",
+              "تصویر آماده پردازش است",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.green.withOpacity(0.7),
+              colorText: Colors.white,
+            );
+          } else {
+            debugPrint("❌ کاربر عملیات را لغو کرد");
+          }
+        } catch (e) {
+          debugPrint("🔥 خطا در اجرای اسکنر: $e");
+          Get.snackbar("خطا", "مشکلی در باز کردن دوربین یا گالری رخ داد");
+        }
       });
     } else {
       currentIndex.value = index;
