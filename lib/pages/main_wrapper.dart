@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
@@ -13,28 +15,18 @@ class NavigationController extends GetxController {
 
   void handleNavigation(int index) {
     if (index == 2) {
+      // داخل متد handleNavigation
       ScannerWorkflow.open(Get.context!, (ImageSource source) async {
-        debugPrint("📸 Source Received in Controller: $source");
+        // نمایش لودینگ ساده (اختیاری اما حرفه‌ای)
+        debugPrint("Processing image...");
 
-        // ۲. حالا _scanner شناخته شده است و متد اجرا می‌شود
-        try {
-          final file = await _scanner.pickAndCrop(source, Get.context!);
+        final File? processedFile =
+            await _scanner.pickAndCrop(source, Get.context!);
 
-          if (file != null) {
-            debugPrint("✅ تصویر با موفقیت ذخیره شد: ${file.path}");
-            Get.snackbar(
-              "موفقیت",
-              "تصویر آماده پردازش است",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green.withOpacity(0.7),
-              colorText: Colors.white,
-            );
-          } else {
-            debugPrint("❌ کاربر عملیات را لغو کرد");
-          }
-        } catch (e) {
-          debugPrint("🔥 خطا در اجرای اسکنر: $e");
-          Get.snackbar("خطا", "مشکلی در باز کردن دوربین یا گالری رخ داد");
+        if (processedFile != null) {
+          debugPrint("✅ تصویر نهایی آماده است: ${processedFile.path}");
+          // حالا اینجا می‌توانید به مرحله بعد (OCR) بروید
+          Get.snackbar("Success", "Receipt aligned successfully!");
         }
       });
     } else {

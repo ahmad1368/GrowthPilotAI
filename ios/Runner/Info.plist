@@ -73,8 +73,9 @@
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>NSCameraUsageDescription</key>
-    <string>GrowthPilotAI uses the camera to scan financial receipts for local OCR processing.</string>
+        <string>We need access to your camera to scan and crop your receipts for expense tracking.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Photos are used to import receipt images for expense tracking.</string>
-</dict>
+        <string>We need access to your photo library to allow you to select and crop saved receipt images.</string></dict>
+    <key>NSMicrophoneUsageDescription</key>
+        <string>We need access to your microphone (only required by the system camera interface).</string>
 </plist>
