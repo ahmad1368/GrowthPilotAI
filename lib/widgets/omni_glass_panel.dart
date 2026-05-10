@@ -17,6 +17,7 @@ class OmniGlassPanel extends StatelessWidget {
   final bool isInteractive;
   final bool fullBorderRadius;
   final IconData? leadingIcon;
+  final Color? backgroundColor; // پارامتر جدید برای کنترل رنگ از بیرون
 
   const OmniGlassPanel({
     super.key,
@@ -27,15 +28,15 @@ class OmniGlassPanel extends StatelessWidget {
     this.footer,
     this.width,
     this.height,
-    this.opacity = 0.1, // مقدار پیش‌فرض بهینه برای شیشه
+    this.opacity = 0.1,
     this.borderRadius = 24.0,
     this.blurSigma = 15.0,
     this.showCloseButton = false,
     this.avoidSystemBars = true,
     this.isInteractive = false,
-    this.fullBorderRadius =
-        true, // تغییر به true برای انطباق با کارت‌های Insight
+    this.fullBorderRadius = true,
     this.leadingIcon,
+    this.backgroundColor, // مقداردهی در سازنده
   });
 
   @override
@@ -43,15 +44,14 @@ class OmniGlassPanel extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // انتخاب رنگ پایه بر اساس تم سیستم
-    final baseColor = isDark ? Colors.black : Colors.white;
+    // اولویت با backgroundColor است؛ در غیر این صورت طبق منطق شما از سیاه/سفید استفاده می‌شود
+    final baseColor = backgroundColor ?? (isDark ? Colors.black : Colors.white);
     final onSurfaceColor = isDark ? Colors.white : Colors.black87;
 
     final borderStyle = fullBorderRadius
         ? BorderRadius.circular(borderRadius)
         : BorderRadius.vertical(top: Radius.circular(borderRadius));
 
-    // برای مدیریت وضعیت Hover در یک Stateless Widget از StatefulBuilder استفاده می‌کنیم
     bool localHovered = false;
 
     return StatefulBuilder(
@@ -90,7 +90,6 @@ class OmniGlassPanel extends StatelessWidget {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     decoration: BoxDecoration(
-                      // اعمال شفافیت هوشمند: در حالت Hover کمی غلیظ‌تر می‌شود
                       color: baseColor.withValues(
                         alpha: (isInteractive && localHovered)
                             ? (opacity + 0.1).clamp(0.0, 1.0)
@@ -129,17 +128,16 @@ class OmniGlassPanel extends StatelessWidget {
             mainAxisSize: height == null ? MainAxisSize.min : MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // هدر پنل (آیکون، تیتر و دکمه بستن)
               if (title != null || showCloseButton)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
                     children: [
                       if (leadingIcon != null) ...[
-                        Icon(
-                          leadingIcon,
-                          color: onSurfaceColor.withValues(alpha: 0.8),
-                          size: 24,
-                        ),
+                        Icon(leadingIcon,
+                            color: onSurfaceColor.withValues(alpha: 0.8),
+                            size: 24),
                         const SizedBox(width: 12),
                       ],
                       if (title != null)
@@ -165,6 +163,8 @@ class OmniGlassPanel extends StatelessWidget {
                     ],
                   ),
                 ),
+
+              // محتوای اصلی
               if (child != null)
                 Flexible(
                   fit: height != null ? FlexFit.tight : FlexFit.loose,
@@ -182,6 +182,8 @@ class OmniGlassPanel extends StatelessWidget {
                     ),
                   ),
                 ),
+
+              // فوتر و دکمه‌های عملیاتی (actionButtons)
               if (actionButtons != null || footer != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 24),
@@ -189,13 +191,13 @@ class OmniGlassPanel extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Divider(
-                        color: onSurfaceColor.withValues(alpha: 0.05),
-                        height: 1,
-                      ),
+                          color: onSurfaceColor.withValues(alpha: 0.05),
+                          height: 1),
                       const SizedBox(height: 20),
                       if (actionButtons != null)
                         Align(
-                          alignment: Alignment.centerRight,
+                          alignment: Alignment
+                              .centerLeft, // چیدمان دکمه‌ها برای زبان فارسی
                           child: Wrap(
                             spacing: 12,
                             runSpacing: 12,

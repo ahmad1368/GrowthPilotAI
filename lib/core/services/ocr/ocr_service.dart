@@ -1,13 +1,11 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import '../../utils/omni_logger.dart';
-import '../../../widgets/common/omni_error_dialog.dart';
 
 class OCRService {
   TextRecognizer? _textRecognizer;
 
   void _initialize() {
-    // Lazy Initialization: فقط وقتی نیاز بود ساخته می‌شود
     _textRecognizer ??= TextRecognizer(script: TextRecognitionScript.latin);
   }
 
@@ -16,15 +14,11 @@ class OCRService {
     final inputImage = InputImage.fromFilePath(imageFile.path);
 
     try {
-      // اجرای آفلاین و امن
+      // اجرای آفلاین و امن با ML Kit
       return await _textRecognizer!.processImage(inputImage);
     } catch (e) {
-      OmniLogger.log(
-        title: "خطای پردازش هوش مصنوعی",
-        message: "متاسفانه امکان استخراج متن از این رسید وجود ندارد.",
-        type: OmniMessageType.error,
-        footer: "ML Error: $e",
-      );
+      // به جای OmniLogger، خطا را لاگ می‌کنیم تا ورک‌فلو آن را مدیریت کند
+      debugPrint("OCR Processing Error: $e");
       return null;
     }
   }

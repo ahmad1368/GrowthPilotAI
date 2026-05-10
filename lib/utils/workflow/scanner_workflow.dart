@@ -1,26 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/core/services/ocr/omni_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../widgets/image_source_sheet.dart';
 import '../../core/services/ocr/ocr_service.dart';
-import '../../core/utils/omni_logger.dart';
-import '../../widgets/common/omni_error_dialog.dart';
+import '../../core/services/ocr/omni_parser.dart';
+import '../../widgets/omni_glass_panel.dart';
+import '../../widgets/adaptive_text.dart';
 import '../../services/scanner/scanner_service.dart';
 
 class ScannerWorkflow {
   final OCRService _ocrService = OCRService();
   final ScannerService _scannerService = ScannerService();
 
-  /// شروع فرآیند اسکن و نمایش منوی انتخاب منبع
   void start(BuildContext context, Function(String text) onTextExtracted) {
-    // OmniLogger.log(
-    //   title: "دستیار هوشمند مالی",
-    //   message: "لطفاً تصویر رسید را وارد کنید تا تحلیل هوشمند آغاز شود 🧠",
-    //   type: OmniMessageType.info,
-    // );
-
     Get.bottomSheet(
       ImageSourceSheet(
         onSourceSelected: (source) async {
@@ -33,7 +26,6 @@ class ScannerWorkflow {
     );
   }
 
-  /// مدیریت زنجیره عملیات: دریافت تصویر -> OCR -> تحلیل هوشمند
   Future<void> _processImageWorkflow(ImageSource source,
       Function(String) callback, BuildContext context) async {
     try {
@@ -42,92 +34,151 @@ class ScannerWorkflow {
       if (croppedFile == null) return;
 
       final result = await _ocrService.extractText(croppedFile);
-      if (result != null) {
-        await _analyzeAndValidate(result.text, callback);
+
+      if (result != null && result.text.trim().isNotEmpty) {
+        _showResultPanel(result.text, callback);
+      } else {
+        _showStatusPanel(
+          title: "عدم شناسایی",
+          message: "متنی در تصویر یافت نشد.",
+          icon: Icons.search_off_rounded,
+        );
       }
     } catch (e) {
-      _handleError(e);
+      _showStatusPanel(
+        title: "خطای سیستم",
+        message: "در پردازش تصویر مشکلی پیش آمد.",
+        icon: Icons.error_outline_rounded,
+      );
     } finally {
       _ocrService.dispose();
     }
   }
 
-  /// تحلیل هوشمند محتوا (جلوگیری از تکرار و دسته‌بندی)
-  Future<void> _analyzeAndValidate(
-      String text, Function(String) callback) async {
-    // ۱. استخراج فرضی (در Issue #15 واقعی می‌شود)
-    final String shopName = "Walmart";
-    final String date = "2026-05-08";
-
-    // ۲. بررسی تکراری بودن (شبیه‌سازی منطق دیتابیس)
-    bool isDuplicate = false;
-
-    if (isDuplicate) {
-      _showDuplicateWarning(shopName, date, text, callback);
-    } else {
-      _showSmartSuccess(text, callback);
-    }
-  }
-
-  /// نمایش هشدار برای رسیدهای تکراری
-  void _showDuplicateWarning(
-      String shop, String date, String text, Function(String) cb) {
-    OmniLogger.log(
-      title: "رسید تکراری شناسایی شد! 🛑",
-      message:
-          "این فاکتور قبلاً در تاریخ $date از فروشگاه $shop ثبت شده است.\n\n"
-          "ثبت مجدد هزینه‌ها باعث اختلال در تحلیل سود و زیان و گزارش‌های مالیاتی شما می‌شود.",
-      type: OmniMessageType.warning,
-      actionLabel: "ثبت مجدد (توصیه نمی‌شود)",
-      onAction: () => cb(text),
-    );
-  }
-
-  /// نمایش موفقیت و پیشنهاد دسته‌بندی هوشمند
-  void _showSmartSuccess(String text, Function(String) cb) {
-    final suggestion = _getCategorySuggestion(text);
+  /// نمایش خروجی اصلی با OmniGlassPanel مستقیم
+  void _showResultPanel(String text, Function(String) callback) {
     final currency = OmniParser.detectCurrency(text);
     final taxes = OmniParser.extractTaxes(text);
 
-    // ساخت پیام مالیاتی اگر مالیاتی پیدا شده باشد
-    String taxInfo = "";
-    if (taxes.isNotEmpty) {
-      taxInfo = "\n\n📌 **یادآور مالیاتی:**\n";
-      taxes.forEach((key, value) => taxInfo += "• $key: \$$value\n");
-      taxInfo += "*(این مبالغ برای اظهارنامه مالیاتی فصلی ذخیره می‌شوند)*";
-    }
-
-    OmniLogger.log(
-      title: "تحلیل هوشمند موفق ✅",
-      message: "💡 پیشنهاد دسته: [$suggestion]\n"
-          "💵 ارز شناسایی شده: $currency"
-          "$taxInfo\n\n"
-          "محتوای استخراج شده:\n$text",
-      type: OmniMessageType.success,
-      footer: "توصیه: رسیدهای بیزنسی شامل GST را حتماً تایید کنید.",
-      actionLabel: "تایید و ثبت در $suggestion",
-      onAction: () => cb(text),
+    Get.dialog(
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: OmniGlassPanel(
+            title: "نتیجه اسکن",
+            leadingIcon: Icons.document_scanner_outlined,
+            // دکمه‌ها مستقیماً در پنل قرار می‌گیرند تا استایل فوتر حفظ شود
+            actionButtons: [
+              _buildActionButton(
+                label: "تایید",
+                onTap: () {
+                  Get.back();
+                  callback(text);
+                },
+                isPrimary: true,
+              ),
+              _buildActionButton(
+                label: "لغو",
+                onTap: () => Get.back(),
+                isPrimary: false,
+              ),
+            ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _infoRow("واحد پول:", currency),
+                if (taxes.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  ...taxes.entries
+                      .map((e) => _infoRow("${e.key}:", "${e.value}")),
+                ],
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  child: Divider(color: Colors.white10, height: 1),
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 200),
+                  child: SingleChildScrollView(
+                    child: Opacity(
+                      opacity: 0.8,
+                      child: AdaptiveText(text,
+                          style: const TextStyle(fontSize: 13)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
-  /// موتور حدس دسته‌بندی بر اساس محتوا (زیر ۵۰ خط)
-  String _getCategorySuggestion(String text) {
-    final lowerText = text.toLowerCase();
-    if (lowerText.contains('gas') || lowerText.contains('fuel'))
-      return "حمل و نقل 🚗";
-    if (lowerText.contains('food') || lowerText.contains('mart'))
-      return "مواد غذایی 🛒";
-    if (lowerText.contains('restaurant') || lowerText.contains('cafe'))
-      return "رستوران ☕";
-    return "عمومی 📦";
+  /// نمایش وضعیت‌ها (خطا/هشدار) مستقیماً با OmniGlassPanel
+  void _showStatusPanel(
+      {required String title,
+      required String message,
+      required IconData icon}) {
+    Get.dialog(
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: OmniGlassPanel(
+            title: title,
+            leadingIcon: icon,
+            actionButtons: [
+              _buildActionButton(
+                label: "بستن",
+                onTap: () => Get.back(),
+                isPrimary: false,
+              ),
+            ],
+            child: AdaptiveText(message, textAlign: TextAlign.center),
+          ),
+        ),
+      ),
+    );
   }
 
-  void _handleError(dynamic e) {
-    OmniLogger.log(
-      title: "خطا در پردازش",
-      message: "سیستم قادر به تحلیل این رسید نبود.",
-      type: OmniMessageType.error,
-      footer: "Error: $e",
+  /// متد کمکی برای ساخت دکمه‌ها با استفاده از خودِ OmniGlassPanel
+  Widget _buildActionButton({
+    required String label,
+    required VoidCallback onTap,
+    required bool isPrimary,
+  }) {
+    final isDark = Get.isDarkMode;
+    return GestureDetector(
+      onTap: onTap,
+      child: OmniGlassPanel(
+        opacity: isPrimary ? 0.2 : 0.05,
+        isInteractive: true,
+        backgroundColor:
+            isPrimary ? (isDark ? Colors.tealAccent : Colors.teal) : null,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          child: AdaptiveText(
+            label,
+            style: TextStyle(
+              fontWeight: isPrimary ? FontWeight.bold : FontWeight.normal,
+              fontSize: 13,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _infoRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: AdaptiveText(label, style: const TextStyle(fontSize: 12)),
+        ),
+        AdaptiveText(value,
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+      ],
     );
   }
 
