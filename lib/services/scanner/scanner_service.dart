@@ -5,16 +5,20 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ScannerService {
   final ImagePicker _picker = ImagePicker();
 
-  /// ۱. متد درخواست مجوزها (دوربین و گالری)
+  /// ۱. متد درخواست مجوزها (فقط برای موبایل)
   Future<bool> requestPermissions() async {
+    // در وب نیازی به درخواست مجوز از طریق permission_handler نیست
+    if (kIsWeb) return true;
+
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
       Permission.storage,
-      Permission.photos, // مخصوص اندروید ۱۳ به بالا
+      Permission.photos,
     ].request();
 
     return statuses[Permission.camera]!.isGranted &&
@@ -22,56 +26,45 @@ class ScannerService {
             statuses[Permission.photos]!.isGranted);
   }
 
-  /// ۲. متد اصلی: زنجیره انتخاب، برش و ذخیره دائمی
+  /// ۲. متد اصلی: زنجیره انتخاب و برش (سازگار با وب و موبایل)
   Future<File?> pickAndCrop(ImageSource source, BuildContext context) async {
     try {
-      // الف) بررسی مجوزها
+      // الف) بررسی مجوزها (در وب همیشه true برمی‌گرداند)
       bool hasPermission = await requestPermissions();
       if (!hasPermission) {
         debugPrint("🚫 مجوزهای لازم صادر نشده است");
         return null;
       }
 
-      // ب) انتخاب تصویر از منبع (دوربین یا گالری)
+      // ب) انتخاب تصویر
       final XFile? pickedFile = await _picker.pickImage(
         source: source,
-// ۱. تنظیم کیفیت بر اساس Requirement شماره ۲۱
-        // این مقدار باعث می‌شود حجم فایل به شدت کاهش یابد بدون اینکه نویز پیکسلی ایجاد شود
         imageQuality: 85,
-
-        // ۲. محدود کردن ابعاد برای جلوگیری از کرش در تصاویر بسیار بزرگ (4K)
-        // معمولاً ۱۸۰۰ پیکسل برای OCR رسیدها عالی است
         maxWidth: 1800,
         maxHeight: 1800,
       );
 
       if (pickedFile == null) return null;
-// ... کدهای قبلی متد pickAndCrop ...
 
+      // ج) مدیریت وب: در وب برش و ذخیره دائمی محلی نداریم
+      if (kIsWeb) {
+        debugPrint("🌐 حالت وب: عبور از مرحله برش و ذخیره دائمی");
+        return File(pickedFile.path); // مسیر در وب یک Blob URL است
+      }
+
+      // د) منطق مخصوص موبایل (برش تصویر)
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: pickedFile.path,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 90,
         uiSettings: [
           AndroidUiSettings(
-            // ۱. تیتر بالای صفحه برش
             toolbarTitle: 'تنظیم لبه‌های رسید',
-
-            // ۲. رنگ پس‌زمینه نوار ابزار (مطابق با تم تیره شما)
             toolbarColor: const Color(0xFF121212),
-
-            // ۳. رنگ متن‌ها و آیکون‌های نوار ابزار (فیروزه‌ای)
             toolbarWidgetColor: Colors.cyanAccent,
-
-            // ۴. رنگ دکمه‌های کنترلی فعال مثل چرخش و تایید
             activeControlsWidgetColor: Colors.cyanAccent,
-
-            // ۵. رنگ نوار وضعیت (StatusBar) بالای گوشی
             statusBarColor: const Color(0xFF000000),
-
-            // ۶. رنگ پس‌زمینه اصلی محیط برش
             backgroundColor: const Color(0xFF121212),
-
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
           ),
@@ -79,20 +72,17 @@ class ScannerService {
             title: 'تنظیم لبه‌های رسید',
             aspectRatioLockEnabled: false,
             resetAspectRatioEnabled: true,
-            // در iOS سیستم تم‌دهی محدودتر است اما تیتر را هماهنگ کردیم
           ),
         ],
       );
 
-// ... ادامه منطق ذخیره‌سازی ...
-
       if (croppedFile == null) return null;
 
-      // د) تبدیل به شیء File و انتقال به حافظه دائمی
+      // هـ) ذخیره دائمی (فقط در موبایل)
       final File tempFile = File(croppedFile.path);
       final File permanentFile = await saveFilePermanently(tempFile);
 
-      // هـ) پاک‌سازی فایل موقت کش (بهینه‌سازی حافظه)
+      // پاک‌سازی فایل موقت
       if (await tempFile.exists()) {
         await tempFile.delete();
       }
@@ -104,22 +94,19 @@ class ScannerService {
     }
   }
 
-  /// ۳. متد کمکی برای انتقال فایل از کش موقت به پوشه دائمی اپلیکیشن
+  /// ۳. متد ذخیره دائمی (فقط برای موبایل)
   Future<File> saveFilePermanently(File tempFile) async {
-    // دریافت مسیر پوشه Documents (دائمی و خصوصی برای اپلیکیشن)
-    final directory = await getApplicationDocumentsDirectory();
+    if (kIsWeb) return tempFile; // در وب ذخیره در فایل‌سیستم نداریم
 
-    // ایجاد نام منحصر به فرد با استفاده از برچسب زمانی (Timestamp)
+    final directory = await getApplicationDocumentsDirectory();
     final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     final String extension = p.extension(tempFile.path);
     final String fileName = "receipt_$timestamp$extension";
 
-    // تعریف مسیر کامل جدید و کپی کردن فایل
     final String permanentPath = p.join(directory.path, fileName);
     final File permanentFile = await tempFile.copy(permanentPath);
 
-    debugPrint("📂 فایل با موفقیت ذخیره دائمی شد: $permanentPath");
-
+    debugPrint("📂 فایل ذخیره دائمی شد: $permanentPath");
     return permanentFile;
   }
 }

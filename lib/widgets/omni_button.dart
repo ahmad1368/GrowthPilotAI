@@ -1,79 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
-import 'package:get/get.dart';
-import 'omni_glass_panel.dart';
 import 'adaptive_text.dart';
 
 class OmniButton extends StatelessWidget {
-  final String? label;
-  final IconData? icon;
+  final String label;
+  final IconData icon;
   final VoidCallback onTap;
-  final bool isPrimary;
   final double? width;
-  final double height;
-  final double borderRadius;
+  final bool isPrimary;
 
   const OmniButton({
     super.key,
-    this.label,
-    this.icon,
+    required this.label,
+    required this.icon,
     required this.onTap,
-    this.isPrimary = false,
     this.width,
-    this.height = 48,
-    this.borderRadius = 15,
+    this.isPrimary = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Get.isDarkMode;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    // تعیین رنگ محتوا بر اساس نوع دکمه و تم
-    // اگر Primary باشد، رنگ معکوس پس‌زمینه را می‌گیرد تا خوانا باشد
-    final Color? contentColor =
-        isPrimary ? (isDark ? Colors.black : Colors.white) : null;
+    // ۱. تعیین رنگ پس‌زمینه دکمه
+    final Color bgColor = isPrimary
+        ? Colors.cyanAccent // دکمه اصلی همیشه فیروزه‌ای
+        : (isDarkMode
+            ? Colors.white.withOpacity(0.08)
+            : Colors.black.withOpacity(0.05));
 
-    // تعیین رنگ پس‌زمینه دکمه‌های Primary بر اساس برند پروژه
-    final Color? bgColor =
-        isPrimary ? (isDark ? Colors.tealAccent.shade700 : Colors.teal) : null;
+    // ۲. تعیین رنگ محتوا (آیکون و متن) - حل مشکل دیده نشدن
+    final Color contentColor = isPrimary
+        ? Colors.black // روی پس‌زمینه فیروزه‌ای، متن و آیکون باید مشکی باشند
+        : (isDarkMode
+            ? Colors.cyanAccent
+            : Colors.black87); // در حالت عادی، فیروزه‌ای یا مشکی ملایم
 
-    return Bounceable(
-      onTap: onTap,
-      scaleFactor: 0.95, // میزان فشرده شدن دکمه هنگام لمس
-      child: OmniGlassPanel(
-        width: width,
-        height: height,
-        borderRadius: borderRadius,
-        // شفافیت هوشمند مطابق استاندارد جدید پروژه
-        opacity: isDark ? 0.1 : 0.9,
-        isInteractive: true,
-        backgroundColor: bgColor,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon != null)
-                  Icon(
-                    icon,
-                    size: 20,
-                    color:
-                        contentColor, // اگر null باشد از تم سراسری main.dart می‌خواند
-                  ),
-                if (icon != null && label != null) const SizedBox(width: 10),
-                if (label != null)
-                  AdaptiveText(
-                    label!,
-                    style: TextStyle(
-                      fontWeight: isPrimary ? FontWeight.bold : FontWeight.w500,
-                      fontSize: 14,
-                      color: contentColor,
-                    ),
-                  ),
-              ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: width,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isPrimary
+                  ? Colors.cyanAccent.withOpacity(0.5)
+                  : (isDarkMode ? Colors.white10 : Colors.black12),
+              width: 1,
             ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // استفاده از رنگ محتوای محاسبه شده برای آیکون
+              Icon(
+                icon,
+                size: 18,
+                color: contentColor,
+              ),
+              const SizedBox(width: 8),
+              // استفاده از AdaptiveText یا Text با رنگ مناسب
+              Flexible(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: contentColor,
+                    fontSize: 13,
+                    fontWeight: isPrimary ? FontWeight.bold : FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
         ),
       ),

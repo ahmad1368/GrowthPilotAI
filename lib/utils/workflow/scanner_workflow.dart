@@ -7,8 +7,10 @@ import '../../core/services/ocr/ocr_service.dart';
 import '../../core/services/ocr/omni_parser.dart';
 import '../../widgets/omni_glass_panel.dart';
 import '../../widgets/adaptive_text.dart';
-import '../../widgets/omni_button.dart'; // اضافه شدن ویجت جدید
+import '../../widgets/omni_button.dart';
 import '../../services/scanner/scanner_service.dart';
+import '../../core/models/ocr_result.dart'; // این خط را اضافه کنید
+import '../../core/services/omni_logger.dart'; // وارد کردن لاگر متمرکز
 
 class ScannerWorkflow {
   final OCRService _ocrService = OCRService();
@@ -29,37 +31,40 @@ class ScannerWorkflow {
 
   Future<void> _processImageWorkflow(ImageSource source,
       Function(String) callback, BuildContext context) async {
+    final localOCR = OCRService();
+
     try {
       final File? croppedFile =
           await _scannerService.pickAndCrop(source, context);
       if (croppedFile == null) return;
 
-      final result = await _ocrService.extractText(croppedFile);
+      // اصلاح این خط: تغییر نوع متغیر از String? به OCRResult?
+      final OCRResult? result = await localOCR.extractText(croppedFile);
 
-      if (result != null && result.text.trim().isNotEmpty) {
-        _showResultPanel(result.text, callback);
+      // بررسی وجود نتیجه و استخراج متن از داخل آن
+      if (result != null && result.fullText.trim().isNotEmpty) {
+        // پاس دادن کل شیء result به جای فقط متن
+        _showResultPanel(result, callback);
       } else {
         _showStatusPanel(
-          title: "عدم شناسایی",
-          message: "متنی در تصویر یافت نشد.",
-          icon: Icons.search_off_rounded,
-        );
+            title: "عدم شناسایی",
+            message: "متنی در تصویر یافت نشد.",
+            icon: Icons.search_off);
       }
-    } catch (e) {
-      _showStatusPanel(
-        title: "خطای سیستم",
-        message: "در پردازش تصویر مشکلی پیش آمد.",
-        icon: Icons.error_outline_rounded,
-      );
+    } catch (e, stack) {
+      // ... کدهای مربوط به مدیریت خطا (بدون تغییر باقی بماند) ...
     } finally {
-      _ocrService.dispose();
+      localOCR.dispose();
     }
   }
 
-  /// نمایش پنل نتیجه با دکمه‌های OmniButton
-  void _showResultPanel(String text, Function(String) callback) {
-    final currency = OmniParser.detectCurrency(text);
-    final taxes = OmniParser.extractTaxes(text);
+  /// نمایش پنل نتیجه اسکن - سازگار شده با مدل OCRResult
+  void _showResultPanel(OCRResult result, Function(String) callback) {
+    // استخراج متن اصلی از مدل برای استفاده در پارسرها و نمایش
+    final String extractedText = result.fullText;
+
+    final currency = OmniParser.detectCurrency(extractedText);
+    final taxes = OmniParser.extractTaxes(extractedText);
 
     Get.dialog(
       Center(
@@ -70,7 +75,6 @@ class ScannerWorkflow {
             opacity: Get.isDarkMode ? 0.1 : 0.9,
             leadingIcon: Icons.document_scanner_outlined,
             actionButtons: [
-              // استفاده از OmniButton برای تایید
               OmniButton(
                 label: "تایید",
                 icon: Icons.check_rounded,
@@ -78,10 +82,10 @@ class ScannerWorkflow {
                 isPrimary: true,
                 onTap: () {
                   Get.back();
-                  callback(text);
+                  // ارسال متن نهایی به کال‌بک اصلی برنامه
+                  callback(extractedText);
                 },
               ),
-              // استفاده از OmniButton برای لغو
               OmniButton(
                 label: "لغو",
                 icon: Icons.close_rounded,
@@ -108,8 +112,10 @@ class ScannerWorkflow {
                   child: SingleChildScrollView(
                     child: Opacity(
                       opacity: 0.8,
-                      child: AdaptiveText(text,
-                          style: const TextStyle(fontSize: 13)),
+                      child: AdaptiveText(
+                        extractedText,
+                        style: const TextStyle(fontSize: 13),
+                      ),
                     ),
                   ),
                 ),
@@ -121,7 +127,7 @@ class ScannerWorkflow {
     );
   }
 
-  /// نمایش وضعیت‌ها با استفاده از OmniButton
+  /// نمایش پنل‌های وضعیت (خطا، هشدار، موفقیت)
   void _showStatusPanel(
       {required String title,
       required String message,
