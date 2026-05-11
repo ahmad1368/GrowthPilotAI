@@ -7,6 +7,7 @@ import '../../core/services/ocr/ocr_service.dart';
 import '../../core/services/ocr/omni_parser.dart';
 import '../../widgets/omni_glass_panel.dart';
 import '../../widgets/adaptive_text.dart';
+import '../../widgets/omni_button.dart'; // اضافه شدن ویجت جدید
 import '../../services/scanner/scanner_service.dart';
 
 class ScannerWorkflow {
@@ -55,7 +56,7 @@ class ScannerWorkflow {
     }
   }
 
-  /// نمایش خروجی اصلی با OmniGlassPanel مستقیم
+  /// نمایش پنل نتیجه با دکمه‌های OmniButton
   void _showResultPanel(String text, Function(String) callback) {
     final currency = OmniParser.detectCurrency(text);
     final taxes = OmniParser.extractTaxes(text);
@@ -66,21 +67,27 @@ class ScannerWorkflow {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: OmniGlassPanel(
             title: "نتیجه اسکن",
+            opacity: Get.isDarkMode ? 0.1 : 0.9,
             leadingIcon: Icons.document_scanner_outlined,
-            // دکمه‌ها مستقیماً در پنل قرار می‌گیرند تا استایل فوتر حفظ شود
             actionButtons: [
-              _buildActionButton(
+              // استفاده از OmniButton برای تایید
+              OmniButton(
                 label: "تایید",
+                icon: Icons.check_rounded,
+                width: 110,
+                isPrimary: true,
                 onTap: () {
                   Get.back();
                   callback(text);
                 },
-                isPrimary: true,
               ),
-              _buildActionButton(
+              // استفاده از OmniButton برای لغو
+              OmniButton(
                 label: "لغو",
-                onTap: () => Get.back(),
+                icon: Icons.close_rounded,
+                width: 90,
                 isPrimary: false,
+                onTap: () => Get.back(),
               ),
             ],
             child: Column(
@@ -114,7 +121,7 @@ class ScannerWorkflow {
     );
   }
 
-  /// نمایش وضعیت‌ها (خطا/هشدار) مستقیماً با OmniGlassPanel
+  /// نمایش وضعیت‌ها با استفاده از OmniButton
   void _showStatusPanel(
       {required String title,
       required String message,
@@ -125,43 +132,18 @@ class ScannerWorkflow {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: OmniGlassPanel(
             title: title,
+            opacity: Get.isDarkMode ? 0.1 : 0.9,
             leadingIcon: icon,
             actionButtons: [
-              _buildActionButton(
+              OmniButton(
                 label: "بستن",
-                onTap: () => Get.back(),
+                icon: Icons.done_all_rounded,
+                width: 120,
                 isPrimary: false,
+                onTap: () => Get.back(),
               ),
             ],
             child: AdaptiveText(message, textAlign: TextAlign.center),
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// متد کمکی برای ساخت دکمه‌ها با استفاده از خودِ OmniGlassPanel
-  Widget _buildActionButton({
-    required String label,
-    required VoidCallback onTap,
-    required bool isPrimary,
-  }) {
-    final isDark = Get.isDarkMode;
-    return GestureDetector(
-      onTap: onTap,
-      child: OmniGlassPanel(
-        opacity: isPrimary ? 0.2 : 0.05,
-        isInteractive: true,
-        backgroundColor:
-            isPrimary ? (isDark ? Colors.tealAccent : Colors.teal) : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-          child: AdaptiveText(
-            label,
-            style: TextStyle(
-              fontWeight: isPrimary ? FontWeight.bold : FontWeight.normal,
-              fontSize: 13,
-            ),
           ),
         ),
       ),

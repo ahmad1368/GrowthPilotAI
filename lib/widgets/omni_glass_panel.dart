@@ -17,7 +17,7 @@ class OmniGlassPanel extends StatelessWidget {
   final bool isInteractive;
   final bool fullBorderRadius;
   final IconData? leadingIcon;
-  final Color? backgroundColor; // پارامتر جدید برای کنترل رنگ از بیرون
+  final Color? backgroundColor;
 
   const OmniGlassPanel({
     super.key,
@@ -36,7 +36,7 @@ class OmniGlassPanel extends StatelessWidget {
     this.isInteractive = false,
     this.fullBorderRadius = true,
     this.leadingIcon,
-    this.backgroundColor, // مقداردهی در سازنده
+    this.backgroundColor,
   });
 
   @override
@@ -44,8 +44,15 @@ class OmniGlassPanel extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // اولویت با backgroundColor است؛ در غیر این صورت طبق منطق شما از سیاه/سفید استفاده می‌شود
-    final baseColor = backgroundColor ?? (isDark ? Colors.black : Colors.white);
+    // رنگ لایت‌مد استخراج شده از تصویر ارسالی کاربر
+    const Color lightBgColor = Color(0xFFF7F8FA);
+
+    final baseColor = backgroundColor ?? (isDark ? Colors.black : lightBgColor);
+    // اگر تم روشن بود و شفافیت دستی وارد نشده بود، شفافیت را برای سفیدی بیشتر بالا می‌بریم
+    final effectiveOpacity =
+        (backgroundColor == null && !isDark && opacity == 0.1)
+            ? 0.85 // مقدار غلظت برای لایت‌مد (شبیه عکس تنظیمات)
+            : opacity;
     final onSurfaceColor = isDark ? Colors.white : Colors.black87;
 
     final borderStyle = fullBorderRadius
@@ -92,8 +99,8 @@ class OmniGlassPanel extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: baseColor.withValues(
                         alpha: (isInteractive && localHovered)
-                            ? (opacity + 0.1).clamp(0.0, 1.0)
-                            : opacity,
+                            ? (effectiveOpacity + 0.1).clamp(0.0, 1.0)
+                            : effectiveOpacity,
                       ),
                       borderRadius: borderStyle,
                       border: Border.all(
@@ -128,7 +135,6 @@ class OmniGlassPanel extends StatelessWidget {
             mainAxisSize: height == null ? MainAxisSize.min : MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // هدر پنل (آیکون، تیتر و دکمه بستن)
               if (title != null || showCloseButton)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
@@ -163,8 +169,6 @@ class OmniGlassPanel extends StatelessWidget {
                     ],
                   ),
                 ),
-
-              // محتوای اصلی
               if (child != null)
                 Flexible(
                   fit: height != null ? FlexFit.tight : FlexFit.loose,
@@ -182,8 +186,6 @@ class OmniGlassPanel extends StatelessWidget {
                     ),
                   ),
                 ),
-
-              // فوتر و دکمه‌های عملیاتی (actionButtons)
               if (actionButtons != null || footer != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 24),
@@ -196,8 +198,7 @@ class OmniGlassPanel extends StatelessWidget {
                       const SizedBox(height: 20),
                       if (actionButtons != null)
                         Align(
-                          alignment: Alignment
-                              .centerLeft, // چیدمان دکمه‌ها برای زبان فارسی
+                          alignment: Alignment.centerLeft,
                           child: Wrap(
                             spacing: 12,
                             runSpacing: 12,

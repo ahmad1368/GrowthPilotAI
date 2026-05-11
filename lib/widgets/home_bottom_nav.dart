@@ -31,18 +31,40 @@ class HomeBottomNav extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.cyanAccent,
           unselectedItemColor: Colors.white30,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.grid_view_rounded), label: 'Home'),
+                icon: Icon(
+                  Icons.grid_view_rounded,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.bar_chart_rounded), label: 'Insights'),
+              icon: Icon(
+                Icons.bar_chart_rounded,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              label: 'Insights',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.document_scanner_rounded, size: 28),
+                icon: Icon(
+                  Icons.document_scanner_rounded,
+                  size: 28,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 label: 'Scan'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_rounded), label: 'Profile'),
+              icon: Icon(
+                Icons.person_rounded,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              label: 'Profile',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings_rounded), label: 'Settings'),
+                icon: Icon(
+                  Icons.settings_rounded,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                label: 'Settings'),
           ],
         ),
       ),

@@ -35,6 +35,7 @@ dependencies:
   # --- AI & Machine Learning ---
   google_mlkit_text_recognition: ^0.15.1
   permission_handler: ^12.0.1
+  flutter_bounceable: ^1.2.0
 
 dev_dependencies:
   flutter_test:
