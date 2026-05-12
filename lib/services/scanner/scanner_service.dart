@@ -7,12 +7,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+/// تعریف یک نوع داده برای گزارش پیشرفت
+typedef ScanProgressCallback = void Function(String stepId, double subProgress);
+
 class ScannerService {
   final ImagePicker _picker = ImagePicker();
 
-  /// ۱. متد درخواست مجوزها (فقط برای موبایل)
+  /// ۱. متد درخواست مجوزها (با گزارش وضعیت به UI)
   Future<bool> requestPermissions() async {
-    // در وب نیازی به درخواست مجوز از طریق permission_handler نیست
     if (kIsWeb) return true;
 
     Map<Permission, PermissionStatus> statuses = await [
@@ -26,17 +28,23 @@ class ScannerService {
             statuses[Permission.photos]!.isGranted);
   }
 
-  /// ۲. متد اصلی: زنجیره انتخاب و برش (سازگار با وب و موبایل)
-  Future<File?> pickAndCrop(ImageSource source, BuildContext context) async {
+  /// ۲. متد اصلی با قابلیت گزارش پیشرفت لحظه‌ای
+  /// [onProgress] اجازه می‌دهد UI بفهمد دقیقاً در کدام مرحله هستیم.
+  Future<File?> pickAndCrop(
+    ImageSource source,
+    BuildContext context, {
+    ScanProgressCallback? onProgress,
+  }) async {
     try {
-      // الف) بررسی مجوزها (در وب همیشه true برمی‌گرداند)
+      // الف) شروع مرحله انتخاب
+      onProgress?.call('pick', 0.1); // شروع انتخاب
+
       bool hasPermission = await requestPermissions();
       if (!hasPermission) {
         debugPrint("🚫 مجوزهای لازم صادر نشده است");
         return null;
       }
 
-      // ب) انتخاب تصویر
       final XFile? pickedFile = await _picker.pickImage(
         source: source,
         imageQuality: 85,
@@ -45,21 +53,24 @@ class ScannerService {
       );
 
       if (pickedFile == null) return null;
+      onProgress?.call('pick', 1.0); // پایان انتخاب
 
-      // ج) مدیریت وب: در وب برش و ذخیره دائمی محلی نداریم
+      // ب) مدیریت وب
       if (kIsWeb) {
-        debugPrint("🌐 حالت وب: عبور از مرحله برش و ذخیره دائمی");
-        return File(pickedFile.path); // مسیر در وب یک Blob URL است
+        onProgress?.call('done', 1.0);
+        return File(pickedFile.path);
       }
 
-      // د) منطق مخصوص موبایل (برش تصویر)
+      // ج) شروع مرحله برش (Crop)
+      onProgress?.call('crop', 0.2); // ورود به صفحه برش
+
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: pickedFile.path,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 90,
         uiSettings: [
           AndroidUiSettings(
-            toolbarTitle: 'تنظیم لبه‌های رسید',
+            toolbarTitle: 'تنظیم لبه‌های سند',
             toolbarColor: const Color(0xFF121212),
             toolbarWidgetColor: Colors.cyanAccent,
             activeControlsWidgetColor: Colors.cyanAccent,
@@ -69,7 +80,7 @@ class ScannerService {
             lockAspectRatio: false,
           ),
           IOSUiSettings(
-            title: 'تنظیم لبه‌های رسید',
+            title: 'تنظیم لبه‌های سند',
             aspectRatioLockEnabled: false,
             resetAspectRatioEnabled: true,
           ),
@@ -77,8 +88,12 @@ class ScannerService {
       );
 
       if (croppedFile == null) return null;
+      onProgress?.call('crop', 1.0); // پایان برش
 
-      // هـ) ذخیره دائمی (فقط در موبایل)
+      // د) ذخیره سازی دائمی
+      onProgress?.call(
+          'ai', 0.1); // آماده‌سازی برای پردازش هوشمند (شروع مرحله بعد)
+
       final File tempFile = File(croppedFile.path);
       final File permanentFile = await saveFilePermanently(tempFile);
 
@@ -94,19 +109,19 @@ class ScannerService {
     }
   }
 
-  /// ۳. متد ذخیره دائمی (فقط برای موبایل)
+  /// ۳. متد ذخیره دائمی
   Future<File> saveFilePermanently(File tempFile) async {
-    if (kIsWeb) return tempFile; // در وب ذخیره در فایل‌سیستم نداریم
+    if (kIsWeb) return tempFile;
 
     final directory = await getApplicationDocumentsDirectory();
     final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     final String extension = p.extension(tempFile.path);
-    final String fileName = "receipt_$timestamp$extension";
+    final String fileName = "doc_$timestamp$extension";
 
     final String permanentPath = p.join(directory.path, fileName);
     final File permanentFile = await tempFile.copy(permanentPath);
 
-    debugPrint("📂 فایل ذخیره دائمی شد: $permanentPath");
+    debugPrint("📂 فایل با موفقیت در حافظه ماندگار شد: $permanentPath");
     return permanentFile;
   }
 }
