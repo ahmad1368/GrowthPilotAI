@@ -147,10 +147,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "5:1407349826204092014",
+      "lastPropertyId": "4:3274884444133419373",
+      "name": "DocumentType",
+      "properties": [
+        {
+          "id": "1:3822539053991719425",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4314188896221551808",
+          "name": "name",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "7:7418576198694631340"
+        },
+        {
+          "id": "3:1570878085546655654",
+          "name": "isPublic",
+          "type": 1
+        },
+        {
+          "id": "4:3274884444133419373",
+          "name": "iconName",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "4:423798553179985044",
-  "lastIndexId": "6:8228385944914176999",
+  "lastEntityId": "5:1407349826204092014",
+  "lastIndexId": "7:7418576198694631340",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -19,6 +19,7 @@ import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
+import 'core/models/document_type.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -171,7 +172,37 @@ final _entities = <obx_int.ModelEntity>[
             name: 'transactions',
             srcEntity: 'TransactionEntity',
             srcField: 'vendor')
-      ])
+      ]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(5, 1407349826204092014),
+      name: 'DocumentType',
+      lastPropertyId: const obx_int.IdUid(4, 3274884444133419373),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3822539053991719425),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4314188896221551808),
+            name: 'name',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(7, 7418576198694631340)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1570878085546655654),
+            name: 'isPublic',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3274884444133419373),
+            name: 'iconName',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[])
 ];
 
 /// Shortcut for [Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -209,8 +240,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(4, 423798553179985044),
-      lastIndexId: const obx_int.IdUid(6, 8228385944914176999),
+      lastEntityId: const obx_int.IdUid(5, 1407349826204092014),
+      lastIndexId: const obx_int.IdUid(7, 7418576198694631340),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
@@ -398,6 +429,40 @@ obx_int.ModelDefinition getObjectBoxModel() {
               obx_int.RelInfo<TransactionEntity>.toOneBacklink(9, object.id,
                   (TransactionEntity srcObject) => srcObject.vendor));
           return object;
+        }),
+    DocumentType: obx_int.EntityDefinition<DocumentType>(
+        model: _entities[4],
+        toOneRelations: (DocumentType object) => [],
+        toManyRelations: (DocumentType object) => {},
+        getId: (DocumentType object) => object.id,
+        setId: (DocumentType object, int id) {
+          object.id = id;
+        },
+        objectToFB: (DocumentType object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final iconNameOffset = fbb.writeString(object.iconName);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addBool(2, object.isPublic);
+          fbb.addOffset(3, iconNameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final isPublicParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false);
+          final iconNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final object = DocumentType(
+              name: nameParam, isPublic: isPublicParam, iconName: iconNameParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -501,4 +566,23 @@ class VendorEntity_ {
   static final transactions =
       obx.QueryBacklinkToMany<TransactionEntity, VendorEntity>(
           TransactionEntity_.vendor);
+}
+
+/// [DocumentType] entity fields to define ObjectBox queries.
+class DocumentType_ {
+  /// see [DocumentType.id]
+  static final id =
+      obx.QueryIntegerProperty<DocumentType>(_entities[4].properties[0]);
+
+  /// see [DocumentType.name]
+  static final name =
+      obx.QueryStringProperty<DocumentType>(_entities[4].properties[1]);
+
+  /// see [DocumentType.isPublic]
+  static final isPublic =
+      obx.QueryBooleanProperty<DocumentType>(_entities[4].properties[2]);
+
+  /// see [DocumentType.iconName]
+  static final iconName =
+      obx.QueryStringProperty<DocumentType>(_entities[4].properties[3]);
 }

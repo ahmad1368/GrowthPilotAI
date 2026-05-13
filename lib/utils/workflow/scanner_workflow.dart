@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/core/models/ocr_result.dart';
+import 'package:growth_pilot_ai/core/models/omni_response.dart';
+import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/widgets/omni_step_progress.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/services/document/document_classifier.dart';
-import '../../core/services/ocr/ocr_service.dart';
 import '../../core/services/omni_logger.dart';
-import '../../core/models/ocr_result.dart';
 import '../../services/scanner/scanner_service.dart';
-
 // ویجت‌های بازسازی شده
 import '../../widgets/image_source_sheet.dart';
 import '../../widgets/omni_glass_panel.dart';
@@ -17,6 +17,16 @@ import '../../widgets/omni_button.dart';
 import '../../core/constants/scan_pipelines.dart';
 
 class ScannerWorkflow {
+  // ۱. لیست انواع سند را اینجا تعریف کن
+  final List<String> documentTypes = [
+    "رسید بانکی",
+    "فاکتور خرید",
+    "کارت شناسایی",
+    "قرارداد رسمی",
+    "سایر موارد"
+  ];
+
+  // ۲. متغیرهای سرویس و وضعیت در زیر آن
   final OCRService _ocrService = OCRService();
   final ScannerService _scannerService = ScannerService();
 
@@ -24,16 +34,28 @@ class ScannerWorkflow {
   final RxString _currentStepId = 'pick'.obs;
   final RxDouble _subProgress = 0.0.obs;
 
-  void start(BuildContext context, Function(String text) onTextExtracted) {
+  void start(BuildContext context, Function(String) onSave) async {
     Get.bottomSheet(
       ImageSourceSheet(
         onSourceSelected: (source) async {
-          Get.back(); // بستن شیت انتخاب منبع
-          await _processImageWorkflow(source, onTextExtracted, context);
+          Get.back();
+
+          // اجرای پردازش و دریافت OmniResult
+          final outcome = await _processImageWorkflow(source, context);
+
+          if (outcome.success) {
+            // نمایش پنل تایید با اطمینان کامل از وجود دیتا
+            _showEnhancedResultPanel(
+                outcome.data!, outcome.message ?? "نامشخص", onSave);
+          } else {
+            // مدیریت خطای متمرکز
+            _showStatusPanel(
+                title: "پردازش ناموفق",
+                message: outcome.message!,
+                icon: Icons.warning_amber_rounded);
+          }
         },
       ),
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
     );
   }
 
@@ -53,64 +75,29 @@ class ScannerWorkflow {
     );
   }
 
-  Future<void> _processImageWorkflow(
-    ImageSource source,
-    Function(String) callback,
-    BuildContext context,
-  ) async {
-    // نمایش یک آورلی (Overlay) هوشمند که نوار پیشرفت را نشان می‌دهد
+  OmniResult<OCRResult> _processImageWorkflow(
+      ImageSource source, BuildContext context) async {
     _showProgressOverlay();
 
-    try {
-      // ۱. مرحله انتخاب و برش (با گزارش لحظه‌ای پیشرفت)
-      final File? croppedFile = await _scannerService.pickAndCrop(
-        source,
-        context,
-        onProgress: (stepId, progress) {
-          _currentStepId.value = stepId;
-          _subProgress.value = progress;
-        },
-      );
-
-      if (croppedFile == null) {
-        Get.back(); // بستن آورلی در صورت لغو
-        return;
-      }
-
-      // ۲. مرحله پردازش هوش مصنوعی (AI/OCR)
-      _currentStepId.value = 'ai';
-      _subProgress.value = 0.3; // شروع پردازش سنگین
-
-      final OCRResult? result = await _ocrService.extractText(croppedFile);
-
-      _subProgress.value = 0.8; // تحلیل متن
-      final String detectedType =
-          DocumentClassifier.detect(result?.fullText ?? "");
-
-      _subProgress.value = 1.0;
-      await Future.delayed(
-          const Duration(milliseconds: 500)); // توقف کوتاه برای دیدن وضعیت ۱۰۰٪
-
-      Get.back(); // بستن آورلی پیشرفت
-
-      // ۳. نمایش نتیجه نهایی
-      if (result != null && result.fullText.trim().isNotEmpty) {
-        _showEnhancedResultPanel(result, detectedType, callback);
-      } else {
-        _showStatusPanel(
-          title: "عدم شناسایی",
-          message: "متنی در تصویر یافت نشد. لطفاً از وضوح تصویر مطمئن شوید.",
-          icon: Icons.search_off_rounded,
-        );
-      }
-    } catch (e, stack) {
+    // گام ۱: دریافت فایل (خروجی OmniResult است)
+    final scannerRes = await _scannerService.pickAndCrop(source, context);
+    if (!scannerRes.success) {
       Get.back();
-      OmniLogger.error(
-        title: "خطای جریان اسکن",
-        message: e.toString(),
-        widgetName: "ScannerWorkflow",
-      );
+      return OmniResponse.error(scannerRes.message!);
     }
+
+    // گام ۲: ارسال فایل به OCR (ورودی دیتای مرحله قبل است)
+    final ocrRes = await _ocrService.extractText(scannerRes.data!);
+    if (!ocrRes.success) {
+      Get.back();
+      return ocrRes;
+    }
+
+    // گام ۳: تشخیص نوع سند
+    final classRes = await DocumentClassifier.detect(ocrRes.data!.fullText);
+
+    Get.back();
+    return OmniResponse.success(ocrRes.data!, message: classRes.data);
   }
 
   /// نمایش یک آورلی شیشه‌ای که نوار پیشرفت را در کل صفحه مدیریت می‌کند
@@ -130,54 +117,91 @@ class ScannerWorkflow {
     );
   }
 
-  /// پنل پیشرفته نمایش نتیجه با افکت‌های جدید
   void _showEnhancedResultPanel(
-      OCRResult result, String detectedType, Function(String) callback) {
-    final bool isDarkMode = Get.isDarkMode;
-    final Color accentColor = Colors.cyanAccent;
+      OCRResult result, String initialType, Function(String) onSave) {
+    // تبدیل رشته معمولی به واکنشی برای هماهنگی با Obx و متد انتخاب نوع سند
+    final RxString rxDetectedType = initialType.obs;
 
     Get.dialog(
+      barrierDismissible: false, // جلوگیری از بسته شدن ناگهانی
       Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 500),
             child: OmniGlassPanel(
-              title: "تحلیل هوشمند سند",
-              leadingIcon: Icons.auto_awesome_outlined,
-              opacity: isDarkMode ? 0.1 : 0.9,
+              title: "نتیجه پردازش هوشمند",
+              leadingIcon: Icons.auto_awesome_rounded,
+              opacity: Get.isDarkMode ? 0.2 : 0.9,
               actionButtons: [
                 OmniButton(
-                  label: "تایید و ذخیره",
-                  icon: Icons.check_circle_outline_rounded,
+                  label: "تایید و ذخیره نهایی",
+                  icon: Icons.save_rounded,
                   isPrimary: true,
                   onTap: () {
-                    Get.back();
-                    callback(result.fullText);
+                    Get.back(); // بستن دیالوگ
+                    onSave(rxDetectedType
+                        .value); // بازگرداندن مقدار نهایی انتخاب شده
                   },
                 ),
                 OmniButton(
-                  label: "تلاش مجدد",
+                  label: "اسکن مجدد",
                   icon: Icons.refresh_rounded,
                   isPrimary: false,
                   onTap: () => Get.back(),
                 ),
               ],
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // سکشن نوع سند با طراحی بهبود یافته
-                  _buildTypeSelectorSection(
-                      detectedType, isDarkMode ? Colors.white : Colors.black),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ۱. بخش انتخاب و نمایش نوع سند (که قبلاً نوشتیم)
+                    _buildTypeSelectorSection(
+                        rxDetectedType, Colors.cyanAccent),
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Divider(color: Colors.white10, height: 1),
-                  ),
+                    const SizedBox(height: 20),
 
-                  // باکس پیش‌نمایش متن با افکت لیزر مجازی (شبیه لودینگ ملایم)
-                  _buildTextPreview(result.fullText, accentColor),
-                ],
+                    // ۲. نمایش متن استخراج شده
+                    const AdaptiveText(
+                      "متن شناسایی شده:",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white70),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white10),
+                      ),
+                      child: AdaptiveText(
+                        result.fullText ?? "متنی یافت نشد",
+                        style: const TextStyle(fontSize: 14, height: 1.5),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    // ۳. نمایش درصد اطمینان (Confidence)
+                    Row(
+                      children: [
+                        const Icon(Icons.verified_user_outlined,
+                            size: 16, color: Colors.greenAccent),
+                        const SizedBox(width: 8),
+                        AdaptiveText(
+                          "دقت پردازش: ${((result.confidence ?? 0.0) * 100).toStringAsFixed(1)}%",
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.greenAccent),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -186,18 +210,105 @@ class ScannerWorkflow {
     );
   }
 
-  Widget _buildTypeSelectorSection(String type, Color iconColor) {
+  void _showTypeSelectionPanel(RxString currentType) {
+    Get.dialog(
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: OmniGlassPanel(
+              title: "انتخاب نوع سند",
+              leadingIcon: Icons.category_rounded,
+              opacity: Get.isDarkMode ? 0.15 : 0.9,
+              // دکمه بستن در پایین
+              actionButtons: [
+                OmniButton(
+                  label: "انصراف",
+                  icon: Icons.close_rounded,
+                  isPrimary: false,
+                  onTap: () => Get.back(),
+                ),
+              ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: documentTypes.map((type) {
+                  return Material(
+                    color: Colors.transparent,
+                    child: ListTile(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                      title: AdaptiveText(
+                        type,
+                        style: TextStyle(
+                          color: currentType.value == type
+                              ? Colors.cyanAccent
+                              : Colors.white,
+                          fontWeight: currentType.value == type
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                      leading: Icon(
+                        currentType.value == type
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_off,
+                        color: currentType.value == type
+                            ? Colors.cyanAccent
+                            : Colors.white30,
+                      ),
+                      onTap: () {
+                        currentType.value =
+                            type; // تغییر مقدار به صورت Reactive
+                        Get.back(); // بستن پنل بعد از انتخاب
+                        OmniLogger.info(
+                          title: "تغییر طبقه‌بندی",
+                          message: "نوع سند به $type تغییر یافت.",
+                          widgetName: "ScannerWorkflow",
+                        );
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTypeSelectorSection(RxString detectedType, Color iconColor) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.cyan.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.cyan.withOpacity(0.1)),
+        // استفاده از رنگ سایان بسیار ملایم برای متمایز کردن بخش انتخابگر
+        color: Colors.cyanAccent.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.cyanAccent.withOpacity(0.15),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
-          const Icon(Icons.description_rounded, color: Colors.cyanAccent),
+          // آیکون وضعیت که حس بصری بهتری منتقل می‌کند
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.cyanAccent.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.inventory_2_outlined,
+              color: Colors.cyanAccent,
+              size: 20,
+            ),
+          ),
           const SizedBox(width: 12),
+
+          // بخش متون (عنوان و مقدار واکنشی)
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,23 +316,52 @@ class ScannerWorkflow {
                 AdaptiveText(
                   "طبقه‌بندی هوشمند:",
                   style: TextStyle(
-                      fontSize: 10, color: iconColor.withOpacity(0.5)),
+                    fontSize: 10,
+                    color: iconColor.withOpacity(0.6),
+                    letterSpacing: 0.5,
+                  ),
                 ),
-                AdaptiveText(
-                  type,
-                  style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.cyanAccent),
-                ),
+                const SizedBox(height: 2),
+                // بخش واکنشی که به محض انتخاب نوع جدید، آپدیت می‌شود
+                Obx(() => AdaptiveText(
+                      detectedType.value,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.cyanAccent,
+                      ),
+                    )),
               ],
             ),
           ),
-          IconButton(
-            icon:
-                const Icon(Icons.swap_horiz_rounded, color: Colors.cyanAccent),
-            onPressed: () => _showTypeChangeMenu(type),
-          )
+
+          // دکمه ویرایش برای باز کردن پنل انتخاب
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () => _showTypeSelectionPanel(detectedType),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.edit_note_rounded,
+                      color: Colors.cyanAccent,
+                      size: 24,
+                    ),
+                    AdaptiveText(
+                      "تغییر",
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: Colors.cyanAccent.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

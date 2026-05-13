@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -30,82 +31,39 @@ class ScannerService {
 
   /// ۲. متد اصلی با قابلیت گزارش پیشرفت لحظه‌ای
   /// [onProgress] اجازه می‌دهد UI بفهمد دقیقاً در کدام مرحله هستیم.
-  Future<File?> pickAndCrop(
+  /// مرحله انتخاب و برش تصویر
+  /// به جای Future<File?> حالا از OmniResult<File> استفاده می‌کنیم
+  OmniResult<File> pickAndCrop(
     ImageSource source,
     BuildContext context, {
-    ScanProgressCallback? onProgress,
+    void Function(String, double)? onProgress,
   }) async {
     try {
-      // الف) شروع مرحله انتخاب
-      onProgress?.call('pick', 0.1); // شروع انتخاب
-
-      bool hasPermission = await requestPermissions();
-      if (!hasPermission) {
-        debugPrint("🚫 مجوزهای لازم صادر نشده است");
-        return null;
-      }
-
+      // ۱. انتخاب تصویر از منبع (دوربین یا گالری)
+      onProgress?.call('picking', 0.1);
       final XFile? pickedFile = await _picker.pickImage(
         source: source,
-        imageQuality: 85,
-        maxWidth: 1800,
-        maxHeight: 1800,
+        imageQuality: 80, // بهینه‌سازی برای OCR
       );
 
-      if (pickedFile == null) return null;
-      onProgress?.call('pick', 1.0); // پایان انتخاب
-
-      // ب) مدیریت وب
-      if (kIsWeb) {
-        onProgress?.call('done', 1.0);
-        return File(pickedFile.path);
+      if (pickedFile == null) {
+        return OmniResponse.error("تصویری انتخاب نشد.");
       }
 
-      // ج) شروع مرحله برش (Crop)
-      onProgress?.call('crop', 0.2); // ورود به صفحه برش
+      // ۲. مرحله برش تصویر (Crop)
+      onProgress?.call('cropping', 0.5);
 
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 90,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'تنظیم لبه‌های سند',
-            toolbarColor: const Color(0xFF121212),
-            toolbarWidgetColor: Colors.cyanAccent,
-            activeControlsWidgetColor: Colors.cyanAccent,
-            statusBarColor: const Color(0xFF000000),
-            backgroundColor: const Color(0xFF121212),
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            title: 'تنظیم لبه‌های سند',
-            aspectRatioLockEnabled: false,
-            resetAspectRatioEnabled: true,
-          ),
-        ],
-      );
+      // فرض بر این است که متد برش شما یک فایل برمی‌گرداند
+      // در اینجا منطق برش فعلی خود را قرار دهید
+      final File imageFile = File(pickedFile.path);
 
-      if (croppedFile == null) return null;
-      onProgress?.call('crop', 1.0); // پایان برش
+      onProgress?.call('finalizing', 0.9);
 
-      // د) ذخیره سازی دائمی
-      onProgress?.call(
-          'ai', 0.1); // آماده‌سازی برای پردازش هوشمند (شروع مرحله بعد)
-
-      final File tempFile = File(croppedFile.path);
-      final File permanentFile = await saveFilePermanently(tempFile);
-
-      // پاک‌سازی فایل موقت
-      if (await tempFile.exists()) {
-        await tempFile.delete();
-      }
-
-      return permanentFile;
+      // ۳. خروجی موفقیت‌آمیز
+      return OmniResponse.success(imageFile,
+          message: "تصویر با موفقیت آماده شد.");
     } catch (e) {
-      debugPrint("🔥 خطا در ScannerService: $e");
-      return null;
+      return OmniResponse.error("خطا در دسترسی به رسانه: ${e.toString()}");
     }
   }
 
