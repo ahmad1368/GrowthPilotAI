@@ -1,3 +1,6 @@
+import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
+import 'package:growth_pilot_ai/core/models/ocr_result.dart';
+
 import '../../../../objectbox.g.dart';
 import '../entities/transaction_entity.dart';
 
@@ -95,8 +98,9 @@ class TransactionRepository {
     try {
       final all = _box.getAll();
       // عملیات بهینه‌سازی مدل
-    } catch (e) {
+    } catch (e, stack) {
       // در صورت بروز خطا در ساختار جدید (Migration Error)
+      FailureMapper.map<OCRResult>(e, stack: stack);
     }
   }
 }

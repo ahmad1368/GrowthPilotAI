@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
+import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
+import 'package:growth_pilot_ai/core/services/omni_logger.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -29,41 +31,70 @@ class ScannerService {
             statuses[Permission.photos]!.isGranted);
   }
 
-  /// ۲. متد اصلی با قابلیت گزارش پیشرفت لحظه‌ای
-  /// [onProgress] اجازه می‌دهد UI بفهمد دقیقاً در کدام مرحله هستیم.
-  /// مرحله انتخاب و برش تصویر
-  /// به جای Future<File?> حالا از OmniResult<File> استفاده می‌کنیم
-  OmniResult<File> pickAndCrop(
+  /// متد اصلی انتخاب و آماده‌سازی تصویر با مدیریت خطای متمرکز
+  /// [source]: منبع تصویر (دوربین یا گالری)
+  /// [onProgress]: کالبک برای به‌روزرسانی نوار پیشرفت در UI
+  Future<OmniResponse<File>> pickAndCrop(
     ImageSource source,
     BuildContext context, {
-    void Function(String, double)? onProgress,
+    void Function(String stepId, double progress)? onProgress,
   }) async {
     try {
-      // ۱. انتخاب تصویر از منبع (دوربین یا گالری)
-      onProgress?.call('picking', 0.1);
+      // ۱. شروع فرآیند و لاگ اولیه
+      OmniLogger.info(
+          title: "شروع فرایند",
+          message: "شروع فرآیند انتخاب تصویر از ${source.name}",
+          widgetName: "ScannerService");
+      onProgress?.call('picking', 0.2);
+
+      // ۲. انتخاب تصویر از ImagePicker
       final XFile? pickedFile = await _picker.pickImage(
         source: source,
-        imageQuality: 80, // بهینه‌سازی برای OCR
+        imageQuality: 85, // تعادل بین کیفیت OCR و حجم فایل
       );
 
+      // ۳. بررسی انصراف کاربر
       if (pickedFile == null) {
-        return OmniResponse.error("تصویری انتخاب نشد.");
+        OmniLogger.warning(
+            title: "انصراف", message: "کاربر از انتخاب تصویر منصرف شد.");
+        return OmniResponse.error("عملیات توسط کاربر لغو شد.");
       }
 
-      // ۲. مرحله برش تصویر (Crop)
+      // ۴. مرحله برش تصویر (Crop)
       onProgress?.call('cropping', 0.5);
+      OmniLogger.info(
+          title: "انتقال به مرحله بعد",
+          message: "در حال انتقال به مرحله برش تصویر...");
 
-      // فرض بر این است که متد برش شما یک فایل برمی‌گرداند
-      // در اینجا منطق برش فعلی خود را قرار دهید
+      // تبدیل XFile به File برای پردازش‌های بعدی
       final File imageFile = File(pickedFile.path);
 
-      onProgress?.call('finalizing', 0.9);
+      /* 
+         نکته: اگر پکیج image_cropper را نصب دارید، منطق آن را اینجا صدا بزنید.
+         فعلاً تصویر اصلی را برای نهایی‌سازی آماده می‌کنیم.
+      */
 
-      // ۳. خروجی موفقیت‌آمیز
-      return OmniResponse.success(imageFile,
-          message: "تصویر با موفقیت آماده شد.");
-    } catch (e) {
-      return OmniResponse.error("خطا در دسترسی به رسانه: ${e.toString()}");
+      // ۵. نهایی‌سازی (مثلاً فشرده‌سازی یا بررسی سلامت فایل)
+      onProgress?.call('finalizing', 0.8);
+
+      if (!await imageFile.exists()) {
+        throw FileSystemException("فایل انتخاب شده یافت نشد", imageFile.path);
+      }
+
+      onProgress?.call('completed', 1.0);
+      OmniLogger.info(
+          title: "آماده",
+          message: "فایل با موفقیت آماده شد: ${imageFile.path}");
+
+      // ۶. خروجی موفقیت‌آمیز در قالب استاندارد پروژه
+      return OmniResponse.success(
+        imageFile,
+        message: "تصویر با موفقیت انتخاب و پردازش شد.",
+      );
+    } catch (e, stack) {
+      // استفاده حرفه‌ای از FailureMapper برای مدیریت خطاهای پیش‌بینی نشده
+      // نوع جنریک <File> تضمین می‌کند که خروجی با امضای تابع همخوانی دارد
+      return FailureMapper.map<File>(e, stack: stack);
     }
   }
 

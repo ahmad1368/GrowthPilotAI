@@ -1,3 +1,6 @@
+import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
+import 'package:growth_pilot_ai/core/models/ocr_result.dart';
+
 import '../../models/omni_response.dart';
 
 class DocumentClassifier {
@@ -17,7 +20,7 @@ class DocumentClassifier {
 
   /// تشخیص نوع سند بر اساس متن ورودی
   /// خروجی همیشه یک [OmniResponse] است که شامل نوع تشخیص داده شده در فیلد data می‌باشد.
-  static OmniResponse<String> detect(String text) {
+  static OmniResponse<Object> detect(String text) {
     // ۱. بررسی اعتبار ورودی
     if (text.trim().isEmpty) {
       return OmniResponse.error(
@@ -47,12 +50,14 @@ class DocumentClassifier {
             ? "الگوی مشابهی یافت نشد."
             : "نوع سند با موفقیت تشخیص داده شد.",
       );
-    } catch (e) {
+    } catch (e, stack) {
       // ۴. مدیریت خطاهای غیرمنتظره در حین پردازش
-      return OmniResponse.error(
+      OmniResponse.error(
         "خطا در تحلیل هوشمند متن: ${e.toString()}",
         statusCode: 500,
       );
+
+      return FailureMapper.map<OCRResult>(e, stack: stack);
     }
   }
 }

@@ -1,16 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:growth_pilot_ai/widgets/adaptive_text.dart';
-
+import 'package:get/get.dart';
 import '../data/objectbox_provider.dart';
 import '../models/error_log.dart';
-import '../../main.dart'; // برای دسترسی به متغیر سراسری objectbox
 
 class OmniLogger {
-  /// متد اصلی برای ثبت خطاها از سراسر برنامه
   static void error({
     required String title,
     required dynamic message,
@@ -20,10 +14,8 @@ class OmniLogger {
     final String errorMsg = message.toString();
     final DateTime now = DateTime.now();
 
-    // ۱. چاپ در کنسول (فقط در حالت Debug)
     log('❌ [$title] در ویجت ($widgetName): $errorMsg');
 
-    // ۲. ذخیره در دیتابیس محلی (ObjectBox)
     _saveToLocalDatabase(
       title: title,
       message: errorMsg,
@@ -32,11 +24,44 @@ class OmniLogger {
       time: now,
     );
 
-    // ۳. ارسال به سیستم‌های آنلاین (مثل Sentry یا Crashlytics)
     _sendToOnlineServices(title, errorMsg, stackTrace, widgetName);
   }
 
-  /// ثبت اطلاعات و وقایع برنامه (بدون ایجاد وقفه یا ثبت به عنوان خطا)
+  /// ۲. ثبت هشدارها (زرد/نارنجی - غیر بحرانی)
+  static void warning({
+    required String title,
+    required String message,
+    String? widgetName,
+  }) {
+    final DateTime now = DateTime.now();
+    final bool isDarkMode = Get.isDarkMode;
+
+    // چاپ در کنسول با ایموجی هشدار
+    log('⚠️ [$title] | 🕒 ${now.hour}:${now.minute} | 📍 Widget: $widgetName | 📝 $message');
+
+    // نمایش اسنک‌بار با تم هشدار (Amber/Orange)
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: isDarkMode
+          ? Colors.amber.withValues(alpha: 0.2)
+          : Colors.orange.withValues(alpha: 0.1),
+      colorText: isDarkMode ? Colors.amber[100] : Colors.orange[900],
+      icon: Icon(
+        Icons.warning_amber_rounded,
+        color: isDarkMode ? Colors.amberAccent : Colors.orangeAccent,
+      ),
+      margin: const EdgeInsets.all(15),
+      borderRadius: 15,
+      duration: const Duration(seconds: 4),
+      borderWidth: 1,
+      borderColor: isDarkMode
+          ? Colors.amber.withValues(alpha: 0.3)
+          : Colors.orange.withValues(alpha: 0.2),
+    );
+  }
+
   static void info({
     required String title,
     required String message,
@@ -45,11 +70,8 @@ class OmniLogger {
     final DateTime now = DateTime.now();
     final bool isDarkMode = Get.isDarkMode;
 
-    // ۱. چاپ در کنسول برای دیباگ (نمایش ساعت، ویجت و پیام)
     log('ℹ️ [$title] | 🕒 ${now.hour}:${now.minute} | 📍 Widget: $widgetName | 📝 $message');
 
-    // ۲. نمایش پیام ملایم به کاربر (UI)
-    // استفاده از withValues طبق استاندارد جدید پروژه
     Get.snackbar(
       title,
       message,
@@ -59,16 +81,10 @@ class OmniLogger {
           : Colors.black.withValues(alpha: 0.05),
       colorText: isDarkMode ? Colors.white : Colors.black,
       icon: Icon(Icons.info_outline_rounded,
-          color: isDarkMode ? Colors.white : Colors.black // واکنش به تم
-          ),
+          color: isDarkMode ? Colors.white : Colors.black),
       margin: const EdgeInsets.all(15),
       borderRadius: 15,
       duration: const Duration(seconds: 3),
-      mainButton: TextButton(
-        onPressed: () => Get.back(),
-        child: AdaptiveText("متوجه شدم",
-            style: TextStyle(color: Colors.cyanAccent, fontSize: 10)),
-      ),
     );
   }
 
@@ -80,17 +96,24 @@ class OmniLogger {
     required DateTime time,
   }) {
     try {
-      final logEntry = ErrorLog(
-        title: title,
-        message: message,
-        stackTrace: stackTrace,
-        timestamp: time,
-        widgetName: widgetName,
-      );
-      // استفاده از باکس مخصوص ارورها در ObjectBox
-      objectbox.store.box<ErrorLog>().put(logEntry);
+      // راه حل خطا: استفاده از Get.find به جای متغیر سراسری
+      if (Get.isRegistered<ObjectBox>()) {
+        final objectBoxInstance = Get.find<ObjectBox>();
+
+        final logEntry = ErrorLog(
+          title: title,
+          message: message,
+          stackTrace: stackTrace,
+          timestamp: time,
+          widgetName: widgetName,
+        );
+
+        objectBoxInstance.store.box<ErrorLog>().put(logEntry);
+      }
     } catch (e) {
-      log('Critical: Failed to save error log to ObjectBox: $e');
+      // بسیار مهم: در اینجا هرگز از FailureMapper استفاده نکنید
+      // چون باعث ایجاد چرخه بی‌نهایت (Recursion) می‌شود.
+      log('Critical failure: Could not save log to DB: $e');
     }
   }
 
@@ -100,7 +123,6 @@ class OmniLogger {
     StackTrace? stack,
     String? widget,
   ) {
-    // اینجا در آینده کد Sentry یا Firebase را قرار می‌دهیم
-    // مثال: Sentry.captureException(message, stackTrace: stack);
+    // برای آینده
   }
 }

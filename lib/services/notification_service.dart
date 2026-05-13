@@ -1,3 +1,6 @@
+import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
+import 'package:growth_pilot_ai/core/models/ocr_result.dart';
+
 import '../models/notification_model.dart';
 
 class NotificationService {
@@ -19,9 +22,10 @@ class NotificationService {
           isRead: false,
         );
       });
-    } catch (e) {
+    } catch (e, stack) {
       // در صورت بروز خطا، یک لیست خالی برمی‌گردانیم تا برنامه کرش نکند
       print("Error in NotificationService: $e");
+      FailureMapper.map<OCRResult>(e, stack: stack);
       return [];
     }
   }

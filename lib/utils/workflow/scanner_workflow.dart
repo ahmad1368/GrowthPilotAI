@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
@@ -25,10 +24,9 @@ class ScannerWorkflow {
     "قرارداد رسمی",
     "سایر موارد"
   ];
-
-  // ۲. متغیرهای سرویس و وضعیت در زیر آن
-  final OCRService _ocrService = OCRService();
-  final ScannerService _scannerService = ScannerService();
+// به جای ساختن، سرویس‌های آماده را از حافظه فراخوانی می‌کنیم
+  final _ocrService = Get.find<OCRService>();
+  final _scannerService = Get.find<ScannerService>();
 
   // کنترل وضعیت پیشرفت برای نمایش در UI
   final RxString _currentStepId = 'pick'.obs;
@@ -75,29 +73,64 @@ class ScannerWorkflow {
     );
   }
 
-  OmniResult<OCRResult> _processImageWorkflow(
+  OmniResult<OCRResult> startProcess(
       ImageSource source, BuildContext context) async {
-    _showProgressOverlay();
+    return await _processImageWorkflow(source, context);
+  }
 
-    // گام ۱: دریافت فایل (خروجی OmniResult است)
-    final scannerRes = await _scannerService.pickAndCrop(source, context);
-    if (!scannerRes.success) {
+  /// اصلاح شده: اضافه شدن Future به ابتدای نوع بازگشتی
+  Future<OmniResponse<OCRResult>> _processImageWorkflow(
+      ImageSource source, BuildContext context) async {
+    try {
+      _showProgressOverlay();
+
+      // ۱. مرحله انتخاب و برش تصویر
+      final scannerRes = await _scannerService.pickAndCrop(
+        source,
+        context,
+        onProgress: (stepId, subValue) {
+          _currentStepId.value = stepId;
+          _subProgress.value = subValue;
+        },
+      );
+
+      if (!scannerRes.success) {
+        Get.back(); // بستن آورلی لودینگ
+        return OmniResponse.error(
+            scannerRes.message?.toString() ?? "خطا در مرحله اسکن");
+      }
+
+      // ۲. مرحله استخراج متن (OCR)
+      _currentStepId.value = 'ocr';
+      _subProgress.value = 0.5;
+
+      final ocrRes = await _ocrService.extractText(scannerRes.data!);
+      if (!ocrRes.success) {
+        Get.back();
+        return OmniResponse.error(
+            ocrRes.message?.toString() ?? "خطا در استخراج متن");
+      }
+
+      // ۳. مرحله تشخیص نوع سند
+      _currentStepId.value = 'classifying';
+      _subProgress.value = 0.9;
+
+      final classRes = await DocumentClassifier.detect(ocrRes.data!.fullText);
+
+      Get.back(); // پایان موفقیت‌آمیز و بستن آورلی
+
+      return OmniResponse.success(ocrRes.data!,
+          message: classRes.data?.toString() ?? "سایر موارد");
+    } catch (e, stack) {
       Get.back();
-      return OmniResponse.error(scannerRes.message!);
+      OmniLogger.error(
+        title: "خطای Workflow",
+        message: e,
+        stackTrace: stack,
+        widgetName: "ScannerWorkflow",
+      );
+      return OmniResponse.error("خطای غیرمنتظره در جریان پردازش: $e");
     }
-
-    // گام ۲: ارسال فایل به OCR (ورودی دیتای مرحله قبل است)
-    final ocrRes = await _ocrService.extractText(scannerRes.data!);
-    if (!ocrRes.success) {
-      Get.back();
-      return ocrRes;
-    }
-
-    // گام ۳: تشخیص نوع سند
-    final classRes = await DocumentClassifier.detect(ocrRes.data!.fullText);
-
-    Get.back();
-    return OmniResponse.success(ocrRes.data!, message: classRes.data);
   }
 
   /// نمایش یک آورلی شیشه‌ای که نوار پیشرفت را در کل صفحه مدیریت می‌کند

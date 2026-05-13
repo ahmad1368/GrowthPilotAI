@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart'; // اضافه شدن لاگر
 import '../core/data/repositories/transaction_repository.dart';
 import '../core/data/entities/transaction_entity.dart';
 import '../services/environment_service.dart';
-import '../main.dart'; // برای دسترسی به نمونه سراسری objectbox
 
 class TransactionController extends GetxController {
-  // ۱. لیست‌های مشاهده‌گر (Observable)
-  // از همان نام قبلی پروژه شما (filteredTransactions) استفاده می‌کنیم تا UI خراب نشود
+  // ۱. لیست‌های مشاهده‌گر
   var filteredTransactions = <TransactionEntity>[].obs;
   var isLoading = false.obs;
 
@@ -17,58 +18,67 @@ class TransactionController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // مقداردهی اولیه ریپازیتوری با استفاده از باکس تراکنش‌ها
-    _repository =
-        TransactionRepository(objectbox.store.box<TransactionEntity>());
+    try {
+      // پیدا کردن اینستنس دیتابیس
+      final objectBoxInstance = Get.find<ObjectBox>();
 
-    // ایجاد داده تستی در صورت خالی بودن دیتابیس (Issue #16)
-    _seedTestData();
+      _repository = TransactionRepository(
+        objectBoxInstance.store.box<TransactionEntity>(),
+      );
 
-    // لود اولیه داده‌ها بر اساس وضعیت سوئیچ دیتابیس
-    fetchTransactions();
+      _seedTestData();
+      fetchTransactions();
+
+      OmniLogger.info("TransactionController: Initialized successfully.");
+    } catch (e, stack) {
+      OmniLogger.error(
+        title: "TransactionController Initialization Failed",
+        message: e,
+        stackTrace: stack,
+      );
+    }
   }
 
-  /// متد اصلی برای بارگذاری داده‌ها (ترکیب منطق آنلاین و آفلاین)
+  /// متد اصلی برای بارگذاری داده‌ها
   Future<void> fetchTransactions() async {
     try {
       isLoading.value = true;
+      OmniLogger.info("Fetching transactions...");
 
-      // بررسی وضعیت سوئیچ دیتابیس از سرویس محیطی
       final bool isRemote =
           Get.find<EnvironmentService>().isRemoteEnabled.value;
 
       if (isRemote) {
-        // --- منطق دریافت از وب (API) ---
-        // TODO: پس از آماده شدن API، کد زیر را جایگزین کنید
-        print("Fetching data from Remote Cloud Database (Vancouver Server)...");
-        // مثال: final remoteData = await _apiService.getAll();
-        // filteredTransactions.assignAll(remoteData);
+        // منطق Cloud (Vancouver Server)
+        OmniLogger.warning(
+            "Remote fetching is not implemented yet. Pointing to TODO.");
+        // TODO: پیاده‌سازی سرویس API
       } else {
-        // --- منطق دریافت از دیتابیس محلی (ObjectBox) ---
-        print("Fetching data from Local ObjectBox...");
+        // منطق محلی
         _loadLocalData();
       }
-    } catch (e) {
-      print("Error fetching transactions: $e");
+    } catch (e, stack) {
+      // تبدیل خطا به ساختار استاندارد و نمایش/لاگ آن
+      final response = FailureMapper.map<void>(e, stack: stack);
+      Get.snackbar("خطا", response.message ?? "خطا در دریافت اطلاعات");
     } finally {
       isLoading.value = false;
     }
   }
 
-  /// منطق بارگذاری داده‌های محلی (کد قبلی شما)
+  /// منطق بارگذاری داده‌های محلی
   void _loadLocalData() {
     final now = DateTime.now();
     final lastMonth = now.subtract(const Duration(days: 30));
 
-    // استفاده از ریپازیتوری برای فیلتر ۳۰ روز اخیر
     final results = _repository.getByDateRange(lastMonth, now);
 
-    // به‌روزرسانی لیست
     filteredTransactions.assignAll(results);
-    print("تعداد تراکنش‌های محلی یافت شده: ${results.length}");
+    OmniLogger.info(
+        "Local transactions loaded: ${results.length} items found.");
   }
 
-  /// متد جستجوی متنی (قابلیت قبلی شما)
+  /// متد جستجوی متنی
   void searchTransactions(String query) {
     if (query.isEmpty) {
       fetchTransactions();
@@ -77,11 +87,15 @@ class TransactionController extends GetxController {
 
     final results = _repository.search(query);
     filteredTransactions.assignAll(results);
+    OmniLogger.info(
+        "Search performed for: '$query'. Results: ${results.length}");
   }
 
-  /// ایجاد داده‌های اولیه (کد قبلی شما)
+  /// ایجاد داده‌های اولیه (تست)
   void _seedTestData() {
-    final transactionBox = objectbox.store.box<TransactionEntity>();
+    final objectBoxInstance = Get.find<ObjectBox>();
+    final transactionBox = objectBoxInstance.store.box<
+        TransactionEntity>(); // استفاده از Getter مستقیم اگر در ObjectBox تعریف شده
 
     if (transactionBox.isEmpty()) {
       final now = DateTime.now();
@@ -90,18 +104,18 @@ class TransactionController extends GetxController {
           description: "خرید اشتراک Azure (تستی)",
           amount: 45.0,
           date: now,
-          dbType: 0, // Expense
+          dbType: 0,
         ),
         TransactionEntity(
           description: "درآمد پروژه Flutter (تستی)",
           amount: 1200.0,
           date: now.subtract(const Duration(days: 5)),
-          dbType: 1, // Income
+          dbType: 1,
         ),
       ];
 
       transactionBox.putMany(testItems);
-      print("داده‌های تستی با موفقیت به دیتابیس اضافه شدند.");
+      OmniLogger.info("Test data seeded into ObjectBox.");
     }
   }
 }
