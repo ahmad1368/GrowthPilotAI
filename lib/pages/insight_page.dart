@@ -69,29 +69,29 @@ class _InsightPageState extends State<InsightPage> {
       controller: widget.controller,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        _buildSliverHeader(),
+        // _buildSliverHeader(),
         _buildSliverList(),
       ],
     );
   }
 
-  Widget _buildSliverHeader() {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTitleRow(),
-            const SizedBox(height: 16),
-            Obx(() => InsightHeader(
-                total: controller.filteredTransactions
-                    .fold(0.0, (sum, item) => sum + item.amount))),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildSliverHeader() {
+  //   return SliverToBoxAdapter(
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(20),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           _buildTitleRow(),
+  //           const SizedBox(height: 16),
+  //           Obx(() => InsightHeader(
+  //               total: controller.filteredTransactions
+  //                   .fold(0.0, (sum, item) => sum + item.amount))),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildTitleRow() {
     if (widget.title == null) return const SizedBox.shrink();

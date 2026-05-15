@@ -71,7 +71,7 @@ class OmniStepProgress extends StatelessWidget {
             currentStep.title,
             key: ValueKey(currentStep.id),
             style: const TextStyle(
-                color: Colors.cyanAccent,
+                // color: Colors.cyanAccent,
                 fontSize: 16,
                 fontWeight: FontWeight.bold),
           ),

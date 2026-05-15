@@ -210,13 +210,6 @@ class ScannerWorkflow {
     // تبدیل رشته معمولی به واکنشی برای هماهنگی با Obx و متد انتخاب نوع سند
     final RxString rxDetectedType = initialType.obs;
 
-    // 👇 این تکه کد دیباگ را اینجا اضافه کن:
-    print("=========================================================");
-    print("🔍 [DEBUG] _showEnhancedResultPanel TRIGGERED!");
-    print(
-        "🧵 STACK TRACE:\n${StackTrace.current.toString().split('\n').take(4).join('\n')}");
-    print("=========================================================");
-
     Get.dialog(
       barrierDismissible: false, // جلوگیری از بسته شدن ناگهانی
       Center(
@@ -256,8 +249,7 @@ class ScannerWorkflow {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // ۱. بخش انتخاب و نمایش نوع سند (که قبلاً نوشتیم)
-                    _buildTypeSelectorSection(
-                        rxDetectedType, Colors.cyanAccent),
+                    _buildTypeSelectorSection(rxDetectedType),
 
                     const SizedBox(height: 20),
 
@@ -265,9 +257,10 @@ class ScannerWorkflow {
                     const AdaptiveText(
                       "متن شناسایی شده:",
                       style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white70),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        // color: Colors.white70
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Container(
@@ -289,13 +282,18 @@ class ScannerWorkflow {
                     // ۳. نمایش درصد اطمینان (Confidence)
                     Row(
                       children: [
-                        const Icon(Icons.verified_user_outlined,
-                            size: 16, color: Colors.greenAccent),
+                        const Icon(
+                          Icons.verified_user_outlined,
+                          size: 16,
+                          // color: Colors.greenAccent
+                        ),
                         const SizedBox(width: 8),
                         AdaptiveText(
                           "دقت پردازش: ${((result.confidence ?? 0.0) * 100).toStringAsFixed(1)}%",
                           style: const TextStyle(
-                              fontSize: 12, color: Colors.greenAccent),
+                            fontSize: 12,
+                            //  color: Colors.greenAccent
+                          ),
                         ),
                       ],
                     ),
@@ -319,7 +317,7 @@ class ScannerWorkflow {
             child: OmniGlassPanel(
               title: "انتخاب نوع سند",
               leadingIcon: Icons.category_rounded,
-              opacity: Get.isDarkMode ? 0.15 : 0.9,
+              // opacity: Get.isDarkMode ? 0.15 : 0.9,
               // دکمه بستن در پایین
               actionButtons: [
                 OmniButton(
@@ -340,9 +338,9 @@ class ScannerWorkflow {
                       title: AdaptiveText(
                         type,
                         style: TextStyle(
-                          color: currentType.value == type
-                              ? Colors.cyanAccent
-                              : Colors.white,
+                          // color: currentType.value == type
+                          //     ? Colors.cyanAccent
+                          //     : Colors.white,
                           fontWeight: currentType.value == type
                               ? FontWeight.bold
                               : FontWeight.normal,
@@ -352,9 +350,9 @@ class ScannerWorkflow {
                         currentType.value == type
                             ? Icons.radio_button_checked
                             : Icons.radio_button_off,
-                        color: currentType.value == type
-                            ? Colors.cyanAccent
-                            : Colors.white30,
+                        // color: currentType.value == type
+                        //     ? Colors.cyanAccent
+                        //     : Colors.white30,
                       ),
                       onTap: () {
                         currentType.value =
@@ -377,13 +375,13 @@ class ScannerWorkflow {
     );
   }
 
-  Widget _buildTypeSelectorSection(RxString detectedType, Color iconColor) {
+  Widget _buildTypeSelectorSection(RxString detectedType) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         // استفاده از رنگ سایان بسیار ملایم برای متمایز کردن بخش انتخابگر
-        color: Colors.cyanAccent.withOpacity(0.05),
+        // color: Colors.cyanAccent.withOpacity(0.05),
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: Colors.cyanAccent.withOpacity(0.15),
@@ -396,12 +394,12 @@ class ScannerWorkflow {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.cyanAccent.withOpacity(0.1),
+              // color: Colors.cyanAccent.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.inventory_2_outlined,
-              color: Colors.cyanAccent,
+              // color: Colors.cyanAccent,
               size: 20,
             ),
           ),
@@ -416,7 +414,7 @@ class ScannerWorkflow {
                   "طبقه‌بندی هوشمند:",
                   style: TextStyle(
                     fontSize: 10,
-                    color: iconColor.withOpacity(0.6),
+                    // color: iconColor.withOpacity(0.6),
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -427,7 +425,7 @@ class ScannerWorkflow {
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Colors.cyanAccent,
+                        // color: Colors.cyanAccent,
                       ),
                     )),
               ],
@@ -446,14 +444,14 @@ class ScannerWorkflow {
                   children: [
                     const Icon(
                       Icons.edit_note_rounded,
-                      color: Colors.cyanAccent,
+                      // color: Colors.cyanAccent,
                       size: 24,
                     ),
                     AdaptiveText(
                       "تغییر",
                       style: TextStyle(
                         fontSize: 9,
-                        color: Colors.cyanAccent.withOpacity(0.8),
+                        // color: Colors.cyanAccent.withOpacity(0.8),
                       ),
                     ),
                   ],

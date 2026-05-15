@@ -21,19 +21,19 @@ class OmniButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    // ۱. تعیین رنگ پس‌زمینه دکمه
-    final Color bgColor = isPrimary
-        ? Colors.cyanAccent // دکمه اصلی همیشه فیروزه‌ای
-        : (isDarkMode
-            ? Colors.white.withOpacity(0.08)
-            : Colors.black.withOpacity(0.05));
+    // // ۱. تعیین رنگ پس‌زمینه دکمه
+    // final Color bgColor = isPrimary
+    //     ? Colors.cyanAccent // دکمه اصلی همیشه فیروزه‌ای
+    //     : (isDarkMode
+    //         ? Colors.white.withOpacity(0.08)
+    //         : Colors.black.withOpacity(0.05));
 
-    // ۲. تعیین رنگ محتوا (آیکون و متن) - حل مشکل دیده نشدن
-    final Color contentColor = isPrimary
-        ? Colors.black // روی پس‌زمینه فیروزه‌ای، متن و آیکون باید مشکی باشند
-        : (isDarkMode
-            ? Colors.cyanAccent
-            : Colors.black87); // در حالت عادی، فیروزه‌ای یا مشکی ملایم
+    // // ۲. تعیین رنگ محتوا (آیکون و متن) - حل مشکل دیده نشدن
+    // final Color contentColor = isPrimary
+    //     ? Colors.black // روی پس‌زمینه فیروزه‌ای، متن و آیکون باید مشکی باشند
+    //     : (isDarkMode
+    //         ? Colors.cyanAccent
+    //         : Colors.black87); // در حالت عادی، فیروزه‌ای یا مشکی ملایم
 
     return Material(
       color: Colors.transparent,
@@ -44,12 +44,10 @@ class OmniButton extends StatelessWidget {
           width: width,
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           decoration: BoxDecoration(
-            color: bgColor,
+            // color: bgColor,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isPrimary
-                  ? Colors.cyanAccent.withOpacity(0.5)
-                  : (isDarkMode ? Colors.white10 : Colors.black12),
+              color: (isDarkMode ? Colors.white10 : Colors.black12),
               width: 1,
             ),
           ),
@@ -61,7 +59,7 @@ class OmniButton extends StatelessWidget {
               Icon(
                 icon,
                 size: 18,
-                color: contentColor,
+                // color: contentColor,
               ),
               const SizedBox(width: 8),
               // استفاده از AdaptiveText یا Text با رنگ مناسب
@@ -69,7 +67,7 @@ class OmniButton extends StatelessWidget {
                 child: Text(
                   label,
                   style: TextStyle(
-                    color: contentColor,
+                    // color: contentColor,
                     fontSize: 13,
                     fontWeight: isPrimary ? FontWeight.bold : FontWeight.w500,
                   ),

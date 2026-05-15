@@ -17,12 +17,12 @@ class NavigationController extends GetxController {
       // استفاده از متد start به جای open
       _scannerWorkflow.start(Get.context!, (String extractedText) {
         // این کالبک وقتی اجرا می‌شود که OCR با موفقیت تمام شده باشد
-        Get.snackbar(
-          "Success",
-          "OCR Completed: ${extractedText.length} characters found",
-          backgroundColor: Colors.cyanAccent.withValues(alpha: 0.1),
-          colorText: Colors.cyanAccent,
-        );
+        // Get.snackbar(
+        //   "Success",
+        //   "OCR Completed: ${extractedText.length} characters found",
+        //   backgroundColor: Colors.cyanAccent.withValues(alpha: 0.1),
+        //   colorText: Colors.cyanAccent,
+        // );
       });
     } else {
       currentIndex.value = index;
