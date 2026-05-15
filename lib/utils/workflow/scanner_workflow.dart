@@ -4,6 +4,8 @@ import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/widgets/omni_step_progress.dart';
+import 'package:growth_pilot_ai/features/detector/models/financial_parser_request.dart';
+import 'package:growth_pilot_ai/features/detector/models/services/financial_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/services/document/document_classifier.dart';
 import '../../core/services/omni_logger.dart';
@@ -149,12 +151,36 @@ class ScannerWorkflow {
       // ۳. مرحله تشخیص هوشمند
       final classRes = await DocumentClassifier.detect(ocrRes.data!.fullText);
 
+      // 🟢 شروع کدهای اصلاح‌شده بدون خطا برای حل تفکیک پارامترهای مالی (Issue #25)
+      // ۱. ابتدا نمونه‌سازی شیءگرا برای حل خطای متد استاتیک
+      final financialParser = FinancialParser();
+
+      // ۲. تبدیل متن به خطوط مجزا با تغییر ساختار و پاس دادن آبجکت درخواست استاندارد به همراه await
+      final parserResponse = await financialParser.parse(
+        FinancialParserRequest(
+          lines: ocrRes.data!.fullText.split('\n'),
+        ),
+      );
+
+      // ۳. بررسی موفقیت خروجی استاندارد OmniResponse و باز کردن مقادیر برای حل خطای گترها
+      if (parserResponse.success && parserResponse.data != null) {
+        final financialData = parserResponse.data!;
+
+        print(
+            "DEBUG [Issue #25]: Automatically Extracted Currency -> ${financialData.currency}");
+        print(
+            "DEBUG [Issue #25]: CRA Compliant Standard Date -> ${financialData.extractedDate}");
+      } else {
+        print(
+            "DEBUG [Issue #25]: Financial extraction skipped or failed: ${parserResponse.message}");
+      }
+      // 🔴 پایان کدهای اصلاح‌شده برای Issue #25
+
       // ۴. مرحله اتمام (Completed)
       _currentStepId.value = 'completed';
       _subProgress.value = 1.0;
 
-      await Future.delayed(const Duration(milliseconds: 500));
-
+      // حذف تاخیر مصنوعی اضافی ۵۰۰ میلی‌ثانیه‌ای برای شتاب‌دهی و حفظ Snappy UX پروژه
       if (isOverlayVisible) {
         Get.back(); // بستن آورلی پیشرفت قبل از نمایش نتیجه
         isOverlayVisible = false;
