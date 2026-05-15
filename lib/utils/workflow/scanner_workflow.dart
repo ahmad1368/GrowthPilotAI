@@ -85,11 +85,11 @@ class ScannerWorkflow {
     _currentStepId.close();
     _subProgress.close();
 
-    OmniLogger.info(
-      title: "Workflow Disposed",
-      message: "تمامی استریم‌ها و منابع سخت‌افزاری آزاد شدند.",
-      widgetName: "ScannerWorkflow",
-    );
+    // OmniLogger.info(
+    //   title: "Workflow Disposed",
+    //   message: "تمامی استریم‌ها و منابع سخت‌افزاری آزاد شدند.",
+    //   widgetName: "ScannerWorkflow",
+    // );
   }
 
   OmniResult<OCRResult> startProcess(
@@ -209,6 +209,13 @@ class ScannerWorkflow {
       OCRResult result, String initialType, Function(String) onSave) {
     // تبدیل رشته معمولی به واکنشی برای هماهنگی با Obx و متد انتخاب نوع سند
     final RxString rxDetectedType = initialType.obs;
+
+    // 👇 این تکه کد دیباگ را اینجا اضافه کن:
+    print("=========================================================");
+    print("🔍 [DEBUG] _showEnhancedResultPanel TRIGGERED!");
+    print(
+        "🧵 STACK TRACE:\n${StackTrace.current.toString().split('\n').take(4).join('\n')}");
+    print("=========================================================");
 
     Get.dialog(
       barrierDismissible: false, // جلوگیری از بسته شدن ناگهانی
@@ -349,11 +356,11 @@ class ScannerWorkflow {
                         currentType.value =
                             type; // تغییر مقدار به صورت Reactive
                         Get.back(); // بستن پنل بعد از انتخاب
-                        OmniLogger.info(
-                          title: "تغییر طبقه‌بندی",
-                          message: "نوع سند به $type تغییر یافت.",
-                          widgetName: "ScannerWorkflow",
-                        );
+                        // OmniLogger.info(
+                        //   title: "تغییر طبقه‌بندی",
+                        //   message: "نوع سند به $type تغییر یافت.",
+                        //   widgetName: "ScannerWorkflow",
+                        // );
                       },
                     ),
                   );
@@ -474,14 +481,14 @@ class ScannerWorkflow {
     );
   }
 
-  void _showTypeChangeMenu(String currentType) {
-    OmniLogger.info(
-      title: "تغییر نوع سند",
-      message: "منوی تغییر طبقه‌بندی باز شد. فعلی: $currentType",
-      widgetName: "ScannerWorkflow",
-    );
-    // اینجا می‌توانید یک Get.bottomSheet برای انتخاب دستی نوع سند باز کنید.
-  }
+  // void _showTypeChangeMenu(String currentType) {
+  //   // OmniLogger.info(
+  //   //   title: "تغییر نوع سند",
+  //   //   message: "منوی تغییر طبقه‌بندی باز شد. فعلی: $currentType",
+  //   //   widgetName: "ScannerWorkflow",
+  //   // );
+  //   // اینجا می‌توانید یک Get.bottomSheet برای انتخاب دستی نوع سند باز کنید.
+  // }
 
   void _showStatusPanel(
       {required String title,

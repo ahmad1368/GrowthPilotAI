@@ -20,12 +20,12 @@ class OCRService {
           await _textRecognizer.processImage(inputImage);
 
       // ۳. لاگ کردن متن خام در محیط توسعه برای دیباگ راحت‌تر (Issue #266)
-      OmniLogger.info(
-        title: "ML Kit OCR Raw Output",
-        message:
-            "متن خام استخراج شده: ${recognizedText.text.substring(0, recognizedText.text.length > 50 ? 50 : recognizedText.text.length)}...",
-        widgetName: "OCRService",
-      );
+      // OmniLogger.info(
+      //   title: "ML Kit OCR Raw Output",
+      //   message:
+      //       "متن خام استخراج شده: ${recognizedText.text.substring(0, recognizedText.text.length > 50 ? 50 : recognizedText.text.length)}...",
+      //   widgetName: "OCRService",
+      // );
 
       // ۴. ساخت مدل نتیجه با متغیرهای نام‌دار و پیش‌گیری از مقدار نال
       final result = OCRResult(
@@ -74,10 +74,10 @@ class OCRService {
   /// آزادسازی منابع سخت‌افزاری در هنگام بسته شدن ورک‌فلو (مانند متد dispose در ScannerWorkflow)
   void dispose() {
     _textRecognizer.close();
-    OmniLogger.info(
-      title: "OCR Service Closed",
-      message: "منابع سخت‌افزاری TextRecognizer با موفقیت آزاد شدند.",
-      widgetName: "OCRService",
-    );
+    // OmniLogger.info(
+    //   title: "OCR Service Closed",
+    //   message: "منابع سخت‌افزاری TextRecognizer با موفقیت آزاد شدند.",
+    //   widgetName: "OCRService",
+    // );
   }
 }
