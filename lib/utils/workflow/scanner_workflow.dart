@@ -29,46 +29,65 @@ class ScannerWorkflow {
   final _scannerService = Get.find<ScannerService>();
 
   // کنترل وضعیت پیشرفت برای نمایش در UI
-  final RxString _currentStepId = 'pick'.obs;
+  final RxString _currentStepId = 'picking'.obs;
   final RxDouble _subProgress = 0.0.obs;
 
   void start(BuildContext context, Function(String) onSave) async {
     Get.bottomSheet(
       ImageSourceSheet(
         onSourceSelected: (source) async {
+          // ۱. ابتدا باتم‌شیت انتخاب منبع عکس را کاملاً می‌بندیم
           Get.back();
 
-          // اجرای پردازش و دریافت OmniResult
+          // یک تاخیر مایکروثانیه‌ای برای اینکه پشته ناویگیشن متوجه بسته شدن باتم‌شیت بشود
+          await Future.delayed(const Duration(milliseconds: 100));
+
+          // ۲. اجرای فرآیند اصلی پردازش تصویر (شامل لودینگ، کراپ، OCR و تشخیص هوشمند)
           final outcome = await _processImageWorkflow(source, context);
 
+          // ۳. پس از پایان کامل فرآیند، برای خروج انیمیشن لودینگ یک تنفس کوتاه ایجاد می‌کنیم
+          await Future.delayed(const Duration(milliseconds: 200));
+
+          // ۴. مدیریت هوشمند باز کردن پنل نهایی بر اساس وضعیت موفقیت
           if (outcome.success) {
-            // نمایش پنل تایید با اطمینان کامل از وجود دیتا
-            _showEnhancedResultPanel(
-                outcome.data!, outcome.message ?? "نامشخص", onSave);
+            if (outcome.data != null) {
+              _showEnhancedResultPanel(
+                outcome.data!,
+                outcome.message ?? "نامشخص",
+                onSave,
+              );
+            } else {
+              // اگر موفقیت ثبت شده ولی دیتا به هر دلیلی نال بود، پوشش امنیتی خطا قرار می‌دهیم
+              _showStatusPanel(
+                title: "خطای ساختار داده",
+                message:
+                    "پردازش با موفقیت انجام شد اما متن استخراج شده خالی است.",
+                icon: Icons.data_object_rounded,
+              );
+            }
           } else {
-            // مدیریت خطای متمرکز
+            // نمایش پنل خطای متمرکز با متون انطباق یافته AdaptiveText
             _showStatusPanel(
-                title: "پردازش ناموفق",
-                message: outcome.message!,
-                icon: Icons.warning_amber_rounded);
+              title: "پردازش ناموفق",
+              message:
+                  outcome.message ?? "خطای ناشناخته در لایه پردازش هوش مصنوعی",
+              icon: Icons.warning_amber_rounded,
+            );
           }
         },
       ),
     );
   }
 
-  /// آزادسازی منابع برای جلوگیری از نشت حافظه (Memory Leak)
   void dispose() {
-    // ۱. بستن سرویس OCR (بسیار مهم برای آزادسازی منابع سخت‌افزاری)
     _ocrService.dispose();
-
-    // ۲. اگر از Rx استفاده می‌کنی، بستن آن‌ها ضروری نیست اما حرفه‌ای است
-    // _currentStepId.close();
-    // _subProgress.close();
+    // بستن صریح جریان‌های Rx برای جلوگیری از نشت حافظه در صورت استفاده طولانی
+    _currentStepId.close();
+    _subProgress.close();
 
     OmniLogger.info(
       title: "Workflow Disposed",
-      message: "منابع جریان اسکن با موفقیت آزاد شدند.",
+      message: "تمامی استریم‌ها و منابع سخت‌افزاری آزاد شدند.",
       widgetName: "ScannerWorkflow",
     );
   }
@@ -78,13 +97,15 @@ class ScannerWorkflow {
     return await _processImageWorkflow(source, context);
   }
 
-  /// اصلاح شده: اضافه شدن Future به ابتدای نوع بازگشتی
   Future<OmniResponse<OCRResult>> _processImageWorkflow(
       ImageSource source, BuildContext context) async {
+    bool isOverlayVisible = false;
+
     try {
       _showProgressOverlay();
+      isOverlayVisible = true; // علامت‌گذاری اینکه آورلی نمایش داده شده
 
-      // ۱. مرحله انتخاب و برش تصویر
+      // ۱. مرحله انتخاب (Picking)
       final scannerRes = await _scannerService.pickAndCrop(
         source,
         context,
@@ -95,34 +116,58 @@ class ScannerWorkflow {
       );
 
       if (!scannerRes.success) {
-        Get.back(); // بستن آورلی لودینگ
-        return OmniResponse.error(
-            scannerRes.message?.toString() ?? "خطا در مرحله اسکن");
+        // اگر آورلی باز است، آن را می‌بندیم تا کاربر به صفحه قبل برگردد
+        if (isOverlayVisible) {
+          Get.back();
+          isOverlayVisible = false;
+        }
+        return OmniResponse.error(scannerRes.message ?? "خطا در اسکن");
       }
 
-      // ۲. مرحله استخراج متن (OCR)
-      _currentStepId.value = 'ocr';
-      _subProgress.value = 0.5;
+      // ۲. مرحله پردازش هوش مصنوعی (Finalizing)
+      _currentStepId.value = 'finalizing';
+      _subProgress.value = 0.1;
+
+      print("DEBUG: Scanner Path: ${scannerRes.data?.path}");
 
       final ocrRes = await _ocrService.extractText(scannerRes.data!);
-      if (!ocrRes.success) {
-        Get.back();
-        return OmniResponse.error(
-            ocrRes.message?.toString() ?? "خطا در استخراج متن");
+      // تست مقدار قبل از رفتن به مرحله بعد
+      if (ocrRes.success && ocrRes.data != null) {
+        print("Final Text in Workflow: ${ocrRes.data!.fullText}");
       }
 
-      // ۳. مرحله تشخیص نوع سند
-      _currentStepId.value = 'classifying';
-      _subProgress.value = 0.9;
+      if (!ocrRes.success) {
+        if (isOverlayVisible) {
+          Get.back();
+          isOverlayVisible = false;
+        }
+        return OmniResponse.error(ocrRes.message ?? "خطا در استخراج متن");
+      }
 
+      _subProgress.value = 0.7;
+
+      // ۳. مرحله تشخیص هوشمند
       final classRes = await DocumentClassifier.detect(ocrRes.data!.fullText);
 
-      Get.back(); // پایان موفقیت‌آمیز و بستن آورلی
+      // ۴. مرحله اتمام (Completed)
+      _currentStepId.value = 'completed';
+      _subProgress.value = 1.0;
+
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      if (isOverlayVisible) {
+        Get.back(); // بستن آورلی پیشرفت قبل از نمایش نتیجه
+        isOverlayVisible = false;
+      }
 
       return OmniResponse.success(ocrRes.data!,
           message: classRes.data?.toString() ?? "سایر موارد");
     } catch (e, stack) {
-      Get.back();
+      // در صورت بروز هرگونه خطای پیش‌بینی نشده
+      if (isOverlayVisible) {
+        Get.back(); // آزاد کردن صفحه
+      }
+
       OmniLogger.error(
         title: "خطای Workflow",
         message: e,
@@ -130,6 +175,16 @@ class ScannerWorkflow {
         widgetName: "ScannerWorkflow",
       );
       return OmniResponse.error("خطای غیرمنتظره در جریان پردازش: $e");
+    } finally {
+      // ۶. این همان بخش جادویی است که دنبالش بودید!
+      // چه کد با موفقیت اجرا شود و چه با خطا به Catch برود،
+      // دستور Get.back() در اینجا اجرا می‌شود و لایه لودینگ بسته می‌شود.
+      if (isOverlayVisible) {
+        if (Get.isDialogOpen == true) {
+          Get.back();
+        }
+        isOverlayVisible = false;
+      }
     }
   }
 

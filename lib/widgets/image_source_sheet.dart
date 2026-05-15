@@ -43,7 +43,7 @@ class ImageSourceSheet extends StatelessWidget {
               // ۲. نوار پیشرفت استاندارد (نمایش مرحله اول: انتخاب منبع)
               OmniStepProgress(
                 allSteps: ScanPipelines.docScanSteps,
-                currentStepId: 'pick', // مرحله فعلی: انتخاب منبع
+                currentStepId: 'picking', // مرحله فعلی: انتخاب منبع
                 subProgress: 0.5, // ۵۰ درصد این مرحله طی شده
               ),
 

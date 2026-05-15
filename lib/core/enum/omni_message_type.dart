@@ -1,7 +1,8 @@
 enum OmniMessageType {
-  info,
-  success,
-  warning,
-  error,
-  schedule,
+  error, // خطاها
+  warning, // هشدارها
+  info, // اطلاع‌رسانی
+  success, // عملیات موفق
+  reminder, // یادآوری
+  schedule, // زمان‌بندی
 }

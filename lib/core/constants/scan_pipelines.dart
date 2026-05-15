@@ -4,24 +4,24 @@ import '../models/process_step.dart';
 class ScanPipelines {
   static final List<ProcessStep> docScanSteps = [
     ProcessStep(
-      id: 'pick',
-      title: 'انتخاب تصویر',
+      id: 'picking',
+      title: 'انتخاب',
       order: 1,
       // navigateTo: (c) => const GalleryPage()
     ),
     ProcessStep(
-      id: 'crop',
+      id: 'cropping',
       title: 'برش و تنظیم',
       order: 2,
     ),
     ProcessStep(
-      id: 'ai',
+      id: 'finalizing',
       title: 'پردازش هوش مصنوعی',
       order: 3,
       weight: 3.0,
     ),
     ProcessStep(
-      id: 'done',
+      id: 'completed',
       title: 'اتمام عملیات',
       order: 4,
     ),

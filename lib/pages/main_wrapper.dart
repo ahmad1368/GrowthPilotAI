@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
 import 'package:growth_pilot_ai/utils/workflow/scanner_workflow.dart';
 import 'package:growth_pilot_ai/widgets/adaptive_text.dart';
 import 'package:growth_pilot_ai/widgets/home_bottom_nav.dart';
-import 'package:image_picker/image_picker.dart';
 
 class NavigationController extends GetxController {
   var currentIndex = 0.obs;
