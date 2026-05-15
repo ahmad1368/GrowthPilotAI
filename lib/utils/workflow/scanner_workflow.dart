@@ -243,7 +243,11 @@ class ScannerWorkflow {
                   label: "اسکن مجدد",
                   icon: Icons.refresh_rounded,
                   isPrimary: false,
-                  onTap: () => Get.back(),
+                  onTap: () {
+                    Get.back(); // بستن پنل فعلی
+                    start(
+                        Get.context!, onSave); // باز شدن فوری منوی دوربین/گالری
+                  },
                 ),
               ],
               child: SingleChildScrollView(
