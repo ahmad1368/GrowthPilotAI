@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/widgets/omni_step_progress.dart';
+import 'package:growth_pilot_ai/features/classifier/domain/enums/models/classifier_request.dart';
+import 'package:growth_pilot_ai/features/classifier/services/tflite_classifier_service.dart';
 import 'package:growth_pilot_ai/features/detector/models/financial_parser_request.dart';
 import 'package:growth_pilot_ai/features/detector/models/services/financial_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -131,6 +135,42 @@ class ScannerWorkflow {
       _subProgress.value = 0.1;
 
       print("DEBUG: Scanner Path: ${scannerRes.data?.path}");
+
+// 🟢 شروع کدهای اصلاح‌شده بر اساس استاندارد سیستم TFLite Gatekeeper (Issue #26)
+      // ۱. به‌روزرسانی لایه واکنشی استپر برای آگاهی کاربر از سنجش لبه داکیومنت
+      _currentStepId.value = 'finalizing';
+      _subProgress.value = 0.2;
+
+      // ۲. آماده‌سازی و تزریق محلی سرویس کلاسیفایر
+      final classifier = TfliteClassifierService();
+      await classifier.loadModel();
+
+      final classificationResult = await classifier.classify(
+        ClassifierRequest(imageFile: File(scannerRes.data!.path)),
+      );
+
+      // ۳. ثبت متمرکز لاگ با متد سراسری OmniLogger بر اساس مشخصات کاربر و زمان جاری پروژه
+      OmniLogger.info(
+        title: "ارزیابی کیفیت داکیومنت با TFLite",
+        message:
+            "میزان تطابق رسید: ${classificationResult.data?.confidence ?? 0.0}",
+        widgetName: "ScannerWorkflow",
+      );
+
+      // ۴. دربان اصلی: در صورتی که عکس گرفته شده فاکتور مالی نباشد، فرآیند را سریعاً قطع کن
+      if (!classificationResult.success ||
+          classificationResult.data?.isValidDocument == false) {
+        if (isOverlayVisible) {
+          Get.back();
+          isOverlayVisible = false;
+        }
+        classifier.dispose(); // آزادسازی حافظه رم دستگاه بر اساس معیارهای پذیرش
+        return OmniResponse.error(
+            "سند مالی معتبر تشخیص داده نشد. لطفاً فاکتور را در کادر تنظیم کنید.");
+      }
+
+      classifier.dispose(); // پاکسازی رم پس از موفقیت ارزیابی
+      // 🔴 پایان کدهای افزوده شده برای لایه دربان سند
 
       final ocrRes = await _ocrService.extractText(scannerRes.data!);
       // تست مقدار قبل از رفتن به مرحله بعد

@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image: ^4.3.0
 
   # --- Core & Security ---
   get: ^4.6.6
@@ -38,6 +39,7 @@ dependencies:
   flutter_bounceable: ^1.2.0
   flutter_tesseract_ocr: ^0.4.30
   logger: ^2.7.0
+  tflite_flutter: ^0.12.1
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +50,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # بخش فونت‌ها یا دارایی‌ها را اگر دارید اینجا اضافه کنید
-  # assets:
-  #   - assets/images/
+  assets:
+    - assets/models/mobilenet_v2_1.0_224_quant.tflite
