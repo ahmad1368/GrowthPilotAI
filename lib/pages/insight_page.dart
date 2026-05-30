@@ -37,7 +37,7 @@ class _InsightPageState extends State<InsightPage> {
     15,
     (i) => InsightModel(
         id: i,
-        title: "تحلیل هوشمند شماره ${i + 1}",
+        title: "تحلیل جدید هوشمند شماره ${i + 1}",
         description: "الگوهای مصرفی و جزئیات تراکنش‌های اخیر.",
         efficiency: "85%"),
   );

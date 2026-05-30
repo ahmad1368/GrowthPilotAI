@@ -1,7 +1,8 @@
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class DocumentType {
+class DocumentTypeEntity {
+  // تغییر نام کلاس برای تفکیک قطعی از انام کلاسیفایر
   @Id()
   int id = 0;
 
@@ -12,7 +13,7 @@ class DocumentType {
 
   final String iconName; // نام آیکون مرتبط برای نمایش در UI
 
-  DocumentType({
+  DocumentTypeEntity({
     required this.name,
     this.isPublic = false,
     this.iconName = 'description_outlined',
