@@ -16,18 +16,22 @@ class OmniLogger {
 
   static void warning(String message) => _logger.w(message);
 
-  // دقت کنید: نام پارامترهای ورودی باید دقیقاً با چیزی که به _logger.e پاس می‌دهیم یکی باشد
+  /// ثبت متمرکز خطاها همراه با مشخصات دقیق کاربر، ویجت و سیستم ارور
   static void error({
     required String title,
-    dynamic message, // نام پارامتر: message
-    StackTrace? stackTrace, // نام پارامتر: stackTrace
+    required String widgetName,
+    dynamic message,
+    StackTrace? stackTrace,
+    String userId = "Ahmad_Salem_Pour",
   }) {
-    // اینجا از همان نام‌هایی که در خطوط بالا تعریف کردیم استفاده می‌کنیم
+    // ترکیب اطلاعات ساختاریافته برای نمایش یکپارچه در کنسول و دیباگ
+    final structuredMessage =
+        " User: $userId | Widget: $widgetName | Details: $message";
+
     _logger.e(
       title,
-      error: message, // مقدار message به پارامتر errorِ پکیج پاس داده می‌شود
-      stackTrace:
-          stackTrace, // مقدار stackTrace به پارامتر stackTraceِ پکیج پاس داده می‌شود
+      error: structuredMessage,
+      stackTrace: stackTrace,
     );
   }
 }

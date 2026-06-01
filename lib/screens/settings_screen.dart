@@ -92,18 +92,18 @@ class SettingsScreen extends StatelessWidget {
               _buildSectionHeader("Security"),
               const SizedBox(height: 12),
 
-              OmniGlassPanel(
+              const OmniGlassPanel(
                 opacity: 0.1,
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: const Icon(Icons.security_rounded,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  leading: Icon(Icons.security_rounded,
                       color: Colors.greenAccent),
-                  title: const AdaptiveText("Local Encryption"),
-                  subtitle: const AdaptiveText(
+                  title: AdaptiveText("Local Encryption"),
+                  subtitle: AdaptiveText(
                     "AES-256 Protection Active",
                     fontSize: 11,
                   ),
-                  trailing: const Icon(
+                  trailing: Icon(
                     Icons.verified_user_rounded,
                     color: Colors.blueAccent,
                     size: 20,

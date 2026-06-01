@@ -86,12 +86,12 @@ class AppDrawer extends StatelessWidget {
                     ),
 
                     // فوتر دراور برای نسخه اپلیکیشن
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 10),
                       child: AdaptiveText(
                         "GrowthPilot AI v1.0.8",
                         fontSize: 10,
-                        style: const TextStyle(color: Colors.white24),
+                        style: TextStyle(color: Colors.white24),
                       ),
                     )
                   ],

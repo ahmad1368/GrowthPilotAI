@@ -22,7 +22,7 @@ class ReceiptScannerScreen extends StatelessWidget {
                 // بخش پیش‌نمایش یا کنترلر
                 OmniGlassPanel(
                   opacity: 0.5,
-                  child: Container(
+                  child: SizedBox(
                     height: isWide ? 400 : 250,
                     width: double.infinity,
                     child: Column(

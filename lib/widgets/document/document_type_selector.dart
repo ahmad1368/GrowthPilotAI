@@ -35,7 +35,7 @@ class DocumentTypeSelector extends StatelessWidget {
         Row(
           children: [
             // اصلاح نام آیکون به حروف کوچک
-            Icon(Icons.category_outlined, color: Colors.cyanAccent, size: 20),
+            const Icon(Icons.category_outlined, color: Colors.cyanAccent, size: 20),
             const SizedBox(width: 8),
             Expanded(
               child: DropdownButton<String>(
@@ -55,7 +55,7 @@ class DocumentTypeSelector extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: Icon(Icons.add_circle_outline, color: Colors.cyanAccent),
+              icon: const Icon(Icons.add_circle_outline, color: Colors.cyanAccent),
               onPressed: onAddNew,
               tooltip: "افزودن نوع سند جدید",
             )

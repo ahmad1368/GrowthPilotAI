@@ -7,9 +7,9 @@ import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/widgets/omni_step_progress.dart';
 import 'package:growth_pilot_ai/features/classifier/domain/enums/models/classifier_request.dart';
-import 'package:growth_pilot_ai/features/classifier/services/tflite_classifier_service.dart';
 import 'package:growth_pilot_ai/features/detector/models/financial_parser_request.dart';
 import 'package:growth_pilot_ai/features/detector/models/services/financial_parser.dart';
+import 'package:growth_pilot_ai/features/document_classification/data/services/tflite_classifier_service.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/services/document/document_classifier.dart';
 import '../../core/services/omni_logger.dart';
@@ -142,24 +142,22 @@ class ScannerWorkflow {
       _subProgress.value = 0.2;
 
       // ۲. آماده‌سازی و تزریق محلی سرویس کلاسیفایر
-      final classifier = TfliteClassifierService();
+      final classifier = TFliteClassifierService();
       await classifier.loadModel();
 
-      final classificationResult = await classifier.classify(
-        ClassifierRequest(imageFile: File(scannerRes.data!.path)),
+      final classificationResult = await classifier.classifyDocument(
+        File(scannerRes.data!.path),
       );
 
       // ۳. ثبت متمرکز لاگ با متد سراسری OmniLogger بر اساس مشخصات کاربر و زمان جاری پروژه
       OmniLogger.info(
         title: "ارزیابی کیفیت داکیومنت با TFLite",
-        message:
-            "میزان تطابق رسید: ${classificationResult.data?.confidence ?? 0.0}",
+        message: "میزان تطابق رسید: ${classificationResult.confidence}",
         widgetName: "ScannerWorkflow",
       );
 
-      // ۴. دربان اصلی: در صورتی که عکس گرفته شده فاکتور مالی نباشد، فرآیند را سریعاً قطع کن
-      if (!classificationResult.success ||
-          classificationResult.data?.isValidDocument == false) {
+// ۴. دربان اصلی: در صورتی که عکس گرفته شده فاکتور مالی نباشد، فرآیند را سریعاً قطع کن (اصلاح با ساختار جدید)
+      if (!classificationResult.isValid) {
         if (isOverlayVisible) {
           Get.back();
           isOverlayVisible = false;
@@ -189,7 +187,7 @@ class ScannerWorkflow {
       _subProgress.value = 0.7;
 
       // ۳. مرحله تشخیص هوشمند
-      final classRes = await DocumentClassifier.detect(ocrRes.data!.fullText);
+      final classRes = DocumentClassifier.detect(ocrRes.data!.fullText);
 
       // 🟢 شروع کدهای اصلاح‌شده بدون خطا برای حل تفکیک پارامترهای مالی (Issue #25)
       // ۱. ابتدا نمونه‌سازی شیءگرا برای حل خطای متد استاتیک
@@ -459,7 +457,7 @@ class ScannerWorkflow {
           // آیکون وضعیت که حس بصری بهتری منتقل می‌کند
           Container(
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               // color: Colors.cyanAccent.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
@@ -476,7 +474,7 @@ class ScannerWorkflow {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AdaptiveText(
+                const AdaptiveText(
                   "طبقه‌بندی هوشمند:",
                   style: TextStyle(
                     fontSize: 10,
@@ -504,11 +502,11 @@ class ScannerWorkflow {
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () => _showTypeSelectionPanel(detectedType),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.edit_note_rounded,
                       // color: Colors.cyanAccent,
                       size: 24,

@@ -65,7 +65,7 @@ class SettingsPage extends StatelessWidget {
                   Obx(() => Switch(
                         value: envService.isRemoteEnabled.value,
                         onChanged: (val) => envService.toggleDataSource(val),
-                        activeColor: Colors.greenAccent,
+                        activeThumbColor: Colors.greenAccent,
                       )),
                 ],
               ),

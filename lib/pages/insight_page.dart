@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
-import 'package:growth_pilot_ai/utils/workflow/scanner_workflow.dart';
 import '../controllers/transaction_controller.dart';
 import '../utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/omni_glass_panel.dart';
-import '../widgets/insight/insight_header.dart';
 import '../widgets/insight/insight_list_item.dart';
 import '../models/insight_model.dart';
 
@@ -37,7 +35,7 @@ class _InsightPageState extends State<InsightPage> {
     15,
     (i) => InsightModel(
         id: i,
-        title: "تحلیل هوشمند شماره ${i + 1}",
+        title: "تحلیل جدید هوشمند شماره ${i + 1}",
         description: "الگوهای مصرفی و جزئیات تراکنش‌های اخیر.",
         efficiency: "85%"),
   );

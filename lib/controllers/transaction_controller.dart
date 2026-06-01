@@ -33,6 +33,7 @@ class TransactionController extends GetxController {
     } catch (e, stack) {
       OmniLogger.error(
         title: "TransactionController Initialization Failed",
+        widgetName: "TransactionController",
         message: e,
         stackTrace: stack,
       );

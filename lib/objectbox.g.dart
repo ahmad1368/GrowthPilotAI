@@ -20,6 +20,7 @@ import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
 import 'core/models/document_type.dart';
+import 'core/models/error_log.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -174,30 +175,69 @@ final _entities = <obx_int.ModelEntity>[
             srcField: 'vendor')
       ]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(5, 1407349826204092014),
-      name: 'DocumentType',
-      lastPropertyId: const obx_int.IdUid(4, 3274884444133419373),
+      id: const obx_int.IdUid(6, 8897868831705587762),
+      name: 'DocumentTypeEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5385969681087342381),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 3822539053991719425),
+            id: const obx_int.IdUid(1, 2797120440896798576),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 4314188896221551808),
+            id: const obx_int.IdUid(2, 4643943187783766031),
             name: 'name',
             type: 9,
             flags: 2048,
-            indexId: const obx_int.IdUid(7, 7418576198694631340)),
+            indexId: const obx_int.IdUid(8, 3170650326812969352)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 1570878085546655654),
+            id: const obx_int.IdUid(3, 3654922943520830378),
             name: 'isPublic',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 3274884444133419373),
+            id: const obx_int.IdUid(4, 5385969681087342381),
             name: 'iconName',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(7, 5361462158824125226),
+      name: 'ErrorLog',
+      lastPropertyId: const obx_int.IdUid(6, 8083298058714824134),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3009188414961791544),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1568636352268206772),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3744718890590156870),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2270540707766054018),
+            name: 'stackTrace',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3089991431830755700),
+            name: 'timestamp',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8083298058714824134),
+            name: 'widgetName',
             type: 9,
             flags: 0)
       ],
@@ -240,13 +280,18 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(5, 1407349826204092014),
-      lastIndexId: const obx_int.IdUid(7, 7418576198694631340),
+      lastEntityId: const obx_int.IdUid(7, 5361462158824125226),
+      lastIndexId: const obx_int.IdUid(8, 3170650326812969352),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [1407349826204092014],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [
+        3822539053991719425,
+        4314188896221551808,
+        1570878085546655654,
+        3274884444133419373
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -430,15 +475,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   (TransactionEntity srcObject) => srcObject.vendor));
           return object;
         }),
-    DocumentType: obx_int.EntityDefinition<DocumentType>(
+    DocumentTypeEntity: obx_int.EntityDefinition<DocumentTypeEntity>(
         model: _entities[4],
-        toOneRelations: (DocumentType object) => [],
-        toManyRelations: (DocumentType object) => {},
-        getId: (DocumentType object) => object.id,
-        setId: (DocumentType object, int id) {
+        toOneRelations: (DocumentTypeEntity object) => [],
+        toManyRelations: (DocumentTypeEntity object) => {},
+        getId: (DocumentTypeEntity object) => object.id,
+        setId: (DocumentTypeEntity object, int id) {
           object.id = id;
         },
-        objectToFB: (DocumentType object, fb.Builder fbb) {
+        objectToFB: (DocumentTypeEntity object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
           final iconNameOffset = fbb.writeString(object.iconName);
           fbb.startTable(5);
@@ -458,8 +503,54 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false);
           final iconNameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
-          final object = DocumentType(
+          final object = DocumentTypeEntity(
               name: nameParam, isPublic: isPublicParam, iconName: iconNameParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    ErrorLog: obx_int.EntityDefinition<ErrorLog>(
+        model: _entities[5],
+        toOneRelations: (ErrorLog object) => [],
+        toManyRelations: (ErrorLog object) => {},
+        getId: (ErrorLog object) => object.id,
+        setId: (ErrorLog object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ErrorLog object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          final messageOffset = fbb.writeString(object.message);
+          final stackTraceOffset = fbb.writeString(object.stackTrace);
+          final widgetNameOffset = fbb.writeString(object.widgetName);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, titleOffset);
+          fbb.addOffset(2, messageOffset);
+          fbb.addOffset(3, stackTraceOffset);
+          fbb.addInt64(4, object.timestamp.millisecondsSinceEpoch);
+          fbb.addOffset(5, widgetNameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final stackTraceParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final widgetNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final object = ErrorLog(
+              title: titleParam,
+              message: messageParam,
+              stackTrace: stackTraceParam,
+              timestamp: timestampParam,
+              widgetName: widgetNameParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -568,21 +659,48 @@ class VendorEntity_ {
           TransactionEntity_.vendor);
 }
 
-/// [DocumentType] entity fields to define ObjectBox queries.
-class DocumentType_ {
-  /// see [DocumentType.id]
+/// [DocumentTypeEntity] entity fields to define ObjectBox queries.
+class DocumentTypeEntity_ {
+  /// see [DocumentTypeEntity.id]
   static final id =
-      obx.QueryIntegerProperty<DocumentType>(_entities[4].properties[0]);
+      obx.QueryIntegerProperty<DocumentTypeEntity>(_entities[4].properties[0]);
 
-  /// see [DocumentType.name]
+  /// see [DocumentTypeEntity.name]
   static final name =
-      obx.QueryStringProperty<DocumentType>(_entities[4].properties[1]);
+      obx.QueryStringProperty<DocumentTypeEntity>(_entities[4].properties[1]);
 
-  /// see [DocumentType.isPublic]
+  /// see [DocumentTypeEntity.isPublic]
   static final isPublic =
-      obx.QueryBooleanProperty<DocumentType>(_entities[4].properties[2]);
+      obx.QueryBooleanProperty<DocumentTypeEntity>(_entities[4].properties[2]);
 
-  /// see [DocumentType.iconName]
+  /// see [DocumentTypeEntity.iconName]
   static final iconName =
-      obx.QueryStringProperty<DocumentType>(_entities[4].properties[3]);
+      obx.QueryStringProperty<DocumentTypeEntity>(_entities[4].properties[3]);
+}
+
+/// [ErrorLog] entity fields to define ObjectBox queries.
+class ErrorLog_ {
+  /// see [ErrorLog.id]
+  static final id =
+      obx.QueryIntegerProperty<ErrorLog>(_entities[5].properties[0]);
+
+  /// see [ErrorLog.title]
+  static final title =
+      obx.QueryStringProperty<ErrorLog>(_entities[5].properties[1]);
+
+  /// see [ErrorLog.message]
+  static final message =
+      obx.QueryStringProperty<ErrorLog>(_entities[5].properties[2]);
+
+  /// see [ErrorLog.stackTrace]
+  static final stackTrace =
+      obx.QueryStringProperty<ErrorLog>(_entities[5].properties[3]);
+
+  /// see [ErrorLog.timestamp]
+  static final timestamp =
+      obx.QueryDateProperty<ErrorLog>(_entities[5].properties[4]);
+
+  /// see [ErrorLog.widgetName]
+  static final widgetName =
+      obx.QueryStringProperty<ErrorLog>(_entities[5].properties[5]);
 }
