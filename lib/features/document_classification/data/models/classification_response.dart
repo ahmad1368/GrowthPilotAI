@@ -9,7 +9,7 @@ class ClassificationResponse {
         .map((element) => (element as num).toDouble())
         .toList();
 
-    double maxConfidenceRaw = 0.0;
+    double maxConfidenceRaw = 0;
     int maxIndex = 0;
 
     for (int i = 0; i < probabilities.length; i++) {
