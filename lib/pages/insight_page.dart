@@ -43,11 +43,8 @@ class _InsightPageState extends State<InsightPage> {
   @override
   Widget build(BuildContext context) {
     final bool isWide = UIHelper.isWide(context);
-
-    // در فایل insight_page.dart
     return Scaffold(
       backgroundColor: Colors.transparent,
-      floatingActionButton: null, // دکمه قبلی حذف شد
       body: widget.child ?? (isWide ? _buildWideLayout() : _buildListView()),
     );
   }
@@ -67,42 +64,30 @@ class _InsightPageState extends State<InsightPage> {
       controller: widget.controller,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        // _buildSliverHeader(),
+        _buildSliverHeader(),
         _buildSliverList(),
       ],
     );
   }
 
-  // Widget _buildSliverHeader() {
-  //   return SliverToBoxAdapter(
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(20),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           _buildTitleRow(),
-  //           const SizedBox(height: 16),
-  //           Obx(() => InsightHeader(
-  //               total: controller.filteredTransactions
-  //                   .fold(0.0, (sum, item) => sum + item.amount))),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _buildSliverHeader() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: _buildTitleRow(),
+      ),
+    );
+  }
 
   Widget _buildTitleRow() {
-    if (widget.title == null) return const SizedBox.shrink();
     return Row(
       children: [
         if (widget.icon != null)
           Icon(widget.icon, color: Colors.blueAccent, size: 28),
         const SizedBox(width: 12),
-        AdaptiveText(widget.title!,
+        AdaptiveText(widget.title ?? "",
             style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
       ],
     );
   }
