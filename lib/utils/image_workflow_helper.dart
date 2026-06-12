@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../widgets/image_source_sheet.dart';
+import 'package:growth_pilot_ai/features/scanner/screens/presentation/widgets/presentation/widgets/image_source_sheet.dart';
 import '../utils/ui_helper.dart';
 
 class ImageWorkflowHelper {

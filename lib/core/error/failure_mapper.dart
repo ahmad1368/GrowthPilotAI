@@ -8,10 +8,10 @@ class FailureMapper {
   static OmniResponse<T> map<T>(Object error, {StackTrace? stack}) {
     // اصلاح فراخوانی لاگر بر اساس پارامترهایی که با هم ست کردیم
     OmniLogger.error(
-      title: "Exception Captured in Mapper",
-      widgetName: "FailureMapper",
-      message: error, // تغییر نام از error به message بر اساس پیام خطا
-      stackTrace: stack, // تغییر نام احتمالی از stack به stackTrace
+      message: "Exception Captured in Mapper: $error",
+      worker: "Ahmad_Salem_Pour",
+      serviceName: "FailureMapper",
+      stackTrace: stack,
     );
 
     if (error is FileSystemException) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../controllers/ocr_confirmation_controller.dart';
+import 'package:growth_pilot_ai/features/document_classification/controllers/ocr_confirmation_controller.dart';
 
 class OcrEditableFields extends StatelessWidget {
   final OcrConfirmationController controller;

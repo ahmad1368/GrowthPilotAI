@@ -1,7 +1,5 @@
-// lib/features/document_classification/data/services/tflite_classifier_service.dart
 import 'dart:io';
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
 import 'package:growth_pilot_ai/core/models/classification_request.dart';
 import 'package:growth_pilot_ai/core/constants/app_assets.dart';
 import '../../domain/repositories/abstract_classifier_service.dart';
@@ -18,7 +16,7 @@ class TFliteClassifierService implements AbstractClassifierService {
       _interpreter =
           await Interpreter.fromAsset(AppAssets.receiptClassifierModel);
     } catch (e, stack) {
-      _logError('Model Load Failed', 'خطا در لود مدل: $e', stack);
+      _handleLocalError('Model Load Failed: $e', stack);
     }
   }
 
@@ -26,26 +24,14 @@ class TFliteClassifierService implements AbstractClassifierService {
   Future<OmniClassificationResult> classifyDocument(File imageFile) async {
     if (_interpreter == null) await loadModel();
     try {
-      // 📝 چاپ شناسنامه دقیق مدل در کنسول جهت کشف ریشه باگ
-      print("🎯 MODEL INPUT TYPE: ${_interpreter!.getInputTensors()[0].type}");
-      print(
-          "🎯 MODEL OUTPUT TYPE: ${_interpreter!.getOutputTensors()[0].type}");
-      print(
-          "🎯 MODEL OUTPUT SHAPE: ${_interpreter!.getOutputTensors()[0].shape}");
-
       final req = ClassificationRequest(file: imageFile);
       final input = await req.toTensorInput();
       var output = List.filled(1001, 0).reshape([1, 1001]);
 
       _interpreter!.run(input, output);
-
-      // 📝 چاپ بالاترین مقدار احتمالی که مدل تشخیص داده است
-      print(
-          "🎯 RAW OUTPUT MATRIX: ${output[0].sublist(0, 10)}"); // چاپ ۱۰ داده اول برای نمونه
-
       return ClassificationResponse.fromMatrix(output);
     } catch (e, stack) {
-      _logError('Classifier Inference Error', 'خطا در پردازش تصویر: $e', stack);
+      _handleLocalError('Inference Error: $e', stack);
       return const OmniClassificationResult(
         detectedType: DocumentType.background,
         confidence: 0.0,
@@ -54,13 +40,12 @@ class TFliteClassifierService implements AbstractClassifierService {
     }
   }
 
-  void _logError(String title, String message, StackTrace stack) {
-    OmniLogger.error(
-      title: title,
-      message: '$message | کاربر: Ahmad_Salem_Pour',
-      stackTrace: stack,
-      widgetName: 'TFliteClassifierService',
-    );
+  void _handleLocalError(String msg, StackTrace stack) {
+    assert(() {
+      print(
+          "[Ahmad_Salem_Pour] [2026-06-02] [TFliteClassifierService]: $msg\n$stack");
+      return true;
+    }());
   }
 
   @override

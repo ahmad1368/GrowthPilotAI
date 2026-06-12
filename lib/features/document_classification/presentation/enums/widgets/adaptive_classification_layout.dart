@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:growth_pilot_ai/pages/insight_page.dart';
-import 'classification_status_panel.dart';
+import 'package:growth_pilot_ai/features/document_classification/presentation/widgets/classification_status_panel.dart';
+import 'package:growth_pilot_ai/features/insights/presentation/widgets/pages/insight_page.dart';
 
 class AdaptiveClassificationLayout extends StatelessWidget {
   final bool isProcessing;

@@ -24,10 +24,11 @@ class FinancialAnalyticsProcessor {
       );
     } catch (e, stack) {
       OmniLogger.error(
-        title: "خطای پردازشگر آنالیتیکس مالی",
-        message: "خطا در فیلترینگ یا محاسبه دوره‌ای | User: Ahmad_Salem_Pour",
+        message: "خطا در فیلترینگ یا محاسبه دوره‌ای آنالیتیکس مالی",
+        worker: "Ahmad_Salem_Pour",
+        serviceName: "FinancialAnalyticsProcessor",
+        exception: e,
         stackTrace: stack,
-        widgetName: "FinancialAnalyticsProcessor",
       );
       return const FinancialComparison(
           totalDifference: 0, percentageChange: 0, isNegativeTrend: false);

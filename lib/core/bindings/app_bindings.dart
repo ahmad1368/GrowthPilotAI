@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
+import 'package:growth_pilot_ai/features/document_classification/business/ocr_service.dart';
 import '../../services/connectivity_service.dart';
 import '../../services/environment_service.dart';
 import '../../services/scanner/scanner_service.dart';

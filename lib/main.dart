@@ -2,14 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
+import 'package:growth_pilot_ai/features/settings/presentation/widgets/settings_screen.dart';
 import 'package:growth_pilot_ai/widgets/global_error_view.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/bindings/app_bindings.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'widgets/home_layout.dart';
-import 'screens/settings_screen.dart';
 
 void main() {
   runZonedGuarded(() async {
@@ -17,11 +17,17 @@ void main() {
 
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);
+      // OmniLogger.error(
+      //     title: "Flutter Framework Error",
+      //     message: details.exception,
+      //     stackTrace: details.stack,
+      //     widgetName: "main.dart");
       OmniLogger.error(
-          title: "Flutter Framework Error",
-          message: details.exception,
-          stackTrace: details.stack,
-          widgetName: "main.dart");
+          message: "Flutter Framework Error",
+          worker: "Main.dart",
+          exception: details.exception,
+          serviceName: "runZonedGuarded",
+          stackTrace: details.stack);
     };
 
     ErrorWidget.builder = (details) => GlobalErrorView(details: details);
@@ -35,10 +41,11 @@ void main() {
     runApp(MyApp(savedThemeMode: savedThemeMode));
   }, (Object error, StackTrace stack) {
     OmniLogger.error(
-        title: "GLOBAL UNCAUGHT EXCEPTION",
-        message: "$error | User: Ahmad_Salem_Pour",
-        stackTrace: stack,
-        widgetName: "main.dart");
+      message: "GLOBAL UNCAUGHT EXCEPTION: $error",
+      worker: "Ahmad_Salem_Pour",
+      serviceName: "main.dart",
+      stackTrace: stack,
+    );
   });
 }
 

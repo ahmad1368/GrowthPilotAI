@@ -23,6 +23,7 @@ dependencies:
   adaptive_theme: ^3.7.0
   fl_chart: ^0.66.0
   flutter_animate: ^4.5.0
+  shadcn_ui: ^0.5.1 # <--- اضافه شدن پکیج اصلی شادسی‌ان بر اساس ساختار تخت و اینترپرایز جدید
 
   # --- Database & Persistence ---
   objectbox: ^2.5.1
@@ -48,6 +49,7 @@ dev_dependencies:
   build_runner: ^2.4.9
   objectbox_generator: ^2.5.1
   flutter_lints: ^3.0.0
+  mockito: ^5.4.4
 
 flutter:
   uses-material-design: true

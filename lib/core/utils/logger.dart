@@ -1,36 +1,87 @@
-import 'package:logger/logger.dart';
+import 'dart:developer' as developer;
 
 class OmniLogger {
-  static final Logger _logger = Logger(
-    printer: PrettyPrinter(
-      methodCount: 2,
-      errorMethodCount: 8,
-      lineLength: 120,
-      colors: true,
-      printEmojis: true,
-      printTime: true,
-    ),
-  );
-
-  static void info(String message) => _logger.i(message);
-
-  static void warning(String message) => _logger.w(message);
-
-  /// ثبت متمرکز خطاها همراه با مشخصات دقیق کاربر، ویجت و سیستم ارور
-  static void error({
-    required String title,
-    required String widgetName,
-    dynamic message,
+  // فرمت‌کننده متمرکز و داخلی برای ساختار استاندارد لاگ‌ها
+  static void _log(
+    String level,
+    String message,
+    String worker, {
+    String? service,
+    Object? error,
     StackTrace? stackTrace,
-    String userId = "Ahmad_Salem_Pour",
   }) {
-    // ترکیب اطلاعات ساختاریافته برای نمایش یکپارچه در کنسول و دیباگ
-    final structuredMessage =
-        " User: $userId | Widget: $widgetName | Details: $message";
+    final time = DateTime.now().toIso8601String();
+    final serviceTag = service != null ? "[$service]" : "";
+    final logOutput =
+        "[$time] $level $serviceTag: $message | Operator: $worker";
 
-    _logger.e(
-      title,
-      error: structuredMessage,
+    developer.log(
+      logOutput,
+      name: 'OmniLogger',
+      error: error,
+      stackTrace: stackTrace,
+    );
+  }
+
+  /// متد عمومی و استاندارد برای ثبت لاگ‌های عمومی با تعیین سطح (Level)
+  static void log({
+    required String message,
+    required String worker,
+    String? serviceName,
+    String level = "INFO",
+    Object? exception,
+    StackTrace? stackTrace,
+  }) {
+    _log(
+      level.toUpperCase(),
+      message,
+      worker,
+      service: serviceName,
+      error: exception,
+      stackTrace: stackTrace,
+    );
+  }
+
+  /// ثبت لاگ‌های اطلاعاتی (تنها به متد استاندارد log پاس داده می‌شود)
+  static void info({
+    required String message,
+    required String worker,
+    String? serviceName,
+  }) {
+    log(
+        message: message,
+        worker: worker,
+        serviceName: serviceName,
+        level: "INFO");
+  }
+
+  /// ثبت هشدارهای سیستم
+  static void warning({
+    required String message,
+    required String worker,
+    String? serviceName,
+  }) {
+    log(
+        message: message,
+        worker: worker,
+        serviceName: serviceName,
+        level: "WARNING");
+  }
+
+  /// ثبت خطاهای کریتیکال به همراه Exception و StackTrace
+  static void error({
+    required String message,
+    required String worker,
+    String? serviceName,
+    Object? exception,
+    StackTrace? stackTrace,
+  }) {
+    log(
+      message: message,
+      worker: worker,
+      serviceName: serviceName,
+      level: "ERROR",
+      exception: exception,
       stackTrace: stackTrace,
     );
   }
