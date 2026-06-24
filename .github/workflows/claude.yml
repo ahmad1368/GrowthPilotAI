@@ -19,11 +19,11 @@ jobs:
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pull-requests: read
-      issues: read
+      contents: write # دسترسی نوشتن برای کامیت کردن مستقیم کدهای اصلاح شده توسط کلود
+      pull-requests: write # دسترسی برای ثبت کامنت روی PRها
+      issues: write # دسترسی برای پاسخ دادن به ایشوها
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,15 +36,9 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-          # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
             actions: read
 
-          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
-          # prompt: 'Update the pull request description to include a summary of changes.'
-
-          # Optional: Add claude_args to customize behavior and configuration
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-          # claude_args: '--allowed-tools Bash(gh pr *)'
-
+          # آرگومان و تمامی مجوزهای استخراج شده بر اساس نیازمندی‌های پروژه شما:
+          claude_args: >-
+            --allowed-tools "Bash(npm:*),Bash(npx:*),Bash(flutter:*),Bash(dart:*),Bash(sqlite3:*),mcp__playwright__navigate,mcp__playwright__click,mcp__playwright__fill,mcp__playwright__hover,mcp__playwright__select_option,mcp__playwright__get_html,mcp__playwright__screenshot"
