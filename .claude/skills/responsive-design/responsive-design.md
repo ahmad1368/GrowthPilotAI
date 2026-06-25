@@ -11,4 +11,4 @@ When designing user interfaces for GrowthPilotAI, you must ensure the layout ada
    - Tablet: 600 <= width < 1200
    - Web/Desktop: width >= 1200
 3. **Adaptive Form Factors**: Use `Flex`, `Wrap`, and `Grid` architectures instead of basic Rows/Columns so content flows naturally when resized on web browsers.
-4. **Platform Input Safety**: Ensure buttons and input forms handle both touch interactions (Mobile/Tablet) and mouse/keyboard inputs (Web) seamlessly (e.g., hover states, correct mouse cursors).
+4. **Platform Input Safety**: Ensure buttons and input forms handle both touch interactions (Mobile/Tablet) and mouse/keyboard inputs (Web) seamlessly (e.g., hover states, correct mouse cursors). 5.**Use Flat Shadcn UI**: Use Flat Shadcn UI for project UI
