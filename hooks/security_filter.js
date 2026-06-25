@@ -1,45 +1,66 @@
-const fs = require("fs");
+process.stdin.setEncoding("utf8");
+let input = "";
 
-// ۱. خواندن داده‌های ارسالی از سمت کلود (stdin)
-let inputData = "";
 process.stdin.on("data", (chunk) => {
-  inputData += chunk;
+  input += chunk;
 });
-
-// ذخیره کردن مستقیم جیسونِ ارسالی کلود در یک فایل برای مانیتور کردن شما
-fs.writeFileSync("hooks/claude_raw_debug.json", inputData);
 
 process.stdin.on("end", () => {
   try {
-    const payload = JSON.parse(inputData);
+    const payload = JSON.parse(input);
     const toolName = payload.tool_name;
+    const args = payload.tool_input || {};
 
-    // استخراج مسیر فایلی که کلود می‌خواهد به آن دست بزند
-    let targetedFile = "";
-    if (payload.tool_input) {
-      targetedFile =
-        payload.tool_input.file_path || payload.tool_input.pattern || "";
+    // لیست کلمات کلیدی و فایل‌های خط قرمز پروژه شما
+    const sensitiveItems = [".env", "objectbox-model.json", "secrets"];
+
+    let isViolation = false;
+    let alertMessage = "";
+
+    // ۱. بررسی ابزار Read (خوانش مستقیم فایل)
+    if (toolName === "Read") {
+      const filePath = args.file_path || "";
+      if (sensitiveItems.some((item) => filePath.includes(item))) {
+        isViolation = true;
+        alertMessage = `Directly reading sensitive files (${filePath}) is prohibited.`;
+      }
     }
 
-    // ۲. لیست فایلهای ممنوعه پروژه شما
-    const blackList = [".env", "objectbox-model.json", "secrets"];
-
-    // ۳. بررسی اینکه آیا کلود دارد به فایل ممنوعه نزدیک می‌شود؟
-    const isDangerous = blackList.some((blockedItem) =>
-      targetedFile.includes(blockedItem),
-    );
-
-    if (isDangerous && (toolName === "Read" || toolName === "Grep")) {
-      // خطای قرمز برای فرستادن به کلود
-      process.stderr.write(
-        `[SECURITY ALERT] Access to ${targetedFile} is strictly blocked by GrowthPilotAI Guard.\n`,
-      );
-      process.exit(2); // کد خروج ۲ یعنی: بلاک کن!
+    // ۲. بررسی ابزار Grep (جستجوی متنی درون فایل‌ها)
+    else if (toolName === "Grep") {
+      const pattern = args.pattern || "";
+      const path = args.path || "";
+      // اگر بخواهد کلماتی مثل .env را سرچ کند یا درون پوشه حساس بگردد
+      if (
+        sensitiveItems.some(
+          (item) => pattern.includes(item) || path.includes(item),
+        )
+      ) {
+        isViolation = true;
+        alertMessage = `Searching inside sensitive paths/patterns is prohibited.`;
+      }
     }
 
-    // اگر مشکلی نبود، اجازه بده اجرا شود
-    process.exit(0); // کد خروج ۰ یعنی: آزاد است!
+    // ۳. بررسی ابزار Bash (اجرای دستوراتی مثل cat .env یا rm -rf)
+    else if (toolName === "Bash") {
+      const command = args.command || "";
+      // بررسی اینکه آیا دستور ترمینال شامل فایل‌های حساس هست یا خیر
+      if (sensitiveItems.some((item) => command.includes(item))) {
+        isViolation = true;
+        alertMessage = `Running terminal commands accessing sensitive files is prohibited.`;
+      }
+    }
+
+    // اعمال قانون: اگر تخلفی صورت گرفته، کلود را بلاک کن
+    if (isViolation) {
+      console.error(`\n[SECURITY BREACH DETECTED]: ${alertMessage}`);
+      process.exit(2); // کد خروج ۲ یعنی بلاک کردن عملیات کلود
+    }
+
+    // عبور امن در صورت نبود مشکل
+    process.exit(0);
   } catch (e) {
-    process.exit(0); // در صورت خطای اسکریپت، برای قفل نشدن کار اجازه عبور بده
+    // در صورت بروز خطای غیرمنتظره در اسکریپت، برای قفل نشدن کلود اجازه عبور می‌دهیم
+    process.exit(0);
   }
 });

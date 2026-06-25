@@ -1,13 +1,12 @@
 {
-  "PreToolUse": [
-    {
-      "matcher": "Read|Grep",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "node hooks/security_filter.js"
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Grep",
+        "hooks": [
+          { "type": "command", "command": "node hooks/security_filter.js" }
+        ]
+      }
+    ]
+  }
 }
