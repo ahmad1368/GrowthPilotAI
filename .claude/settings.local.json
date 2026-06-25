@@ -2,6 +2,15 @@
   "hooks": {
     "PreToolUse": [
       {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const fs = require('fs'); process.stdin.pipe(fs.createWriteStream('hooks/post-log.json'))\""
+          }
+        ]
+      },
+      {
         "desc": "Security layer preventing unauthorized file reads, greps, or shell cats.",
         "matcher": "Read|Grep|Bash",
         "hooks": [
