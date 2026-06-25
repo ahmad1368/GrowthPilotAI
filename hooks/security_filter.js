@@ -6,6 +6,9 @@ process.stdin.on("data", (chunk) => {
   inputData += chunk;
 });
 
+// ذخیره کردن مستقیم جیسونِ ارسالی کلود در یک فایل برای مانیتور کردن شما
+fs.writeFileSync("hooks/claude_raw_debug.json", inputData);
+
 process.stdin.on("end", () => {
   try {
     const payload = JSON.parse(inputData);
