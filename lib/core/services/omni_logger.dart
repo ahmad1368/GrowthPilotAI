@@ -1,21 +1,51 @@
-import 'dart:developer';
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import '../data/objectbox_provider.dart';
 import '../models/error_log.dart';
 
+enum LogBottleneck {
+  database, // ObjectBox IO
+  aiOcr, // TFLite / AI Pipeline
+  network, // API Calls
+  security, // Security Filters
+  business, // Controllers & Bloc
+  global // پیش‌فرض برای کدهای قدیمی پروژه
+}
+
 class OmniLogger {
+  // تعریف پکیج Logger برای ساخت کادرهای زیبا و رنگی در کنسول
+  static final Logger _prettyLogger = Logger(
+    printer: PrettyPrinter(
+      methodCount: 2,
+      errorMethodCount: 8,
+      lineLength: 90,
+      colors: true,
+      printEmojis: true,
+      dateTimeFormat: DateTimeFormat.dateAndTime,
+    ),
+  );
+
+  /// ۱. ثبت خطاهای بحرانی (بدون شکستن فراخوانی‌های قبلی)
   static void error({
     required String title,
     required dynamic message,
     StackTrace? stackTrace,
     String? widgetName,
+    LogBottleneck bottleneck = LogBottleneck.global, // پارامتر اختیاری جدید
   }) {
     final String errorMsg = message.toString();
     final DateTime now = DateTime.now();
 
-    log('❌ [$title] در ویجت ($widgetName): $errorMsg');
+    // استفاده از لاگر پیشرفته برای نمایش رنگی و ساختاریافته در کنسول
+    _prettyLogger.e(
+      '[$bottleneck] [$title] در ویجت (${widgetName ?? 'Global'}): $errorMsg',
+      error: message,
+      stackTrace: stackTrace,
+    );
 
+    // ذخیره در دیتابیس لوکال (کد قبلی شما)
     _saveToLocalDatabase(
       title: title,
       message: errorMsg,
@@ -27,19 +57,21 @@ class OmniLogger {
     _sendToOnlineServices(title, errorMsg, stackTrace, widgetName);
   }
 
-  /// ۲. ثبت هشدارها (زرد/نارنجی - غیر بحرانی)
+  /// ۲. ثبت هشدارها و نمایش اسنک‌بار (بدون شکستن فراخوانی‌های قبلی)
   static void warning({
     required String title,
     required String message,
     String? widgetName,
+    LogBottleneck bottleneck = LogBottleneck.global, // پارامتر اختیاری جدید
   }) {
     final DateTime now = DateTime.now();
     final bool isDarkMode = Get.isDarkMode;
 
-    // چاپ در کنسول با ایموجی هشدار
-    log('⚠️ [$title] | 🕒 ${now.hour}:${now.minute} | 📍 Widget: $widgetName | 📝 $message');
+    // لاگ رنگی هشدار در کنسول
+    _prettyLogger
+        .w('[$bottleneck] [$title] | 📍 Widget: $widgetName | 📝 $message');
 
-    // نمایش اسنک‌بار با تم هشدار (Amber/Orange)
+    // نمایش اسنک‌بار با تم هشدار (کد قبلی شما)
     Get.snackbar(
       title,
       message,
@@ -62,16 +94,20 @@ class OmniLogger {
     );
   }
 
+  /// ۳. ثبت لاگ‌های اطلاعاتی و نمایش اسنک‌بار (بدون شکستن فراخوانی‌های قبلی)
   static void info({
     required String title,
     required String message,
     String? widgetName,
+    LogBottleneck bottleneck = LogBottleneck.global, // پارامتر اختیاری جدید
   }) {
-    final DateTime now = DateTime.now();
     final bool isDarkMode = Get.isDarkMode;
 
-    log('ℹ️ [$title] | 🕒 ${now.hour}:${now.minute} | 📍 Widget: $widgetName | 📝 $message');
+    // لاگ رنگی اطلاعات در کنسول
+    _prettyLogger
+        .i('[$bottleneck] [$title] | 📍 Widget: $widgetName | 📝 $message');
 
+    // نمایش اسنک‌بار اطلاعاتی (کد قبلی شما)
     Get.snackbar(
       title,
       message,
@@ -88,6 +124,17 @@ class OmniLogger {
     );
   }
 
+  /// ۴. متد کاملاً جدید برای مانیتورینگ سرعت و عملکرد گلوگاه‌ها (Performance Tracking)
+  static void traceTime({
+    required LogBottleneck bottleneck,
+    required String operation,
+    required Duration duration,
+  }) {
+    _prettyLogger.t(
+        '[$bottleneck] ⏱️ Execution Time for "$operation": ${duration.inMilliseconds}ms');
+  }
+
+  /// متدهای خصوصی مربوط به دیتابیس لوکال و سرور (بدون تغییر)
   static void _saveToLocalDatabase({
     required String title,
     required String message,
@@ -96,7 +143,6 @@ class OmniLogger {
     required DateTime time,
   }) {
     try {
-      // راه حل خطا: استفاده از Get.find به جای متغیر سراسری
       if (Get.isRegistered<ObjectBox>()) {
         final objectBoxInstance = Get.find<ObjectBox>();
 
@@ -111,9 +157,7 @@ class OmniLogger {
         objectBoxInstance.store.box<ErrorLog>().put(logEntry);
       }
     } catch (e) {
-      // بسیار مهم: در اینجا هرگز از FailureMapper استفاده نکنید
-      // چون باعث ایجاد چرخه بی‌نهایت (Recursion) می‌شود.
-      log('Critical failure: Could not save log to DB: $e');
+      dev.log('Critical failure: Could not save log to DB: $e');
     }
   }
 

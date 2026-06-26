@@ -30,6 +30,10 @@
         ]
       },
       {
+        "matcher": "WriteFile|EditFile",
+        "hooks": [{ "type": "command", "command": "flutter analyze" }]
+      },
+      {
         "desc": "Launches a separate AI instance to review query duplication in high-value directories.",
         "matcher": "Write",
         "hooks": [
