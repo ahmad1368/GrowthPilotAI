@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node YOUR_PROJECT_PATH_HERE/hooks/security_filter.js"
+          }
+        ]
+      }
+    ]
+  }
+}
