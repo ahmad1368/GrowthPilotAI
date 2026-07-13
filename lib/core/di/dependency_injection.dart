@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/remote_sync_data_source.dart';
@@ -28,9 +29,9 @@ class DependencyInjection {
         () => MockTransactionRepository(),
       );
 
-      // ۳. ثبت منبع همگام‌سازی ابری (فعلاً Mock تا بک‌اند واقعی آماده شود)
-      _locator.registerLazySingleton<RemoteSyncDataSource>(
-        () => MockRemoteSyncDataSource(SyncConfig.fromEnvironment()),
+      // ۳. ثبت سرویس احراز هویت اجتماعی (فعلاً Mock تا Firebase واقعی آماده شود)
+      _locator.registerLazySingleton<SocialAuthService>(
+        () => MockSocialAuthService(),
       );
 
       // ۴. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
