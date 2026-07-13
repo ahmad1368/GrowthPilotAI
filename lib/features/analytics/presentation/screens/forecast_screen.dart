@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/utils/forecast_engine.dart';
 import '../widgets/forecast_chart.dart';
+import '../widgets/forecast_summary_card.dart';
 
 /// Spending-forecast page: renders a recent daily-spending history extended by
 /// a dashed prediction from [ForecastEngine]. The chart is the data consumer;
@@ -17,12 +18,19 @@ class ForecastScreen extends StatelessWidget {
     final forecast = ForecastEngine.predictNext(_sampleHistory, 7);
     return Scaffold(
       appBar: AppBar(title: const Text('Spending Forecast')),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 24, 24, 24),
-        child: ForecastChart(
-          historical: _sampleHistory,
-          forecast: forecast,
-        ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          ForecastSummaryCard(history: _sampleHistory, forecast: forecast),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: 320,
+            child: ForecastChart(
+              historical: _sampleHistory,
+              forecast: forecast,
+            ),
+          ),
+        ],
       ),
     );
   }
