@@ -1,6 +1,10 @@
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/business/csv_export_strategy.dart';
 import 'package:growth_pilot_ai/business/fetch_transactions_usecase.dart';
 import 'package:growth_pilot_ai/business/sync_transactions_usecase.dart';
+import 'package:growth_pilot_ai/core/interfaces/export_strategy.dart';
+import 'package:growth_pilot_ai/core/interfaces/transaction_fetch_service.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_transaction_fetch_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/accounting_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_accounting_auth_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/bank_link_service.dart';
@@ -59,12 +63,22 @@ class DependencyInjection {
         () => FetchTransactionsUseCase(_locator<TransactionFetchService>()),
       );
 
-      // ۷. ثبت سرویس OAuth حساب‌داری (QuickBooks/Xero؛ فعلاً Mock)
+      // ۷. ثبت سرویس اتصال بانکی Plaid (بازگردانی؛ فعلاً Mock)
+      _locator.registerLazySingleton<BankLinkService>(
+        () => MockBankLinkService(),
+      );
+
+      // ۸. ثبت سرویس OAuth حساب‌داری (QuickBooks/Xero؛ فعلاً Mock)
       _locator.registerLazySingleton<AccountingAuthService>(
         () => MockAccountingAuthService(),
       );
 
-      // ۸. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
+      // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)
+      _locator.registerLazySingleton<ExportStrategy>(
+        () => CsvExportStrategy(),
+      );
+
+      // ۹. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
       await _locator<AbstractClassifierService>().loadModel();
     } catch (e, stack) {
       OmniLogger.error(
