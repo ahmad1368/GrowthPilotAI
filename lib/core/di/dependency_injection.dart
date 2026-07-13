@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
+import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/services/omni_logger.dart';
 import 'package:growth_pilot_ai/features/document_classification/domain/repositories/abstract_classifier_service.dart';
 import 'package:growth_pilot_ai/features/document_classification/data/services/tflite_classifier_service.dart';
@@ -25,7 +27,12 @@ class DependencyInjection {
         () => MockTransactionRepository(),
       );
 
-      // ۳. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
+      // ۳. ثبت سرویس احراز هویت اجتماعی (فعلاً Mock تا Firebase واقعی آماده شود)
+      _locator.registerLazySingleton<SocialAuthService>(
+        () => MockSocialAuthService(),
+      );
+
+      // ۴. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
       await _locator<AbstractClassifierService>().loadModel();
     } catch (e, stack) {
       OmniLogger.error(
