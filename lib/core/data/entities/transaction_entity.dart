@@ -36,10 +36,11 @@ class TransactionEntity {
   /// این فیلد نال‌پذیر است تا داده‌های قدیمی دچار مشکل نشوند.
   String? memo;
 
-  /// مثال تغییر نام فیلد با حفظ داده‌های قبلی
-  /// @Property(uid: 456789123)
-  /// String? updatedDescription;
-  ///
+  /// [Issue #40] زمان آخرین ویرایش (UTC) — پایه‌ی استراتژی Last-Write-Wins.
+  DateTime lastModified;
+
+  /// [Issue #40] حذف نرم؛ رکورد حذف‌شده تا همگام‌سازی بعدی باقی می‌ماند.
+  bool isDeleted;
 
   TransactionEntity({
     this.id = 0,
@@ -48,7 +49,10 @@ class TransactionEntity {
     required this.description,
     this.dbType = 0, // پیش‌فرض: هزینه
     this.dbSyncStatus = 1, // پیش‌فرض: در انتظار (Pending)
-  });
+    this.isDeleted = false,
+    DateTime? lastModified,
+  }) : lastModified =
+            lastModified ?? DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
 
   // گترهای کمکی برای خوانایی بیشتر کد در UI
   TransactionType get type => TransactionType.values[dbType];
