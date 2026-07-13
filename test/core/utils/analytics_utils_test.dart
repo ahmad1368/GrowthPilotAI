@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/models/financial_comparison.dart';
 import 'package:growth_pilot_ai/core/utils/analytics_utils.dart';
 
