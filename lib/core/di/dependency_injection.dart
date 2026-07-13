@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/business/fetch_transactions_usecase.dart';
 import 'package:growth_pilot_ai/business/sync_transactions_usecase.dart';
-import 'package:growth_pilot_ai/core/interfaces/bank_link_service.dart';
-import 'package:growth_pilot_ai/core/data/datasources/mock_bank_link_service.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_transaction_fetch_service.dart';
+import 'package:growth_pilot_ai/core/interfaces/transaction_fetch_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
@@ -38,7 +39,7 @@ class DependencyInjection {
         () => MockSocialAuthService(),
       );
 
-      // ۴. ثبت منبع همگام‌سازی ابری (بازگردانی شد؛ یوزکیس دلتا به آن وابسته است)
+      // ۴. ثبت منبع همگام‌سازی ابری (بازگردانی؛ یوزکیس دلتا به آن وابسته است)
       _locator.registerLazySingleton<RemoteSyncDataSource>(
         () => MockRemoteSyncDataSource(SyncConfig.fromEnvironment()),
       );
@@ -48,9 +49,12 @@ class DependencyInjection {
         () => SyncTransactionsUseCase(_locator<RemoteSyncDataSource>()),
       );
 
-      // ۶. ثبت سرویس اتصال بانکی Plaid (فعلاً Mock تا SDK/بک‌اند واقعی آماده شود)
-      _locator.registerLazySingleton<BankLinkService>(
-        () => MockBankLinkService(),
+      // ۶. سرویس واکشی خودکار تراکنش‌ها (Plaid) + یوزکیس حلقه‌ی واکشی
+      _locator.registerLazySingleton<TransactionFetchService>(
+        () => MockTransactionFetchService(),
+      );
+      _locator.registerLazySingleton<FetchTransactionsUseCase>(
+        () => FetchTransactionsUseCase(_locator<TransactionFetchService>()),
       );
 
       // ۷. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
