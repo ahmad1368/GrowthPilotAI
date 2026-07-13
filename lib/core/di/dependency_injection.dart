@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:growth_pilot_ai/business/sync_transactions_usecase.dart';
+import 'package:growth_pilot_ai/core/interfaces/bank_link_service.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_bank_link_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
@@ -36,12 +38,22 @@ class DependencyInjection {
         () => MockSocialAuthService(),
       );
 
-      // ۴. یوزکیس همگام‌سازی دلتا (وابسته به منبع همگام‌سازی بالا)
+      // ۴. ثبت منبع همگام‌سازی ابری (بازگردانی شد؛ یوزکیس دلتا به آن وابسته است)
+      _locator.registerLazySingleton<RemoteSyncDataSource>(
+        () => MockRemoteSyncDataSource(SyncConfig.fromEnvironment()),
+      );
+
+      // ۵. یوزکیس همگام‌سازی دلتا (وابسته به منبع همگام‌سازی بالا)
       _locator.registerLazySingleton<SyncTransactionsUseCase>(
         () => SyncTransactionsUseCase(_locator<RemoteSyncDataSource>()),
       );
 
-      // ۵. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
+      // ۶. ثبت سرویس اتصال بانکی Plaid (فعلاً Mock تا SDK/بک‌اند واقعی آماده شود)
+      _locator.registerLazySingleton<BankLinkService>(
+        () => MockBankLinkService(),
+      );
+
+      // ۷. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
       await _locator<AbstractClassifierService>().loadModel();
     } catch (e, stack) {
       OmniLogger.error(
