@@ -47,7 +47,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(2, 1174740264999713832),
       name: 'TransactionEntity',
-      lastPropertyId: const obx_int.IdUid(10, 6135345771449429271),
+      lastPropertyId: const obx_int.IdUid(12, 3154185988222372620),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -105,6 +105,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(10, 6135345771449429271),
             name: 'memo',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 2590928845301501178),
+            name: 'lastModified',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 3154185988222372620),
+            name: 'isDeleted',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -342,7 +352,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final descriptionOffset = fbb.writeString(object.description);
           final memoOffset =
               object.memo == null ? null : fbb.writeString(object.memo!);
-          fbb.startTable(11);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, remoteIdOffset);
           fbb.addFloat64(2, object.amount);
@@ -353,6 +363,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(7, object.category.targetId);
           fbb.addInt64(8, object.vendor.targetId);
           fbb.addOffset(9, memoOffset);
+          fbb.addInt64(10, object.lastModified.millisecondsSinceEpoch);
+          fbb.addBool(11, object.isDeleted);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -372,13 +384,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           final dbSyncStatusParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final isDeletedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
+          final lastModifiedParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
           final object = TransactionEntity(
               id: idParam,
               amount: amountParam,
               date: dateParam,
               description: descriptionParam,
               dbType: dbTypeParam,
-              dbSyncStatus: dbSyncStatusParam)
+              dbSyncStatus: dbSyncStatusParam,
+              isDeleted: isDeletedParam,
+              lastModified: lastModifiedParam)
             ..remoteId = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 6)
             ..memo = const fb.StringReader(asciiOptimization: true)
@@ -613,6 +631,14 @@ class TransactionEntity_ {
   /// see [TransactionEntity.memo]
   static final memo =
       obx.QueryStringProperty<TransactionEntity>(_entities[1].properties[9]);
+
+  /// see [TransactionEntity.lastModified]
+  static final lastModified =
+      obx.QueryDateProperty<TransactionEntity>(_entities[1].properties[10]);
+
+  /// see [TransactionEntity.isDeleted]
+  static final isDeleted =
+      obx.QueryBooleanProperty<TransactionEntity>(_entities[1].properties[11]);
 }
 
 /// [CategoryEntity] entity fields to define ObjectBox queries.
