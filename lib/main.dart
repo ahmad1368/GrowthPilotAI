@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/bindings/app_bindings.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
+import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -60,7 +61,8 @@ class MyApp extends StatelessWidget {
         darkTheme: darkTheme,
         home: const HomeLayout(),
         getPages: [
-          GetPage(name: '/settings', page: () => const SettingsScreen())
+          GetPage(name: '/settings', page: () => const SettingsScreen()),
+          GetPage(name: '/forecast', page: () => const ForecastScreen()),
         ],
       ),
     );

@@ -45,7 +45,10 @@ class AppDrawer extends StatelessWidget {
                           _buildDrawerItem(
                             icon: Icons.analytics_rounded,
                             title: "Growth Metrics",
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pop(context);
+                              Get.toNamed('/forecast');
+                            },
                           ),
                           _buildDrawerItem(
                             icon: Icons.cloud_done_rounded,
