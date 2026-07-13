@@ -1,3 +1,4 @@
+import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/interfaces/remote_sync_data_source.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/models/sync_config.dart';
@@ -23,5 +24,18 @@ class MockRemoteSyncDataSource implements RemoteSyncDataSource {
     OmniLogger.info('Mock sync health check OK for ${config.baseUrl}');
     return OmniResponse.success(true,
         message: 'Mock backend reachable (200 OK)');
+  }
+
+  @override
+  OmniResult<List<int>> uploadTransactions(
+      List<TransactionEntity> dirty) async {
+    if (!config.isConfigured) {
+      return OmniResponse.error('No sync endpoint configured',
+          statusCode: 503);
+    }
+    // Emulates an idempotent upsert: every sent local id comes back confirmed.
+    final syncedIds = dirty.map((t) => t.id).toList();
+    OmniLogger.info('Mock delta upload confirmed ${syncedIds.length} records');
+    return OmniResponse.success(syncedIds, message: 'Uploaded');
   }
 }
