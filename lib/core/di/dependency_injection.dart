@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/business/fetch_transactions_usecase.dart';
 import 'package:growth_pilot_ai/business/sync_transactions_usecase.dart';
 import 'package:growth_pilot_ai/core/interfaces/accounting_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_accounting_auth_service.dart';
@@ -40,7 +41,7 @@ class DependencyInjection {
         () => MockSocialAuthService(),
       );
 
-      // ۴. ثبت منبع همگام‌سازی ابری (بازگردانی شد؛ یوزکیس دلتا به آن وابسته است)
+      // ۴. ثبت منبع همگام‌سازی ابری (بازگردانی؛ یوزکیس دلتا به آن وابسته است)
       _locator.registerLazySingleton<RemoteSyncDataSource>(
         () => MockRemoteSyncDataSource(SyncConfig.fromEnvironment()),
       );
@@ -50,9 +51,12 @@ class DependencyInjection {
         () => SyncTransactionsUseCase(_locator<RemoteSyncDataSource>()),
       );
 
-      // ۶. ثبت سرویس اتصال بانکی Plaid (فعلاً Mock تا SDK/بک‌اند واقعی آماده شود)
-      _locator.registerLazySingleton<BankLinkService>(
-        () => MockBankLinkService(),
+      // ۶. سرویس واکشی خودکار تراکنش‌ها (Plaid) + یوزکیس حلقه‌ی واکشی
+      _locator.registerLazySingleton<TransactionFetchService>(
+        () => MockTransactionFetchService(),
+      );
+      _locator.registerLazySingleton<FetchTransactionsUseCase>(
+        () => FetchTransactionsUseCase(_locator<TransactionFetchService>()),
       );
 
       // ۷. ثبت سرویس OAuth حساب‌داری (QuickBooks/Xero؛ فعلاً Mock)
