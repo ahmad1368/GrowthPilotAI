@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/business/anonymizer_service.dart';
 import 'package:growth_pilot_ai/business/csv_export_strategy.dart';
 import 'package:growth_pilot_ai/business/fetch_transactions_usecase.dart';
 import 'package:growth_pilot_ai/business/sync_transactions_usecase.dart';
@@ -76,6 +77,11 @@ class DependencyInjection {
       // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)
       _locator.registerLazySingleton<ExportStrategy>(
         () => CsvExportStrategy(),
+      );
+
+      // ۱۰. سرویس ناشناس‌سازی داده پیش از ذخیره ابری (تحلیل بازار)
+      _locator.registerLazySingleton<AnonymizerService>(
+        () => AnonymizerService(),
       );
 
       // ۹. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
