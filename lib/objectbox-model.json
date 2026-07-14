@@ -227,10 +227,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "8:1558640386324839830",
+      "lastPropertyId": "4:5003041896792702603",
+      "name": "MappingRuleEntity",
+      "properties": [
+        {
+          "id": "1:4338415111100604995",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1332141392652882678",
+          "name": "merchantPattern",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "9:1267603601901855525"
+        },
+        {
+          "id": "3:1753435126311818925",
+          "name": "targetAccountId",
+          "type": 9
+        },
+        {
+          "id": "4:5003041896792702603",
+          "name": "targetAccountName",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "7:5361462158824125226",
-  "lastIndexId": "8:3170650326812969352",
+  "lastEntityId": "8:1558640386324839830",
+  "lastIndexId": "9:1267603601901855525",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

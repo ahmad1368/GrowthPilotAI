@@ -16,6 +16,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
@@ -252,6 +253,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(8, 1558640386324839830),
+      name: 'MappingRuleEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5003041896792702603),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4338415111100604995),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1332141392652882678),
+            name: 'merchantPattern',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(9, 1267603601901855525)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1753435126311818925),
+            name: 'targetAccountId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5003041896792702603),
+            name: 'targetAccountName',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -290,8 +321,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(7, 5361462158824125226),
-      lastIndexId: const obx_int.IdUid(8, 3170650326812969352),
+      lastEntityId: const obx_int.IdUid(8, 1558640386324839830),
+      lastIndexId: const obx_int.IdUid(9, 1267603601901855525),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -572,6 +603,49 @@ obx_int.ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    MappingRuleEntity: obx_int.EntityDefinition<MappingRuleEntity>(
+        model: _entities[6],
+        toOneRelations: (MappingRuleEntity object) => [],
+        toManyRelations: (MappingRuleEntity object) => {},
+        getId: (MappingRuleEntity object) => object.id,
+        setId: (MappingRuleEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MappingRuleEntity object, fb.Builder fbb) {
+          final merchantPatternOffset = fbb.writeString(object.merchantPattern);
+          final targetAccountIdOffset = fbb.writeString(object.targetAccountId);
+          final targetAccountNameOffset =
+              fbb.writeString(object.targetAccountName);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, merchantPatternOffset);
+          fbb.addOffset(2, targetAccountIdOffset);
+          fbb.addOffset(3, targetAccountNameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final merchantPatternParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final targetAccountIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final targetAccountNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final object = MappingRuleEntity(
+              id: idParam,
+              merchantPattern: merchantPatternParam,
+              targetAccountId: targetAccountIdParam,
+              targetAccountName: targetAccountNameParam);
+
+          return object;
         })
   };
 
@@ -729,4 +803,23 @@ class ErrorLog_ {
   /// see [ErrorLog.widgetName]
   static final widgetName =
       obx.QueryStringProperty<ErrorLog>(_entities[5].properties[5]);
+}
+
+/// [MappingRuleEntity] entity fields to define ObjectBox queries.
+class MappingRuleEntity_ {
+  /// see [MappingRuleEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<MappingRuleEntity>(_entities[6].properties[0]);
+
+  /// see [MappingRuleEntity.merchantPattern]
+  static final merchantPattern =
+      obx.QueryStringProperty<MappingRuleEntity>(_entities[6].properties[1]);
+
+  /// see [MappingRuleEntity.targetAccountId]
+  static final targetAccountId =
+      obx.QueryStringProperty<MappingRuleEntity>(_entities[6].properties[2]);
+
+  /// see [MappingRuleEntity.targetAccountName]
+  static final targetAccountName =
+      obx.QueryStringProperty<MappingRuleEntity>(_entities[6].properties[3]);
 }
