@@ -7,8 +7,10 @@ import 'package:growth_pilot_ai/widgets/global_error_view.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/bindings/app_bindings.dart';
+import 'package:growth_pilot_ai/controllers/category_mapping_controller.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
+import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_screen.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -63,6 +65,13 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(name: '/settings', page: () => const SettingsScreen()),
           GetPage(name: '/forecast', page: () => const ForecastScreen()),
+          GetPage(
+            name: '/category-mapping',
+            page: () => const CategoryMappingScreen(),
+            binding: BindingsBuilder(
+              () => Get.lazyPut(() => CategoryMappingController()),
+            ),
+          ),
         ],
       ),
     );
