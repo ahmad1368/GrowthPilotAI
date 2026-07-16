@@ -51,6 +51,14 @@ class AppDrawer extends StatelessWidget {
                             },
                           ),
                           _buildDrawerItem(
+                            icon: Icons.rule_rounded,
+                            title: "Category Mapping",
+                            onTap: () {
+                              Navigator.pop(context);
+                              Get.toNamed('/category-mapping');
+                            },
+                          ),
+                          _buildDrawerItem(
                             icon: Icons.cloud_done_rounded,
                             title: "Azure Status",
                             onTap: () {},

@@ -19,6 +19,7 @@ import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
+import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
 import 'core/models/document_type.dart';
 import 'core/models/error_log.dart';
@@ -283,6 +284,41 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(9, 5314542200592677594),
+      name: 'TransactionMappingStatusEntity',
+      lastPropertyId: const obx_int.IdUid(5, 4834349698690622788),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4599857445135163326),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8353153069010031149),
+            name: 'transactionId',
+            type: 6,
+            flags: 40,
+            indexId: const obx_int.IdUid(10, 5906403305534417853)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5887974905924634096),
+            name: 'confirmedAccountId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4864932927503659930),
+            name: 'confirmedAccountName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4834349698690622788),
+            name: 'confirmedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -321,8 +357,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(8, 1558640386324839830),
-      lastIndexId: const obx_int.IdUid(9, 1267603601901855525),
+      lastEntityId: const obx_int.IdUid(9, 5314542200592677594),
+      lastIndexId: const obx_int.IdUid(10, 5906403305534417853),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -646,7 +682,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
               targetAccountName: targetAccountNameParam);
 
           return object;
-        })
+        }),
+    TransactionMappingStatusEntity:
+        obx_int.EntityDefinition<TransactionMappingStatusEntity>(
+            model: _entities[7],
+            toOneRelations: (TransactionMappingStatusEntity object) => [],
+            toManyRelations: (TransactionMappingStatusEntity object) => {},
+            getId: (TransactionMappingStatusEntity object) => object.id,
+            setId: (TransactionMappingStatusEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB:
+                (TransactionMappingStatusEntity object, fb.Builder fbb) {
+              final confirmedAccountIdOffset =
+                  fbb.writeString(object.confirmedAccountId);
+              final confirmedAccountNameOffset =
+                  fbb.writeString(object.confirmedAccountName);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.transactionId);
+              fbb.addOffset(2, confirmedAccountIdOffset);
+              fbb.addOffset(3, confirmedAccountNameOffset);
+              fbb.addInt64(4, object.confirmedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final transactionIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final confirmedAccountIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final confirmedAccountNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+              final confirmedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = TransactionMappingStatusEntity(
+                  id: idParam,
+                  transactionId: transactionIdParam,
+                  confirmedAccountId: confirmedAccountIdParam,
+                  confirmedAccountName: confirmedAccountNameParam,
+                  confirmedAt: confirmedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -822,4 +906,31 @@ class MappingRuleEntity_ {
   /// see [MappingRuleEntity.targetAccountName]
   static final targetAccountName =
       obx.QueryStringProperty<MappingRuleEntity>(_entities[6].properties[3]);
+}
+
+/// [TransactionMappingStatusEntity] entity fields to define ObjectBox queries.
+class TransactionMappingStatusEntity_ {
+  /// see [TransactionMappingStatusEntity.id]
+  static final id = obx.QueryIntegerProperty<TransactionMappingStatusEntity>(
+      _entities[7].properties[0]);
+
+  /// see [TransactionMappingStatusEntity.transactionId]
+  static final transactionId =
+      obx.QueryIntegerProperty<TransactionMappingStatusEntity>(
+          _entities[7].properties[1]);
+
+  /// see [TransactionMappingStatusEntity.confirmedAccountId]
+  static final confirmedAccountId =
+      obx.QueryStringProperty<TransactionMappingStatusEntity>(
+          _entities[7].properties[2]);
+
+  /// see [TransactionMappingStatusEntity.confirmedAccountName]
+  static final confirmedAccountName =
+      obx.QueryStringProperty<TransactionMappingStatusEntity>(
+          _entities[7].properties[3]);
+
+  /// see [TransactionMappingStatusEntity.confirmedAt]
+  static final confirmedAt =
+      obx.QueryDateProperty<TransactionMappingStatusEntity>(
+          _entities[7].properties[4]);
 }

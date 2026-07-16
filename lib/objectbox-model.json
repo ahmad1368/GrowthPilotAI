@@ -258,10 +258,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "9:5314542200592677594",
+      "lastPropertyId": "5:4834349698690622788",
+      "name": "TransactionMappingStatusEntity",
+      "properties": [
+        {
+          "id": "1:4599857445135163326",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8353153069010031149",
+          "name": "transactionId",
+          "type": 6,
+          "flags": 40,
+          "indexId": "10:5906403305534417853"
+        },
+        {
+          "id": "3:5887974905924634096",
+          "name": "confirmedAccountId",
+          "type": 9
+        },
+        {
+          "id": "4:4864932927503659930",
+          "name": "confirmedAccountName",
+          "type": 9
+        },
+        {
+          "id": "5:4834349698690622788",
+          "name": "confirmedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "8:1558640386324839830",
-  "lastIndexId": "9:1267603601901855525",
+  "lastEntityId": "9:5314542200592677594",
+  "lastIndexId": "10:5906403305534417853",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

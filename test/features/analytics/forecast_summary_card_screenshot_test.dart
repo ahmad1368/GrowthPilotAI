@@ -25,9 +25,9 @@ void main() {
         key: key,
         child: Material(
           color: bg,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: const ForecastSummaryCard(
+          child: const Padding(
+            padding: EdgeInsets.all(20),
+            child: ForecastSummaryCard(
                 history: history, forecast: forecast),
           ),
         ),
