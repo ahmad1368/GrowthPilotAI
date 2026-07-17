@@ -11,12 +11,14 @@ import 'package:growth_pilot_ai/controllers/category_mapping_controller.dart';
 import 'package:growth_pilot_ai/controllers/accounting_integrations_controller.dart';
 import 'package:growth_pilot_ai/controllers/connected_accounts_controller.dart';
 import 'package:growth_pilot_ai/controllers/transaction_match_controller.dart';
+import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/connected_accounts_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard_screen.dart';
 import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_screen.dart';
 import 'package:growth_pilot_ai/features/transactions/screens/duplicate_matches_screen.dart';
+import 'package:growth_pilot_ai/features/inbox/screens/inbox_screen.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -97,6 +99,13 @@ class MyApp extends StatelessWidget {
             page: () => const DuplicateMatchesScreen(),
             binding: BindingsBuilder(
               () => Get.lazyPut(() => TransactionMatchController()),
+            ),
+          ),
+          GetPage(
+            name: '/inbox',
+            page: () => const InboxScreen(),
+            binding: BindingsBuilder(
+              () => Get.lazyPut(() => InboxController()),
             ),
           ),
         ],

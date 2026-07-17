@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
+import 'package:growth_pilot_ai/core/theme/inbox_shad_theme.dart';
+import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+
+/// Main Inbox screen (Issue #72): searchable, most-recent-first list of
+/// conversation threads. Flat shadcn_ui per the design-system pivot — no
+/// Glassmorphism/BackdropFilter despite the original issue's literal ask.
+class InboxScreen extends StatelessWidget {
+  const InboxScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final controller = Get.find<InboxController>();
+
+    return ShadTheme(
+      data: InboxShadTheme.build(brightness),
+      child: Scaffold(
+        backgroundColor: brightness == Brightness.dark
+            ? const Color(0xFF09090B)
+            : const Color(0xFFFFFFFF),
+        appBar: AppBar(title: const Text('Inbox')),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              ShadInput(
+                placeholder: const Text('Search conversations'),
+                onChanged: (value) => controller.searchQuery.value = value,
+              ),
+              const SizedBox(height: 12),
+              Expanded(
+                child: Obx(() {
+                  final summaries = controller.visibleSummaries;
+                  if (summaries.isEmpty) {
+                    return const Center(child: Text('No conversations yet'));
+                  }
+                  return ListView.builder(
+                    itemCount: summaries.length,
+                    itemBuilder: (context, index) => ConversationTile(
+                      summary: summaries[index],
+                      onTap: () {},
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
