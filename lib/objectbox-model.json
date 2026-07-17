@@ -568,10 +568,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "15:9075117630209762498",
+      "lastPropertyId": "8:1883840329695349606",
+      "name": "AccountingSyncStatusEntity",
+      "properties": [
+        {
+          "id": "1:5353411186884071429",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4201041299938057989",
+          "name": "transactionId",
+          "type": 6,
+          "flags": 40,
+          "indexId": "18:2807626477900965725"
+        },
+        {
+          "id": "3:2687545788609788628",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "4:4770076025185641898",
+          "name": "externalProviderId",
+          "type": 9
+        },
+        {
+          "id": "5:2702242169138796812",
+          "name": "retryCount",
+          "type": 6
+        },
+        {
+          "id": "6:1414676461479386730",
+          "name": "lastAttemptAt",
+          "type": 10
+        },
+        {
+          "id": "7:1599038404083021719",
+          "name": "nextRetryAt",
+          "type": 10
+        },
+        {
+          "id": "8:1883840329695349606",
+          "name": "lastError",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "14:8804315362738781488",
-  "lastIndexId": "17:7597477842286060950",
+  "lastEntityId": "15:9075117630209762498",
+  "lastIndexId": "18:2807626477900965725",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
