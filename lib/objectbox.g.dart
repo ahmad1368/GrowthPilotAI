@@ -18,6 +18,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
+import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
@@ -642,6 +643,66 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(16, 8408153993645793235),
+      name: 'InboxNotificationEntity',
+      lastPropertyId: const obx_int.IdUid(10, 2929912602770700824),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7014625217415504828),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7237550074444460742),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6411854723739976418),
+            name: 'body',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1369341770942103085),
+            name: 'dbType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 171225848099243985),
+            name: 'dbPriority',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6002951690793251429),
+            name: 'metadataRefType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7914098305665314729),
+            name: 'metadataRefId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 5546907442904334438),
+            name: 'createdAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(19, 7194083034705239905)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 2922952345164445223),
+            name: 'isRead',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 2929912602770700824),
+            name: 'deliveredViaPush',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -680,8 +741,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(15, 9075117630209762498),
-      lastIndexId: const obx_int.IdUid(18, 2807626477900965725),
+      lastEntityId: const obx_int.IdUid(16, 8408153993645793235),
+      lastIndexId: const obx_int.IdUid(19, 7194083034705239905),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1440,6 +1501,76 @@ obx_int.ModelDefinition getObjectBoxModel() {
               lastError: lastErrorParam);
 
           return object;
+        }),
+    InboxNotificationEntity: obx_int.EntityDefinition<InboxNotificationEntity>(
+        model: _entities[14],
+        toOneRelations: (InboxNotificationEntity object) => [],
+        toManyRelations: (InboxNotificationEntity object) => {},
+        getId: (InboxNotificationEntity object) => object.id,
+        setId: (InboxNotificationEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (InboxNotificationEntity object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          final bodyOffset = fbb.writeString(object.body);
+          final metadataRefTypeOffset = object.metadataRefType == null
+              ? null
+              : fbb.writeString(object.metadataRefType!);
+          final metadataRefIdOffset = object.metadataRefId == null
+              ? null
+              : fbb.writeString(object.metadataRefId!);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, titleOffset);
+          fbb.addOffset(2, bodyOffset);
+          fbb.addInt64(3, object.dbType);
+          fbb.addInt64(4, object.dbPriority);
+          fbb.addOffset(5, metadataRefTypeOffset);
+          fbb.addOffset(6, metadataRefIdOffset);
+          fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+          fbb.addBool(8, object.isRead);
+          fbb.addBool(9, object.deliveredViaPush);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final bodyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final dbTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final dbPriorityParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final metadataRefTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 14);
+          final metadataRefIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final isReadParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final deliveredViaPushParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final object = InboxNotificationEntity(
+              id: idParam,
+              title: titleParam,
+              body: bodyParam,
+              dbType: dbTypeParam,
+              dbPriority: dbPriorityParam,
+              metadataRefType: metadataRefTypeParam,
+              metadataRefId: metadataRefIdParam,
+              createdAt: createdAtParam,
+              isRead: isReadParam,
+              deliveredViaPush: deliveredViaPushParam);
+
+          return object;
         })
   };
 
@@ -1874,4 +2005,49 @@ class AccountingSyncStatusEntity_ {
   /// see [AccountingSyncStatusEntity.lastError]
   static final lastError = obx.QueryStringProperty<AccountingSyncStatusEntity>(
       _entities[13].properties[7]);
+}
+
+/// [InboxNotificationEntity] entity fields to define ObjectBox queries.
+class InboxNotificationEntity_ {
+  /// see [InboxNotificationEntity.id]
+  static final id = obx.QueryIntegerProperty<InboxNotificationEntity>(
+      _entities[14].properties[0]);
+
+  /// see [InboxNotificationEntity.title]
+  static final title = obx.QueryStringProperty<InboxNotificationEntity>(
+      _entities[14].properties[1]);
+
+  /// see [InboxNotificationEntity.body]
+  static final body = obx.QueryStringProperty<InboxNotificationEntity>(
+      _entities[14].properties[2]);
+
+  /// see [InboxNotificationEntity.dbType]
+  static final dbType = obx.QueryIntegerProperty<InboxNotificationEntity>(
+      _entities[14].properties[3]);
+
+  /// see [InboxNotificationEntity.dbPriority]
+  static final dbPriority = obx.QueryIntegerProperty<InboxNotificationEntity>(
+      _entities[14].properties[4]);
+
+  /// see [InboxNotificationEntity.metadataRefType]
+  static final metadataRefType =
+      obx.QueryStringProperty<InboxNotificationEntity>(
+          _entities[14].properties[5]);
+
+  /// see [InboxNotificationEntity.metadataRefId]
+  static final metadataRefId = obx.QueryStringProperty<InboxNotificationEntity>(
+      _entities[14].properties[6]);
+
+  /// see [InboxNotificationEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<InboxNotificationEntity>(
+      _entities[14].properties[7]);
+
+  /// see [InboxNotificationEntity.isRead]
+  static final isRead = obx.QueryBooleanProperty<InboxNotificationEntity>(
+      _entities[14].properties[8]);
+
+  /// see [InboxNotificationEntity.deliveredViaPush]
+  static final deliveredViaPush =
+      obx.QueryBooleanProperty<InboxNotificationEntity>(
+          _entities[14].properties[9]);
 }
