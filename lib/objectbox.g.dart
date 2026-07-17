@@ -16,6 +16,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
@@ -319,6 +320,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(10, 1697370105063585723),
+      name: 'IntegrationConnectionEntity',
+      lastPropertyId: const obx_int.IdUid(6, 1476855963237726146),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8120475236450334584),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3978689783172533435),
+            name: 'providerId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(11, 3573716445769592632)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3705623840615490471),
+            name: 'providerLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 421517111884885464),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3624854652917754785),
+            name: 'accountLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1476855963237726146),
+            name: 'lastSyncedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -357,8 +398,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(9, 5314542200592677594),
-      lastIndexId: const obx_int.IdUid(10, 5906403305534417853),
+      lastEntityId: const obx_int.IdUid(10, 1697370105063585723),
+      lastIndexId: const obx_int.IdUid(11, 3573716445769592632),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -730,6 +771,62 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   confirmedAt: confirmedAtParam);
 
               return object;
+            }),
+    IntegrationConnectionEntity:
+        obx_int.EntityDefinition<IntegrationConnectionEntity>(
+            model: _entities[8],
+            toOneRelations: (IntegrationConnectionEntity object) => [],
+            toManyRelations: (IntegrationConnectionEntity object) => {},
+            getId: (IntegrationConnectionEntity object) => object.id,
+            setId: (IntegrationConnectionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (IntegrationConnectionEntity object, fb.Builder fbb) {
+              final providerIdOffset = fbb.writeString(object.providerId);
+              final providerLabelOffset = fbb.writeString(object.providerLabel);
+              final accountLabelOffset = object.accountLabel == null
+                  ? null
+                  : fbb.writeString(object.accountLabel!);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, providerIdOffset);
+              fbb.addOffset(2, providerLabelOffset);
+              fbb.addInt64(3, object.dbStatus);
+              fbb.addOffset(4, accountLabelOffset);
+              fbb.addInt64(5, object.lastSyncedAt?.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final lastSyncedAtValue = const fb.Int64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 14);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final providerIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final providerLabelParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final accountLabelParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 12);
+              final lastSyncedAtParam = lastSyncedAtValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(lastSyncedAtValue);
+              final object = IntegrationConnectionEntity(
+                  id: idParam,
+                  providerId: providerIdParam,
+                  providerLabel: providerLabelParam,
+                  dbStatus: dbStatusParam,
+                  accountLabel: accountLabelParam,
+                  lastSyncedAt: lastSyncedAtParam);
+
+              return object;
             })
   };
 
@@ -933,4 +1030,35 @@ class TransactionMappingStatusEntity_ {
   static final confirmedAt =
       obx.QueryDateProperty<TransactionMappingStatusEntity>(
           _entities[7].properties[4]);
+}
+
+/// [IntegrationConnectionEntity] entity fields to define ObjectBox queries.
+class IntegrationConnectionEntity_ {
+  /// see [IntegrationConnectionEntity.id]
+  static final id = obx.QueryIntegerProperty<IntegrationConnectionEntity>(
+      _entities[8].properties[0]);
+
+  /// see [IntegrationConnectionEntity.providerId]
+  static final providerId =
+      obx.QueryStringProperty<IntegrationConnectionEntity>(
+          _entities[8].properties[1]);
+
+  /// see [IntegrationConnectionEntity.providerLabel]
+  static final providerLabel =
+      obx.QueryStringProperty<IntegrationConnectionEntity>(
+          _entities[8].properties[2]);
+
+  /// see [IntegrationConnectionEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<IntegrationConnectionEntity>(
+      _entities[8].properties[3]);
+
+  /// see [IntegrationConnectionEntity.accountLabel]
+  static final accountLabel =
+      obx.QueryStringProperty<IntegrationConnectionEntity>(
+          _entities[8].properties[4]);
+
+  /// see [IntegrationConnectionEntity.lastSyncedAt]
+  static final lastSyncedAt =
+      obx.QueryDateProperty<IntegrationConnectionEntity>(
+          _entities[8].properties[5]);
 }
