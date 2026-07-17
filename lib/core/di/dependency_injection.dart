@@ -13,6 +13,9 @@ import 'package:growth_pilot_ai/core/data/datasources/mock_bank_link_service.dar
 import 'package:growth_pilot_ai/core/interfaces/accounting_export_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_accounting_export_service.dart';
 import 'package:growth_pilot_ai/business/sync_confirmed_transactions_usecase.dart';
+import 'package:growth_pilot_ai/core/interfaces/notification_channel.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_notification_channel.dart';
+import 'package:growth_pilot_ai/business/dispatch_notification_usecase.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
@@ -84,6 +87,14 @@ class DependencyInjection {
       _locator.registerLazySingleton<SyncConfirmedTransactionsUseCase>(
         () => SyncConfirmedTransactionsUseCase(
             _locator<AccountingExportService>()),
+      );
+
+      // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
+      _locator.registerLazySingleton<NotificationChannel>(
+        () => MockNotificationChannel(),
+      );
+      _locator.registerLazySingleton<DispatchNotificationUseCase>(
+        () => DispatchNotificationUseCase(_locator<NotificationChannel>()),
       );
 
       // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)

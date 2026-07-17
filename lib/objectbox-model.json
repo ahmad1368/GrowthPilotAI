@@ -619,10 +619,71 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "16:8408153993645793235",
+      "lastPropertyId": "10:2929912602770700824",
+      "name": "InboxNotificationEntity",
+      "properties": [
+        {
+          "id": "1:7014625217415504828",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7237550074444460742",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:6411854723739976418",
+          "name": "body",
+          "type": 9
+        },
+        {
+          "id": "4:1369341770942103085",
+          "name": "dbType",
+          "type": 6
+        },
+        {
+          "id": "5:171225848099243985",
+          "name": "dbPriority",
+          "type": 6
+        },
+        {
+          "id": "6:6002951690793251429",
+          "name": "metadataRefType",
+          "type": 9
+        },
+        {
+          "id": "7:7914098305665314729",
+          "name": "metadataRefId",
+          "type": 9
+        },
+        {
+          "id": "8:5546907442904334438",
+          "name": "createdAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "19:7194083034705239905"
+        },
+        {
+          "id": "9:2922952345164445223",
+          "name": "isRead",
+          "type": 1
+        },
+        {
+          "id": "10:2929912602770700824",
+          "name": "deliveredViaPush",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "15:9075117630209762498",
-  "lastIndexId": "18:2807626477900965725",
+  "lastEntityId": "16:8408153993645793235",
+  "lastIndexId": "19:7194083034705239905",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
