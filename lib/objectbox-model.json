@@ -335,10 +335,66 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "11:7864671894398357892",
+      "lastPropertyId": "9:5026992602004917788",
+      "name": "LinkedAccountEntity",
+      "properties": [
+        {
+          "id": "1:3841453521275845297",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4983592817518881752",
+          "name": "accountId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "12:8244194797297753985"
+        },
+        {
+          "id": "3:131429983873230517",
+          "name": "institutionName",
+          "type": 9
+        },
+        {
+          "id": "4:5729518446775405719",
+          "name": "officialName",
+          "type": 9
+        },
+        {
+          "id": "5:3454731053436863196",
+          "name": "mask",
+          "type": 9
+        },
+        {
+          "id": "6:8288667316241993225",
+          "name": "accountType",
+          "type": 9
+        },
+        {
+          "id": "7:4499256872215680067",
+          "name": "currentBalance",
+          "type": 8
+        },
+        {
+          "id": "8:7122965559983448929",
+          "name": "isActive",
+          "type": 1
+        },
+        {
+          "id": "9:5026992602004917788",
+          "name": "needsReauth",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "10:1697370105063585723",
-  "lastIndexId": "11:3573716445769592632",
+  "lastEntityId": "11:7864671894398357892",
+  "lastIndexId": "12:8244194797297753985",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
