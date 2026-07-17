@@ -294,10 +294,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "10:1697370105063585723",
+      "lastPropertyId": "6:1476855963237726146",
+      "name": "IntegrationConnectionEntity",
+      "properties": [
+        {
+          "id": "1:8120475236450334584",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3978689783172533435",
+          "name": "providerId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "11:3573716445769592632"
+        },
+        {
+          "id": "3:3705623840615490471",
+          "name": "providerLabel",
+          "type": 9
+        },
+        {
+          "id": "4:421517111884885464",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:3624854652917754785",
+          "name": "accountLabel",
+          "type": 9
+        },
+        {
+          "id": "6:1476855963237726146",
+          "name": "lastSyncedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "9:5314542200592677594",
-  "lastIndexId": "10:5906403305534417853",
+  "lastEntityId": "10:1697370105063585723",
+  "lastIndexId": "11:3573716445769592632",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

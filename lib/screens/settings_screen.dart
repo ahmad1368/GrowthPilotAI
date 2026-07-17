@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:get/get.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
@@ -64,6 +65,33 @@ class SettingsScreen extends StatelessWidget {
                             theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                   ),
                   trailing: const ThemeToggle(),
+                ),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Accounting & Banking integrations dashboard (Issue #61)
+              _buildSectionHeader("Integrations"),
+              const SizedBox(height: 12),
+
+              OmniGlassPanel(
+                opacity: 0.1,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  leading: Icon(Icons.account_balance_rounded,
+                      color: theme.colorScheme.onSurface),
+                  title: const AdaptiveText("Accounting & Banking"),
+                  subtitle: AdaptiveText(
+                    "Plaid, QuickBooks, Xero connections",
+                    fontSize: 12,
+                    style: TextStyle(
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.6)),
+                  ),
+                  trailing: Icon(Icons.chevron_right_rounded,
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+                  onTap: () => Get.toNamed('/settings/integrations'),
                 ),
               ),
 

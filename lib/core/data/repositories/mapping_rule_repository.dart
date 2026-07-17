@@ -11,4 +11,8 @@ class MappingRuleRepository {
   List<MappingRuleEntity> getAll() => _box.getAll();
 
   int add(MappingRuleEntity rule) => _box.put(rule);
+
+  /// Clears all auto-map rules (Issue #61 — disconnecting an accounting
+  /// provider invalidates rules pointing at its Chart of Accounts).
+  int removeAll() => _box.removeAll();
 }
