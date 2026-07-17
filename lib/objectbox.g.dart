@@ -17,6 +17,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
+import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
@@ -360,6 +361,61 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(11, 7864671894398357892),
+      name: 'LinkedAccountEntity',
+      lastPropertyId: const obx_int.IdUid(9, 5026992602004917788),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3841453521275845297),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4983592817518881752),
+            name: 'accountId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(12, 8244194797297753985)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 131429983873230517),
+            name: 'institutionName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5729518446775405719),
+            name: 'officialName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3454731053436863196),
+            name: 'mask',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8288667316241993225),
+            name: 'accountType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4499256872215680067),
+            name: 'currentBalance',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7122965559983448929),
+            name: 'isActive',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 5026992602004917788),
+            name: 'needsReauth',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -398,8 +454,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(10, 1697370105063585723),
-      lastIndexId: const obx_int.IdUid(11, 3573716445769592632),
+      lastEntityId: const obx_int.IdUid(11, 7864671894398357892),
+      lastIndexId: const obx_int.IdUid(12, 8244194797297753985),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -827,7 +883,71 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   lastSyncedAt: lastSyncedAtParam);
 
               return object;
-            })
+            }),
+    LinkedAccountEntity: obx_int.EntityDefinition<LinkedAccountEntity>(
+        model: _entities[9],
+        toOneRelations: (LinkedAccountEntity object) => [],
+        toManyRelations: (LinkedAccountEntity object) => {},
+        getId: (LinkedAccountEntity object) => object.id,
+        setId: (LinkedAccountEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (LinkedAccountEntity object, fb.Builder fbb) {
+          final accountIdOffset = fbb.writeString(object.accountId);
+          final institutionNameOffset = fbb.writeString(object.institutionName);
+          final officialNameOffset = fbb.writeString(object.officialName);
+          final maskOffset = fbb.writeString(object.mask);
+          final accountTypeOffset = fbb.writeString(object.accountType);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, accountIdOffset);
+          fbb.addOffset(2, institutionNameOffset);
+          fbb.addOffset(3, officialNameOffset);
+          fbb.addOffset(4, maskOffset);
+          fbb.addOffset(5, accountTypeOffset);
+          fbb.addFloat64(6, object.currentBalance);
+          fbb.addBool(7, object.isActive);
+          fbb.addBool(8, object.needsReauth);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final accountIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final institutionNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final officialNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final maskParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final accountTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final currentBalanceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final isActiveParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
+          final needsReauthParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final object = LinkedAccountEntity(
+              id: idParam,
+              accountId: accountIdParam,
+              institutionName: institutionNameParam,
+              officialName: officialNameParam,
+              mask: maskParam,
+              accountType: accountTypeParam,
+              currentBalance: currentBalanceParam,
+              isActive: isActiveParam,
+              needsReauth: needsReauthParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -1061,4 +1181,43 @@ class IntegrationConnectionEntity_ {
   static final lastSyncedAt =
       obx.QueryDateProperty<IntegrationConnectionEntity>(
           _entities[8].properties[5]);
+}
+
+/// [LinkedAccountEntity] entity fields to define ObjectBox queries.
+class LinkedAccountEntity_ {
+  /// see [LinkedAccountEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<LinkedAccountEntity>(_entities[9].properties[0]);
+
+  /// see [LinkedAccountEntity.accountId]
+  static final accountId =
+      obx.QueryStringProperty<LinkedAccountEntity>(_entities[9].properties[1]);
+
+  /// see [LinkedAccountEntity.institutionName]
+  static final institutionName =
+      obx.QueryStringProperty<LinkedAccountEntity>(_entities[9].properties[2]);
+
+  /// see [LinkedAccountEntity.officialName]
+  static final officialName =
+      obx.QueryStringProperty<LinkedAccountEntity>(_entities[9].properties[3]);
+
+  /// see [LinkedAccountEntity.mask]
+  static final mask =
+      obx.QueryStringProperty<LinkedAccountEntity>(_entities[9].properties[4]);
+
+  /// see [LinkedAccountEntity.accountType]
+  static final accountType =
+      obx.QueryStringProperty<LinkedAccountEntity>(_entities[9].properties[5]);
+
+  /// see [LinkedAccountEntity.currentBalance]
+  static final currentBalance =
+      obx.QueryDoubleProperty<LinkedAccountEntity>(_entities[9].properties[6]);
+
+  /// see [LinkedAccountEntity.isActive]
+  static final isActive =
+      obx.QueryBooleanProperty<LinkedAccountEntity>(_entities[9].properties[7]);
+
+  /// see [LinkedAccountEntity.needsReauth]
+  static final needsReauth =
+      obx.QueryBooleanProperty<LinkedAccountEntity>(_entities[9].properties[8]);
 }

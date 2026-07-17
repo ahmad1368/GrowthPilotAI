@@ -5,6 +5,7 @@ import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
 import '../widgets/omni_glass_panel.dart';
+import '../features/settings/widgets/connected_accounts_nav_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -93,6 +94,12 @@ class SettingsScreen extends StatelessWidget {
                           theme.colorScheme.onSurface.withValues(alpha: 0.3)),
                   onTap: () => Get.toNamed('/settings/integrations'),
                 ),
+              ),
+
+              const SizedBox(height: 12),
+
+              ConnectedAccountsNavTile(
+                onTap: () => Get.toNamed('/settings/connected-accounts'),
               ),
 
               const SizedBox(height: 32),
