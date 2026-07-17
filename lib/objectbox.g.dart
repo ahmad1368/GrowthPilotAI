@@ -15,6 +15,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
@@ -591,6 +592,56 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(15, 9075117630209762498),
+      name: 'AccountingSyncStatusEntity',
+      lastPropertyId: const obx_int.IdUid(8, 1883840329695349606),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5353411186884071429),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4201041299938057989),
+            name: 'transactionId',
+            type: 6,
+            flags: 40,
+            indexId: const obx_int.IdUid(18, 2807626477900965725)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2687545788609788628),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4770076025185641898),
+            name: 'externalProviderId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2702242169138796812),
+            name: 'retryCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1414676461479386730),
+            name: 'lastAttemptAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1599038404083021719),
+            name: 'nextRetryAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1883840329695349606),
+            name: 'lastError',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -629,8 +680,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(14, 8804315362738781488),
-      lastIndexId: const obx_int.IdUid(17, 7597477842286060950),
+      lastEntityId: const obx_int.IdUid(15, 9075117630209762498),
+      lastIndexId: const obx_int.IdUid(18, 2807626477900965725),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1323,6 +1374,72 @@ obx_int.ModelDefinition getObjectBoxModel() {
               attachmentUrl: attachmentUrlParam);
 
           return object;
+        }),
+    AccountingSyncStatusEntity: obx_int.EntityDefinition<
+            AccountingSyncStatusEntity>(
+        model: _entities[13],
+        toOneRelations: (AccountingSyncStatusEntity object) => [],
+        toManyRelations: (AccountingSyncStatusEntity object) => {},
+        getId: (AccountingSyncStatusEntity object) => object.id,
+        setId: (AccountingSyncStatusEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AccountingSyncStatusEntity object, fb.Builder fbb) {
+          final externalProviderIdOffset = object.externalProviderId == null
+              ? null
+              : fbb.writeString(object.externalProviderId!);
+          final lastErrorOffset = object.lastError == null
+              ? null
+              : fbb.writeString(object.lastError!);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.transactionId);
+          fbb.addInt64(2, object.dbStatus);
+          fbb.addOffset(3, externalProviderIdOffset);
+          fbb.addInt64(4, object.retryCount);
+          fbb.addInt64(5, object.lastAttemptAt?.millisecondsSinceEpoch);
+          fbb.addInt64(6, object.nextRetryAt?.millisecondsSinceEpoch);
+          fbb.addOffset(7, lastErrorOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final lastAttemptAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final nextRetryAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final transactionIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final externalProviderIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10);
+          final retryCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final lastAttemptAtParam = lastAttemptAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(lastAttemptAtValue);
+          final nextRetryAtParam = nextRetryAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(nextRetryAtValue);
+          final lastErrorParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 18);
+          final object = AccountingSyncStatusEntity(
+              id: idParam,
+              transactionId: transactionIdParam,
+              dbStatus: dbStatusParam,
+              externalProviderId: externalProviderIdParam,
+              retryCount: retryCountParam,
+              lastAttemptAt: lastAttemptAtParam,
+              nextRetryAt: nextRetryAtParam,
+              lastError: lastErrorParam);
+
+          return object;
         })
   };
 
@@ -1718,4 +1835,43 @@ class MessageEntity_ {
   /// see [MessageEntity.attachmentUrl]
   static final attachmentUrl =
       obx.QueryStringProperty<MessageEntity>(_entities[12].properties[7]);
+}
+
+/// [AccountingSyncStatusEntity] entity fields to define ObjectBox queries.
+class AccountingSyncStatusEntity_ {
+  /// see [AccountingSyncStatusEntity.id]
+  static final id = obx.QueryIntegerProperty<AccountingSyncStatusEntity>(
+      _entities[13].properties[0]);
+
+  /// see [AccountingSyncStatusEntity.transactionId]
+  static final transactionId =
+      obx.QueryIntegerProperty<AccountingSyncStatusEntity>(
+          _entities[13].properties[1]);
+
+  /// see [AccountingSyncStatusEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<AccountingSyncStatusEntity>(
+      _entities[13].properties[2]);
+
+  /// see [AccountingSyncStatusEntity.externalProviderId]
+  static final externalProviderId =
+      obx.QueryStringProperty<AccountingSyncStatusEntity>(
+          _entities[13].properties[3]);
+
+  /// see [AccountingSyncStatusEntity.retryCount]
+  static final retryCount =
+      obx.QueryIntegerProperty<AccountingSyncStatusEntity>(
+          _entities[13].properties[4]);
+
+  /// see [AccountingSyncStatusEntity.lastAttemptAt]
+  static final lastAttemptAt =
+      obx.QueryDateProperty<AccountingSyncStatusEntity>(
+          _entities[13].properties[5]);
+
+  /// see [AccountingSyncStatusEntity.nextRetryAt]
+  static final nextRetryAt = obx.QueryDateProperty<AccountingSyncStatusEntity>(
+      _entities[13].properties[6]);
+
+  /// see [AccountingSyncStatusEntity.lastError]
+  static final lastError = obx.QueryStringProperty<AccountingSyncStatusEntity>(
+      _entities[13].properties[7]);
 }

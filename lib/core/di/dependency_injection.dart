@@ -10,6 +10,9 @@ import 'package:growth_pilot_ai/core/interfaces/accounting_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_accounting_auth_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/bank_link_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_bank_link_service.dart';
+import 'package:growth_pilot_ai/core/interfaces/accounting_export_service.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_accounting_export_service.dart';
+import 'package:growth_pilot_ai/business/sync_confirmed_transactions_usecase.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
@@ -72,6 +75,15 @@ class DependencyInjection {
       // ۸. ثبت سرویس OAuth حساب‌داری (QuickBooks/Xero؛ فعلاً Mock)
       _locator.registerLazySingleton<AccountingAuthService>(
         () => MockAccountingAuthService(),
+      );
+
+      // ۸.۱ سرویس اکسپورت تراکنش‌های تاییدشده به QuickBooks/Xero (Issue #59؛ فعلاً Mock)
+      _locator.registerLazySingleton<AccountingExportService>(
+        () => MockAccountingExportService(),
+      );
+      _locator.registerLazySingleton<SyncConfirmedTransactionsUseCase>(
+        () => SyncConfirmedTransactionsUseCase(
+            _locator<AccountingExportService>()),
       );
 
       // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)
