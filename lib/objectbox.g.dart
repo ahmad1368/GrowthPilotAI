@@ -16,9 +16,11 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
+import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
@@ -493,6 +495,102 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(13, 7666229861067165919),
+      name: 'ConversationEntity',
+      lastPropertyId: const obx_int.IdUid(7, 7582975425439423862),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5049878238516188278),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2192260638104058274),
+            name: 'subject',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 488610555196674583),
+            name: 'participantIds',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5999999050534075903),
+            name: 'lastMessageAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(15, 2388524962894448136)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4680548208901998800),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4070115471783802878),
+            name: 'dbContextType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7582975425439423862),
+            name: 'contextRefId',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(14, 8804315362738781488),
+      name: 'MessageEntity',
+      lastPropertyId: const obx_int.IdUid(8, 1255265870448737299),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8781400796589403308),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4950328251599680770),
+            name: 'conversationId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(16, 1749443516919017392)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1425387857287073244),
+            name: 'senderId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7204624208910415376),
+            name: 'body',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5885498655682907850),
+            name: 'dbContentType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2575968264239162205),
+            name: 'createdAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(17, 7597477842286060950)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4290678190183630816),
+            name: 'isRead',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1255265870448737299),
+            name: 'attachmentUrl',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -531,8 +629,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(12, 6174765353207546924),
-      lastIndexId: const obx_int.IdUid(14, 9154197970435579783),
+      lastEntityId: const obx_int.IdUid(14, 8804315362738781488),
+      lastIndexId: const obx_int.IdUid(17, 7597477842286060950),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1109,7 +1207,123 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   matchScore: matchScoreParam);
 
               return object;
-            })
+            }),
+    ConversationEntity: obx_int.EntityDefinition<ConversationEntity>(
+        model: _entities[11],
+        toOneRelations: (ConversationEntity object) => [],
+        toManyRelations: (ConversationEntity object) => {},
+        getId: (ConversationEntity object) => object.id,
+        setId: (ConversationEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ConversationEntity object, fb.Builder fbb) {
+          final subjectOffset = fbb.writeString(object.subject);
+          final participantIdsOffset = fbb.writeList(object.participantIds
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final contextRefIdOffset = object.contextRefId == null
+              ? null
+              : fbb.writeString(object.contextRefId!);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, subjectOffset);
+          fbb.addOffset(2, participantIdsOffset);
+          fbb.addInt64(3, object.lastMessageAt.millisecondsSinceEpoch);
+          fbb.addInt64(4, object.dbStatus);
+          fbb.addInt64(5, object.dbContextType);
+          fbb.addOffset(6, contextRefIdOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final subjectParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final participantIdsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 8, []);
+          final lastMessageAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final dbContextTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final contextRefIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16);
+          final object = ConversationEntity(
+              id: idParam,
+              subject: subjectParam,
+              participantIds: participantIdsParam,
+              lastMessageAt: lastMessageAtParam,
+              dbStatus: dbStatusParam,
+              dbContextType: dbContextTypeParam,
+              contextRefId: contextRefIdParam);
+
+          return object;
+        }),
+    MessageEntity: obx_int.EntityDefinition<MessageEntity>(
+        model: _entities[12],
+        toOneRelations: (MessageEntity object) => [],
+        toManyRelations: (MessageEntity object) => {},
+        getId: (MessageEntity object) => object.id,
+        setId: (MessageEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MessageEntity object, fb.Builder fbb) {
+          final senderIdOffset = fbb.writeString(object.senderId);
+          final bodyOffset = fbb.writeString(object.body);
+          final attachmentUrlOffset = object.attachmentUrl == null
+              ? null
+              : fbb.writeString(object.attachmentUrl!);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.conversationId);
+          fbb.addOffset(2, senderIdOffset);
+          fbb.addOffset(3, bodyOffset);
+          fbb.addInt64(4, object.dbContentType);
+          fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+          fbb.addBool(6, object.isRead);
+          fbb.addOffset(7, attachmentUrlOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final conversationIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final senderIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final bodyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final dbContentTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final isReadParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
+          final attachmentUrlParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18);
+          final object = MessageEntity(
+              id: idParam,
+              conversationId: conversationIdParam,
+              senderId: senderIdParam,
+              body: bodyParam,
+              dbContentType: dbContentTypeParam,
+              createdAt: createdAtParam,
+              isRead: isReadParam,
+              attachmentUrl: attachmentUrlParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -1437,4 +1651,71 @@ class UnifiedTransactionEntity_ {
   /// see [UnifiedTransactionEntity.matchScore]
   static final matchScore = obx.QueryDoubleProperty<UnifiedTransactionEntity>(
       _entities[10].properties[12]);
+}
+
+/// [ConversationEntity] entity fields to define ObjectBox queries.
+class ConversationEntity_ {
+  /// see [ConversationEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<ConversationEntity>(_entities[11].properties[0]);
+
+  /// see [ConversationEntity.subject]
+  static final subject =
+      obx.QueryStringProperty<ConversationEntity>(_entities[11].properties[1]);
+
+  /// see [ConversationEntity.participantIds]
+  static final participantIds =
+      obx.QueryStringVectorProperty<ConversationEntity>(
+          _entities[11].properties[2]);
+
+  /// see [ConversationEntity.lastMessageAt]
+  static final lastMessageAt =
+      obx.QueryDateProperty<ConversationEntity>(_entities[11].properties[3]);
+
+  /// see [ConversationEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<ConversationEntity>(_entities[11].properties[4]);
+
+  /// see [ConversationEntity.dbContextType]
+  static final dbContextType =
+      obx.QueryIntegerProperty<ConversationEntity>(_entities[11].properties[5]);
+
+  /// see [ConversationEntity.contextRefId]
+  static final contextRefId =
+      obx.QueryStringProperty<ConversationEntity>(_entities[11].properties[6]);
+}
+
+/// [MessageEntity] entity fields to define ObjectBox queries.
+class MessageEntity_ {
+  /// see [MessageEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<MessageEntity>(_entities[12].properties[0]);
+
+  /// see [MessageEntity.conversationId]
+  static final conversationId =
+      obx.QueryIntegerProperty<MessageEntity>(_entities[12].properties[1]);
+
+  /// see [MessageEntity.senderId]
+  static final senderId =
+      obx.QueryStringProperty<MessageEntity>(_entities[12].properties[2]);
+
+  /// see [MessageEntity.body]
+  static final body =
+      obx.QueryStringProperty<MessageEntity>(_entities[12].properties[3]);
+
+  /// see [MessageEntity.dbContentType]
+  static final dbContentType =
+      obx.QueryIntegerProperty<MessageEntity>(_entities[12].properties[4]);
+
+  /// see [MessageEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<MessageEntity>(_entities[12].properties[5]);
+
+  /// see [MessageEntity.isRead]
+  static final isRead =
+      obx.QueryBooleanProperty<MessageEntity>(_entities[12].properties[6]);
+
+  /// see [MessageEntity.attachmentUrl]
+  static final attachmentUrl =
+      obx.QueryStringProperty<MessageEntity>(_entities[12].properties[7]);
 }

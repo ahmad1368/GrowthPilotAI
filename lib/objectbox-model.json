@@ -469,10 +469,109 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "13:7666229861067165919",
+      "lastPropertyId": "7:7582975425439423862",
+      "name": "ConversationEntity",
+      "properties": [
+        {
+          "id": "1:5049878238516188278",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2192260638104058274",
+          "name": "subject",
+          "type": 9
+        },
+        {
+          "id": "3:488610555196674583",
+          "name": "participantIds",
+          "type": 30
+        },
+        {
+          "id": "4:5999999050534075903",
+          "name": "lastMessageAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "15:2388524962894448136"
+        },
+        {
+          "id": "5:4680548208901998800",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "6:4070115471783802878",
+          "name": "dbContextType",
+          "type": 6
+        },
+        {
+          "id": "7:7582975425439423862",
+          "name": "contextRefId",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "14:8804315362738781488",
+      "lastPropertyId": "8:1255265870448737299",
+      "name": "MessageEntity",
+      "properties": [
+        {
+          "id": "1:8781400796589403308",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4950328251599680770",
+          "name": "conversationId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "16:1749443516919017392"
+        },
+        {
+          "id": "3:1425387857287073244",
+          "name": "senderId",
+          "type": 9
+        },
+        {
+          "id": "4:7204624208910415376",
+          "name": "body",
+          "type": 9
+        },
+        {
+          "id": "5:5885498655682907850",
+          "name": "dbContentType",
+          "type": 6
+        },
+        {
+          "id": "6:2575968264239162205",
+          "name": "createdAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "17:7597477842286060950"
+        },
+        {
+          "id": "7:4290678190183630816",
+          "name": "isRead",
+          "type": 1
+        },
+        {
+          "id": "8:1255265870448737299",
+          "name": "attachmentUrl",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "12:6174765353207546924",
-  "lastIndexId": "14:9154197970435579783",
+  "lastEntityId": "14:8804315362738781488",
+  "lastIndexId": "17:7597477842286060950",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
