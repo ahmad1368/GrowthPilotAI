@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 
-/// Settings menu entry that navigates to the Connected Accounts screen
-/// (Issue #68). Flat card styling only — no glassmorphism/BackdropFilter,
-/// per the fixed palette: dark card #18181b, light card white + soft shadow.
-class ConnectedAccountsNavTile extends StatelessWidget {
+/// Generic Settings menu entry (used by Issue #68's Connected Accounts and
+/// Issue #69's Duplicate Matches). Flat card styling only — no
+/// glassmorphism/BackdropFilter, per the fixed palette: dark card #18181b,
+/// light card white + soft shadow.
+class SettingsNavTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
   final VoidCallback onTap;
 
-  const ConnectedAccountsNavTile({super.key, required this.onTap});
+  const SettingsNavTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +34,10 @@ class ConnectedAccountsNavTile extends StatelessWidget {
         onTap: onTap,
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          leading: Icon(Icons.account_balance_wallet_rounded,
-              color: foreground),
-          title: Text('Connected Accounts',
-              style: TextStyle(color: foreground)),
-          subtitle: Text('Manage linked bank sub-accounts',
-              style:
-                  TextStyle(fontSize: 12, color: foreground.withValues(alpha: 0.6))),
+          leading: Icon(icon, color: foreground),
+          title: Text(title, style: TextStyle(color: foreground)),
+          subtitle: Text(subtitle,
+              style: TextStyle(fontSize: 12, color: foreground.withValues(alpha: 0.6))),
           trailing: Icon(Icons.chevron_right_rounded,
               color: foreground.withValues(alpha: 0.3)),
         ),

@@ -22,6 +22,7 @@ import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
+import 'core/data/entities/unified_transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
 import 'core/models/document_type.dart';
 import 'core/models/error_log.dart';
@@ -416,6 +417,82 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(12, 6174765353207546924),
+      name: 'UnifiedTransactionEntity',
+      lastPropertyId: const obx_int.IdUid(13, 3764447063407558951),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5090413313451258505),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 424124964052146401),
+            name: 'externalId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(13, 4218196861560881448)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1503346616575078972),
+            name: 'dbSource',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8343238297915121940),
+            name: 'amount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4921173635259433049),
+            name: 'date',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(14, 9154197970435579783)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2961443408313943591),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 603257221392331045),
+            name: 'dbCategory',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8121211190331168389),
+            name: 'rawCategory',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1775499993715568192),
+            name: 'gst',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 2528282857568027135),
+            name: 'pst',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 289940779859612298),
+            name: 'hst',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 3839956140584795352),
+            name: 'mergeGroupId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 3764447063407558951),
+            name: 'matchScore',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -454,8 +531,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(11, 7864671894398357892),
-      lastIndexId: const obx_int.IdUid(12, 8244194797297753985),
+      lastEntityId: const obx_int.IdUid(12, 6174765353207546924),
+      lastIndexId: const obx_int.IdUid(14, 9154197970435579783),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -947,7 +1024,92 @@ obx_int.ModelDefinition getObjectBoxModel() {
               needsReauth: needsReauthParam);
 
           return object;
-        })
+        }),
+    UnifiedTransactionEntity:
+        obx_int.EntityDefinition<UnifiedTransactionEntity>(
+            model: _entities[10],
+            toOneRelations: (UnifiedTransactionEntity object) => [],
+            toManyRelations: (UnifiedTransactionEntity object) => {},
+            getId: (UnifiedTransactionEntity object) => object.id,
+            setId: (UnifiedTransactionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (UnifiedTransactionEntity object, fb.Builder fbb) {
+              final externalIdOffset = fbb.writeString(object.externalId);
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              final rawCategoryOffset = object.rawCategory == null
+                  ? null
+                  : fbb.writeString(object.rawCategory!);
+              final mergeGroupIdOffset = object.mergeGroupId == null
+                  ? null
+                  : fbb.writeString(object.mergeGroupId!);
+              fbb.startTable(14);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, externalIdOffset);
+              fbb.addInt64(2, object.dbSource);
+              fbb.addFloat64(3, object.amount);
+              fbb.addInt64(4, object.date.millisecondsSinceEpoch);
+              fbb.addOffset(5, merchantNameOffset);
+              fbb.addInt64(6, object.dbCategory);
+              fbb.addOffset(7, rawCategoryOffset);
+              fbb.addFloat64(8, object.gst);
+              fbb.addFloat64(9, object.pst);
+              fbb.addFloat64(10, object.hst);
+              fbb.addOffset(11, mergeGroupIdOffset);
+              fbb.addFloat64(12, object.matchScore);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final externalIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final dbSourceParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final amountParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final dateParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 14, '');
+              final dbCategoryParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final rawCategoryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 18);
+              final gstParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              final pstParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
+              final hstParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0);
+              final mergeGroupIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGetNullable(buffer, rootOffset, 26);
+              final matchScoreParam = const fb.Float64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 28);
+              final object = UnifiedTransactionEntity(
+                  id: idParam,
+                  externalId: externalIdParam,
+                  dbSource: dbSourceParam,
+                  amount: amountParam,
+                  date: dateParam,
+                  merchantName: merchantNameParam,
+                  dbCategory: dbCategoryParam,
+                  rawCategory: rawCategoryParam,
+                  gst: gstParam,
+                  pst: pstParam,
+                  hst: hstParam,
+                  mergeGroupId: mergeGroupIdParam,
+                  matchScore: matchScoreParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -1220,4 +1382,59 @@ class LinkedAccountEntity_ {
   /// see [LinkedAccountEntity.needsReauth]
   static final needsReauth =
       obx.QueryBooleanProperty<LinkedAccountEntity>(_entities[9].properties[8]);
+}
+
+/// [UnifiedTransactionEntity] entity fields to define ObjectBox queries.
+class UnifiedTransactionEntity_ {
+  /// see [UnifiedTransactionEntity.id]
+  static final id = obx.QueryIntegerProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[0]);
+
+  /// see [UnifiedTransactionEntity.externalId]
+  static final externalId = obx.QueryStringProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[1]);
+
+  /// see [UnifiedTransactionEntity.dbSource]
+  static final dbSource = obx.QueryIntegerProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[2]);
+
+  /// see [UnifiedTransactionEntity.amount]
+  static final amount = obx.QueryDoubleProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[3]);
+
+  /// see [UnifiedTransactionEntity.date]
+  static final date = obx.QueryDateProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[4]);
+
+  /// see [UnifiedTransactionEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[5]);
+
+  /// see [UnifiedTransactionEntity.dbCategory]
+  static final dbCategory = obx.QueryIntegerProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[6]);
+
+  /// see [UnifiedTransactionEntity.rawCategory]
+  static final rawCategory = obx.QueryStringProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[7]);
+
+  /// see [UnifiedTransactionEntity.gst]
+  static final gst = obx.QueryDoubleProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[8]);
+
+  /// see [UnifiedTransactionEntity.pst]
+  static final pst = obx.QueryDoubleProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[9]);
+
+  /// see [UnifiedTransactionEntity.hst]
+  static final hst = obx.QueryDoubleProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[10]);
+
+  /// see [UnifiedTransactionEntity.mergeGroupId]
+  static final mergeGroupId = obx.QueryStringProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[11]);
+
+  /// see [UnifiedTransactionEntity.matchScore]
+  static final matchScore = obx.QueryDoubleProperty<UnifiedTransactionEntity>(
+      _entities[10].properties[12]);
 }

@@ -391,10 +391,88 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "12:6174765353207546924",
+      "lastPropertyId": "13:3764447063407558951",
+      "name": "UnifiedTransactionEntity",
+      "properties": [
+        {
+          "id": "1:5090413313451258505",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:424124964052146401",
+          "name": "externalId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "13:4218196861560881448"
+        },
+        {
+          "id": "3:1503346616575078972",
+          "name": "dbSource",
+          "type": 6
+        },
+        {
+          "id": "4:8343238297915121940",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "5:4921173635259433049",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "14:9154197970435579783"
+        },
+        {
+          "id": "6:2961443408313943591",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "7:603257221392331045",
+          "name": "dbCategory",
+          "type": 6
+        },
+        {
+          "id": "8:8121211190331168389",
+          "name": "rawCategory",
+          "type": 9
+        },
+        {
+          "id": "9:1775499993715568192",
+          "name": "gst",
+          "type": 8
+        },
+        {
+          "id": "10:2528282857568027135",
+          "name": "pst",
+          "type": 8
+        },
+        {
+          "id": "11:289940779859612298",
+          "name": "hst",
+          "type": 8
+        },
+        {
+          "id": "12:3839956140584795352",
+          "name": "mergeGroupId",
+          "type": 9
+        },
+        {
+          "id": "13:3764447063407558951",
+          "name": "matchScore",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "11:7864671894398357892",
-  "lastIndexId": "12:8244194797297753985",
+  "lastEntityId": "12:6174765353207546924",
+  "lastIndexId": "14:9154197970435579783",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -5,7 +5,7 @@ import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
 import '../widgets/omni_glass_panel.dart';
-import '../features/settings/widgets/connected_accounts_nav_tile.dart';
+import '../features/settings/widgets/settings_nav_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -98,8 +98,20 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              ConnectedAccountsNavTile(
+              SettingsNavTile(
+                icon: Icons.account_balance_wallet_rounded,
+                title: 'Connected Accounts',
+                subtitle: 'Manage linked bank sub-accounts',
                 onTap: () => Get.toNamed('/settings/connected-accounts'),
+              ),
+
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.compare_arrows_rounded,
+                title: 'Duplicate Matches',
+                subtitle: 'Review auto-merged Plaid/accounting transactions',
+                onTap: () => Get.toNamed('/transactions/duplicates'),
               ),
 
               const SizedBox(height: 32),
