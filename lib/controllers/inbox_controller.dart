@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/business/build_conversation_summary.dart';
+import 'package:growth_pilot_ai/business/approve_action_card.dart';
 import 'package:growth_pilot_ai/business/filter_conversations_by_query.dart';
+import 'package:growth_pilot_ai/business/load_inbox_summaries.dart';
 import 'package:growth_pilot_ai/business/seed_demo_inbox_data.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/conversation_repository.dart';
@@ -9,8 +10,9 @@ import 'package:growth_pilot_ai/core/data/repositories/unified_transaction_repos
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 
 /// Drives the Inbox screen (Issue #72): seeds demo threads (Issue #70),
-/// resolves each conversation's linked-transaction amount (Issue #69), and
-/// exposes a searchable, most-recent-first summary list.
+/// resolves each conversation's linked-transaction amount (Issue #69),
+/// exposes a searchable, most-recent-first summary list, and processes
+/// ACTION_CARD approvals (Issue #73).
 class InboxController extends GetxController {
   late ConversationRepository _conversations;
   late MessageRepository _messages;
@@ -18,9 +20,13 @@ class InboxController extends GetxController {
 
   final searchQuery = ''.obs;
   final _summaries = <ConversationSummary>[].obs;
+  final _approvingConversationIds = <int>{}.obs;
 
   List<ConversationSummary> get visibleSummaries =>
       FilterConversationsByQuery.call(_summaries, searchQuery.value);
+
+  bool isApprovingAction(int conversationId) =>
+      _approvingConversationIds.contains(conversationId);
 
   @override
   void onInit() {
@@ -36,17 +42,22 @@ class InboxController extends GetxController {
   }
 
   void _reload() {
-    final txAmountByExternalId = {
-      for (final tx in _transactions.getAll()) tx.externalId: tx.amount,
-    };
-    final summaries = _conversations.getAll().map((conversation) {
-      final messages = _messages.getForConversation(conversation.id);
-      final amount = conversation.contextRefId == null
-          ? null
-          : txAmountByExternalId[conversation.contextRefId];
-      return BuildConversationSummary.call(conversation, messages, amount);
-    }).toList()
-      ..sort((a, b) => b.lastMessageAt.compareTo(a.lastMessageAt));
-    _summaries.assignAll(summaries);
+    _summaries.assignAll(
+        LoadInboxSummaries.call(_conversations, _messages, _transactions));
+  }
+
+  /// Approves a PENDING action card. The delay stands in for the backend
+  /// round-trip, making the anti-double-tap guard ([isApprovingAction])
+  /// visible in the UI.
+  Future<void> approveAction(int conversationId, int messageId) async {
+    if (_approvingConversationIds.contains(conversationId)) return;
+    _approvingConversationIds.add(conversationId);
+    await Future.delayed(const Duration(milliseconds: 500));
+    final message = _messages
+        .getForConversation(conversationId)
+        .firstWhere((m) => m.id == messageId);
+    if (ApproveActionCard.call(message)) _messages.upsert(message);
+    _reload();
+    _approvingConversationIds.remove(conversationId);
   }
 }

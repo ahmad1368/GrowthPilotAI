@@ -4,22 +4,33 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_pilot_ai/core/enum/action_card_status.dart';
+import 'package:growth_pilot_ai/core/enum/action_card_type.dart';
+import 'package:growth_pilot_ai/core/models/action_card_data.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 import 'package:growth_pilot_ai/core/theme/inbox_shad_theme.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Captures light/dark PNGs of the Inbox conversation list (Issue #72) for
-/// QA. Not a golden comparison — it only records the current look.
+/// Captures light/dark PNGs of the Inbox conversation list (Issue #72),
+/// including a PENDING ACTION_CARD row (Issue #73), for QA. Not a golden
+/// comparison — it only records the current look.
 void main() {
   final summaries = [
     ConversationSummary(
       conversationId: 1,
       subject: 'Home Depot',
-      lastMessagePreview: 'Can you confirm the delivery window?',
+      lastMessagePreview: 'Approve the \$450 Home Depot charge to sync it.',
       lastMessageAt: DateTime(2026, 7, 15),
       unreadCount: 2,
-      linkedTransactionAmount: 128.40,
+      linkedTransactionAmount: 450.0,
+      actionCard: const ActionCardData(
+        messageId: 9,
+        actionType: ActionCardType.approveTransaction,
+        status: ActionCardStatus.pending,
+        amount: 450.0,
+        transactionRefId: 'plaid-hd-451',
+      ),
     ),
     ConversationSummary(
       conversationId: 2,
@@ -50,7 +61,12 @@ void main() {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: summaries
-                    .map((s) => ConversationTile(summary: s, onTap: () {}))
+                    .map((s) => ConversationTile(
+                          summary: s,
+                          onTap: () {},
+                          isApprovingAction: false,
+                          onApproveAction: () {},
+                        ))
                     .toList(),
               ),
             ),
