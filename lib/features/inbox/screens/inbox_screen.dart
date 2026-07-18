@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
 import 'package:growth_pilot_ai/core/theme/inbox_shad_theme.dart';
-import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
+import 'package:growth_pilot_ai/features/inbox/widgets/conversation_list.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Main Inbox screen (Issue #72): searchable, most-recent-first list of
-/// conversation threads. Flat shadcn_ui per the design-system pivot — no
-/// Glassmorphism/BackdropFilter despite the original issue's literal ask.
+/// Main Inbox screen (Issue #72): searchable, most-recent-first
+/// [ConversationList]. Flat shadcn_ui per the design-system pivot.
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
 
@@ -38,13 +37,8 @@ class InboxScreen extends StatelessWidget {
                   if (summaries.isEmpty) {
                     return const Center(child: Text('No conversations yet'));
                   }
-                  return ListView.builder(
-                    itemCount: summaries.length,
-                    itemBuilder: (context, index) => ConversationTile(
-                      summary: summaries[index],
-                      onTap: () {},
-                    ),
-                  );
+                  return ConversationList(
+                      controller: controller, summaries: summaries);
                 }),
               ),
             ],
