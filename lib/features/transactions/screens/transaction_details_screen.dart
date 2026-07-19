@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/controllers/transaction_match_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/unified_transaction_entity.dart';
-import 'package:growth_pilot_ai/core/theme/mapping_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/transactions/widgets/transaction_merge_detail.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -23,7 +23,7 @@ class TransactionDetailsScreen extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
 
     return ShadTheme(
-      data: MappingShadTheme.build(brightness),
+      data: AppShadTheme.build(brightness),
       child: Scaffold(
         backgroundColor: brightness == Brightness.dark
             ? const Color(0xFF09090B)

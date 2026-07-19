@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Flat, minimal ShadTheme for the Category Mapping screen (Issue #58) —
-/// no glassmorphism/BackdropFilter, matching GrowthPilotAI's fixed palette:
-/// dark bg #09090b / card #18181b, light bg/card #ffffff + soft shadow.
-class MappingShadTheme {
+/// The single canonical ShadTheme (Issue #1) for every screen that opts
+/// into shadcn_ui — flat, no glassmorphism/BackdropFilter, matching
+/// GrowthPilotAI's fixed palette: dark bg #09090b / card #18181b, light
+/// bg/card #ffffff. Replaces the former per-screen `InboxShadTheme` and
+/// `MappingShadTheme`, which were identical copies of this same theme.
+class AppShadTheme {
   static ShadThemeData build(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
     return ShadThemeData(

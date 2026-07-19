@@ -9,7 +9,7 @@ import 'package:growth_pilot_ai/core/enum/action_card_type.dart';
 import 'package:growth_pilot_ai/core/enum/anomaly_type.dart';
 import 'package:growth_pilot_ai/core/models/action_card_data.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
-import 'package:growth_pilot_ai/core/theme/inbox_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/action_card_actions.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -73,7 +73,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       theme: ThemeData(brightness: brightness),
       home: ShadTheme(
-        data: InboxShadTheme.build(brightness),
+        data: AppShadTheme.build(brightness),
         child: Scaffold(
           backgroundColor: bg,
           body: RepaintBoundary(

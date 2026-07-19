@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
-import 'package:growth_pilot_ai/core/theme/inbox_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/conversation_list.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -16,7 +16,7 @@ class InboxScreen extends StatelessWidget {
     final controller = Get.find<InboxController>();
 
     return ShadTheme(
-      data: InboxShadTheme.build(brightness),
+      data: AppShadTheme.build(brightness),
       child: Scaffold(
         backgroundColor: brightness == Brightness.dark
             ? const Color(0xFF09090B)

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// The single canonical Material [ThemeData] (Issue #1) — flat bg #09090b
+/// (dark) / #ffffff (light), matching [AppShadTheme] for screens that also
+/// opt into shadcn_ui.
 class AppTheme {
   static ThemeData buildTheme(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
@@ -8,7 +11,7 @@ class AppTheme {
     return ThemeData(
       brightness: brightness,
       scaffoldBackgroundColor:
-          isDark ? const Color(0xFF0A0A0A) : const Color(0xFFF7F8FA),
+          isDark ? const Color(0xFF09090B) : const Color(0xFFFFFFFF),
       useMaterial3: true,
       colorSchemeSeed: isDark ? Colors.tealAccent : Colors.teal,
       appBarTheme: AppBarTheme(

@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/data/entities/integration_connection_entity.dart';
 import 'package:growth_pilot_ai/core/enum/dashboard_connection_status.dart';
-import 'package:growth_pilot_ai/core/theme/mapping_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/integration_tile.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -31,7 +31,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       theme: ThemeData(brightness: brightness),
       home: ShadTheme(
-        data: MappingShadTheme.build(brightness),
+        data: AppShadTheme.build(brightness),
         child: Scaffold(
           backgroundColor: bg,
           body: RepaintBoundary(
