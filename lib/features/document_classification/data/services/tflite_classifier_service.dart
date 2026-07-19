@@ -26,22 +26,11 @@ class TFliteClassifierService implements AbstractClassifierService {
   Future<OmniClassificationResult> classifyDocument(File imageFile) async {
     if (_interpreter == null) await loadModel();
     try {
-      // 📝 چاپ شناسنامه دقیق مدل در کنسول جهت کشف ریشه باگ
-      print("🎯 MODEL INPUT TYPE: ${_interpreter!.getInputTensors()[0].type}");
-      print(
-          "🎯 MODEL OUTPUT TYPE: ${_interpreter!.getOutputTensors()[0].type}");
-      print(
-          "🎯 MODEL OUTPUT SHAPE: ${_interpreter!.getOutputTensors()[0].shape}");
-
       final req = ClassificationRequest(file: imageFile);
       final input = await req.toTensorInput();
       var output = List.filled(1001, 0).reshape([1, 1001]);
 
       _interpreter!.run(input, output);
-
-      // 📝 چاپ بالاترین مقدار احتمالی که مدل تشخیص داده است
-      print(
-          "🎯 RAW OUTPUT MATRIX: ${output[0].sublist(0, 10)}"); // چاپ ۱۰ داده اول برای نمونه
 
       return ClassificationResponse.fromMatrix(output);
     } catch (e, stack) {

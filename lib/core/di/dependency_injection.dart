@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:growth_pilot_ai/business/anonymizer_service.dart';
+import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
+import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/business/csv_export_strategy.dart';
 import 'package:growth_pilot_ai/business/fetch_transactions_usecase.dart';
 import 'package:growth_pilot_ai/business/sync_transactions_usecase.dart';
@@ -26,12 +30,6 @@ import 'package:growth_pilot_ai/core/services/omni_logger.dart';
 import 'package:growth_pilot_ai/features/document_classification/domain/repositories/abstract_classifier_service.dart';
 import 'package:growth_pilot_ai/features/document_classification/data/services/tflite_classifier_service.dart';
 
-// یک پیاده‌سازی سبک موقت برای باز شدن فوری صفحه بدون ارور لایه دیتا
-class MockTransactionRepository implements TransactionRepository {
-  @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
 class DependencyInjection {
   static final GetIt _locator = GetIt.instance;
 
@@ -42,9 +40,12 @@ class DependencyInjection {
       final classifierService = TFliteClassifierService();
       _locator.registerSingleton<AbstractClassifierService>(classifierService);
 
-      // ۲. تزریق مستقیم قرارداد برای باز شدن کادر ویرایش بدون خطای کامپایل
+      // ۲. ریپازیتوری واقعی تراکنش‌ها (Issue #27؛ قبلاً Mock بود و
+      // saveTransaction را غیرفعال نگه می‌داشت). Store پیش از این متد در
+      // main.dart با Get.put<ObjectBox> ثبت شده است.
       _locator.registerLazySingleton<TransactionRepository>(
-        () => MockTransactionRepository(),
+        () => TransactionRepository(
+            Get.find<ObjectBox>().store.box<TransactionEntity>()),
       );
 
       // ۳. ثبت سرویس احراز هویت اجتماعی (فعلاً Mock تا Firebase واقعی آماده شود)
@@ -108,7 +109,13 @@ class DependencyInjection {
       );
 
       // ۹. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
-      await _locator<AbstractClassifierService>().loadModel();
+      // [Issue #25] tflite_flutter has no web implementation — OCR itself
+      // already refuses to run on web (see OCRService.extractText), so
+      // skip the model load there instead of failing into the catch below
+      // on every page load.
+      if (!kIsWeb) {
+        await _locator<AbstractClassifierService>().loadModel();
+      }
     } catch (e, stack) {
       OmniLogger.error(
         title: "خطا در لایه تزریق وابستگی (DI)",

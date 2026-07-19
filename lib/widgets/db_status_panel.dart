@@ -26,12 +26,16 @@ class DbStatusPanel extends StatelessWidget {
             title: const AdaptiveText("ObjectBox SDK",
                 fontWeight: FontWeight.bold),
             subtitle: const AdaptiveText(
-              "Status: Secured with AES-256", // بازتاب امنیت جدید
+              // [Issue #16] این استور رمزنگاری در سطح فیلد/دیسک ندارد؛ نسخه
+              // رایگان ObjectBox از پارامتر password پشتیبانی نمی‌کند. تا
+              // پیاده‌سازی واقعی رمزنگاری، ادعای اشتباه "Secured with
+              // AES-256" حذف شد تا کاربر را گمراه نکند.
+              "Status: Not encrypted at rest (Community edition)",
               fontSize: 12,
             ),
             trailing: Icon(
-              Icons.verified_user_rounded, // تغییر آیکون برای تاکید بر امنیت
-              color: Colors.greenAccent.withValues(alpha: 0.8),
+              Icons.lock_open_rounded,
+              color: Colors.orangeAccent.withValues(alpha: 0.8),
             ),
           ),
           const Divider(color: Colors.white10, height: 20),
@@ -66,9 +70,9 @@ class DbStatusPanel extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        icon: const Icon(Icons.lock_reset_rounded, size: 18),
+        icon: const Icon(Icons.storage_rounded, size: 18),
         onPressed: () {},
-        label: const AdaptiveText("Rotate Encryption Key"),
+        label: const AdaptiveText("Compact Store"),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),

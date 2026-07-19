@@ -63,9 +63,6 @@ class OcrEditableFields extends StatelessWidget {
     );
   }
 
-  InputDecoration _getInpDec(BuildContext context, IconData icon) =>
-      _getInputDecoration(context, icon);
-
   InputDecoration _getInputDecoration(BuildContext context, IconData icon) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return InputDecoration(

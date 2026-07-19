@@ -8,8 +8,21 @@ class TransactionRepository {
   final Box<TransactionEntity> _box;
 
   TransactionRepository(this._box);
-// زیر خط: TransactionRepository(this._box);
-// بالای خط: List<TransactionEntity> getByDateRange(DateTime start, DateTime end) {
+
+  /// Basic CRUD (Issue #14): [insert]/[update] both map to ObjectBox `put`
+  /// (an id of 0 inserts, a non-zero id upserts); [delete] and [getAll] are
+  /// thin passthroughs.
+  int insert(TransactionEntity transaction) => _box.put(transaction);
+
+  bool update(TransactionEntity transaction) {
+    if (transaction.id == 0) return false;
+    _box.put(transaction);
+    return true;
+  }
+
+  bool delete(int id) => _box.remove(id);
+
+  List<TransactionEntity> getAll() => _box.getAll();
 
   /// Provides a real-time stream of all transactions sorted by date.
   /// This automatically triggers whenever the Transaction box changes (Reactive UI).
@@ -62,29 +75,18 @@ class TransactionRepository {
     TransactionType? type,
     bool sortByLargest = false,
   }) {
-    // ایجاد بیلدر
-    final queryBuilder = _box.query();
+    final typeCondition =
+        type != null ? TransactionEntity_.dbType.equals(type.index) : null;
+    final queryBuilder = _box.query(typeCondition)
+      ..order(TransactionEntity_.amount,
+          flags: sortByLargest ? Order.descending : 0);
 
-    // شرط اول: دسته‌بندی
     if (categoryId != null) {
       queryBuilder.link(
           TransactionEntity_.category, CategoryEntity_.id.equals(categoryId));
     }
 
-    // شرط دوم: نوع تراکنش
-    // نکته: فقط نوشتن دستور زیر کافیست، خودِ بیلدر آن را با AND به قبلی اضافه می‌کند
-    if (type != null) {
-      queryBuilder.order(TransactionEntity_.dbType); // برای مثال
-      // در واقع برای اضافه کردن شرط ساده از دستور زیر استفاده می‌کنیم:
-    }
-
-    // راه حل نهایی برای رفع خطا:
-    final Condition<TransactionEntity>? typeCondition =
-        type != null ? TransactionEntity_.dbType.equals(type.index) : null;
-
-    final query = _box.query(typeCondition).build();
-    // ... ادامه منطق
-
+    final query = queryBuilder.build();
     final results = query.find();
     query.close();
     return results;
@@ -96,8 +98,7 @@ class TransactionRepository {
     // اگر دیتابیس باز باشد، اجرای هر عملیات ساده‌ای در حالت Write
     // به پایداری فایل در هنگام Migration کمک می‌کند.
     try {
-      final all = _box.getAll();
-      // عملیات بهینه‌سازی مدل
+      _box.getAll();
     } catch (e, stack) {
       // در صورت بروز خطا در ساختار جدید (Migration Error)
       FailureMapper.map<OCRResult>(e, stack: stack);
