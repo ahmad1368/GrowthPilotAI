@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:growth_pilot_ai/core/theme/mapping_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/transactions/widgets/merged_provider_badge.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -21,7 +21,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       theme: ThemeData(brightness: brightness),
       home: ShadTheme(
-        data: MappingShadTheme.build(brightness),
+        data: AppShadTheme.build(brightness),
         child: Scaffold(
           backgroundColor: bg,
           body: Center(

@@ -12,7 +12,7 @@ class GlobalErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // استفاده از پس‌زمینه شفاف یا مشابه سایر صفحات برنامه
-      backgroundColor: Colors.black.withOpacity(0.1),
+      backgroundColor: Colors.black.withValues(alpha: 0.1),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

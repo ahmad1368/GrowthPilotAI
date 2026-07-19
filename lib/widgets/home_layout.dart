@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../controllers/transaction_controller.dart';
 import '../pages/main_wrapper.dart'; // حتما این را اضافه کنید
 import 'app_drawer.dart';
-import 'glass_app_bar.dart';
+import 'app_shell_bar.dart';
 import 'home_body.dart';
 import 'home_bottom_nav.dart';
 import 'notification_badge.dart';
@@ -44,7 +44,7 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       extendBodyBehindAppBar: true,
       extendBody: true,
       drawer: const AppDrawer(),
-      appBar: GlassAppBar(
+      appBar: AppShellBar(
         title: "GrowthPilot AI",
         opacity: appBarOpacity,
         actions: [

@@ -63,52 +63,58 @@ class MyApp extends StatelessWidget {
       light: AppTheme.buildTheme(Brightness.light),
       dark: AppTheme.buildTheme(Brightness.dark),
       initial: savedThemeMode ?? AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => GetMaterialApp(
-        title: 'GrowthPilot AI',
-        debugShowCheckedModeBanner: false,
-        initialBinding: AppBindings(),
-        theme: theme,
-        darkTheme: darkTheme,
-        home: const HomeLayout(),
-        getPages: [
-          GetPage(name: '/settings', page: () => const SettingsScreen()),
-          GetPage(name: '/forecast', page: () => const ForecastScreen()),
-          GetPage(
-            name: '/category-mapping',
-            page: () => const CategoryMappingScreen(),
-            binding: BindingsBuilder(
-              () => Get.lazyPut(() => CategoryMappingController()),
+      // [Issue #8] Cross-fades the whole app between light/dark instead of
+      // the instant theme swap AdaptiveTheme does on its own.
+      builder: (theme, darkTheme) => AnimatedSwitcher(
+        duration: const Duration(milliseconds: 400),
+        child: GetMaterialApp(
+          key: ValueKey(theme.brightness),
+          title: 'GrowthPilot AI',
+          debugShowCheckedModeBanner: false,
+          initialBinding: AppBindings(),
+          theme: theme,
+          darkTheme: darkTheme,
+          home: const HomeLayout(),
+          getPages: [
+            GetPage(name: '/settings', page: () => const SettingsScreen()),
+            GetPage(name: '/forecast', page: () => const ForecastScreen()),
+            GetPage(
+              name: '/category-mapping',
+              page: () => const CategoryMappingScreen(),
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => CategoryMappingController()),
+              ),
             ),
-          ),
-          GetPage(
-            name: '/settings/integrations',
-            page: () => const IntegrationsDashboardScreen(),
-            binding: BindingsBuilder(
-              () => Get.lazyPut(() => AccountingIntegrationsController()),
+            GetPage(
+              name: '/settings/integrations',
+              page: () => const IntegrationsDashboardScreen(),
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => AccountingIntegrationsController()),
+              ),
             ),
-          ),
-          GetPage(
-            name: '/settings/connected-accounts',
-            page: () => const ConnectedAccountsScreen(),
-            binding: BindingsBuilder(
-              () => Get.lazyPut(() => ConnectedAccountsController()),
+            GetPage(
+              name: '/settings/connected-accounts',
+              page: () => const ConnectedAccountsScreen(),
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => ConnectedAccountsController()),
+              ),
             ),
-          ),
-          GetPage(
-            name: '/transactions/duplicates',
-            page: () => const DuplicateMatchesScreen(),
-            binding: BindingsBuilder(
-              () => Get.lazyPut(() => TransactionMatchController()),
+            GetPage(
+              name: '/transactions/duplicates',
+              page: () => const DuplicateMatchesScreen(),
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => TransactionMatchController()),
+              ),
             ),
-          ),
-          GetPage(
-            name: '/inbox',
-            page: () => const InboxScreen(),
-            binding: BindingsBuilder(
-              () => Get.lazyPut(() => InboxController()),
+            GetPage(
+              name: '/inbox',
+              page: () => const InboxScreen(),
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => InboxController()),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

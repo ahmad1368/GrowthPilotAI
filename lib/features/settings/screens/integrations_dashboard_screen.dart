@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/accounting_integrations_controller.dart';
-import 'package:growth_pilot_ai/core/theme/mapping_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/disconnect_confirm_dialog.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/integration_tile.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -17,7 +17,7 @@ class IntegrationsDashboardScreen extends StatelessWidget {
     final controller = Get.find<AccountingIntegrationsController>();
 
     return ShadTheme(
-      data: MappingShadTheme.build(brightness),
+      data: AppShadTheme.build(brightness),
       child: Scaffold(
         backgroundColor: brightness == Brightness.dark
             ? const Color(0xFF09090B)

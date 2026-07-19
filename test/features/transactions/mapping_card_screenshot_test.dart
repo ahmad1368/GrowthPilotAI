@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/category_mapping_controller.dart';
 import 'package:growth_pilot_ai/core/models/mapping_result.dart';
 import 'package:growth_pilot_ai/core/models/merchant_mapping_group.dart';
-import 'package:growth_pilot_ai/core/theme/mapping_shad_theme.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/features/transactions/widgets/mapping_card.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -42,7 +42,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       theme: ThemeData(brightness: brightness),
       home: ShadTheme(
-        data: MappingShadTheme.build(brightness),
+        data: AppShadTheme.build(brightness),
         child: Scaffold(
           backgroundColor: bg,
           body: RepaintBoundary(
