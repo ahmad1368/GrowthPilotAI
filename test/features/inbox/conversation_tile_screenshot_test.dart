@@ -6,15 +6,20 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/enum/action_card_status.dart';
 import 'package:growth_pilot_ai/core/enum/action_card_type.dart';
+import 'package:growth_pilot_ai/core/enum/anomaly_type.dart';
 import 'package:growth_pilot_ai/core/models/action_card_data.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 import 'package:growth_pilot_ai/core/theme/inbox_shad_theme.dart';
+import 'package:growth_pilot_ai/features/inbox/widgets/action_card_actions.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+void _noop() {}
+
 /// Captures light/dark PNGs of the Inbox conversation list (Issue #72),
-/// including a PENDING ACTION_CARD row (Issue #73), for QA. Not a golden
-/// comparison — it only records the current look.
+/// including a PENDING ACTION_CARD row (Issue #73) and a PENDING
+/// anomaly-review row (Issue #74), for QA. Not a golden comparison — it
+/// only records the current look.
 void main() {
   final summaries = [
     ConversationSummary(
@@ -39,6 +44,23 @@ void main() {
       lastMessageAt: DateTime(2026, 7, 14),
       unreadCount: 0,
     ),
+    ConversationSummary(
+      conversationId: 3,
+      subject: 'Zenith Office Supplies',
+      lastMessagePreview: 'Unusual \$2400.00 charge — please review.',
+      lastMessageAt: DateTime(2026, 7, 16),
+      unreadCount: 1,
+      linkedTransactionAmount: 2400.0,
+      actionCard: const ActionCardData(
+        messageId: 11,
+        actionType: ActionCardType.reviewAnomaly,
+        status: ActionCardStatus.pending,
+        amount: 2400.0,
+        transactionRefId: 'plaid-zenith-9012',
+        merchantName: 'Zenith Office Supplies',
+        anomalyType: AnomalyType.zScore,
+      ),
+    ),
   ];
 
   Future<void> capture(
@@ -47,7 +69,7 @@ void main() {
         ? const Color(0xFF09090B)
         : const Color(0xFFFFFFFF);
     final key = GlobalKey();
-    await tester.binding.setSurfaceSize(const Size(400, 220));
+    await tester.binding.setSurfaceSize(const Size(400, 320));
     await tester.pumpWidget(MaterialApp(
       theme: ThemeData(brightness: brightness),
       home: ShadTheme(
@@ -64,8 +86,12 @@ void main() {
                     .map((s) => ConversationTile(
                           summary: s,
                           onTap: () {},
-                          isApprovingAction: false,
-                          onApproveAction: () {},
+                          actions: const ActionCardActions(
+                            isApproving: false,
+                            onApprove: _noop,
+                            isIgnoringAnomaly: false,
+                            onIgnoreAnomaly: _noop,
+                          ),
                         ))
                     .toList(),
               ),

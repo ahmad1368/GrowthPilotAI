@@ -518,7 +518,7 @@
     },
     {
       "id": "14:8804315362738781488",
-      "lastPropertyId": "12:1790746369166165382",
+      "lastPropertyId": "14:2775177505378971834",
       "name": "MessageEntity",
       "properties": [
         {
@@ -585,6 +585,16 @@
           "id": "12:1790746369166165382",
           "name": "actionCardTransactionRefId",
           "type": 9
+        },
+        {
+          "id": "13:3717355350441981604",
+          "name": "actionCardMerchantName",
+          "type": 9
+        },
+        {
+          "id": "14:2775177505378971834",
+          "name": "dbAnomalyType",
+          "type": 6
         }
       ],
       "relations": []
@@ -700,10 +710,36 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "17:1216448508926828534",
+      "lastPropertyId": "3:2162601551199684090",
+      "name": "IgnoredMerchantEntity",
+      "properties": [
+        {
+          "id": "1:8030809110012057007",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5872247840878257373",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "20:7718676404835755987"
+        },
+        {
+          "id": "3:2162601551199684090",
+          "name": "ignoredAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "16:8408153993645793235",
-  "lastIndexId": "19:7194083034705239905",
+  "lastEntityId": "17:1216448508926828534",
+  "lastIndexId": "20:7718676404835755987",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

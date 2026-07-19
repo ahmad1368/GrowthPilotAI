@@ -18,6 +18,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
+import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
@@ -546,7 +547,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(14, 8804315362738781488),
       name: 'MessageEntity',
-      lastPropertyId: const obx_int.IdUid(12, 1790746369166165382),
+      lastPropertyId: const obx_int.IdUid(14, 2775177505378971834),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -610,6 +611,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(12, 1790746369166165382),
             name: 'actionCardTransactionRefId',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 3717355350441981604),
+            name: 'actionCardMerchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 2775177505378971834),
+            name: 'dbAnomalyType',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -723,6 +734,31 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(17, 1216448508926828534),
+      name: 'IgnoredMerchantEntity',
+      lastPropertyId: const obx_int.IdUid(3, 2162601551199684090),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8030809110012057007),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5872247840878257373),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(20, 7718676404835755987)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2162601551199684090),
+            name: 'ignoredAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -761,8 +797,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(16, 8408153993645793235),
-      lastIndexId: const obx_int.IdUid(19, 7194083034705239905),
+      lastEntityId: const obx_int.IdUid(17, 1216448508926828534),
+      lastIndexId: const obx_int.IdUid(20, 7718676404835755987),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1416,7 +1452,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.actionCardTransactionRefId == null
                   ? null
                   : fbb.writeString(object.actionCardTransactionRefId!);
-          fbb.startTable(13);
+          final actionCardMerchantNameOffset =
+              object.actionCardMerchantName == null
+                  ? null
+                  : fbb.writeString(object.actionCardMerchantName!);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.conversationId);
           fbb.addOffset(2, senderIdOffset);
@@ -1429,6 +1469,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(9, object.dbActionCardStatus);
           fbb.addFloat64(10, object.actionCardAmount);
           fbb.addOffset(11, actionCardTransactionRefIdOffset);
+          fbb.addOffset(12, actionCardMerchantNameOffset);
+          fbb.addInt64(13, object.dbAnomalyType);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1461,6 +1503,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final actionCardTransactionRefIdParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 26);
+          final actionCardMerchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 28);
+          final dbAnomalyTypeParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 30);
           final object = MessageEntity(
               id: idParam,
               conversationId: conversationIdParam,
@@ -1473,7 +1520,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbActionCardType: dbActionCardTypeParam,
               dbActionCardStatus: dbActionCardStatusParam,
               actionCardAmount: actionCardAmountParam,
-              actionCardTransactionRefId: actionCardTransactionRefIdParam);
+              actionCardTransactionRefId: actionCardTransactionRefIdParam,
+              actionCardMerchantName: actionCardMerchantNameParam,
+              dbAnomalyType: dbAnomalyTypeParam);
 
           return object;
         }),
@@ -1610,6 +1659,40 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam,
               isRead: isReadParam,
               deliveredViaPush: deliveredViaPushParam);
+
+          return object;
+        }),
+    IgnoredMerchantEntity: obx_int.EntityDefinition<IgnoredMerchantEntity>(
+        model: _entities[15],
+        toOneRelations: (IgnoredMerchantEntity object) => [],
+        toManyRelations: (IgnoredMerchantEntity object) => {},
+        getId: (IgnoredMerchantEntity object) => object.id,
+        setId: (IgnoredMerchantEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (IgnoredMerchantEntity object, fb.Builder fbb) {
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, merchantNameOffset);
+          fbb.addInt64(2, object.ignoredAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final ignoredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final object = IgnoredMerchantEntity(
+              id: idParam,
+              merchantName: merchantNameParam,
+              ignoredAt: ignoredAtParam);
 
           return object;
         })
@@ -2023,6 +2106,14 @@ class MessageEntity_ {
   /// see [MessageEntity.actionCardTransactionRefId]
   static final actionCardTransactionRefId =
       obx.QueryStringProperty<MessageEntity>(_entities[12].properties[11]);
+
+  /// see [MessageEntity.actionCardMerchantName]
+  static final actionCardMerchantName =
+      obx.QueryStringProperty<MessageEntity>(_entities[12].properties[12]);
+
+  /// see [MessageEntity.dbAnomalyType]
+  static final dbAnomalyType =
+      obx.QueryIntegerProperty<MessageEntity>(_entities[12].properties[13]);
 }
 
 /// [AccountingSyncStatusEntity] entity fields to define ObjectBox queries.
@@ -2107,4 +2198,19 @@ class InboxNotificationEntity_ {
   static final deliveredViaPush =
       obx.QueryBooleanProperty<InboxNotificationEntity>(
           _entities[14].properties[9]);
+}
+
+/// [IgnoredMerchantEntity] entity fields to define ObjectBox queries.
+class IgnoredMerchantEntity_ {
+  /// see [IgnoredMerchantEntity.id]
+  static final id = obx.QueryIntegerProperty<IgnoredMerchantEntity>(
+      _entities[15].properties[0]);
+
+  /// see [IgnoredMerchantEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<IgnoredMerchantEntity>(
+      _entities[15].properties[1]);
+
+  /// see [IgnoredMerchantEntity.ignoredAt]
+  static final ignoredAt =
+      obx.QueryDateProperty<IgnoredMerchantEntity>(_entities[15].properties[2]);
 }
