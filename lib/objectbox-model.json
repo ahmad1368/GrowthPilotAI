@@ -518,7 +518,7 @@
     },
     {
       "id": "14:8804315362738781488",
-      "lastPropertyId": "14:2775177505378971834",
+      "lastPropertyId": "16:5390322156434481375",
       "name": "MessageEntity",
       "properties": [
         {
@@ -595,6 +595,16 @@
           "id": "14:2775177505378971834",
           "name": "dbAnomalyType",
           "type": 6
+        },
+        {
+          "id": "15:2312453220004215962",
+          "name": "dbRecommendationType",
+          "type": 6
+        },
+        {
+          "id": "16:5390322156434481375",
+          "name": "actionCardActionLabel",
+          "type": 9
         }
       ],
       "relations": []
@@ -736,10 +746,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "18:2960291869059046520",
+      "lastPropertyId": "4:1798476462777192112",
+      "name": "RecommendationLogEntity",
+      "properties": [
+        {
+          "id": "1:5735350375471772745",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1600885079793115478",
+          "name": "dbType",
+          "type": 6
+        },
+        {
+          "id": "3:6837357969075721495",
+          "name": "sentAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "21:621181584052907916"
+        },
+        {
+          "id": "4:1798476462777192112",
+          "name": "actedOn",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "17:1216448508926828534",
-  "lastIndexId": "20:7718676404835755987",
+  "lastEntityId": "18:2960291869059046520",
+  "lastIndexId": "21:621181584052907916",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

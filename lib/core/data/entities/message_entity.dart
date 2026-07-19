@@ -4,8 +4,8 @@ import 'package:growth_pilot_ai/core/enum/message_content_type.dart';
 /// One message within a [ConversationEntity] (Issue #70) — the Flutter-side
 /// local model for the original issue's MongoDB `messages` collection. The
 /// `actionCard*` fields carry the Issue #73 ACTION_CARD payload (plus the
-/// Issue #74 anomaly-review fields); parsed by [ParseActionCardData] rather
-/// than exposed as typed getters here.
+/// Issue #74 anomaly-review and Issue #75 recommendation fields); parsed by
+/// [ParseActionCardData] rather than exposed as typed getters here.
 @Entity()
 class MessageEntity {
   @Id()
@@ -26,6 +26,8 @@ class MessageEntity {
   String? actionCardTransactionRefId;
   String? actionCardMerchantName;
   int? dbAnomalyType; // AnomalyType index (Issue #74)
+  int? dbRecommendationType; // RecommendationType index (Issue #75)
+  String? actionCardActionLabel; // Issue #75 CTA button text
 
   MessageEntity({
     this.id = 0,
@@ -42,6 +44,8 @@ class MessageEntity {
     this.actionCardTransactionRefId,
     this.actionCardMerchantName,
     this.dbAnomalyType,
+    this.dbRecommendationType,
+    this.actionCardActionLabel,
   });
 
   MessageContentType get contentType => MessageContentType.values[dbContentType];

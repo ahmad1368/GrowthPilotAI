@@ -36,6 +36,21 @@ class ConversationList extends StatelessWidget {
                 ? () {}
                 : () => controller.ignoreAnomalyMerchant(
                     summary.conversationId, actionCard.messageId),
+            isProcessingRecommendation:
+                controller.isProcessingRecommendation(summary.conversationId),
+            onActRecommendation:
+                actionCard == null || actionCard.recommendationType == null
+                    ? () {}
+                    : () => controller
+                        .actOnRecommendation(actionCard.recommendationType!),
+            onDismissRecommendation: actionCard == null
+                ? () {}
+                : () => controller.dismissRecommendation(
+                    summary.conversationId, actionCard.messageId),
+            onSnoozeRecommendation: actionCard == null
+                ? () {}
+                : () => controller.snoozeRecommendation(
+                    summary.conversationId, actionCard.messageId),
           ),
         );
       },

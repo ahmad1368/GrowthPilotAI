@@ -4,6 +4,7 @@ import 'package:growth_pilot_ai/core/data/entities/message_entity.dart';
 import 'package:growth_pilot_ai/core/enum/action_card_status.dart';
 import 'package:growth_pilot_ai/core/enum/action_card_type.dart';
 import 'package:growth_pilot_ai/core/enum/message_content_type.dart';
+import 'package:growth_pilot_ai/core/enum/recommendation_type.dart';
 
 MessageEntity _plainMessage() => MessageEntity(
       conversationId: 1,
@@ -46,5 +47,26 @@ void main() {
     final data = ParseActionCardData.call(
         _actionCardMessage(status: ActionCardStatus.completed.index));
     expect(data!.isPending, isFalse);
+  });
+
+  test('parses a smartRecommendation card\'s recommendationType/actionLabel',
+      () {
+    final message = MessageEntity(
+      id: 11,
+      conversationId: 1,
+      senderId: 'system',
+      body: 'Unused subscription?',
+      dbContentType: MessageContentType.actionCard.index,
+      dbActionCardType: ActionCardType.smartRecommendation.index,
+      dbActionCardStatus: ActionCardStatus.pending.index,
+      dbRecommendationType: RecommendationType.subscriptionAudit.index,
+      actionCardActionLabel: 'Review Subscription',
+      createdAt: DateTime(2026, 1, 1),
+    );
+
+    final data = ParseActionCardData.call(message);
+
+    expect(data!.recommendationType, RecommendationType.subscriptionAudit);
+    expect(data.actionLabel, 'Review Subscription');
   });
 }
