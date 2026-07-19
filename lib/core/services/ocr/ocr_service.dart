@@ -1,18 +1,26 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/services/omni_logger.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
+import 'package:growth_pilot_ai/core/services/ocr/ocr_error_handler.dart';
+import 'package:growth_pilot_ai/core/services/ocr/ocr_spatial_sorter.dart';
 import 'package:growth_pilot_ai/features/document_classification/domain/repositories/abstract_classifier_service.dart';
 import 'ocr_confidence_calculator.dart';
 
+/// [Issue #21] Lazily creates the ML Kit [TextRecognizer] on first use so it
+/// never opens on web, where the plugin has no implementation (Issue #19).
 class OCRService {
-  final TextRecognizer _textRecognizer =
-      TextRecognizer(script: TextRecognitionScript.latin);
+  TextRecognizer? _textRecognizer;
 
   Future<OmniResponse<OCRResult>> extractText(File imageFile) async {
+    if (kIsWeb) {
+      return OmniResponse<OCRResult>.error(
+          "Receipt scanning isn't available on web yet — please use the mobile app.");
+    }
     try {
       final classifier = DependencyInjection.get<AbstractClassifierService>();
       final classificationResult = await classifier.classifyDocument(imageFile);
@@ -29,28 +37,33 @@ class OCRService {
             "Document not detected. Please align the receipt.");
       }
 
+      _textRecognizer ??= TextRecognizer(script: TextRecognitionScript.latin);
       final inputImage = InputImage.fromFile(imageFile);
       final RecognizedText recognizedText =
-          await _textRecognizer.processImage(inputImage);
+          await _textRecognizer!.processImage(inputImage);
 
       final result = OCRResult(
-        fullText: recognizedText.text ?? "",
-        elements: [],
+        fullText: recognizedText.text,
+        elements: OCRSpatialSorter.sort(recognizedText),
         confidence: OcrConfidenceCalculator.calculate(recognizedText),
       );
 
       return OmniResponse<OCRResult>.success(result);
     } catch (e, stack) {
-      OmniLogger.error(
-        title: "خطا در استخراج متن یا کلاسیفایر",
-        message: "خطای سیستمی: $e | User: Ahmad_Salem_Pour",
-        stackTrace: stack,
-        widgetName: "OCRService",
-      );
+      // [Issue #21] OCRErrorHandler discriminates ML Kit-specific failures
+      // (unreadable image, low storage) into a friendlier message; it logs
+      // internally then rethrows, so we translate that back into an
+      // OmniResponse here instead of letting it propagate.
+      try {
+        OCRErrorHandler.handle(e, stack);
+      } catch (mapped) {
+        return OmniResponse<OCRResult>.error(
+            '$mapped'.replaceFirst('Exception: ', ''));
+      }
       return OmniResponse<OCRResult>.error(
           "فرآیند استخراج متن با خطا مواجه شد: $e");
     }
   }
 
-  void dispose() => _textRecognizer.close();
+  void dispose() => _textRecognizer?.close();
 }

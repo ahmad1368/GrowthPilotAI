@@ -1,5 +1,6 @@
 import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
 
 import '../models/notification_model.dart';
 
@@ -24,7 +25,12 @@ class NotificationService {
       });
     } catch (e, stack) {
       // در صورت بروز خطا، یک لیست خالی برمی‌گردانیم تا برنامه کرش نکند
-      print("Error in NotificationService: $e");
+      OmniLogger.error(
+        title: "Error in NotificationService",
+        widgetName: "NotificationService",
+        message: e,
+        stackTrace: stack,
+      );
       FailureMapper.map<OCRResult>(e, stack: stack);
       return [];
     }
@@ -36,7 +42,8 @@ class NotificationService {
     // await http.patch('api/notifications/${notification.id}', data: {'isRead': true});
 
     notification.isRead = true;
-    print("Notification ${notification.id} marked as read in Service.");
+    OmniLogger.info(
+        "Notification ${notification.id} marked as read in Service.");
   }
 
   // متدهای کمکی برای تولید دیتای متنوع

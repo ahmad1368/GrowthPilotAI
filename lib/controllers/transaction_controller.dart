@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
@@ -13,6 +15,8 @@ class TransactionController extends GetxController {
 
   // ۲. تعریف ریپازیتوری
   late TransactionRepository _repository;
+  StreamSubscription<List<TransactionEntity>>? _watchSubscription;
+  bool _hasActiveSearch = false;
 
   @override
   void onInit() {
@@ -29,6 +33,12 @@ class TransactionController extends GetxController {
       _seedTestData();
       fetchTransactions();
 
+      // [Issue #17] هر تغییری در دیتابیس (درج/ویرایش/حذف) به‌صورت خودکار
+      // لیست را (مگر جستجوی فعالی در جریان باشد) به‌روز می‌کند.
+      _watchSubscription = _repository.watchAll().listen((_) {
+        if (!_hasActiveSearch) _loadLocalData();
+      });
+
       OmniLogger.info("TransactionController: Initialized successfully.");
     } catch (e, stack) {
       OmniLogger.error(
@@ -38,6 +48,12 @@ class TransactionController extends GetxController {
         stackTrace: stack,
       );
     }
+  }
+
+  @override
+  void onClose() {
+    _watchSubscription?.cancel();
+    super.onClose();
   }
 
   /// متد اصلی برای بارگذاری داده‌ها
@@ -81,6 +97,7 @@ class TransactionController extends GetxController {
 
   /// متد جستجوی متنی
   void searchTransactions(String query) {
+    _hasActiveSearch = query.isNotEmpty;
     if (query.isEmpty) {
       fetchTransactions();
       return;
@@ -94,29 +111,27 @@ class TransactionController extends GetxController {
 
   /// ایجاد داده‌های اولیه (تست)
   void _seedTestData() {
-    final objectBoxInstance = Get.find<ObjectBox>();
-    final transactionBox = objectBoxInstance.store.box<
-        TransactionEntity>(); // استفاده از Getter مستقیم اگر در ObjectBox تعریف شده
+    if (_repository.getAll().isNotEmpty) return;
 
-    if (transactionBox.isEmpty()) {
-      final now = DateTime.now();
-      final testItems = [
-        TransactionEntity(
-          description: "خرید اشتراک Azure (تستی)",
-          amount: 45.0,
-          date: now,
-          dbType: 0,
-        ),
-        TransactionEntity(
-          description: "درآمد پروژه Flutter (تستی)",
-          amount: 1200.0,
-          date: now.subtract(const Duration(days: 5)),
-          dbType: 1,
-        ),
-      ];
+    final now = DateTime.now();
+    final testItems = [
+      TransactionEntity(
+        description: "خرید اشتراک Azure (تستی)",
+        amount: 45.0,
+        date: now,
+        dbType: 0,
+      ),
+      TransactionEntity(
+        description: "درآمد پروژه Flutter (تستی)",
+        amount: 1200.0,
+        date: now.subtract(const Duration(days: 5)),
+        dbType: 1,
+      ),
+    ];
 
-      transactionBox.putMany(testItems);
-      OmniLogger.info("Test data seeded into ObjectBox.");
+    for (final item in testItems) {
+      _repository.insert(item);
     }
+    OmniLogger.info("Test data seeded into ObjectBox.");
   }
 }
