@@ -25,6 +25,7 @@ import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/placeholder.dart';
+import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
@@ -547,7 +548,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(14, 8804315362738781488),
       name: 'MessageEntity',
-      lastPropertyId: const obx_int.IdUid(14, 2775177505378971834),
+      lastPropertyId: const obx_int.IdUid(16, 5390322156434481375),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -621,6 +622,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(14, 2775177505378971834),
             name: 'dbAnomalyType',
             type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 2312453220004215962),
+            name: 'dbRecommendationType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 5390322156434481375),
+            name: 'actionCardActionLabel',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -759,6 +770,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(18, 2960291869059046520),
+      name: 'RecommendationLogEntity',
+      lastPropertyId: const obx_int.IdUid(4, 1798476462777192112),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5735350375471772745),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1600885079793115478),
+            name: 'dbType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6837357969075721495),
+            name: 'sentAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(21, 621181584052907916)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1798476462777192112),
+            name: 'actedOn',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -797,8 +838,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(17, 1216448508926828534),
-      lastIndexId: const obx_int.IdUid(20, 7718676404835755987),
+      lastEntityId: const obx_int.IdUid(18, 2960291869059046520),
+      lastIndexId: const obx_int.IdUid(21, 621181584052907916),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1456,7 +1497,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.actionCardMerchantName == null
                   ? null
                   : fbb.writeString(object.actionCardMerchantName!);
-          fbb.startTable(15);
+          final actionCardActionLabelOffset =
+              object.actionCardActionLabel == null
+                  ? null
+                  : fbb.writeString(object.actionCardActionLabel!);
+          fbb.startTable(17);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.conversationId);
           fbb.addOffset(2, senderIdOffset);
@@ -1471,6 +1516,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(11, actionCardTransactionRefIdOffset);
           fbb.addOffset(12, actionCardMerchantNameOffset);
           fbb.addInt64(13, object.dbAnomalyType);
+          fbb.addInt64(14, object.dbRecommendationType);
+          fbb.addOffset(15, actionCardActionLabelOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1508,6 +1555,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 28);
           final dbAnomalyTypeParam =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 30);
+          final dbRecommendationTypeParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 32);
+          final actionCardActionLabelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 34);
           final object = MessageEntity(
               id: idParam,
               conversationId: conversationIdParam,
@@ -1522,7 +1574,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               actionCardAmount: actionCardAmountParam,
               actionCardTransactionRefId: actionCardTransactionRefIdParam,
               actionCardMerchantName: actionCardMerchantNameParam,
-              dbAnomalyType: dbAnomalyTypeParam);
+              dbAnomalyType: dbAnomalyTypeParam,
+              dbRecommendationType: dbRecommendationTypeParam,
+              actionCardActionLabel: actionCardActionLabelParam);
 
           return object;
         }),
@@ -1693,6 +1747,42 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam,
               merchantName: merchantNameParam,
               ignoredAt: ignoredAtParam);
+
+          return object;
+        }),
+    RecommendationLogEntity: obx_int.EntityDefinition<RecommendationLogEntity>(
+        model: _entities[16],
+        toOneRelations: (RecommendationLogEntity object) => [],
+        toManyRelations: (RecommendationLogEntity object) => {},
+        getId: (RecommendationLogEntity object) => object.id,
+        setId: (RecommendationLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (RecommendationLogEntity object, fb.Builder fbb) {
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbType);
+          fbb.addInt64(2, object.sentAt.millisecondsSinceEpoch);
+          fbb.addBool(3, object.actedOn);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final sentAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final actedOnParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final object = RecommendationLogEntity(
+              id: idParam,
+              dbType: dbTypeParam,
+              sentAt: sentAtParam,
+              actedOn: actedOnParam);
 
           return object;
         })
@@ -2114,6 +2204,14 @@ class MessageEntity_ {
   /// see [MessageEntity.dbAnomalyType]
   static final dbAnomalyType =
       obx.QueryIntegerProperty<MessageEntity>(_entities[12].properties[13]);
+
+  /// see [MessageEntity.dbRecommendationType]
+  static final dbRecommendationType =
+      obx.QueryIntegerProperty<MessageEntity>(_entities[12].properties[14]);
+
+  /// see [MessageEntity.actionCardActionLabel]
+  static final actionCardActionLabel =
+      obx.QueryStringProperty<MessageEntity>(_entities[12].properties[15]);
 }
 
 /// [AccountingSyncStatusEntity] entity fields to define ObjectBox queries.
@@ -2213,4 +2311,23 @@ class IgnoredMerchantEntity_ {
   /// see [IgnoredMerchantEntity.ignoredAt]
   static final ignoredAt =
       obx.QueryDateProperty<IgnoredMerchantEntity>(_entities[15].properties[2]);
+}
+
+/// [RecommendationLogEntity] entity fields to define ObjectBox queries.
+class RecommendationLogEntity_ {
+  /// see [RecommendationLogEntity.id]
+  static final id = obx.QueryIntegerProperty<RecommendationLogEntity>(
+      _entities[16].properties[0]);
+
+  /// see [RecommendationLogEntity.dbType]
+  static final dbType = obx.QueryIntegerProperty<RecommendationLogEntity>(
+      _entities[16].properties[1]);
+
+  /// see [RecommendationLogEntity.sentAt]
+  static final sentAt = obx.QueryDateProperty<RecommendationLogEntity>(
+      _entities[16].properties[2]);
+
+  /// see [RecommendationLogEntity.actedOn]
+  static final actedOn = obx.QueryBooleanProperty<RecommendationLogEntity>(
+      _entities[16].properties[3]);
 }

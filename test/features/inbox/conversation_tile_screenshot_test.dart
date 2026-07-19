@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/enum/action_card_status.dart';
 import 'package:growth_pilot_ai/core/enum/action_card_type.dart';
 import 'package:growth_pilot_ai/core/enum/anomaly_type.dart';
+import 'package:growth_pilot_ai/core/enum/recommendation_type.dart';
 import 'package:growth_pilot_ai/core/models/action_card_data.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
@@ -17,9 +18,10 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 void _noop() {}
 
 /// Captures light/dark PNGs of the Inbox conversation list (Issue #72),
-/// including a PENDING ACTION_CARD row (Issue #73) and a PENDING
-/// anomaly-review row (Issue #74), for QA. Not a golden comparison — it
-/// only records the current look.
+/// including a PENDING ACTION_CARD row (Issue #73), a PENDING
+/// anomaly-review row (Issue #74), and a PENDING Smart Recommendation row
+/// (Issue #75), for QA. Not a golden comparison — it only records the
+/// current look.
 void main() {
   final summaries = [
     ConversationSummary(
@@ -61,6 +63,22 @@ void main() {
         anomalyType: AnomalyType.zScore,
       ),
     ),
+    ConversationSummary(
+      conversationId: 4,
+      subject: 'Smart Tip — subscription review',
+      lastMessagePreview: 'Unused Subscription?',
+      lastMessageAt: DateTime(2026, 7, 17),
+      unreadCount: 1,
+      actionCard: const ActionCardData(
+        messageId: 13,
+        actionType: ActionCardType.smartRecommendation,
+        status: ActionCardStatus.pending,
+        amount: 0,
+        transactionRefId: 'sub-adobe-cc-001',
+        recommendationType: RecommendationType.subscriptionAudit,
+        actionLabel: 'Review Subscription',
+      ),
+    ),
   ];
 
   Future<void> capture(
@@ -69,7 +87,7 @@ void main() {
         ? const Color(0xFF09090B)
         : const Color(0xFFFFFFFF);
     final key = GlobalKey();
-    await tester.binding.setSurfaceSize(const Size(400, 320));
+    await tester.binding.setSurfaceSize(const Size(400, 440));
     await tester.pumpWidget(MaterialApp(
       theme: ThemeData(brightness: brightness),
       home: ShadTheme(
@@ -91,6 +109,10 @@ void main() {
                             onApprove: _noop,
                             isIgnoringAnomaly: false,
                             onIgnoreAnomaly: _noop,
+                            isProcessingRecommendation: false,
+                            onActRecommendation: _noop,
+                            onDismissRecommendation: _noop,
+                            onSnoozeRecommendation: _noop,
                           ),
                         ))
                     .toList(),

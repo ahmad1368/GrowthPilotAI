@@ -29,4 +29,13 @@ void main() {
     expect(messages.single.dbActionCardStatus, ActionCardStatus.pending.index);
     expect(messages.single.conversationId, 3);
   });
+
+  test('recommendation thread has a single pending Smart Recommendation ACTION_CARD',
+      () {
+    final messages = SeedDemoMessages.forConversation(4, 3);
+
+    expect(messages.single.contentType, MessageContentType.actionCard);
+    expect(messages.single.dbActionCardStatus, ActionCardStatus.pending.index);
+    expect(messages.single.conversationId, 4);
+  });
 }
