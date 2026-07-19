@@ -1,32 +1,40 @@
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/business/approve_action_card.dart';
 import 'package:growth_pilot_ai/business/filter_conversations_by_query.dart';
 import 'package:growth_pilot_ai/business/load_inbox_summaries.dart';
 import 'package:growth_pilot_ai/business/seed_demo_inbox_data.dart';
+import 'package:growth_pilot_ai/controllers/action_card_approval_handler.dart';
+import 'package:growth_pilot_ai/controllers/anomaly_ignore_handler.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/conversation_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/ignored_merchant_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/message_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/unified_transaction_repository.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 
 /// Drives the Inbox screen (Issue #72): seeds demo threads (Issue #70),
-/// resolves each conversation's linked-transaction amount (Issue #69),
-/// exposes a searchable, most-recent-first summary list, and processes
-/// ACTION_CARD approvals (Issue #73).
+/// resolves each conversation's linked-transaction amount (Issue #69), and
+/// exposes a searchable, most-recent-first summary list. ACTION_CARD
+/// approvals (Issue #73) and anomaly dismissals (Issue #74) are delegated
+/// to [ActionCardApprovalHandler]/[AnomalyIgnoreHandler] to stay under the
+/// 50-line file limit.
 class InboxController extends GetxController {
   late ConversationRepository _conversations;
   late MessageRepository _messages;
   late UnifiedTransactionRepository _transactions;
+  late ActionCardApprovalHandler _approvalHandler;
+  late AnomalyIgnoreHandler _anomalyIgnoreHandler;
 
   final searchQuery = ''.obs;
   final _summaries = <ConversationSummary>[].obs;
-  final _approvingConversationIds = <int>{}.obs;
 
   List<ConversationSummary> get visibleSummaries =>
       FilterConversationsByQuery.call(_summaries, searchQuery.value);
 
   bool isApprovingAction(int conversationId) =>
-      _approvingConversationIds.contains(conversationId);
+      _approvalHandler.isApproving(conversationId);
+
+  bool isIgnoringAnomaly(int conversationId) =>
+      _anomalyIgnoreHandler.isIgnoring(conversationId);
 
   @override
   void onInit() {
@@ -35,6 +43,9 @@ class InboxController extends GetxController {
     _conversations = ConversationRepository(store.box());
     _messages = MessageRepository(store.box());
     _transactions = UnifiedTransactionRepository(store.box());
+    _approvalHandler = ActionCardApprovalHandler(_messages);
+    _anomalyIgnoreHandler = AnomalyIgnoreHandler(
+        _messages, IgnoredMerchantRepository(store.box()));
 
     _transactions.seedIfEmpty();
     SeedDemoInboxData.call(_conversations, _messages);
@@ -46,18 +57,13 @@ class InboxController extends GetxController {
         LoadInboxSummaries.call(_conversations, _messages, _transactions));
   }
 
-  /// Approves a PENDING action card. The delay stands in for the backend
-  /// round-trip, making the anti-double-tap guard ([isApprovingAction])
-  /// visible in the UI.
   Future<void> approveAction(int conversationId, int messageId) async {
-    if (_approvingConversationIds.contains(conversationId)) return;
-    _approvingConversationIds.add(conversationId);
-    await Future.delayed(const Duration(milliseconds: 500));
-    final message = _messages
-        .getForConversation(conversationId)
-        .firstWhere((m) => m.id == messageId);
-    if (ApproveActionCard.call(message)) _messages.upsert(message);
+    await _approvalHandler.approve(conversationId, messageId);
     _reload();
-    _approvingConversationIds.remove(conversationId);
+  }
+
+  Future<void> ignoreAnomalyMerchant(int conversationId, int messageId) async {
+    await _anomalyIgnoreHandler.ignore(conversationId, messageId);
+    _reload();
   }
 }

@@ -21,4 +21,12 @@ void main() {
     expect(messages.single.contentType, MessageContentType.text);
     expect(messages.single.conversationId, 2);
   });
+
+  test('Zenith thread has a single pending anomaly ACTION_CARD', () {
+    final messages = SeedDemoMessages.forConversation(3, 2);
+
+    expect(messages.single.contentType, MessageContentType.actionCard);
+    expect(messages.single.dbActionCardStatus, ActionCardStatus.pending.index);
+    expect(messages.single.conversationId, 3);
+  });
 }
