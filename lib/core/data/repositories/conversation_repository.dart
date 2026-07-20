@@ -18,5 +18,7 @@ class ConversationRepository {
     return result;
   }
 
+  ConversationEntity? getById(int id) => _box.get(id);
+
   void upsert(ConversationEntity entity) => _box.put(entity);
 }
