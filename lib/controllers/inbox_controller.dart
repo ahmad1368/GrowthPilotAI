@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/classify_conversation_category.dart';
+import 'package:growth_pilot_ai/business/filter_conversations_by_category.dart';
 import 'package:growth_pilot_ai/business/filter_conversations_by_query.dart';
 import 'package:growth_pilot_ai/business/load_inbox_summaries.dart';
 import 'package:growth_pilot_ai/business/seed_demo_inbox_data.dart';
@@ -14,17 +16,19 @@ import 'package:growth_pilot_ai/core/data/repositories/ignored_merchant_reposito
 import 'package:growth_pilot_ai/core/data/repositories/message_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/recommendation_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/unified_transaction_repository.dart';
+import 'package:growth_pilot_ai/core/enum/inbox_category.dart';
 import 'package:growth_pilot_ai/core/enum/recommendation_type.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 
 /// Drives the Inbox screen (Issue #72): seeds demo threads (Issue #70),
 /// resolves each conversation's linked-transaction amount (Issue #69), and
-/// exposes a searchable, most-recent-first summary list. ACTION_CARD
-/// approvals (Issue #73), anomaly dismissals (Issue #74), Smart
-/// Recommendation actions (Issue #75) and swipe/batch archive + multi-select
-/// (Issue #76) are delegated to [ActionCardApprovalHandler]/
-/// [AnomalyIgnoreHandler]/[SmartRecommendationHandler]/[ArchiveHandler]/
-/// [SelectionHandler] to stay under the 50-line file limit.
+/// exposes a searchable, most-recent-first, category-filtered summary list
+/// (Issue #77). ACTION_CARD approvals (Issue #73), anomaly dismissals
+/// (Issue #74), Smart Recommendation actions (Issue #75) and swipe/batch
+/// archive + multi-select (Issue #76) are delegated to
+/// [ActionCardApprovalHandler]/[AnomalyIgnoreHandler]/
+/// [SmartRecommendationHandler]/[ArchiveHandler]/[SelectionHandler] to stay
+/// under the 50-line file limit.
 class InboxController extends GetxController {
   late ConversationRepository _conversations;
   late MessageRepository _messages;
@@ -36,10 +40,16 @@ class InboxController extends GetxController {
   final selection = SelectionHandler();
 
   final searchQuery = ''.obs;
+  final selectedCategory = InboxCategory.all.obs;
   final _summaries = <ConversationSummary>[].obs;
 
-  List<ConversationSummary> get visibleSummaries =>
-      FilterConversationsByQuery.call(_summaries, searchQuery.value);
+  List<ConversationSummary> get visibleSummaries => FilterConversationsByQuery.call(
+      FilterConversationsByCategory.call(_summaries, selectedCategory.value),
+      searchQuery.value);
+
+  int get pendingCount => _summaries
+      .where((c) => ClassifyConversationCategory.call(c) == InboxCategory.pending)
+      .length;
 
   bool isApprovingAction(int conversationId) =>
       _approvalHandler.isApproving(conversationId);

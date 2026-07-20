@@ -5,6 +5,7 @@ import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/confirm_bulk_archive_dialog.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/conversation_list.dart';
+import 'package:growth_pilot_ai/features/inbox/widgets/inbox_filter_chips.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/selection_toolbar.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -45,6 +46,13 @@ class InboxScreen extends StatelessWidget {
                 placeholder: const Text('Search conversations'),
                 onChanged: (value) => controller.searchQuery.value = value,
               ),
+              const SizedBox(height: 12),
+              Obx(() => InboxFilterChips(
+                    selected: controller.selectedCategory.value,
+                    pendingCount: controller.pendingCount,
+                    onChanged: (category) =>
+                        controller.selectedCategory.value = category,
+                  )),
               const SizedBox(height: 12),
               Expanded(
                 child: Obx(() {
