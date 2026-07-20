@@ -33,4 +33,5 @@ class ConversationEntity {
   ConversationContextType get contextType =>
       ConversationContextType.values[dbContextType];
   bool get hasContext => contextType != ConversationContextType.none;
+  bool get isArchived => status == ConversationStatus.archived;
 }

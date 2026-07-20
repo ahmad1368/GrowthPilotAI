@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
 import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/action_card_actions.dart';
-import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
+import 'package:growth_pilot_ai/features/inbox/widgets/dismissible_conversation_tile.dart';
 
-/// The Inbox screen's list (Issue #72): one [ConversationTile] per
-/// [ConversationSummary], wired to [InboxController] for ACTION_CARD
-/// approvals (Issue #73) and anomaly dismissals (Issue #74).
+/// The Inbox screen's list (Issue #72): one [DismissibleConversationTile]
+/// per [ConversationSummary], wired to [InboxController] for ACTION_CARD
+/// approvals (Issue #73), anomaly dismissals (Issue #74), and
+/// swipe/multi-select archive (Issue #76).
 class ConversationList extends StatelessWidget {
   final InboxController controller;
   final List<ConversationSummary> summaries;
@@ -16,14 +18,30 @@ class ConversationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Obx(() => ListView.builder(
       itemCount: summaries.length,
       itemBuilder: (context, index) {
         final summary = summaries[index];
         final actionCard = summary.actionCard;
-        return ConversationTile(
+        return DismissibleConversationTile(
           summary: summary,
-          onTap: () {},
+          selectionMode: controller.selection.selectionMode.value,
+          isSelected: controller.selection.isSelected(summary.conversationId),
+          onLongPress: () => controller.selection.enter(summary.conversationId),
+          onToggleSelected: () =>
+              controller.selection.toggle(summary.conversationId),
+          onArchive: () async {
+            final entity =
+                controller.archiveConversation(summary.conversationId);
+            if (entity == null || !context.mounted) return;
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Archived "${summary.subject}"'),
+              action: SnackBarAction(
+                label: 'Undo',
+                onPressed: () => controller.undoArchive([entity]),
+              ),
+            ));
+          },
           actions: ActionCardActions(
             isApproving: controller.isApprovingAction(summary.conversationId),
             onApprove: actionCard == null
@@ -54,6 +72,6 @@ class ConversationList extends StatelessWidget {
           ),
         );
       },
-    );
+    ));
   }
 }
