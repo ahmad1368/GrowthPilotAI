@@ -65,6 +65,7 @@ void main() {
                     onLongPress: _noop,
                     onToggleSelected: _noop,
                     onArchive: _noop,
+                    onOpen: _noop,
                   ),
                   DismissibleConversationTile(
                     summary: summaries.first,
@@ -74,6 +75,7 @@ void main() {
                     onLongPress: _noop,
                     onToggleSelected: _noop,
                     onArchive: _noop,
+                    onOpen: _noop,
                   ),
                 ],
               ),

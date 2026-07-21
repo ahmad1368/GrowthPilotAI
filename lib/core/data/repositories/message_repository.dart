@@ -19,4 +19,6 @@ class MessageRepository {
   }
 
   void upsert(MessageEntity entity) => _box.put(entity);
+
+  void upsertAll(List<MessageEntity> entities) => _box.putMany(entities);
 }

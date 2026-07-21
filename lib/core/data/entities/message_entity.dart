@@ -28,6 +28,7 @@ class MessageEntity {
   int? dbAnomalyType; // AnomalyType index (Issue #74)
   int? dbRecommendationType; // RecommendationType index (Issue #75)
   String? actionCardActionLabel; // Issue #75 CTA button text
+  DateTime? readAt; // Issue #78 read-receipt timestamp
 
   MessageEntity({
     this.id = 0,
@@ -46,6 +47,7 @@ class MessageEntity {
     this.dbAnomalyType,
     this.dbRecommendationType,
     this.actionCardActionLabel,
+    this.readAt,
   });
 
   MessageContentType get contentType => MessageContentType.values[dbContentType];

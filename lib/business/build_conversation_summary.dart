@@ -27,6 +27,7 @@ class BuildConversationSummary {
       linkedTransactionAmount:
           conversation.hasContext ? linkedTransactionAmount : null,
       actionCard: latest == null ? null : ParseActionCardData.call(latest),
+      isLatestMessageRead: latest?.isRead ?? true,
     );
   }
 }
