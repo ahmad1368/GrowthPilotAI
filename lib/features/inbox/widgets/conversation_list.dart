@@ -42,6 +42,7 @@ class ConversationList extends StatelessWidget {
               ),
             ));
           },
+          onOpen: () => controller.markConversationRead(summary.conversationId),
           actions: ActionCardActions(
             isApproving: controller.isApprovingAction(summary.conversationId),
             onApprove: actionCard == null

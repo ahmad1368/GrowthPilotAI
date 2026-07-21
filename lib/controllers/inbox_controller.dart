@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/business/classify_conversation_category.dart';
 import 'package:growth_pilot_ai/business/filter_conversations_by_category.dart';
 import 'package:growth_pilot_ai/business/filter_conversations_by_query.dart';
 import 'package:growth_pilot_ai/business/load_inbox_summaries.dart';
+import 'package:growth_pilot_ai/business/mark_messages_as_read.dart';
 import 'package:growth_pilot_ai/business/seed_demo_inbox_data.dart';
 import 'package:growth_pilot_ai/controllers/action_card_approval_handler.dart';
 import 'package:growth_pilot_ai/controllers/anomaly_ignore_handler.dart';
@@ -23,12 +24,12 @@ import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 /// Drives the Inbox screen (Issue #72): seeds demo threads (Issue #70),
 /// resolves each conversation's linked-transaction amount (Issue #69), and
 /// exposes a searchable, most-recent-first, category-filtered summary list
-/// (Issue #77). ACTION_CARD approvals (Issue #73), anomaly dismissals
-/// (Issue #74), Smart Recommendation actions (Issue #75) and swipe/batch
-/// archive + multi-select (Issue #76) are delegated to
-/// [ActionCardApprovalHandler]/[AnomalyIgnoreHandler]/
-/// [SmartRecommendationHandler]/[ArchiveHandler]/[SelectionHandler] to stay
-/// under the 50-line file limit.
+/// (Issue #77), with bulk read-receipt tracking (Issue #78). ACTION_CARD
+/// approvals (Issue #73), anomaly dismissals (Issue #74), Smart
+/// Recommendation actions (Issue #75) and swipe/batch archive +
+/// multi-select (Issue #76) are delegated to [ActionCardApprovalHandler]/
+/// [AnomalyIgnoreHandler]/[SmartRecommendationHandler]/[ArchiveHandler]/
+/// [SelectionHandler] to stay under the 50-line file limit.
 class InboxController extends GetxController {
   late ConversationRepository _conversations;
   late MessageRepository _messages;
@@ -122,6 +123,14 @@ class InboxController extends GetxController {
 
   void undoArchive(List<ConversationEntity> entities) {
     _archiveHandler.undo(entities);
+    _reload();
+  }
+
+  void markConversationRead(int conversationId) {
+    final messages = _messages.getForConversation(conversationId);
+    final changed = MarkMessagesAsRead.call(messages, DateTime.now());
+    if (changed.isEmpty) return;
+    _messages.upsertAll(changed);
     _reload();
   }
 }

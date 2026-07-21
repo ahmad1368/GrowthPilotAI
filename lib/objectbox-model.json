@@ -518,7 +518,7 @@
     },
     {
       "id": "14:8804315362738781488",
-      "lastPropertyId": "16:5390322156434481375",
+      "lastPropertyId": "17:8587853033587054742",
       "name": "MessageEntity",
       "properties": [
         {
@@ -605,6 +605,11 @@
           "id": "16:5390322156434481375",
           "name": "actionCardActionLabel",
           "type": 9
+        },
+        {
+          "id": "17:8587853033587054742",
+          "name": "readAt",
+          "type": 10
         }
       ],
       "relations": []

@@ -3,9 +3,9 @@ import 'package:growth_pilot_ai/core/models/conversation_summary.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/action_card_actions.dart';
 import 'package:growth_pilot_ai/features/inbox/widgets/conversation_tile.dart';
 
-/// Wraps [ConversationTile] with the Issue #76 gestures: swipe-right to
-/// archive (with a background reveal), long-press to enter multi-select,
-/// tap-to-toggle a checkbox once selection mode is active.
+/// Wraps [ConversationTile] with the Issue #76 gestures (swipe-right to
+/// archive, long-press to enter multi-select, tap-to-toggle a checkbox once
+/// selection mode is active) plus the Issue #78 "open marks read" tap.
 class DismissibleConversationTile extends StatelessWidget {
   final ConversationSummary summary;
   final ActionCardActions actions;
@@ -14,6 +14,7 @@ class DismissibleConversationTile extends StatelessWidget {
   final VoidCallback onLongPress;
   final VoidCallback onToggleSelected;
   final VoidCallback onArchive;
+  final VoidCallback onOpen;
 
   const DismissibleConversationTile({
     super.key,
@@ -24,6 +25,7 @@ class DismissibleConversationTile extends StatelessWidget {
     required this.onLongPress,
     required this.onToggleSelected,
     required this.onArchive,
+    required this.onOpen,
   });
 
   @override
@@ -37,7 +39,7 @@ class DismissibleConversationTile extends StatelessWidget {
             Checkbox(value: isSelected, onChanged: (_) => onToggleSelected()),
           Expanded(
             child: ConversationTile(
-                summary: summary, onTap: () {}, actions: actions),
+                summary: summary, onTap: onOpen, actions: actions),
           ),
         ],
       ),

@@ -5,7 +5,8 @@ import 'package:growth_pilot_ai/core/models/action_card_data.dart';
 /// unread count, and — when the conversation has a context link (Issue
 /// #70) — the linked transaction's amount for the "Linked" badge. When the
 /// latest message is an ACTION_CARD (Issue #73), [actionCard] replaces the
-/// plain-text preview in the UI.
+/// plain-text preview in the UI. [isLatestMessageRead] drives the Issue #78
+/// read-receipt icon (single check vs. double check).
 @immutable
 class ConversationSummary {
   final int conversationId;
@@ -15,6 +16,7 @@ class ConversationSummary {
   final int unreadCount;
   final double? linkedTransactionAmount;
   final ActionCardData? actionCard;
+  final bool isLatestMessageRead;
 
   const ConversationSummary({
     required this.conversationId,
@@ -24,6 +26,7 @@ class ConversationSummary {
     required this.unreadCount,
     this.linkedTransactionAmount,
     this.actionCard,
+    this.isLatestMessageRead = true,
   });
 
   bool get hasLinkedTransaction => linkedTransactionAmount != null;

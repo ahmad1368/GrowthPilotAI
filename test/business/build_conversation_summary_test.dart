@@ -68,4 +68,30 @@ void main() {
     final summary = BuildConversationSummary.call(_conversation(), [], null);
     expect(summary.lastMessagePreview, 'No messages yet');
   });
+
+  test('isLatestMessageRead reflects the most recent message, not older ones', () {
+    final messages = [
+      MessageEntity(
+          conversationId: 1,
+          senderId: 'a',
+          body: 'first',
+          isRead: false,
+          createdAt: DateTime(2026, 1, 1)),
+      MessageEntity(
+          conversationId: 1,
+          senderId: 'a',
+          body: 'latest',
+          isRead: true,
+          createdAt: DateTime(2026, 1, 2)),
+    ];
+
+    final summary = BuildConversationSummary.call(_conversation(), messages, null);
+
+    expect(summary.isLatestMessageRead, isTrue);
+  });
+
+  test('isLatestMessageRead defaults to true with no messages', () {
+    final summary = BuildConversationSummary.call(_conversation(), [], null);
+    expect(summary.isLatestMessageRead, isTrue);
+  });
 }
