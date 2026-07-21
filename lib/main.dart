@@ -12,8 +12,10 @@ import 'package:growth_pilot_ai/controllers/accounting_integrations_controller.d
 import 'package:growth_pilot_ai/controllers/connected_accounts_controller.dart';
 import 'package:growth_pilot_ai/controllers/transaction_match_controller.dart';
 import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
+import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
+import 'package:growth_pilot_ai/features/analytics/screens/business_compass_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/connected_accounts_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard_screen.dart';
 import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_screen.dart';
@@ -111,6 +113,13 @@ class MyApp extends StatelessWidget {
               page: () => const InboxScreen(),
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => InboxController()),
+              ),
+            ),
+            GetPage(
+              name: '/business-compass',
+              page: () => const BusinessCompassScreen(),
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => BusinessCompassController()),
               ),
             ),
           ],
