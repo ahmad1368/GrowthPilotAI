@@ -1,4 +1,6 @@
+import 'package:growth_pilot_ai/core/models/widget_config_option.dart';
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
+import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
@@ -23,5 +25,12 @@ class ReportWidgetsBootstrap {
         'MAPPED_RADAR_CHART',
         (spec) => MappedRadarReportWidget(
             data: spec.data, title: spec.title));
+  }
+
+  /// Registers each widget's config side-panel options (Issue #115).
+  static void registerConfig() {
+    WidgetConfigRegistry.register('RADAR_CHART', const [
+      WidgetConfigOption(key: 'showBenchmark', label: 'Show sector benchmark'),
+    ]);
   }
 }
