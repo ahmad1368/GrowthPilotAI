@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/build_compass_insight_narrative.dart';
 import 'package:growth_pilot_ai/business/compute_business_compass_metrics.dart';
 import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
@@ -8,6 +9,7 @@ import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.da
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
 import 'package:growth_pilot_ai/core/enum/compass_period.dart';
 import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';
+import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
 
 /// Drives the Business Compass screen (Issue #84): computes the user's own
 /// "Success DNA" vector from local transactions and compares it against a
@@ -29,6 +31,32 @@ class BusinessCompassController extends GetxController {
 
   BusinessCompassMetrics get sectorMetrics =>
       GetSectorBenchmark.call(selectedSector.value);
+
+  /// The Business Compass rendered as a pluggable report bundle (Issue
+  /// #111), instead of the screen hardcoding which widgets to show.
+  List<ReportWidgetSpec> get reportSpecs {
+    final sector = sectorMetrics;
+    return [
+      ReportWidgetSpec(
+        id: 'RADAR_CHART',
+        title: 'Success DNA',
+        data: {'user': userMetrics.value, 'sector': sector},
+      ),
+      ReportWidgetSpec(
+        id: 'INSIGHT_TEXT',
+        title: 'Strategy Insight',
+        data: {
+          'narrative':
+              BuildCompassInsightNarrative.call(userMetrics.value, sector)
+        },
+      ),
+      ReportWidgetSpec(
+        id: 'METRIC_LEGEND',
+        title: 'Axis Breakdown',
+        data: {'user': userMetrics.value},
+      ),
+    ];
+  }
 
   @override
   void onInit() {
