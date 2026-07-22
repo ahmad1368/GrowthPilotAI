@@ -1,5 +1,6 @@
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.dart';
 
@@ -17,6 +18,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'INSIGHT_TEXT',
         (spec) => InsightNarrativeReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MAPPED_RADAR_CHART',
+        (spec) => MappedRadarReportWidget(
             data: spec.data, title: spec.title));
   }
 }
