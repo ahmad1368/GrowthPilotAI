@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
-import 'package:growth_pilot_ai/core/widgets/dynamic_report_gallery.dart';
+import 'package:growth_pilot_ai/core/widgets/dynamic_report_grid.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compass_period_chips.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compass_sector_chips.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -44,7 +44,7 @@ class BusinessCompassScreen extends StatelessWidget {
                     'Last updated: ${controller.lastUpdatedAt.toString().split('.').first}',
                     style: Theme.of(context).textTheme.labelSmall),
                 const SizedBox(height: 16),
-                DynamicReportGallery(specs: controller.reportSpecs),
+                DynamicReportGrid(specs: controller.reportSpecs),
               ],
             )),
       ),
