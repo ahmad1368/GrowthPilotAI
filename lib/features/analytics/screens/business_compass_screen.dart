@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
-import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
-import 'package:growth_pilot_ai/core/widgets/dynamic_report_grid.dart';
-import 'package:growth_pilot_ai/features/analytics/widgets/compass_period_chips.dart';
-import 'package:growth_pilot_ai/features/analytics/widgets/compass_sector_chips.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_layout_controller.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/business_compass_body.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Business Compass screen (Issue #84): the user's "Success DNA" radar vs.
 /// a mocked sector benchmark (Issue #83), rendered through the pluggable
-/// report widget registry (Issue #111) instead of a hardcoded widget tree.
-/// Flat shadcn_ui per the current design system, not the original issue's
-/// Glassmorphism ask.
-class BusinessCompassScreen extends StatelessWidget {
+/// report widget registry (Issue #111) on a masonry canvas (Issue #113)
+/// with long-press drag reordering (Issue #114). Flat shadcn_ui per the
+/// current design system, not the original issues' Glassmorphism ask.
+class BusinessCompassScreen extends StatefulWidget {
   const BusinessCompassScreen({super.key});
+
+  @override
+  State<BusinessCompassScreen> createState() => _BusinessCompassScreenState();
+}
+
+class _BusinessCompassScreenState extends State<BusinessCompassScreen> {
+  var _reordering = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final specs = Get.find<BusinessCompassController>().reportSpecs;
+    Get.find<WidgetLayoutController>()
+        .loadFor(specs.map((s) => s.id).toList());
+  }
 
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final controller = Get.find<BusinessCompassController>();
 
     return ShadTheme(
       data: AppShadTheme.build(brightness),
@@ -26,27 +39,17 @@ class BusinessCompassScreen extends StatelessWidget {
         backgroundColor: brightness == Brightness.dark
             ? const Color(0xFF09090B)
             : const Color(0xFFFFFFFF),
-        appBar: AppBar(title: const Text('Business Compass')),
-        body: Obx(() => ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                CompassSectorChips(
-                  selected: controller.selectedSector.value,
-                  onChanged: controller.changeSector,
-                ),
-                const SizedBox(height: 12),
-                CompassPeriodChips(
-                  selected: controller.selectedPeriod.value,
-                  onChanged: controller.changePeriod,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                    'Last updated: ${controller.lastUpdatedAt.toString().split('.').first}',
-                    style: Theme.of(context).textTheme.labelSmall),
-                const SizedBox(height: 16),
-                DynamicReportGrid(specs: controller.reportSpecs),
-              ],
-            )),
+        appBar: AppBar(
+          title: const Text('Business Compass'),
+          actions: [
+            IconButton(
+              icon: Icon(_reordering ? Icons.check : Icons.reorder),
+              tooltip: _reordering ? 'Done reordering' : 'Reorder widgets',
+              onPressed: () => setState(() => _reordering = !_reordering),
+            ),
+          ],
+        ),
+        body: BusinessCompassBody(reordering: _reordering),
       ),
     );
   }
