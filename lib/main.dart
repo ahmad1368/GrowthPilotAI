@@ -13,6 +13,7 @@ import 'package:growth_pilot_ai/controllers/connected_accounts_controller.dart';
 import 'package:growth_pilot_ai/controllers/transaction_match_controller.dart';
 import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
 import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
+import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
 import 'package:growth_pilot_ai/features/analytics/screens/business_compass_screen.dart';
@@ -43,6 +44,7 @@ void main() {
     Get.put<ObjectBox>(objectbox, permanent: true);
 
     await DependencyInjection.init();
+    ReportWidgetsBootstrap.register();
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
     runApp(MyApp(savedThemeMode: savedThemeMode));
