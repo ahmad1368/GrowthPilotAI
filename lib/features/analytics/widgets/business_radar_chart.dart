@@ -10,10 +10,15 @@ class BusinessRadarChart extends StatelessWidget {
   final BusinessCompassMetrics userMetrics;
   final BusinessCompassMetrics sectorMetrics;
 
+  /// Issue #115's config side-panel toggle: hides the sector "Ghost"
+  /// overlay when the user only wants to see their own numbers.
+  final bool showSectorOverlay;
+
   const BusinessRadarChart({
     super.key,
     required this.userMetrics,
     required this.sectorMetrics,
+    this.showSectorOverlay = true,
   });
 
   @override
@@ -30,13 +35,16 @@ class BusinessRadarChart extends StatelessWidget {
               text: BusinessCompassMetrics.labels[index], angle: angle),
           titleTextStyle: const TextStyle(fontSize: 11),
           dataSets: [
-            RadarDataSet(
-              fillColor: Colors.grey.withValues(alpha: 0.15),
-              borderColor: Colors.grey,
-              borderWidth: 1.5,
-              dataEntries:
-                  sectorMetrics.toList().map((v) => RadarEntry(value: v)).toList(),
-            ),
+            if (showSectorOverlay)
+              RadarDataSet(
+                fillColor: Colors.grey.withValues(alpha: 0.15),
+                borderColor: Colors.grey,
+                borderWidth: 1.5,
+                dataEntries: sectorMetrics
+                    .toList()
+                    .map((v) => RadarEntry(value: v))
+                    .toList(),
+              ),
             RadarDataSet(
               fillColor: primary.withValues(alpha: 0.25),
               borderColor: primary,
