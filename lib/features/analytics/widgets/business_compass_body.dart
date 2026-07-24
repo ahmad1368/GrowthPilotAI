@@ -9,11 +9,13 @@ import 'package:growth_pilot_ai/features/analytics/widgets/compass_controls_row.
 
 /// Business Compass body (Issues #84/#111/#113/#114): view mode renders the
 /// masonry [DynamicReportGrid] in the user's saved order; reorder mode swaps
-/// in [ReorderableReportList] for long-press drag editing.
+/// in [ReorderableReportList] for long-press drag editing. [canvasKey] wraps
+/// the grid in a [RepaintBoundary] the Issue #117 export flow rasterizes.
 class BusinessCompassBody extends StatelessWidget {
   final bool reordering;
+  final GlobalKey? canvasKey;
 
-  const BusinessCompassBody({super.key, required this.reordering});
+  const BusinessCompassBody({super.key, required this.reordering, this.canvasKey});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,8 @@ class BusinessCompassBody extends StatelessWidget {
                   specsById: specsById,
                   onReorder: layoutController.reorder,
                 )
-              : DynamicReportGrid(specs: ordered),
+              : RepaintBoundary(
+                  key: canvasKey, child: DynamicReportGrid(specs: ordered)),
         ],
       );
     });
