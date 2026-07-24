@@ -78,6 +78,11 @@ class BusinessCompassController extends GetxController {
           'sector': selectedSector.value,
         },
       ),
+      ReportWidgetSpec(
+        id: 'CATEGORY_PROFITABILITY',
+        title: 'Profitability by Category',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
