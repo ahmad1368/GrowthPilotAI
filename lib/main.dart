@@ -15,6 +15,7 @@ import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
 import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
 import 'package:growth_pilot_ai/controllers/widget_layout_controller.dart';
 import 'package:growth_pilot_ai/controllers/widget_config_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_preview_controller.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_layout_store.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_config_store.dart';
 import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart';
@@ -131,6 +132,8 @@ class MyApp extends StatelessWidget {
                     DependencyInjection.get<WidgetLayoutStore>()));
                 Get.lazyPut(() => WidgetConfigController(
                     DependencyInjection.get<WidgetConfigStore>()));
+                Get.lazyPut(() =>
+                    WidgetPreviewController(Get.find<WidgetConfigController>()));
               }),
             ),
           ],

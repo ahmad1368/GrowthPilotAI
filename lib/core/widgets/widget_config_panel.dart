@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/controllers/widget_config_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_preview_controller.dart';
 import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
-import 'package:growth_pilot_ai/core/widgets/widget_config_controls.dart';
+import 'package:growth_pilot_ai/core/widgets/widget_config_editor.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
 
 /// Sliding config side-panel (Issue #115): a flat, native [Drawer] — not
-/// the original issue's Glassmorphism/BackdropFilter ask — that lets the
-/// user pick a configurable widget from [specs] and tune its options.
+/// the original issue's Glassmorphism/BackdropFilter ask. Edits go through
+/// the Issue #116 [WidgetPreviewController] "Live Preview" bridge instead
+/// of saving immediately — see [WidgetConfigEditor].
 class WidgetConfigPanel extends StatefulWidget {
   final List<ReportWidgetSpec> specs;
 
@@ -22,7 +23,6 @@ class _WidgetConfigPanelState extends State<WidgetConfigPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final config = Get.find<WidgetConfigController>();
     final configurable = widget.specs
         .where((s) => WidgetConfigRegistry.optionsFor(s.id).isNotEmpty)
         .toList();
@@ -42,34 +42,15 @@ class _WidgetConfigPanelState extends State<WidgetConfigPanel> {
               const SizedBox(height: 16),
               if (selectedId == null)
                 const Text('No configurable widgets on this dashboard.')
-              else ...[
-                DropdownButton<String>(
-                  value: selectedId,
-                  isExpanded: true,
-                  items: [
-                    for (final s in configurable)
-                      DropdownMenuItem(value: s.id, child: Text(s.title)),
-                  ],
-                  onChanged: (id) => setState(() => _selectedId = id),
-                ),
-                const SizedBox(height: 16),
+              else
                 Expanded(
-                  child: Obx(() {
-                    final options =
-                        WidgetConfigRegistry.optionsFor(selectedId);
-                    return WidgetConfigControls(
-                      options: options,
-                      values: {
-                        for (final o in options)
-                          o.key: config.valueFor(
-                              selectedId, o.key, o.defaultValue)
-                      },
-                      onChanged: (key, value) =>
-                          config.setValue(selectedId, key, value),
-                    );
-                  }),
+                  child: WidgetConfigEditor(
+                    configurable: configurable,
+                    selectedId: selectedId,
+                    onSelect: (id) => setState(() => _selectedId = id),
+                    preview: Get.find<WidgetPreviewController>(),
+                  ),
                 ),
-              ],
             ],
           ),
         ),
