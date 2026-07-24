@@ -28,6 +28,8 @@ import 'package:growth_pilot_ai/core/interfaces/widget_config_store.dart';
 import 'package:growth_pilot_ai/core/data/datasources/secure_widget_config_store.dart';
 import 'package:growth_pilot_ai/core/interfaces/dashboard_export_service.dart';
 import 'package:growth_pilot_ai/core/data/services/pdf_dashboard_export_service.dart';
+import 'package:growth_pilot_ai/core/interfaces/dashboard_template_store.dart';
+import 'package:growth_pilot_ai/core/data/datasources/secure_dashboard_template_store.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/remote_sync_data_source.dart';
@@ -127,6 +129,11 @@ class DependencyInjection {
       // ۱۰.۳ سرویس اسمبل PDF برای اکسپورت داشبورد (Issue #117)
       _locator.registerLazySingleton<DashboardExportService>(
         () => PdfDashboardExportService(),
+      );
+
+      // ۱۰.۴ ذخیره‌سازی نسخه پشتیبان چیدمان پیش از اعمال قالب (Issue #118)
+      _locator.registerLazySingleton<DashboardTemplateStore>(
+        () => SecureDashboardTemplateStore(),
       );
 
       // ۹. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه

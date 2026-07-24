@@ -17,9 +17,11 @@ import 'package:growth_pilot_ai/controllers/widget_layout_controller.dart';
 import 'package:growth_pilot_ai/controllers/widget_config_controller.dart';
 import 'package:growth_pilot_ai/controllers/widget_preview_controller.dart';
 import 'package:growth_pilot_ai/controllers/dashboard_export_controller.dart';
+import 'package:growth_pilot_ai/controllers/dashboard_template_controller.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_layout_store.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_config_store.dart';
 import 'package:growth_pilot_ai/core/interfaces/dashboard_export_service.dart';
+import 'package:growth_pilot_ai/core/interfaces/dashboard_template_store.dart';
 import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
@@ -138,6 +140,9 @@ class MyApp extends StatelessWidget {
                     WidgetPreviewController(Get.find<WidgetConfigController>()));
                 Get.lazyPut(() => DashboardExportController(
                     DependencyInjection.get<DashboardExportService>()));
+                Get.lazyPut(() => DashboardTemplateController(
+                    Get.find<WidgetLayoutController>(),
+                    DependencyInjection.get<DashboardTemplateStore>()));
               }),
             ),
           ],
