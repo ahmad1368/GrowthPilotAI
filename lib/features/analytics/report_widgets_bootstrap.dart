@@ -1,6 +1,7 @@
 import 'package:growth_pilot_ai/core/models/widget_config_option.dart';
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/brand_penetration_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
@@ -38,6 +39,10 @@ class ReportWidgetsBootstrap {
             data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('PL_REPORT',
         (spec) => PLReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'BRAND_PENETRATION_INDEX',
+        (spec) => BrandPenetrationReportWidget(
+            data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
