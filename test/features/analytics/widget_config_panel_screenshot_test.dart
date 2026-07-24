@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/widget_config_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_preview_controller.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_config_store.dart';
 import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_panel.dart';
@@ -18,13 +19,16 @@ class _InMemoryWidgetConfigStore implements WidgetConfigStore {
   Future<void> save(Map<String, Map<String, bool>> values) async {}
 }
 
-/// Renders the Business Compass's new config side-panel (Issue #115)
-/// offscreen and writes light/dark PNGs into `screenshots/`.
+/// Renders the Business Compass's config side-panel (Issue #115), now
+/// backed by the Issue #116 live-preview bridge, offscreen and writes
+/// light/dark PNGs into `screenshots/`.
 void main() {
   setUp(() {
     ReportWidgetsBootstrap.register();
     ReportWidgetsBootstrap.registerConfig();
-    Get.put(WidgetConfigController(_InMemoryWidgetConfigStore()));
+    final config = WidgetConfigController(_InMemoryWidgetConfigStore());
+    Get.put(config);
+    Get.put(WidgetPreviewController(config));
   });
 
   const specs = [

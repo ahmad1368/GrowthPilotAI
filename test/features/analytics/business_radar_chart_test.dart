@@ -2,7 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/business_radar_chart.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Issue #115's config toggle: showSectorOverlay controls whether the
 /// sector "Ghost" dataset renders at all.
@@ -58,5 +60,30 @@ void main() {
     ));
     final data = tester.widget<RadarChart>(find.byType(RadarChart)).data;
     expect(data.dataSets, hasLength(2));
+  });
+
+  // Issue #116's Live Preview indicator (ShadBadge needs a ShadTheme
+  // ancestor, unlike the plain-Material tests above).
+  Widget shadWrap(Widget child) => MaterialApp(
+        home: ShadTheme(
+          data: AppShadTheme.build(Brightness.light),
+          child: Scaffold(body: child),
+        ),
+      );
+
+  testWidgets('isLivePreview: false shows no "Live" badge', (tester) async {
+    await tester.pumpWidget(shadWrap(
+      const BusinessRadarChart(userMetrics: user, sectorMetrics: sector),
+    ));
+    expect(find.text('Live'), findsNothing);
+  });
+
+  testWidgets('isLivePreview: true shows the "Live" badge', (tester) async {
+    await tester.pumpWidget(shadWrap(const BusinessRadarChart(
+      userMetrics: user,
+      sectorMetrics: sector,
+      isLivePreview: true,
+    )));
+    expect(find.text('Live'), findsOneWidget);
   });
 }
