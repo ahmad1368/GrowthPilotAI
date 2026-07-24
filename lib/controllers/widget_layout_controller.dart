@@ -23,8 +23,14 @@ class WidgetLayoutController extends GetxController {
   }
 
   Future<void> reorder(int oldIndex, int newIndex) async {
-    layout.value = PrioritizeWidgetLayout.call(
-        ReorderWidgetLayout.call(layout, oldIndex, newIndex));
+    await setLayout(PrioritizeWidgetLayout.call(
+        ReorderWidgetLayout.call(layout, oldIndex, newIndex)));
+  }
+
+  /// Overwrites the layout wholesale (Issue #118: applying/restoring a
+  /// Dashboard Template), keeping locked widgets pinned to the front.
+  Future<void> setLayout(List<WidgetLayout> newLayout) async {
+    layout.value = PrioritizeWidgetLayout.call(newLayout);
     await _store.save(layout);
   }
 }

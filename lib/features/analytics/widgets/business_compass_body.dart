@@ -3,14 +3,16 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/order_specs_by_layout.dart';
 import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
 import 'package:growth_pilot_ai/controllers/widget_layout_controller.dart';
+import 'package:growth_pilot_ai/core/widgets/dashboard_template_gallery.dart';
 import 'package:growth_pilot_ai/core/widgets/dynamic_report_grid.dart';
 import 'package:growth_pilot_ai/core/widgets/reorderable_report_list.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compass_controls_row.dart';
 
 /// Business Compass body (Issues #84/#111/#113/#114): view mode renders the
-/// masonry [DynamicReportGrid] in the user's saved order; reorder mode swaps
-/// in [ReorderableReportList] for long-press drag editing. [canvasKey] wraps
-/// the grid in a [RepaintBoundary] the Issue #117 export flow rasterizes.
+/// Issue #118 [DashboardTemplateGallery] above the masonry [DynamicReportGrid]
+/// in the user's saved order; reorder mode swaps in [ReorderableReportList]
+/// for long-press drag editing. [canvasKey] wraps the grid in a
+/// [RepaintBoundary] the Issue #117 export flow rasterizes.
 class BusinessCompassBody extends StatelessWidget {
   final bool reordering;
   final GlobalKey? canvasKey;
@@ -32,6 +34,10 @@ class BusinessCompassBody extends StatelessWidget {
         children: [
           CompassControlsRow(controller: controller),
           const SizedBox(height: 16),
+          if (!reordering) ...[
+            const DashboardTemplateGallery(),
+            const SizedBox(height: 16),
+          ],
           reordering
               ? ReorderableReportList(
                   layout: layoutController.layout,
