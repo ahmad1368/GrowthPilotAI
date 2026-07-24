@@ -23,6 +23,7 @@ class BusinessCompassScreen extends StatefulWidget {
 
 class _BusinessCompassScreenState extends State<BusinessCompassScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _canvasKey = GlobalKey();
   var _reordering = false;
 
   @override
@@ -53,6 +54,7 @@ class _BusinessCompassScreenState extends State<BusinessCompassScreen> {
               onToggleReorder: () =>
                   setState(() => _reordering = !_reordering),
               onOpenConfig: () => _scaffoldKey.currentState?.openEndDrawer(),
+              canvasKey: _canvasKey,
             ),
           ],
         ),
@@ -63,7 +65,8 @@ class _BusinessCompassScreenState extends State<BusinessCompassScreen> {
         onEndDrawerChanged: (isOpen) {
           if (!isOpen) Get.find<WidgetPreviewController>().discardAll();
         },
-        body: BusinessCompassBody(reordering: _reordering),
+        body: BusinessCompassBody(
+            reordering: _reordering, canvasKey: _canvasKey),
       ),
     );
   }
