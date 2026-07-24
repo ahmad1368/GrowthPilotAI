@@ -55,6 +55,11 @@ class BusinessCompassController extends GetxController {
         title: 'Axis Breakdown',
         data: {'user': userMetrics.value},
       ),
+      ReportWidgetSpec(
+        id: 'PROFIT_MARGIN_CHART',
+        title: 'Profit Margin Analysis',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

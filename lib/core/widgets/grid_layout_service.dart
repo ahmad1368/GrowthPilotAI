@@ -2,7 +2,11 @@
 /// (Issue #113). Analytical widgets that need room to breathe (a radar chart)
 /// take the full row; small metrics/text widgets share a row two-up.
 class GridLayoutService {
-  static const _fullWidthIds = {'RADAR_CHART', 'MAPPED_RADAR_CHART'};
+  static const _fullWidthIds = {
+    'RADAR_CHART',
+    'MAPPED_RADAR_CHART',
+    'PROFIT_MARGIN_CHART',
+  };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
   /// leaving a gap.
