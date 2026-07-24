@@ -70,6 +70,14 @@ class BusinessCompassController extends GetxController {
         title: 'P&L Report',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'BRAND_PENETRATION_INDEX',
+        title: 'Brand Penetration Index',
+        data: {
+          'transactions': _transactions.getAll(),
+          'sector': selectedSector.value,
+        },
+      ),
     ];
   }
 
