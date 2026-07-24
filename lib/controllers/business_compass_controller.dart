@@ -60,6 +60,11 @@ class BusinessCompassController extends GetxController {
         title: 'Profit Margin Analysis',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SEASONAL_DEMAND_CHART',
+        title: 'Seasonal Demand',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
