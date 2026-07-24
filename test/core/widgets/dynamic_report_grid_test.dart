@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
 import 'package:growth_pilot_ai/core/widgets/dynamic_report_grid.dart';
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
   setUp(() {
@@ -11,6 +12,10 @@ void main() {
         'RADAR_CHART', (spec) => const SizedBox(height: 100));
     ReportWidgetRegistry.register(
         'METRIC_LEGEND', (spec) => const SizedBox(height: 40));
+    // Issue #119's LazyWidgetWrapper now wraps every tile in a
+    // VisibilityDetector; fire its callback every frame instead of the
+    // default 500ms Timer, which flutter_test flags as pending at teardown.
+    VisibilityDetectorController.instance.updateInterval = Duration.zero;
   });
 
   testWidgets(

@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';
 import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
 import 'package:growth_pilot_ai/core/widgets/dynamic_report_grid.dart';
 import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 /// Renders the Business Compass (Issue #84) through the new masonry canvas
 /// (Issue #113) offscreen and writes light/dark PNGs into `screenshots/` —
@@ -15,6 +16,10 @@ import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart
 /// legend sharing a row two-up.
 void main() {
   ReportWidgetsBootstrap.register();
+  // Issue #119's LazyWidgetWrapper only shows real content once a
+  // VisibilityDetector reports it in-viewport; fire that on every frame
+  // instead of its default 500ms interval so screenshots show real content.
+  VisibilityDetectorController.instance.updateInterval = Duration.zero;
 
   const user = BusinessCompassMetrics(
     liquidityRatio: 0.7,
