@@ -65,6 +65,11 @@ class BusinessCompassController extends GetxController {
         title: 'Seasonal Demand',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PL_REPORT',
+        title: 'P&L Report',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

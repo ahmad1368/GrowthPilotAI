@@ -7,6 +7,7 @@ class GridLayoutService {
     'MAPPED_RADAR_CHART',
     'PROFIT_MARGIN_CHART',
     'SEASONAL_DEMAND_CHART',
+    'PL_REPORT',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
