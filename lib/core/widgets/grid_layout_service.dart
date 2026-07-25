@@ -12,6 +12,7 @@ class GridLayoutService {
     'TRAFFIC_ANALYSIS',
     'OVERHEAD_ANALYSIS',
     'CASH_FLOW_FORECAST',
+    'SUPPLIER_SCORECARD',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

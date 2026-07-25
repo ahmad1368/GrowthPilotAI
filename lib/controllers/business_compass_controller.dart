@@ -98,6 +98,11 @@ class BusinessCompassController extends GetxController {
         title: 'Cash Flow Forecast',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SUPPLIER_SCORECARD',
+        title: 'Supplier Price Scorecard',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
