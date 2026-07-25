@@ -6,6 +6,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/budget_variance_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_elasticity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_profitability_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inflation_impact_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
@@ -72,6 +73,8 @@ class ReportWidgetsBootstrap {
         (spec) => CategoryElasticityReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('BUDGET_VARIANCE',
         (spec) => BudgetVarianceReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('FINANCIAL_HEALTH',
+        (spec) => FinancialHealthReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
