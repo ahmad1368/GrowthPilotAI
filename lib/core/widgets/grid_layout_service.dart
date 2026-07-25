@@ -16,6 +16,7 @@ class GridLayoutService {
     'INFLATION_IMPACT',
     'WASTE_LOG',
     'CATEGORY_ELASTICITY',
+    'BUDGET_VARIANCE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
