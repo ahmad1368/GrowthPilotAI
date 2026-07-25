@@ -88,6 +88,11 @@ class BusinessCompassController extends GetxController {
         title: 'Peak Hours Traffic',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'OVERHEAD_ANALYSIS',
+        title: 'Operating Expense & Overhead',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
