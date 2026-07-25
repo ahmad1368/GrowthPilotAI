@@ -15,6 +15,7 @@ class GridLayoutService {
     'SUPPLIER_SCORECARD',
     'INFLATION_IMPACT',
     'WASTE_LOG',
+    'CATEGORY_ELASTICITY',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

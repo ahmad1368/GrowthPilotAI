@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/brand_penetration_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/category_elasticity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_profitability_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inflation_impact_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
@@ -66,6 +67,8 @@ class ReportWidgetsBootstrap {
         (spec) => InflationImpactReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('WASTE_LOG',
         (spec) => WasteLogReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('CATEGORY_ELASTICITY',
+        (spec) => CategoryElasticityReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
