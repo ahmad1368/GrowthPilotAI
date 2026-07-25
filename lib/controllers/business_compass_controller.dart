@@ -116,6 +116,11 @@ class BusinessCompassController extends GetxController {
         title: 'Food Waste & Spoilage',
         data: {'wasteEntries': _wasteLog.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'CATEGORY_ELASTICITY',
+        title: 'Service Price Elasticity',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
