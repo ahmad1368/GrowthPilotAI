@@ -5,8 +5,10 @@ import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
@@ -22,6 +24,7 @@ import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
 class BusinessCompassController extends GetxController {
   late TransactionRepository _transactions;
   late WasteLogRepository _wasteLog;
+  late BudgetLimitRepository _budgetLimits;
   late LinkedAccountRepository _linkedAccounts;
 
   final selectedSector = BusinessSector.tech.obs;
@@ -125,6 +128,11 @@ class BusinessCompassController extends GetxController {
         data: {'transactions': _transactions.getAll()},
       ),
       ReportWidgetSpec(
+        id: 'BUDGET_VARIANCE',
+        title: 'Budget Variance Alerts',
+        data: {'transactions': _transactions.getAll(), 'limits': _budgetLimits.getAll()},
+      ),
+      ReportWidgetSpec(
         id: 'FINANCIAL_HEALTH',
         title: 'Financial Health & Liquidity',
         data: {'accounts': _linkedAccounts.getAll()},
@@ -138,6 +146,7 @@ class BusinessCompassController extends GetxController {
     final store = Get.find<ObjectBox>().store;
     _transactions = TransactionRepository(store.box<TransactionEntity>());
     _wasteLog = WasteLogRepository(store.box<WasteLogEntity>());
+    _budgetLimits = BudgetLimitRepository(store.box<BudgetLimitEntity>());
     _linkedAccounts = LinkedAccountRepository(store.box<LinkedAccountEntity>());
     _recompute();
   }

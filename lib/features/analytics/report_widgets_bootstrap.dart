@@ -2,6 +2,7 @@ import 'package:growth_pilot_ai/core/models/widget_config_option.dart';
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/brand_penetration_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/budget_variance_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_elasticity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_profitability_report_widget.dart';
@@ -70,6 +71,8 @@ class ReportWidgetsBootstrap {
         (spec) => WasteLogReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('CATEGORY_ELASTICITY',
         (spec) => CategoryElasticityReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('BUDGET_VARIANCE',
+        (spec) => BudgetVarianceReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('FINANCIAL_HEALTH',
         (spec) => FinancialHealthReportWidget(data: spec.data, title: spec.title));
   }
