@@ -15,6 +15,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.d
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_scorecard_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/waste_log_report_widget.dart';
 
 /// One-time registration of the analytics report widgets into
 /// [ReportWidgetRegistry] (Issue #111). Adding a new widget type elsewhere
@@ -63,6 +64,8 @@ class ReportWidgetsBootstrap {
         (spec) => SupplierScorecardReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('INFLATION_IMPACT',
         (spec) => InflationImpactReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('WASTE_LOG',
+        (spec) => WasteLogReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

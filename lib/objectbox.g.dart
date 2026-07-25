@@ -30,6 +30,7 @@ import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
+import 'core/data/entities/waste_log_entity.dart';
 import 'core/models/document_type.dart';
 import 'core/models/error_log.dart';
 
@@ -805,6 +806,41 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(19, 85670859346677831),
+      name: 'WasteLogEntity',
+      lastPropertyId: const obx_int.IdUid(5, 879892979605424288),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5130742001718082160),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 819109118773402866),
+            name: 'itemDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6633245881560561050),
+            name: 'estimatedValue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 978617046014339681),
+            name: 'date',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(22, 7903898269233540618)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 879892979605424288),
+            name: 'dbReason',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -843,8 +879,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(18, 2960291869059046520),
-      lastIndexId: const obx_int.IdUid(21, 621181584052907916),
+      lastEntityId: const obx_int.IdUid(19, 85670859346677831),
+      lastIndexId: const obx_int.IdUid(22, 7903898269233540618),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1797,6 +1833,48 @@ obx_int.ModelDefinition getObjectBoxModel() {
               actedOn: actedOnParam);
 
           return object;
+        }),
+    WasteLogEntity: obx_int.EntityDefinition<WasteLogEntity>(
+        model: _entities[17],
+        toOneRelations: (WasteLogEntity object) => [],
+        toManyRelations: (WasteLogEntity object) => {},
+        getId: (WasteLogEntity object) => object.id,
+        setId: (WasteLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WasteLogEntity object, fb.Builder fbb) {
+          final itemDescriptionOffset = fbb.writeString(object.itemDescription);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, itemDescriptionOffset);
+          fbb.addFloat64(2, object.estimatedValue);
+          fbb.addInt64(3, object.date.millisecondsSinceEpoch);
+          fbb.addInt64(4, object.dbReason);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final itemDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final estimatedValueParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final dbReasonParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final object = WasteLogEntity(
+              id: idParam,
+              itemDescription: itemDescriptionParam,
+              estimatedValue: estimatedValueParam,
+              date: dateParam,
+              dbReason: dbReasonParam);
+
+          return object;
         })
   };
 
@@ -2346,4 +2424,27 @@ class RecommendationLogEntity_ {
   /// see [RecommendationLogEntity.actedOn]
   static final actedOn = obx.QueryBooleanProperty<RecommendationLogEntity>(
       _entities[16].properties[3]);
+}
+
+/// [WasteLogEntity] entity fields to define ObjectBox queries.
+class WasteLogEntity_ {
+  /// see [WasteLogEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<WasteLogEntity>(_entities[17].properties[0]);
+
+  /// see [WasteLogEntity.itemDescription]
+  static final itemDescription =
+      obx.QueryStringProperty<WasteLogEntity>(_entities[17].properties[1]);
+
+  /// see [WasteLogEntity.estimatedValue]
+  static final estimatedValue =
+      obx.QueryDoubleProperty<WasteLogEntity>(_entities[17].properties[2]);
+
+  /// see [WasteLogEntity.date]
+  static final date =
+      obx.QueryDateProperty<WasteLogEntity>(_entities[17].properties[3]);
+
+  /// see [WasteLogEntity.dbReason]
+  static final dbReason =
+      obx.QueryIntegerProperty<WasteLogEntity>(_entities[17].properties[4]);
 }

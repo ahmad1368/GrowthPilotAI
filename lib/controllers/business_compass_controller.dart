@@ -5,7 +5,9 @@ import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
 import 'package:growth_pilot_ai/core/enum/compass_period.dart';
 import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';
@@ -17,6 +19,7 @@ import 'package:growth_pilot_ai/core/models/report_widget_spec.dart';
 /// exists in this repo.
 class BusinessCompassController extends GetxController {
   late TransactionRepository _transactions;
+  late WasteLogRepository _wasteLog;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -108,6 +111,11 @@ class BusinessCompassController extends GetxController {
         title: 'Inflation Impact Simulator',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'WASTE_LOG',
+        title: 'Food Waste & Spoilage',
+        data: {'wasteEntries': _wasteLog.getAll()},
+      ),
     ];
   }
 
@@ -116,6 +124,7 @@ class BusinessCompassController extends GetxController {
     super.onInit();
     final store = Get.find<ObjectBox>().store;
     _transactions = TransactionRepository(store.box<TransactionEntity>());
+    _wasteLog = WasteLogRepository(store.box<WasteLogEntity>());
     _recompute();
   }
 
