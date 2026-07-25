@@ -18,6 +18,7 @@ class GridLayoutService {
     'CATEGORY_ELASTICITY',
     'BUDGET_VARIANCE',
     'SEASONAL_OVERHEAD_CHART',
+    'HOLIDAY_IMPACT',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

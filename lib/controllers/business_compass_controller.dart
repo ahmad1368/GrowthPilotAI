@@ -142,6 +142,11 @@ class BusinessCompassController extends GetxController {
         title: 'Seasonal Energy & Maintenance Cost',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'HOLIDAY_IMPACT',
+        title: 'Holiday Sales Impact',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
