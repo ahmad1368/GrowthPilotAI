@@ -17,6 +17,7 @@ class GridLayoutService {
     'WASTE_LOG',
     'CATEGORY_ELASTICITY',
     'BUDGET_VARIANCE',
+    'SEASONAL_OVERHEAD_CHART',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
