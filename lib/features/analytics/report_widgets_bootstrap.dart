@@ -10,6 +10,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart
 import 'package:growth_pilot_ai/features/analytics/widgets/profit_margin_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget.dart';
 
 /// One-time registration of the analytics report widgets into
 /// [ReportWidgetRegistry] (Issue #111). Adding a new widget type elsewhere
@@ -48,6 +49,8 @@ class ReportWidgetsBootstrap {
         'CATEGORY_PROFITABILITY',
         (spec) => CategoryProfitabilityReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('TRAFFIC_ANALYSIS',
+        (spec) => TrafficReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

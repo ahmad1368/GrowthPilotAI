@@ -83,6 +83,11 @@ class BusinessCompassController extends GetxController {
         title: 'Profitability by Category',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'TRAFFIC_ANALYSIS',
+        title: 'Peak Hours Traffic',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
