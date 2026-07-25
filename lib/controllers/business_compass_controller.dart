@@ -103,6 +103,11 @@ class BusinessCompassController extends GetxController {
         title: 'Supplier Price Scorecard',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'INFLATION_IMPACT',
+        title: 'Inflation Impact Simulator',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

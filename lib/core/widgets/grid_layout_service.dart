@@ -13,6 +13,7 @@ class GridLayoutService {
     'OVERHEAD_ANALYSIS',
     'CASH_FLOW_FORECAST',
     'SUPPLIER_SCORECARD',
+    'INFLATION_IMPACT',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
