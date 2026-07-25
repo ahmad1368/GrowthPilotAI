@@ -818,10 +818,36 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "20:6172922639287843028",
+      "lastPropertyId": "3:4093262921528356127",
+      "name": "BudgetLimitEntity",
+      "properties": [
+        {
+          "id": "1:4385691534449253197",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4686453335432350061",
+          "name": "categoryName",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "23:7733300375819667295"
+        },
+        {
+          "id": "3:4093262921528356127",
+          "name": "monthlyLimit",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "19:85670859346677831",
-  "lastIndexId": "22:7903898269233540618",
+  "lastEntityId": "20:6172922639287843028",
+  "lastIndexId": "23:7733300375819667295",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

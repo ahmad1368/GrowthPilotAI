@@ -16,6 +16,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/accounting_sync_status_entity.dart';
+import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
@@ -841,6 +842,31 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(20, 6172922639287843028),
+      name: 'BudgetLimitEntity',
+      lastPropertyId: const obx_int.IdUid(3, 4093262921528356127),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4385691534449253197),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4686453335432350061),
+            name: 'categoryName',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(23, 7733300375819667295)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4093262921528356127),
+            name: 'monthlyLimit',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -879,8 +905,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(19, 85670859346677831),
-      lastIndexId: const obx_int.IdUid(22, 7903898269233540618),
+      lastEntityId: const obx_int.IdUid(20, 6172922639287843028),
+      lastIndexId: const obx_int.IdUid(23, 7733300375819667295),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1875,6 +1901,40 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbReason: dbReasonParam);
 
           return object;
+        }),
+    BudgetLimitEntity: obx_int.EntityDefinition<BudgetLimitEntity>(
+        model: _entities[18],
+        toOneRelations: (BudgetLimitEntity object) => [],
+        toManyRelations: (BudgetLimitEntity object) => {},
+        getId: (BudgetLimitEntity object) => object.id,
+        setId: (BudgetLimitEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BudgetLimitEntity object, fb.Builder fbb) {
+          final categoryNameOffset = fbb.writeString(object.categoryName);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, categoryNameOffset);
+          fbb.addFloat64(2, object.monthlyLimit);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final categoryNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final monthlyLimitParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final object = BudgetLimitEntity(
+              id: idParam,
+              categoryName: categoryNameParam,
+              monthlyLimit: monthlyLimitParam);
+
+          return object;
         })
   };
 
@@ -2447,4 +2507,19 @@ class WasteLogEntity_ {
   /// see [WasteLogEntity.dbReason]
   static final dbReason =
       obx.QueryIntegerProperty<WasteLogEntity>(_entities[17].properties[4]);
+}
+
+/// [BudgetLimitEntity] entity fields to define ObjectBox queries.
+class BudgetLimitEntity_ {
+  /// see [BudgetLimitEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<BudgetLimitEntity>(_entities[18].properties[0]);
+
+  /// see [BudgetLimitEntity.categoryName]
+  static final categoryName =
+      obx.QueryStringProperty<BudgetLimitEntity>(_entities[18].properties[1]);
+
+  /// see [BudgetLimitEntity.monthlyLimit]
+  static final monthlyLimit =
+      obx.QueryDoubleProperty<BudgetLimitEntity>(_entities[18].properties[2]);
 }
