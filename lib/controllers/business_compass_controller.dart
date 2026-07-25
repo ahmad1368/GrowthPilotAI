@@ -137,6 +137,11 @@ class BusinessCompassController extends GetxController {
         title: 'Financial Health & Liquidity',
         data: {'accounts': _linkedAccounts.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SEASONAL_OVERHEAD_CHART',
+        title: 'Seasonal Energy & Maintenance Cost',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
