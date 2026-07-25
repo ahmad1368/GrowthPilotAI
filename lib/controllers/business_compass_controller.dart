@@ -93,6 +93,11 @@ class BusinessCompassController extends GetxController {
         title: 'Operating Expense & Overhead',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'CASH_FLOW_FORECAST',
+        title: 'Cash Flow Forecast',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

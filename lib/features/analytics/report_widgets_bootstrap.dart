@@ -2,6 +2,7 @@ import 'package:growth_pilot_ai/core/models/widget_config_option.dart';
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/brand_penetration_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_profitability_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
@@ -54,6 +55,8 @@ class ReportWidgetsBootstrap {
         (spec) => TrafficReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('OVERHEAD_ANALYSIS',
         (spec) => OverheadReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('CASH_FLOW_FORECAST',
+        (spec) => CashFlowForecastReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
