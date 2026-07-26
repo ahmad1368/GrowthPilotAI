@@ -892,7 +892,7 @@
     },
     {
       "id": "23:5280749065071673335",
-      "lastPropertyId": "6:7767923796308768028",
+      "lastPropertyId": "7:5438024201973111405",
       "name": "InventoryItemEntity",
       "properties": [
         {
@@ -928,6 +928,11 @@
           "flags": 520,
           "indexId": "26:2165798326861927465",
           "relationTarget": "InventoryCategoryEntity"
+        },
+        {
+          "id": "7:5438024201973111405",
+          "name": "sku",
+          "type": 9
         }
       ],
       "relations": []

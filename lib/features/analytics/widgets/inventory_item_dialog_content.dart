@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/business/generate_inventory_item_sku.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_fields.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Stateful form body for [showInventoryItemDialog] (Issue #435): owns the
-/// name/quantity/reorder-threshold/unit-cost/category state (category
-/// picker added in #436).
+/// name/quantity/reorder-threshold/unit-cost/category/SKU state (category
+/// picker in #436, SKU field + generator in #437).
 class InventoryItemDialogContent extends StatefulWidget {
   final List<InventoryCategoryEntity> categories;
+  final List<InventoryItemEntity> existingItems;
 
-  const InventoryItemDialogContent({super.key, required this.categories});
+  const InventoryItemDialogContent(
+      {super.key, required this.categories, required this.existingItems});
 
   @override
   State<InventoryItemDialogContent> createState() => _InventoryItemDialogContentState();
@@ -21,7 +24,13 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
   final _quantityController = TextEditingController();
   final _reorderThresholdController = TextEditingController();
   final _unitCostController = TextEditingController();
+  final _skuController = TextEditingController();
   InventoryCategoryEntity? _category;
+
+  void _generateSku() {
+    final existingSkus = widget.existingItems.map((i) => i.sku).toList();
+    _skuController.text = GenerateInventoryItemSku.call(_category?.name, existingSkus);
+  }
 
   void _submit() {
     final name = _nameController.text.trim();
@@ -36,6 +45,7 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
       quantityOnHand: quantity,
       reorderThreshold: reorderThreshold,
       unitCost: unitCost,
+      sku: _skuController.text.trim(),
     );
     if (_category != null) item.category.target = _category;
     Navigator.of(context).pop(item);
@@ -50,9 +60,11 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
         quantityController: _quantityController,
         reorderThresholdController: _reorderThresholdController,
         unitCostController: _unitCostController,
+        skuController: _skuController,
         categories: widget.categories,
         selectedCategory: _category,
         onCategoryChanged: (value) => setState(() => _category = value),
+        onGenerateSku: _generateSku,
       ),
       actions: [
         ShadButton.outline(

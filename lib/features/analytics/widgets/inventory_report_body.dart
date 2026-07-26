@@ -28,7 +28,7 @@ class _InventoryReportBodyState extends State<InventoryReportBody> {
   late List<InventoryCategoryEntity> _categories = widget.initialCategories;
 
   Future<void> _addItem() async {
-    final item = await showInventoryItemDialog(context, _categories);
+    final item = await showInventoryItemDialog(context, _categories, _items);
     if (item == null) return;
     InventoryItemRepository(Get.find<ObjectBox>().store.box<InventoryItemEntity>())
         .insert(item);

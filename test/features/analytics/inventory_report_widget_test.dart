@@ -51,6 +51,16 @@ void main() {
     expect(find.text('Bakery'), findsOneWidget);
   });
 
+  testWidgets('shows the SKU next to the item name when set', (tester) async {
+    final item = InventoryItemEntity(
+        name: 'Flour', quantityOnHand: 40, reorderThreshold: 10, unitCost: 3.5, sku: 'BAK-0001');
+
+    await tester.pumpWidget(_wrap(InventoryReportWidget(
+        data: {'items': [item], 'categories': const <InventoryCategoryEntity>[]}, title: 'x')));
+
+    expect(find.text('· BAK-0001'), findsOneWidget);
+  });
+
   testWidgets('shows the "+ Add Item" and "+ Category" quick-add buttons', (tester) async {
     await tester.pumpWidget(_wrap(const InventoryReportWidget(
         data: {

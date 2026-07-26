@@ -4,16 +4,19 @@ import 'package:growth_pilot_ai/business/build_inventory_category_path.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// The name/quantity/reorder-threshold/unit-cost/category inputs for a new
-/// inventory item (Issue #435, category picker added in #436).
+/// The name/quantity/reorder-threshold/unit-cost/category/SKU inputs for a
+/// new inventory item (Issue #435, category picker in #436, SKU field +
+/// generator in #437).
 class InventoryItemFields extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController quantityController;
   final TextEditingController reorderThresholdController;
   final TextEditingController unitCostController;
+  final TextEditingController skuController;
   final List<InventoryCategoryEntity> categories;
   final InventoryCategoryEntity? selectedCategory;
   final ValueChanged<InventoryCategoryEntity?> onCategoryChanged;
+  final VoidCallback onGenerateSku;
 
   const InventoryItemFields({
     super.key,
@@ -21,9 +24,11 @@ class InventoryItemFields extends StatelessWidget {
     required this.quantityController,
     required this.reorderThresholdController,
     required this.unitCostController,
+    required this.skuController,
     required this.categories,
     required this.selectedCategory,
     required this.onCategoryChanged,
+    required this.onGenerateSku,
   });
 
   @override
@@ -66,6 +71,16 @@ class InventoryItemFields extends StatelessWidget {
           selectedOptionBuilder: (context, value) =>
               Text(value == null ? 'None' : BuildInventoryCategoryPath.call(value)),
           onChanged: onCategoryChanged,
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: ShadInput(placeholder: const Text('SKU (optional)'), controller: skuController),
+            ),
+            const SizedBox(width: 8),
+            ShadButton.outline(onPressed: onGenerateSku, child: const Text('Generate')),
+          ],
         ),
       ],
     );

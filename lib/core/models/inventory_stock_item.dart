@@ -13,6 +13,7 @@ class InventoryStockItem {
   final double unitCost;
   final InventoryStockStatus status;
   final String? categoryPath;
+  final String sku;
 
   const InventoryStockItem({
     required this.name,
@@ -21,5 +22,6 @@ class InventoryStockItem {
     required this.unitCost,
     required this.status,
     this.categoryPath,
+    this.sku = '',
   });
 }
