@@ -168,6 +168,11 @@ class BusinessCompassController extends GetxController {
         title: 'Commercial Space Productivity Index',
         data: {'transactions': _transactions.getAll(), 'storeProfile': _storeProfile.get()},
       ),
+      ReportWidgetSpec(
+        id: 'ANNUAL_PROFIT_FORECAST',
+        title: 'Annual Profit Forecast',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
