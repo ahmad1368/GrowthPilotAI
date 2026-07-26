@@ -6,9 +6,11 @@ import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
@@ -26,6 +28,7 @@ class BusinessCompassController extends GetxController {
   late WasteLogRepository _wasteLog;
   late BudgetLimitRepository _budgetLimits;
   late LinkedAccountRepository _linkedAccounts;
+  late ComplianceItemRepository _complianceItems;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -147,6 +150,11 @@ class BusinessCompassController extends GetxController {
         title: 'Holiday Sales Impact',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'COMPLIANCE_RISK',
+        title: 'Legal & Compliance Risk',
+        data: {'items': _complianceItems.getAll()},
+      ),
     ];
   }
 
@@ -158,6 +166,7 @@ class BusinessCompassController extends GetxController {
     _wasteLog = WasteLogRepository(store.box<WasteLogEntity>());
     _budgetLimits = BudgetLimitRepository(store.box<BudgetLimitEntity>());
     _linkedAccounts = LinkedAccountRepository(store.box<LinkedAccountEntity>());
+    _complianceItems = ComplianceItemRepository(store.box<ComplianceItemEntity>());
     _recompute();
   }
 

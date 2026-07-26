@@ -844,10 +844,36 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "21:4477203076219111335",
+      "lastPropertyId": "3:8572980432915220336",
+      "name": "ComplianceItemEntity",
+      "properties": [
+        {
+          "id": "1:6245669242077549086",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4404843346652867639",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8572980432915220336",
+          "name": "expiryDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "24:1278814618570498403"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "20:6172922639287843028",
-  "lastIndexId": "23:7733300375819667295",
+  "lastEntityId": "21:4477203076219111335",
+  "lastIndexId": "24:1278814618570498403",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
