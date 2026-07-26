@@ -28,6 +28,7 @@ import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
+import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
@@ -893,6 +894,25 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(24, 1278814618570498403))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(22, 8509950877062724006),
+      name: 'StoreProfileEntity',
+      lastPropertyId: const obx_int.IdUid(2, 941450744853167622),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4200303406585759136),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 941450744853167622),
+            name: 'squareFootage',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -931,7 +951,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(21, 4477203076219111335),
+      lastEntityId: const obx_int.IdUid(22, 8509950877062724006),
       lastIndexId: const obx_int.IdUid(24, 1278814618570498403),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -1992,6 +2012,33 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam, name: nameParam, expiryDate: expiryDateParam);
 
           return object;
+        }),
+    StoreProfileEntity: obx_int.EntityDefinition<StoreProfileEntity>(
+        model: _entities[20],
+        toOneRelations: (StoreProfileEntity object) => [],
+        toManyRelations: (StoreProfileEntity object) => {},
+        getId: (StoreProfileEntity object) => object.id,
+        setId: (StoreProfileEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StoreProfileEntity object, fb.Builder fbb) {
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addFloat64(1, object.squareFootage);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final squareFootageParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final object = StoreProfileEntity(
+              id: idParam, squareFootage: squareFootageParam);
+
+          return object;
         })
   };
 
@@ -2594,4 +2641,15 @@ class ComplianceItemEntity_ {
   /// see [ComplianceItemEntity.expiryDate]
   static final expiryDate =
       obx.QueryDateProperty<ComplianceItemEntity>(_entities[19].properties[2]);
+}
+
+/// [StoreProfileEntity] entity fields to define ObjectBox queries.
+class StoreProfileEntity_ {
+  /// see [StoreProfileEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<StoreProfileEntity>(_entities[20].properties[0]);
+
+  /// see [StoreProfileEntity.squareFootage]
+  static final squareFootage =
+      obx.QueryDoubleProperty<StoreProfileEntity>(_entities[20].properties[1]);
 }

@@ -870,9 +870,28 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "22:8509950877062724006",
+      "lastPropertyId": "2:941450744853167622",
+      "name": "StoreProfileEntity",
+      "properties": [
+        {
+          "id": "1:4200303406585759136",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:941450744853167622",
+          "name": "squareFootage",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "21:4477203076219111335",
+  "lastEntityId": "22:8509950877062724006",
   "lastIndexId": "24:1278814618570498403",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
