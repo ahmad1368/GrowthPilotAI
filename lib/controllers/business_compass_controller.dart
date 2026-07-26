@@ -14,8 +14,10 @@ import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repositor
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_stock_take_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_category_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
@@ -38,6 +40,7 @@ class BusinessCompassController extends GetxController {
   late StoreProfileRepository _storeProfile;
   late InventoryItemRepository _inventoryItems;
   late InventoryCategoryRepository _inventoryCategories;
+  late InventoryStockTakeRepository _stockTakes;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -187,6 +190,14 @@ class BusinessCompassController extends GetxController {
           'categories': _inventoryCategories.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'STOCK_TAKE',
+        title: 'Periodic Stock Take & Reconciliation',
+        data: {
+          'records': _stockTakes.getAll(),
+          'items': _inventoryItems.getAll(),
+        },
+      ),
     ];
   }
 
@@ -203,6 +214,7 @@ class BusinessCompassController extends GetxController {
     _inventoryItems = InventoryItemRepository(store.box<InventoryItemEntity>());
     _inventoryCategories =
         InventoryCategoryRepository(store.box<InventoryCategoryEntity>());
+    _stockTakes = InventoryStockTakeRepository(store.box<InventoryStockTakeEntity>());
     _recompute();
   }
 
