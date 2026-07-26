@@ -11,7 +11,9 @@ import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
@@ -29,6 +31,7 @@ class BusinessCompassController extends GetxController {
   late BudgetLimitRepository _budgetLimits;
   late LinkedAccountRepository _linkedAccounts;
   late ComplianceItemRepository _complianceItems;
+  late StoreProfileRepository _storeProfile;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -160,6 +163,11 @@ class BusinessCompassController extends GetxController {
         title: 'Target Region Purchasing Power Fit',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SPACE_PRODUCTIVITY',
+        title: 'Commercial Space Productivity Index',
+        data: {'transactions': _transactions.getAll(), 'storeProfile': _storeProfile.get()},
+      ),
     ];
   }
 
@@ -172,6 +180,7 @@ class BusinessCompassController extends GetxController {
     _budgetLimits = BudgetLimitRepository(store.box<BudgetLimitEntity>());
     _linkedAccounts = LinkedAccountRepository(store.box<LinkedAccountEntity>());
     _complianceItems = ComplianceItemRepository(store.box<ComplianceItemEntity>());
+    _storeProfile = StoreProfileRepository(store.box<StoreProfileEntity>());
     _recompute();
   }
 
