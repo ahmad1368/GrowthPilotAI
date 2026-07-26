@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_item_attribute_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_category_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/inventory_item_attribute_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_item_repository.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_category_dialog.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_dialog.dart';
@@ -28,11 +30,20 @@ class _InventoryReportBodyState extends State<InventoryReportBody> {
   late List<InventoryCategoryEntity> _categories = widget.initialCategories;
 
   Future<void> _addItem() async {
-    final item = await showInventoryItemDialog(context, _categories, _items);
-    if (item == null) return;
-    InventoryItemRepository(Get.find<ObjectBox>().store.box<InventoryItemEntity>())
-        .insert(item);
-    setState(() => _items = [..._items, item]);
+    final draft = await showInventoryItemDialog(context, _categories, _items);
+    if (draft == null) return;
+    final store = Get.find<ObjectBox>().store;
+    InventoryItemRepository(store.box<InventoryItemEntity>()).insert(draft.item);
+
+    final attributeRepo =
+        InventoryItemAttributeRepository(store.box<InventoryItemAttributeEntity>());
+    for (final entry in draft.attributes) {
+      final attribute = InventoryItemAttributeEntity(key: entry.key, value: entry.value)
+        ..item.target = draft.item;
+      attributeRepo.insert(attribute);
+    }
+
+    setState(() => _items = [..._items, draft.item]);
   }
 
   Future<void> _addCategory() async {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/models/inventory_stock_item.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_detail_subtitle.dart';
 
 /// One inventory item's stock row (Issue #435): a low-stock warning icon
 /// and a quantity readout, colored by stock status. Shows the SKU next to
-/// the name when set (Issue #437).
+/// the name when set (Issue #437), plus category/serial/attributes/expiry
+/// detail lines (Issue #438).
 class InventoryItemRow extends StatelessWidget {
   final InventoryStockItem item;
 
@@ -40,11 +42,7 @@ class InventoryItemRow extends StatelessWidget {
                     ],
                   ],
                 ),
-                if (item.categoryPath != null)
-                  Text(item.categoryPath!,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 11, color: scheme.onSurface.withValues(alpha: 0.5))),
+                InventoryItemDetailSubtitle(item: item),
               ],
             ),
           ),

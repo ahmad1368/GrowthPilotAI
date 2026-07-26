@@ -61,6 +61,28 @@ void main() {
     expect(find.text('· BAK-0001'), findsOneWidget);
   });
 
+  testWidgets('shows an expiry warning for an item past its expiry date', (tester) async {
+    final item = InventoryItemEntity(
+        name: 'Milk', quantityOnHand: 40, reorderThreshold: 10, unitCost: 3.5)
+      ..expiryDate = DateTime.now().subtract(const Duration(days: 2));
+
+    await tester.pumpWidget(_wrap(InventoryReportWidget(
+        data: {'items': [item], 'categories': const <InventoryCategoryEntity>[]}, title: 'x')));
+
+    expect(find.text('2d expired'), findsOneWidget);
+  });
+
+  testWidgets('shows the serial number when set', (tester) async {
+    final item = InventoryItemEntity(
+        name: 'Drill', quantityOnHand: 40, reorderThreshold: 10, unitCost: 3.5)
+      ..serialNumber = 'SN-123';
+
+    await tester.pumpWidget(_wrap(InventoryReportWidget(
+        data: {'items': [item], 'categories': const <InventoryCategoryEntity>[]}, title: 'x')));
+
+    expect(find.textContaining('SN-123'), findsOneWidget);
+  });
+
   testWidgets('shows the "+ Add Item" and "+ Category" quick-add buttons', (tester) async {
     await tester.pumpWidget(_wrap(const InventoryReportWidget(
         data: {

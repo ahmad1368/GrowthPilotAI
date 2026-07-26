@@ -11,17 +11,22 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widg
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Captures light/dark PNGs of the Inventory Management widget (Issue
-/// #435, hierarchical categories in #436, SKU field in #437) for QA. Not a
-/// golden comparison — it only records the look.
+/// #435, hierarchical categories in #436, SKU field in #437, expiry/
+/// serial-number in #438) for QA. Not a golden comparison — it only
+/// records the look.
 void main() {
   final bakery = InventoryCategoryEntity(name: 'Bakery');
   final flour = InventoryItemEntity(
       name: 'Flour', quantityOnHand: 2, reorderThreshold: 10, unitCost: 3.5, sku: 'BAK-0001')
-    ..category.target = bakery;
+    ..category.target = bakery
+    ..expiryDate = DateTime.now().add(const Duration(days: 3));
+  final drill = InventoryItemEntity(
+      name: 'Drill', quantityOnHand: 8, reorderThreshold: 5, unitCost: 45)
+    ..serialNumber = 'SN-9001';
   final items = [
     flour,
     InventoryItemEntity(name: 'Sugar', quantityOnHand: 40, reorderThreshold: 10, unitCost: 2),
-    InventoryItemEntity(name: 'Butter', quantityOnHand: 15, reorderThreshold: 5, unitCost: 6),
+    drill,
   ];
 
   Future<void> capture(

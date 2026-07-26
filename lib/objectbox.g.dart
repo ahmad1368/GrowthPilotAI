@@ -24,6 +24,7 @@ import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/inventory_category_entity.dart';
+import 'core/data/entities/inventory_item_attribute_entity.dart';
 import 'core/data/entities/inventory_item_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
@@ -919,7 +920,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(23, 5280749065071673335),
       name: 'InventoryItemEntity',
-      lastPropertyId: const obx_int.IdUid(7, 5438024201973111405),
+      lastPropertyId: const obx_int.IdUid(9, 3422603904293097044),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -958,10 +959,25 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(7, 5438024201973111405),
             name: 'sku',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 4901943611932996654),
+            name: 'expiryDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 3422603904293097044),
+            name: 'serialNumber',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
+      backlinks: <obx_int.ModelBacklink>[
+        obx_int.ModelBacklink(
+            name: 'attributes',
+            srcEntity: 'InventoryItemAttributeEntity',
+            srcField: 'item')
+      ]),
   obx_int.ModelEntity(
       id: const obx_int.IdUid(24, 5399699029872775127),
       name: 'InventoryCategoryEntity',
@@ -985,6 +1001,37 @@ final _entities = <obx_int.ModelEntity>[
             flags: 520,
             indexId: const obx_int.IdUid(25, 5347509028222754498),
             relationTarget: 'InventoryCategoryEntity')
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(25, 4271398442978620384),
+      name: 'InventoryItemAttributeEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5481057223765720484),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6256713084195727421),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 492517609635168344),
+            name: 'key',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4870959918827347813),
+            name: 'value',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5481057223765720484),
+            name: 'itemId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(27, 3122284676644710533),
+            relationTarget: 'InventoryItemEntity')
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -1025,8 +1072,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(24, 5399699029872775127),
-      lastIndexId: const obx_int.IdUid(26, 2165798326861927465),
+      lastEntityId: const obx_int.IdUid(25, 4271398442978620384),
+      lastIndexId: const obx_int.IdUid(27, 3122284676644710533),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2117,7 +2164,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
     InventoryItemEntity: obx_int.EntityDefinition<InventoryItemEntity>(
         model: _entities[21],
         toOneRelations: (InventoryItemEntity object) => [object.category],
-        toManyRelations: (InventoryItemEntity object) => {},
+        toManyRelations: (InventoryItemEntity object) => {
+              obx_int.RelInfo<InventoryItemAttributeEntity>.toOneBacklink(
+                  4,
+                  object.id,
+                  (InventoryItemAttributeEntity srcObject) =>
+                      srcObject.item): object.attributes
+            },
         getId: (InventoryItemEntity object) => object.id,
         setId: (InventoryItemEntity object, int id) {
           object.id = id;
@@ -2125,7 +2178,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectToFB: (InventoryItemEntity object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
           final skuOffset = fbb.writeString(object.sku);
-          fbb.startTable(8);
+          final serialNumberOffset = fbb.writeString(object.serialNumber);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addInt64(2, object.quantityOnHand);
@@ -2133,12 +2187,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(4, object.unitCost);
           fbb.addInt64(5, object.category.targetId);
           fbb.addOffset(6, skuOffset);
+          fbb.addInt64(7, object.expiryDate?.millisecondsSinceEpoch);
+          fbb.addOffset(8, serialNumberOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
+          final expiryDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
           final idParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
@@ -2151,16 +2209,31 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final skuParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 16, '');
+          final expiryDateParam = expiryDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(expiryDateValue);
+          final serialNumberParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, '');
           final object = InventoryItemEntity(
               id: idParam,
               name: nameParam,
               quantityOnHand: quantityOnHandParam,
               reorderThreshold: reorderThresholdParam,
               unitCost: unitCostParam,
-              sku: skuParam);
+              sku: skuParam,
+              expiryDate: expiryDateParam,
+              serialNumber: serialNumberParam);
           object.category.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.category.attach(store);
+          obx_int.InternalToManyAccess.setRelInfo<InventoryItemEntity>(
+              object.attributes,
+              store,
+              obx_int.RelInfo<InventoryItemAttributeEntity>.toOneBacklink(
+                  4,
+                  object.id,
+                  (InventoryItemAttributeEntity srcObject) => srcObject.item));
           return object;
         }),
     InventoryCategoryEntity: obx_int.EntityDefinition<InventoryCategoryEntity>(
@@ -2192,7 +2265,44 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.parent.attach(store);
           return object;
-        })
+        }),
+    InventoryItemAttributeEntity:
+        obx_int.EntityDefinition<InventoryItemAttributeEntity>(
+            model: _entities[23],
+            toOneRelations: (InventoryItemAttributeEntity object) =>
+                [object.item],
+            toManyRelations: (InventoryItemAttributeEntity object) => {},
+            getId: (InventoryItemAttributeEntity object) => object.id,
+            setId: (InventoryItemAttributeEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (InventoryItemAttributeEntity object, fb.Builder fbb) {
+              final keyOffset = fbb.writeString(object.key);
+              final valueOffset = fbb.writeString(object.value);
+              fbb.startTable(5);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, keyOffset);
+              fbb.addOffset(2, valueOffset);
+              fbb.addInt64(3, object.item.targetId);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final keyParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+              final valueParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+              final object = InventoryItemAttributeEntity(
+                  id: idParam, key: keyParam, value: valueParam);
+              object.item.targetId =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              object.item.attach(store);
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -2837,6 +2947,19 @@ class InventoryItemEntity_ {
   /// see [InventoryItemEntity.sku]
   static final sku =
       obx.QueryStringProperty<InventoryItemEntity>(_entities[21].properties[6]);
+
+  /// see [InventoryItemEntity.expiryDate]
+  static final expiryDate =
+      obx.QueryDateProperty<InventoryItemEntity>(_entities[21].properties[7]);
+
+  /// see [InventoryItemEntity.serialNumber]
+  static final serialNumber =
+      obx.QueryStringProperty<InventoryItemEntity>(_entities[21].properties[8]);
+
+  /// see [InventoryItemEntity.attributes]
+  static final attributes = obx.QueryBacklinkToMany<
+      InventoryItemAttributeEntity,
+      InventoryItemEntity>(InventoryItemAttributeEntity_.item);
 }
 
 /// [InventoryCategoryEntity] entity fields to define ObjectBox queries.
@@ -2853,4 +2976,24 @@ class InventoryCategoryEntity_ {
   static final parent =
       obx.QueryRelationToOne<InventoryCategoryEntity, InventoryCategoryEntity>(
           _entities[22].properties[2]);
+}
+
+/// [InventoryItemAttributeEntity] entity fields to define ObjectBox queries.
+class InventoryItemAttributeEntity_ {
+  /// see [InventoryItemAttributeEntity.id]
+  static final id = obx.QueryIntegerProperty<InventoryItemAttributeEntity>(
+      _entities[23].properties[0]);
+
+  /// see [InventoryItemAttributeEntity.key]
+  static final key = obx.QueryStringProperty<InventoryItemAttributeEntity>(
+      _entities[23].properties[1]);
+
+  /// see [InventoryItemAttributeEntity.value]
+  static final value = obx.QueryStringProperty<InventoryItemAttributeEntity>(
+      _entities[23].properties[2]);
+
+  /// see [InventoryItemAttributeEntity.item]
+  static final item =
+      obx.QueryRelationToOne<InventoryItemAttributeEntity, InventoryItemEntity>(
+          _entities[23].properties[3]);
 }
