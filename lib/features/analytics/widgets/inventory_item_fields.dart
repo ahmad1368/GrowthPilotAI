@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:growth_pilot_ai/business/build_inventory_category_path.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// The name/quantity/reorder-threshold/unit-cost inputs for a new inventory
-/// item (Issue #435).
+/// The name/quantity/reorder-threshold/unit-cost/category inputs for a new
+/// inventory item (Issue #435, category picker added in #436).
 class InventoryItemFields extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController quantityController;
   final TextEditingController reorderThresholdController;
   final TextEditingController unitCostController;
+  final List<InventoryCategoryEntity> categories;
+  final InventoryCategoryEntity? selectedCategory;
+  final ValueChanged<InventoryCategoryEntity?> onCategoryChanged;
 
   const InventoryItemFields({
     super.key,
@@ -16,6 +21,9 @@ class InventoryItemFields extends StatelessWidget {
     required this.quantityController,
     required this.reorderThresholdController,
     required this.unitCostController,
+    required this.categories,
+    required this.selectedCategory,
+    required this.onCategoryChanged,
   });
 
   @override
@@ -46,6 +54,19 @@ class InventoryItemFields extends StatelessWidget {
             controller: unitCostController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: decimalOnly),
+        const SizedBox(height: 8),
+        ShadSelect<InventoryCategoryEntity?>(
+          initialValue: selectedCategory,
+          placeholder: const Text('Category (optional)'),
+          options: [
+            const ShadOption(value: null, child: Text('None')),
+            for (final c in categories)
+              ShadOption(value: c, child: Text(BuildInventoryCategoryPath.call(c))),
+          ],
+          selectedOptionBuilder: (context, value) =>
+              Text(value == null ? 'None' : BuildInventoryCategoryPath.call(value)),
+          onChanged: onCategoryChanged,
+        ),
       ],
     );
   }

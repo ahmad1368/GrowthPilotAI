@@ -892,7 +892,7 @@
     },
     {
       "id": "23:5280749065071673335",
-      "lastPropertyId": "5:837381040661992266",
+      "lastPropertyId": "6:7767923796308768028",
       "name": "InventoryItemEntity",
       "properties": [
         {
@@ -920,13 +920,48 @@
           "id": "5:837381040661992266",
           "name": "unitCost",
           "type": 8
+        },
+        {
+          "id": "6:7767923796308768028",
+          "name": "categoryId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "26:2165798326861927465",
+          "relationTarget": "InventoryCategoryEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "24:5399699029872775127",
+      "lastPropertyId": "3:9192019110261497505",
+      "name": "InventoryCategoryEntity",
+      "properties": [
+        {
+          "id": "1:5423582354122739084",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1582736336572438993",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:9192019110261497505",
+          "name": "parentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "25:5347509028222754498",
+          "relationTarget": "InventoryCategoryEntity"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "23:5280749065071673335",
-  "lastIndexId": "24:1278814618570498403",
+  "lastEntityId": "24:5399699029872775127",
+  "lastIndexId": "26:2165798326861927465",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
