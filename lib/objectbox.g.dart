@@ -18,6 +18,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
@@ -867,6 +868,31 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(21, 4477203076219111335),
+      name: 'ComplianceItemEntity',
+      lastPropertyId: const obx_int.IdUid(3, 8572980432915220336),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6245669242077549086),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4404843346652867639),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8572980432915220336),
+            name: 'expiryDate',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(24, 1278814618570498403))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -905,8 +931,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(20, 6172922639287843028),
-      lastIndexId: const obx_int.IdUid(23, 7733300375819667295),
+      lastEntityId: const obx_int.IdUid(21, 4477203076219111335),
+      lastIndexId: const obx_int.IdUid(24, 1278814618570498403),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1935,6 +1961,37 @@ obx_int.ModelDefinition getObjectBoxModel() {
               monthlyLimit: monthlyLimitParam);
 
           return object;
+        }),
+    ComplianceItemEntity: obx_int.EntityDefinition<ComplianceItemEntity>(
+        model: _entities[19],
+        toOneRelations: (ComplianceItemEntity object) => [],
+        toManyRelations: (ComplianceItemEntity object) => {},
+        getId: (ComplianceItemEntity object) => object.id,
+        setId: (ComplianceItemEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ComplianceItemEntity object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addInt64(2, object.expiryDate.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final expiryDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final object = ComplianceItemEntity(
+              id: idParam, name: nameParam, expiryDate: expiryDateParam);
+
+          return object;
         })
   };
 
@@ -2522,4 +2579,19 @@ class BudgetLimitEntity_ {
   /// see [BudgetLimitEntity.monthlyLimit]
   static final monthlyLimit =
       obx.QueryDoubleProperty<BudgetLimitEntity>(_entities[18].properties[2]);
+}
+
+/// [ComplianceItemEntity] entity fields to define ObjectBox queries.
+class ComplianceItemEntity_ {
+  /// see [ComplianceItemEntity.id]
+  static final id = obx.QueryIntegerProperty<ComplianceItemEntity>(
+      _entities[19].properties[0]);
+
+  /// see [ComplianceItemEntity.name]
+  static final name = obx.QueryStringProperty<ComplianceItemEntity>(
+      _entities[19].properties[1]);
+
+  /// see [ComplianceItemEntity.expiryDate]
+  static final expiryDate =
+      obx.QueryDateProperty<ComplianceItemEntity>(_entities[19].properties[2]);
 }
