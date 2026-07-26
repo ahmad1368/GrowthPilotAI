@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/vendor_entity.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widget.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -13,12 +14,16 @@ Widget _wrap(Widget child) => MaterialApp(
       ),
     );
 
+const _noCategories = <InventoryCategoryEntity>[];
+const _noVendors = <VendorEntity>[];
+
 void main() {
   testWidgets('shows a placeholder when no inventory items are tracked', (tester) async {
     await tester.pumpWidget(_wrap(const InventoryReportWidget(
         data: {
           'items': <InventoryItemEntity>[],
-          'categories': <InventoryCategoryEntity>[],
+          'categories': _noCategories,
+          'vendors': _noVendors,
         },
         title: 'x')));
 
@@ -31,7 +36,7 @@ void main() {
         name: 'Flour', quantityOnHand: 2, reorderThreshold: 10, unitCost: 3.5);
 
     await tester.pumpWidget(_wrap(InventoryReportWidget(
-        data: {'items': [lowStock], 'categories': const <InventoryCategoryEntity>[]},
+        data: {'items': [lowStock], 'categories': _noCategories, 'vendors': _noVendors},
         title: 'x')));
 
     expect(find.text('Flour'), findsOneWidget);
@@ -46,7 +51,7 @@ void main() {
     item.category.target = category;
 
     await tester.pumpWidget(_wrap(InventoryReportWidget(
-        data: {'items': [item], 'categories': [category]}, title: 'x')));
+        data: {'items': [item], 'categories': [category], 'vendors': _noVendors}, title: 'x')));
 
     expect(find.text('Bakery'), findsOneWidget);
   });
@@ -56,7 +61,8 @@ void main() {
         name: 'Flour', quantityOnHand: 40, reorderThreshold: 10, unitCost: 3.5, sku: 'BAK-0001');
 
     await tester.pumpWidget(_wrap(InventoryReportWidget(
-        data: {'items': [item], 'categories': const <InventoryCategoryEntity>[]}, title: 'x')));
+        data: {'items': [item], 'categories': _noCategories, 'vendors': _noVendors},
+        title: 'x')));
 
     expect(find.text('· BAK-0001'), findsOneWidget);
   });
@@ -67,7 +73,8 @@ void main() {
       ..expiryDate = DateTime.now().subtract(const Duration(days: 2));
 
     await tester.pumpWidget(_wrap(InventoryReportWidget(
-        data: {'items': [item], 'categories': const <InventoryCategoryEntity>[]}, title: 'x')));
+        data: {'items': [item], 'categories': _noCategories, 'vendors': _noVendors},
+        title: 'x')));
 
     expect(find.text('2d expired'), findsOneWidget);
   });
@@ -78,16 +85,30 @@ void main() {
       ..serialNumber = 'SN-123';
 
     await tester.pumpWidget(_wrap(InventoryReportWidget(
-        data: {'items': [item], 'categories': const <InventoryCategoryEntity>[]}, title: 'x')));
+        data: {'items': [item], 'categories': _noCategories, 'vendors': _noVendors},
+        title: 'x')));
 
     expect(find.textContaining('SN-123'), findsOneWidget);
+  });
+
+  testWidgets('shows the associated supplier name when set', (tester) async {
+    final vendor = VendorEntity(name: 'Acme Supplies');
+    final item = InventoryItemEntity(
+        name: 'Flour', quantityOnHand: 40, reorderThreshold: 10, unitCost: 3.5);
+    item.vendor.target = vendor;
+
+    await tester.pumpWidget(_wrap(InventoryReportWidget(
+        data: {'items': [item], 'categories': _noCategories, 'vendors': [vendor]}, title: 'x')));
+
+    expect(find.textContaining('Acme Supplies'), findsOneWidget);
   });
 
   testWidgets('shows the "+ Add Item" and "+ Category" quick-add buttons', (tester) async {
     await tester.pumpWidget(_wrap(const InventoryReportWidget(
         data: {
           'items': <InventoryItemEntity>[],
-          'categories': <InventoryCategoryEntity>[],
+          'categories': _noCategories,
+          'vendors': _noVendors,
         },
         title: 'x')));
 

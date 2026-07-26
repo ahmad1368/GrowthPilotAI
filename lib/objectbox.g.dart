@@ -176,7 +176,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 423798553179985044),
       name: 'VendorEntity',
-      lastPropertyId: const obx_int.IdUid(3, 6242450742222365948),
+      lastPropertyId: const obx_int.IdUid(7, 1707912807056167629),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -194,6 +194,26 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(3, 6242450742222365948),
             name: 'taxId',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 632670965579939390),
+            name: 'contactInfo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2356255465818339061),
+            name: 'paymentTerms',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3810003438925001040),
+            name: 'typicalLeadTimeDays',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1707912807056167629),
+            name: 'isActive',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -921,7 +941,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(23, 5280749065071673335),
       name: 'InventoryItemEntity',
-      lastPropertyId: const obx_int.IdUid(9, 3422603904293097044),
+      lastPropertyId: const obx_int.IdUid(10, 5209661235582671252),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -970,7 +990,14 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(9, 3422603904293097044),
             name: 'serialNumber',
             type: 9,
-            flags: 0)
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5209661235582671252),
+            name: 'vendorId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(29, 1473823619933608336),
+            relationTarget: 'VendorEntity')
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[
@@ -1109,7 +1136,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(26, 3219706497707716703),
-      lastIndexId: const obx_int.IdUid(28, 5379338542057535326),
+      lastIndexId: const obx_int.IdUid(29, 1473823619933608336),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -1286,10 +1313,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final nameOffset = fbb.writeString(object.name);
           final taxIdOffset =
               object.taxId == null ? null : fbb.writeString(object.taxId!);
-          fbb.startTable(4);
+          final contactInfoOffset = fbb.writeString(object.contactInfo);
+          final paymentTermsOffset = fbb.writeString(object.paymentTerms);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, taxIdOffset);
+          fbb.addOffset(3, contactInfoOffset);
+          fbb.addOffset(4, paymentTermsOffset);
+          fbb.addInt64(5, object.typicalLeadTimeDays);
+          fbb.addBool(6, object.isActive);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1302,8 +1335,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 6, '');
           final taxIdParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 8);
-          final object =
-              VendorEntity(id: idParam, name: nameParam, taxId: taxIdParam);
+          final contactInfoParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final paymentTermsParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final typicalLeadTimeDaysParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final isActiveParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
+          final object = VendorEntity(
+              id: idParam,
+              name: nameParam,
+              taxId: taxIdParam,
+              contactInfo: contactInfoParam,
+              paymentTerms: paymentTermsParam,
+              typicalLeadTimeDays: typicalLeadTimeDaysParam,
+              isActive: isActiveParam);
           obx_int.InternalToManyAccess.setRelInfo<VendorEntity>(
               object.transactions,
               store,
@@ -2199,7 +2248,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         }),
     InventoryItemEntity: obx_int.EntityDefinition<InventoryItemEntity>(
         model: _entities[21],
-        toOneRelations: (InventoryItemEntity object) => [object.category],
+        toOneRelations: (InventoryItemEntity object) =>
+            [object.category, object.vendor],
         toManyRelations: (InventoryItemEntity object) => {
               obx_int.RelInfo<InventoryItemAttributeEntity>.toOneBacklink(
                   4,
@@ -2215,7 +2265,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final nameOffset = fbb.writeString(object.name);
           final skuOffset = fbb.writeString(object.sku);
           final serialNumberOffset = fbb.writeString(object.serialNumber);
-          fbb.startTable(10);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addInt64(2, object.quantityOnHand);
@@ -2225,6 +2275,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(6, skuOffset);
           fbb.addInt64(7, object.expiryDate?.millisecondsSinceEpoch);
           fbb.addOffset(8, serialNumberOffset);
+          fbb.addInt64(9, object.vendor.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2263,6 +2314,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.category.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.category.attach(store);
+          object.vendor.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.vendor.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<InventoryItemEntity>(
               object.attributes,
               store,
@@ -2487,6 +2541,22 @@ class VendorEntity_ {
   /// see [VendorEntity.taxId]
   static final taxId =
       obx.QueryStringProperty<VendorEntity>(_entities[3].properties[2]);
+
+  /// see [VendorEntity.contactInfo]
+  static final contactInfo =
+      obx.QueryStringProperty<VendorEntity>(_entities[3].properties[3]);
+
+  /// see [VendorEntity.paymentTerms]
+  static final paymentTerms =
+      obx.QueryStringProperty<VendorEntity>(_entities[3].properties[4]);
+
+  /// see [VendorEntity.typicalLeadTimeDays]
+  static final typicalLeadTimeDays =
+      obx.QueryIntegerProperty<VendorEntity>(_entities[3].properties[5]);
+
+  /// see [VendorEntity.isActive]
+  static final isActive =
+      obx.QueryBooleanProperty<VendorEntity>(_entities[3].properties[6]);
 
   /// see [VendorEntity.transactions]
   static final transactions =
@@ -3034,6 +3104,11 @@ class InventoryItemEntity_ {
   /// see [InventoryItemEntity.serialNumber]
   static final serialNumber =
       obx.QueryStringProperty<InventoryItemEntity>(_entities[21].properties[8]);
+
+  /// see [InventoryItemEntity.vendor]
+  static final vendor =
+      obx.QueryRelationToOne<InventoryItemEntity, VendorEntity>(
+          _entities[21].properties[9]);
 
   /// see [InventoryItemEntity.attributes]
   static final attributes = obx.QueryBacklinkToMany<

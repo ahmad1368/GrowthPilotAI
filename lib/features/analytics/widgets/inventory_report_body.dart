@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_attribute_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/vendor_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_category_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_item_attribute_repository.dart';
@@ -17,9 +18,13 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_view
 class InventoryReportBody extends StatefulWidget {
   final List<InventoryItemEntity> initialItems;
   final List<InventoryCategoryEntity> initialCategories;
+  final List<VendorEntity> vendors;
 
   const InventoryReportBody(
-      {super.key, required this.initialItems, required this.initialCategories});
+      {super.key,
+      required this.initialItems,
+      required this.initialCategories,
+      required this.vendors});
 
   @override
   State<InventoryReportBody> createState() => _InventoryReportBodyState();
@@ -30,7 +35,7 @@ class _InventoryReportBodyState extends State<InventoryReportBody> {
   late List<InventoryCategoryEntity> _categories = widget.initialCategories;
 
   Future<void> _addItem() async {
-    final draft = await showInventoryItemDialog(context, _categories, _items);
+    final draft = await showInventoryItemDialog(context, _categories, _items, widget.vendors);
     if (draft == null) return;
     final store = Get.find<ObjectBox>().store;
     InventoryItemRepository(store.box<InventoryItemEntity>()).insert(draft.item);

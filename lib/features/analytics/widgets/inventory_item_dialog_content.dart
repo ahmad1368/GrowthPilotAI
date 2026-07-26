@@ -2,22 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/business/generate_inventory_item_sku.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/vendor_entity.dart';
 import 'package:growth_pilot_ai/core/models/inventory_item_draft.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_attributes_fields.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_fields.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_perishable_fields.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_vendor_field.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Stateful form body for [showInventoryItemDialog] (Issue #435): owns the
 /// name/quantity/reorder-threshold/unit-cost/category/SKU state (category
 /// picker in #436, SKU field + generator in #437, expiry/serial/attributes
-/// in #438).
+/// in #438, supplier picker in #442).
 class InventoryItemDialogContent extends StatefulWidget {
   final List<InventoryCategoryEntity> categories;
   final List<InventoryItemEntity> existingItems;
+  final List<VendorEntity> vendors;
 
   const InventoryItemDialogContent(
-      {super.key, required this.categories, required this.existingItems});
+      {super.key,
+      required this.categories,
+      required this.existingItems,
+      required this.vendors});
 
   @override
   State<InventoryItemDialogContent> createState() => _InventoryItemDialogContentState();
@@ -33,6 +39,7 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
   final _attributeKeyControllers = <TextEditingController>[];
   final _attributeValueControllers = <TextEditingController>[];
   InventoryCategoryEntity? _category;
+  VendorEntity? _vendor;
   DateTime? _expiryDate;
 
   void _generateSku() {
@@ -82,6 +89,7 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
       serialNumber: _serialNumberController.text.trim(),
     );
     if (_category != null) item.category.target = _category;
+    if (_vendor != null) item.vendor.target = _vendor;
 
     final attributes = <MapEntry<String, String>>[];
     for (var i = 0; i < _attributeKeyControllers.length; i++) {
@@ -125,6 +133,12 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
               valueControllers: _attributeValueControllers,
               onAddRow: _addAttributeRow,
               onRemoveRow: _removeAttributeRow,
+            ),
+            const SizedBox(height: 8),
+            InventoryItemVendorField(
+              vendors: widget.vendors,
+              selectedVendor: _vendor,
+              onVendorChanged: (value) => setState(() => _vendor = value),
             ),
           ],
         ),

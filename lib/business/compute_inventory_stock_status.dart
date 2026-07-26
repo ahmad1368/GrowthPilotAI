@@ -29,6 +29,7 @@ class ComputeInventoryStockStatus {
         expiryLabel: needsLabel ? BuildInventoryExpiryLabel.call(item.expiryDate!, now) : null,
         serialNumber: item.serialNumber,
         attributes: {for (final a in item.attributes) a.key: a.value},
+        vendorName: item.vendor.target?.name,
       );
     }).toList()
       ..sort((a, b) => a.quantityOnHand.compareTo(b.quantityOnHand));
