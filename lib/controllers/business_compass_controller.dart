@@ -155,6 +155,11 @@ class BusinessCompassController extends GetxController {
         title: 'Legal & Compliance Risk',
         data: {'items': _complianceItems.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'REGIONAL_AFFORDABILITY',
+        title: 'Target Region Purchasing Power Fit',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
