@@ -12,6 +12,7 @@ class InventoryStockItem {
   final int reorderThreshold;
   final double unitCost;
   final InventoryStockStatus status;
+  final String? categoryPath;
 
   const InventoryStockItem({
     required this.name,
@@ -19,5 +20,6 @@ class InventoryStockItem {
     required this.reorderThreshold,
     required this.unitCost,
     required this.status,
+    this.categoryPath,
   });
 }

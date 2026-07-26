@@ -11,8 +11,10 @@ import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/inventory_category_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
@@ -35,6 +37,7 @@ class BusinessCompassController extends GetxController {
   late ComplianceItemRepository _complianceItems;
   late StoreProfileRepository _storeProfile;
   late InventoryItemRepository _inventoryItems;
+  late InventoryCategoryRepository _inventoryCategories;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -179,7 +182,10 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'INVENTORY_STOCK',
         title: 'Inventory Management',
-        data: {'items': _inventoryItems.getAll()},
+        data: {
+          'items': _inventoryItems.getAll(),
+          'categories': _inventoryCategories.getAll(),
+        },
       ),
     ];
   }
@@ -195,6 +201,8 @@ class BusinessCompassController extends GetxController {
     _complianceItems = ComplianceItemRepository(store.box<ComplianceItemEntity>());
     _storeProfile = StoreProfileRepository(store.box<StoreProfileEntity>());
     _inventoryItems = InventoryItemRepository(store.box<InventoryItemEntity>());
+    _inventoryCategories =
+        InventoryCategoryRepository(store.box<InventoryCategoryEntity>());
     _recompute();
   }
 

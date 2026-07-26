@@ -4,16 +4,22 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widget.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Captures light/dark PNGs of the new Inventory Management widget (Issue
-/// #435) for QA. Not a golden comparison — it only records the look.
+/// Captures light/dark PNGs of the Inventory Management widget (Issue
+/// #435, hierarchical categories added in #436) for QA. Not a golden
+/// comparison — it only records the look.
 void main() {
+  final bakery = InventoryCategoryEntity(name: 'Bakery');
+  final flour = InventoryItemEntity(
+      name: 'Flour', quantityOnHand: 2, reorderThreshold: 10, unitCost: 3.5)
+    ..category.target = bakery;
   final items = [
-    InventoryItemEntity(name: 'Flour', quantityOnHand: 2, reorderThreshold: 10, unitCost: 3.5),
+    flour,
     InventoryItemEntity(name: 'Sugar', quantityOnHand: 40, reorderThreshold: 10, unitCost: 2),
     InventoryItemEntity(name: 'Butter', quantityOnHand: 15, reorderThreshold: 5, unitCost: 6),
   ];
@@ -36,7 +42,8 @@ void main() {
               color: bg,
               padding: const EdgeInsets.all(12),
               child: InventoryReportWidget(
-                  data: {'items': items}, title: 'Inventory Management'),
+                  data: {'items': items, 'categories': [bakery]},
+                  title: 'Inventory Management'),
             ),
           ),
         ),

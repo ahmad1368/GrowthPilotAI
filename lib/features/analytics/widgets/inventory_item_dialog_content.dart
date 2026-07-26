@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_fields.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Stateful form body for [showInventoryItemDialog] (Issue #435): owns the
-/// name/quantity/reorder-threshold/unit-cost controllers.
+/// name/quantity/reorder-threshold/unit-cost/category state (category
+/// picker added in #436).
 class InventoryItemDialogContent extends StatefulWidget {
-  const InventoryItemDialogContent({super.key});
+  final List<InventoryCategoryEntity> categories;
+
+  const InventoryItemDialogContent({super.key, required this.categories});
 
   @override
   State<InventoryItemDialogContent> createState() => _InventoryItemDialogContentState();
@@ -17,6 +21,7 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
   final _quantityController = TextEditingController();
   final _reorderThresholdController = TextEditingController();
   final _unitCostController = TextEditingController();
+  InventoryCategoryEntity? _category;
 
   void _submit() {
     final name = _nameController.text.trim();
@@ -26,12 +31,14 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
     if (name.isEmpty || quantity == null || reorderThreshold == null || unitCost == null) {
       return;
     }
-    Navigator.of(context).pop(InventoryItemEntity(
+    final item = InventoryItemEntity(
       name: name,
       quantityOnHand: quantity,
       reorderThreshold: reorderThreshold,
       unitCost: unitCost,
-    ));
+    );
+    if (_category != null) item.category.target = _category;
+    Navigator.of(context).pop(item);
   }
 
   @override
@@ -43,6 +50,9 @@ class _InventoryItemDialogContentState extends State<InventoryItemDialogContent>
         quantityController: _quantityController,
         reorderThresholdController: _reorderThresholdController,
         unitCostController: _unitCostController,
+        categories: widget.categories,
+        selectedCategory: _category,
+        onCategoryChanged: (value) => setState(() => _category = value),
       ),
       actions: [
         ShadButton.outline(

@@ -20,13 +20,23 @@ class InventoryItemRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (isLow) ...[
-                  Icon(Icons.warning_amber_rounded, size: 14, color: color),
-                  const SizedBox(width: 4),
-                ],
-                Flexible(child: Text(item.name, overflow: TextOverflow.ellipsis)),
+                Row(
+                  children: [
+                    if (isLow) ...[
+                      Icon(Icons.warning_amber_rounded, size: 14, color: color),
+                      const SizedBox(width: 4),
+                    ],
+                    Flexible(child: Text(item.name, overflow: TextOverflow.ellipsis)),
+                  ],
+                ),
+                if (item.categoryPath != null)
+                  Text(item.categoryPath!,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 11, color: scheme.onSurface.withValues(alpha: 0.5))),
               ],
             ),
           ),
