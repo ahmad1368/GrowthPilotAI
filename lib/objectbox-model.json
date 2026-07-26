@@ -889,9 +889,43 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "23:5280749065071673335",
+      "lastPropertyId": "5:837381040661992266",
+      "name": "InventoryItemEntity",
+      "properties": [
+        {
+          "id": "1:4575943902418567509",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8926360666435561298",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5201741171236052996",
+          "name": "quantityOnHand",
+          "type": 6
+        },
+        {
+          "id": "4:2367964155750836776",
+          "name": "reorderThreshold",
+          "type": 6
+        },
+        {
+          "id": "5:837381040661992266",
+          "name": "unitCost",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "22:8509950877062724006",
+  "lastEntityId": "23:5280749065071673335",
   "lastIndexId": "24:1278814618570498403",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

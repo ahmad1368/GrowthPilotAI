@@ -20,6 +20,7 @@ class GridLayoutService {
     'SEASONAL_OVERHEAD_CHART',
     'HOLIDAY_IMPACT',
     'COMPLIANCE_RISK',
+    'INVENTORY_STOCK',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
