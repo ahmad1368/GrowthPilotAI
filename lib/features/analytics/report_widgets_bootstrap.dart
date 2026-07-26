@@ -17,6 +17,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/overhead_report_widge
 import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/profit_margin_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/regional_affordability_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_scorecard_report_widget.dart';
@@ -84,6 +85,8 @@ class ReportWidgetsBootstrap {
         (spec) => HolidayImpactReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('COMPLIANCE_RISK',
         (spec) => ComplianceRiskReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('REGIONAL_AFFORDABILITY',
+        (spec) => RegionalAffordabilityReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
