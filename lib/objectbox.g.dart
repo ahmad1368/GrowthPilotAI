@@ -919,7 +919,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(23, 5280749065071673335),
       name: 'InventoryItemEntity',
-      lastPropertyId: const obx_int.IdUid(6, 7767923796308768028),
+      lastPropertyId: const obx_int.IdUid(7, 5438024201973111405),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -953,7 +953,12 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(26, 2165798326861927465),
-            relationTarget: 'InventoryCategoryEntity')
+            relationTarget: 'InventoryCategoryEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5438024201973111405),
+            name: 'sku',
+            type: 9,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -2119,13 +2124,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (InventoryItemEntity object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(7);
+          final skuOffset = fbb.writeString(object.sku);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addInt64(2, object.quantityOnHand);
           fbb.addInt64(3, object.reorderThreshold);
           fbb.addFloat64(4, object.unitCost);
           fbb.addInt64(5, object.category.targetId);
+          fbb.addOffset(6, skuOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2142,12 +2149,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           final unitCostParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final skuParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
           final object = InventoryItemEntity(
               id: idParam,
               name: nameParam,
               quantityOnHand: quantityOnHandParam,
               reorderThreshold: reorderThresholdParam,
-              unitCost: unitCostParam);
+              unitCost: unitCostParam,
+              sku: skuParam);
           object.category.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.category.attach(store);
@@ -2823,6 +2833,10 @@ class InventoryItemEntity_ {
   static final category =
       obx.QueryRelationToOne<InventoryItemEntity, InventoryCategoryEntity>(
           _entities[21].properties[5]);
+
+  /// see [InventoryItemEntity.sku]
+  static final sku =
+      obx.QueryStringProperty<InventoryItemEntity>(_entities[21].properties[6]);
 }
 
 /// [InventoryCategoryEntity] entity fields to define ObjectBox queries.

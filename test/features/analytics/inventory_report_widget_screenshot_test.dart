@@ -11,12 +11,12 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widg
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Captures light/dark PNGs of the Inventory Management widget (Issue
-/// #435, hierarchical categories added in #436) for QA. Not a golden
-/// comparison — it only records the look.
+/// #435, hierarchical categories in #436, SKU field in #437) for QA. Not a
+/// golden comparison — it only records the look.
 void main() {
   final bakery = InventoryCategoryEntity(name: 'Bakery');
   final flour = InventoryItemEntity(
-      name: 'Flour', quantityOnHand: 2, reorderThreshold: 10, unitCost: 3.5)
+      name: 'Flour', quantityOnHand: 2, reorderThreshold: 10, unitCost: 3.5, sku: 'BAK-0001')
     ..category.target = bakery;
   final items = [
     flour,

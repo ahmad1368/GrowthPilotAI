@@ -18,6 +18,7 @@ class ComputeInventoryStockStatus {
         unitCost: item.unitCost,
         status: status,
         categoryPath: category == null ? null : BuildInventoryCategoryPath.call(category),
+        sku: item.sku,
       );
     }).toList()
       ..sort((a, b) => a.quantityOnHand.compareTo(b.quantityOnHand));

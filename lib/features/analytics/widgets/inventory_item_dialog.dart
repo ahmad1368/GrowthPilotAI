@@ -6,10 +6,11 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Quick-add form for an inventory item (Issue #435). Returns the new item
 /// (not yet persisted) or null if cancelled/invalid.
-Future<InventoryItemEntity?> showInventoryItemDialog(
-    BuildContext context, List<InventoryCategoryEntity> categories) {
+Future<InventoryItemEntity?> showInventoryItemDialog(BuildContext context,
+    List<InventoryCategoryEntity> categories, List<InventoryItemEntity> existingItems) {
   return showShadDialog<InventoryItemEntity>(
     context: context,
-    builder: (context) => InventoryItemDialogContent(categories: categories),
+    builder: (context) =>
+        InventoryItemDialogContent(categories: categories, existingItems: existingItems),
   );
 }
