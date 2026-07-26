@@ -18,8 +18,10 @@ import 'package:growth_pilot_ai/core/data/entities/inventory_stock_take_entity.d
 import 'package:growth_pilot_ai/core/data/repositories/inventory_category_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/vendor_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/purchase_order_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
@@ -44,6 +46,7 @@ class BusinessCompassController extends GetxController {
   late InventoryCategoryRepository _inventoryCategories;
   late InventoryStockTakeRepository _stockTakes;
   late VendorRepository _vendors;
+  late PurchaseOrderRepository _purchaseOrders;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -207,6 +210,11 @@ class BusinessCompassController extends GetxController {
         title: 'Local Supplier Directory',
         data: {'vendors': _vendors.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PURCHASE_ORDER',
+        title: 'Automated Purchase Orders',
+        data: {'orders': _purchaseOrders.getAll(), 'items': _inventoryItems.getAll()},
+      ),
     ];
   }
 
@@ -225,6 +233,7 @@ class BusinessCompassController extends GetxController {
         InventoryCategoryRepository(store.box<InventoryCategoryEntity>());
     _stockTakes = InventoryStockTakeRepository(store.box<InventoryStockTakeEntity>());
     _vendors = VendorRepository(store.box<VendorEntity>());
+    _purchaseOrders = PurchaseOrderRepository(store.box<PurchaseOrderEntity>());
     _recompute();
   }
 

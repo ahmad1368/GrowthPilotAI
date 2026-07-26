@@ -31,6 +31,7 @@ import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/placeholder.dart';
+import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
@@ -1097,6 +1098,46 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(28, 5379338542057535326))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(27, 8277370032489067981),
+      name: 'PurchaseOrderEntity',
+      lastPropertyId: const obx_int.IdUid(6, 8275728957011076902),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5372397328609518900),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8008550109750290718),
+            name: 'vendorName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3392708768222957271),
+            name: 'itemsSummary',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5547672675255518588),
+            name: 'estimatedTotal',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4289982155602562789),
+            name: 'createdAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(30, 185843924825212111)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8275728957011076902),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1135,8 +1176,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(26, 3219706497707716703),
-      lastIndexId: const obx_int.IdUid(29, 1473823619933608336),
+      lastEntityId: const obx_int.IdUid(27, 8277370032489067981),
+      lastIndexId: const obx_int.IdUid(30, 185843924825212111),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2435,7 +2476,54 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   takenAt: takenAtParam);
 
               return object;
-            })
+            }),
+    PurchaseOrderEntity: obx_int.EntityDefinition<PurchaseOrderEntity>(
+        model: _entities[25],
+        toOneRelations: (PurchaseOrderEntity object) => [],
+        toManyRelations: (PurchaseOrderEntity object) => {},
+        getId: (PurchaseOrderEntity object) => object.id,
+        setId: (PurchaseOrderEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PurchaseOrderEntity object, fb.Builder fbb) {
+          final vendorNameOffset = fbb.writeString(object.vendorName);
+          final itemsSummaryOffset = fbb.writeString(object.itemsSummary);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, vendorNameOffset);
+          fbb.addOffset(2, itemsSummaryOffset);
+          fbb.addFloat64(3, object.estimatedTotal);
+          fbb.addInt64(4, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.dbStatus);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final vendorNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final itemsSummaryParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final estimatedTotalParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final object = PurchaseOrderEntity(
+              id: idParam,
+              vendorName: vendorNameParam,
+              itemsSummary: itemsSummaryParam,
+              estimatedTotal: estimatedTotalParam,
+              createdAt: createdAtParam,
+              dbStatus: dbStatusParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -3175,4 +3263,31 @@ class InventoryStockTakeEntity_ {
   /// see [InventoryStockTakeEntity.takenAt]
   static final takenAt = obx.QueryDateProperty<InventoryStockTakeEntity>(
       _entities[24].properties[4]);
+}
+
+/// [PurchaseOrderEntity] entity fields to define ObjectBox queries.
+class PurchaseOrderEntity_ {
+  /// see [PurchaseOrderEntity.id]
+  static final id = obx.QueryIntegerProperty<PurchaseOrderEntity>(
+      _entities[25].properties[0]);
+
+  /// see [PurchaseOrderEntity.vendorName]
+  static final vendorName =
+      obx.QueryStringProperty<PurchaseOrderEntity>(_entities[25].properties[1]);
+
+  /// see [PurchaseOrderEntity.itemsSummary]
+  static final itemsSummary =
+      obx.QueryStringProperty<PurchaseOrderEntity>(_entities[25].properties[2]);
+
+  /// see [PurchaseOrderEntity.estimatedTotal]
+  static final estimatedTotal =
+      obx.QueryDoubleProperty<PurchaseOrderEntity>(_entities[25].properties[3]);
+
+  /// see [PurchaseOrderEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<PurchaseOrderEntity>(_entities[25].properties[4]);
+
+  /// see [PurchaseOrderEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<PurchaseOrderEntity>(
+      _entities[25].properties[5]);
 }

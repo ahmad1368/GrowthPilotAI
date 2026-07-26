@@ -1069,10 +1069,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "27:8277370032489067981",
+      "lastPropertyId": "6:8275728957011076902",
+      "name": "PurchaseOrderEntity",
+      "properties": [
+        {
+          "id": "1:5372397328609518900",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8008550109750290718",
+          "name": "vendorName",
+          "type": 9
+        },
+        {
+          "id": "3:3392708768222957271",
+          "name": "itemsSummary",
+          "type": 9
+        },
+        {
+          "id": "4:5547672675255518588",
+          "name": "estimatedTotal",
+          "type": 8
+        },
+        {
+          "id": "5:4289982155602562789",
+          "name": "createdAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "30:185843924825212111"
+        },
+        {
+          "id": "6:8275728957011076902",
+          "name": "dbStatus",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "26:3219706497707716703",
-  "lastIndexId": "29:1473823619933608336",
+  "lastEntityId": "27:8277370032489067981",
+  "lastIndexId": "30:185843924825212111",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
