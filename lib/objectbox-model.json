@@ -892,7 +892,7 @@
     },
     {
       "id": "23:5280749065071673335",
-      "lastPropertyId": "7:5438024201973111405",
+      "lastPropertyId": "9:3422603904293097044",
       "name": "InventoryItemEntity",
       "properties": [
         {
@@ -933,6 +933,16 @@
           "id": "7:5438024201973111405",
           "name": "sku",
           "type": 9
+        },
+        {
+          "id": "8:4901943611932996654",
+          "name": "expiryDate",
+          "type": 10
+        },
+        {
+          "id": "9:3422603904293097044",
+          "name": "serialNumber",
+          "type": 9
         }
       ],
       "relations": []
@@ -963,10 +973,42 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "25:4271398442978620384",
+      "lastPropertyId": "4:5481057223765720484",
+      "name": "InventoryItemAttributeEntity",
+      "properties": [
+        {
+          "id": "1:6256713084195727421",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:492517609635168344",
+          "name": "key",
+          "type": 9
+        },
+        {
+          "id": "3:4870959918827347813",
+          "name": "value",
+          "type": 9
+        },
+        {
+          "id": "4:5481057223765720484",
+          "name": "itemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "27:3122284676644710533",
+          "relationTarget": "InventoryItemEntity"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "24:5399699029872775127",
-  "lastIndexId": "26:2165798326861927465",
+  "lastEntityId": "25:4271398442978620384",
+  "lastIndexId": "27:3122284676644710533",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

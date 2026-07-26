@@ -22,7 +22,7 @@ class InventoryReportView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final stockItems = ComputeInventoryStockStatus.call(items);
+    final stockItems = ComputeInventoryStockStatus.call(items, DateTime.now());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

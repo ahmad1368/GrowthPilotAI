@@ -1,5 +1,6 @@
 import 'package:objectbox/objectbox.dart';
 import 'inventory_category_entity.dart';
+import 'inventory_item_attribute_entity.dart';
 
 /// A tracked stock item (Issue #435) — the foundational SKU/inventory data
 /// model this app previously lacked. SKU generation is #437; camera-based
@@ -24,8 +25,19 @@ class InventoryItemEntity {
   /// auto-generated, empty if unset.
   String sku;
 
+  /// Optional expiry date for perishables (Issue #438).
+  @Property(type: PropertyType.date)
+  DateTime? expiryDate;
+
+  /// Optional serial number, e.g. for high-value repair parts (Issue #438).
+  String serialNumber;
+
   /// Optional hierarchical category (Issue #436).
   final category = ToOne<InventoryCategoryEntity>();
+
+  /// Dynamic custom attributes, e.g. size/color (Issue #438).
+  @Backlink('item')
+  final attributes = ToMany<InventoryItemAttributeEntity>();
 
   InventoryItemEntity({
     this.id = 0,
@@ -34,5 +46,7 @@ class InventoryItemEntity {
     required this.reorderThreshold,
     required this.unitCost,
     this.sku = '',
+    this.expiryDate,
+    this.serialNumber = '',
   });
 }
