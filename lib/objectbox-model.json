@@ -1005,10 +1005,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "26:3219706497707716703",
+      "lastPropertyId": "5:4311614270521518546",
+      "name": "InventoryStockTakeEntity",
+      "properties": [
+        {
+          "id": "1:3416068762938494316",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8312772973250195752",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "3:1242693191176353966",
+          "name": "systemQuantity",
+          "type": 6
+        },
+        {
+          "id": "4:7587420032296624244",
+          "name": "physicalQuantity",
+          "type": 6
+        },
+        {
+          "id": "5:4311614270521518546",
+          "name": "takenAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "28:5379338542057535326"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "25:4271398442978620384",
-  "lastIndexId": "27:3122284676644710533",
+  "lastEntityId": "26:3219706497707716703",
+  "lastIndexId": "28:5379338542057535326",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

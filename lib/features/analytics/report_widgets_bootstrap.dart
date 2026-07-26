@@ -23,6 +23,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/regional_affordabilit
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/space_productivity_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/stock_take_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_scorecard_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/waste_log_report_widget.dart';
@@ -96,6 +97,8 @@ class ReportWidgetsBootstrap {
         (spec) => AnnualProfitForecastReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('INVENTORY_STOCK',
         (spec) => InventoryReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('STOCK_TAKE',
+        (spec) => StockTakeReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

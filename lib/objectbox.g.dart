@@ -26,6 +26,7 @@ import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/inventory_category_entity.dart';
 import 'core/data/entities/inventory_item_attribute_entity.dart';
 import 'core/data/entities/inventory_item_entity.dart';
+import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/message_entity.dart';
@@ -1034,6 +1035,41 @@ final _entities = <obx_int.ModelEntity>[
             relationTarget: 'InventoryItemEntity')
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(26, 3219706497707716703),
+      name: 'InventoryStockTakeEntity',
+      lastPropertyId: const obx_int.IdUid(5, 4311614270521518546),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3416068762938494316),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8312772973250195752),
+            name: 'itemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1242693191176353966),
+            name: 'systemQuantity',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7587420032296624244),
+            name: 'physicalQuantity',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4311614270521518546),
+            name: 'takenAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(28, 5379338542057535326))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1072,8 +1108,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(25, 4271398442978620384),
-      lastIndexId: const obx_int.IdUid(27, 3122284676644710533),
+      lastEntityId: const obx_int.IdUid(26, 3219706497707716703),
+      lastIndexId: const obx_int.IdUid(28, 5379338542057535326),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2302,6 +2338,49 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
               object.item.attach(store);
               return object;
+            }),
+    InventoryStockTakeEntity:
+        obx_int.EntityDefinition<InventoryStockTakeEntity>(
+            model: _entities[24],
+            toOneRelations: (InventoryStockTakeEntity object) => [],
+            toManyRelations: (InventoryStockTakeEntity object) => {},
+            getId: (InventoryStockTakeEntity object) => object.id,
+            setId: (InventoryStockTakeEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (InventoryStockTakeEntity object, fb.Builder fbb) {
+              final itemNameOffset = fbb.writeString(object.itemName);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, itemNameOffset);
+              fbb.addInt64(2, object.systemQuantity);
+              fbb.addInt64(3, object.physicalQuantity);
+              fbb.addInt64(4, object.takenAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final itemNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final systemQuantityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final physicalQuantityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final takenAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = InventoryStockTakeEntity(
+                  id: idParam,
+                  itemName: itemNameParam,
+                  systemQuantity: systemQuantityParam,
+                  physicalQuantity: physicalQuantityParam,
+                  takenAt: takenAtParam);
+
+              return object;
             })
   };
 
@@ -2996,4 +3075,29 @@ class InventoryItemAttributeEntity_ {
   static final item =
       obx.QueryRelationToOne<InventoryItemAttributeEntity, InventoryItemEntity>(
           _entities[23].properties[3]);
+}
+
+/// [InventoryStockTakeEntity] entity fields to define ObjectBox queries.
+class InventoryStockTakeEntity_ {
+  /// see [InventoryStockTakeEntity.id]
+  static final id = obx.QueryIntegerProperty<InventoryStockTakeEntity>(
+      _entities[24].properties[0]);
+
+  /// see [InventoryStockTakeEntity.itemName]
+  static final itemName = obx.QueryStringProperty<InventoryStockTakeEntity>(
+      _entities[24].properties[1]);
+
+  /// see [InventoryStockTakeEntity.systemQuantity]
+  static final systemQuantity =
+      obx.QueryIntegerProperty<InventoryStockTakeEntity>(
+          _entities[24].properties[2]);
+
+  /// see [InventoryStockTakeEntity.physicalQuantity]
+  static final physicalQuantity =
+      obx.QueryIntegerProperty<InventoryStockTakeEntity>(
+          _entities[24].properties[3]);
+
+  /// see [InventoryStockTakeEntity.takenAt]
+  static final takenAt = obx.QueryDateProperty<InventoryStockTakeEntity>(
+      _entities[24].properties[4]);
 }
