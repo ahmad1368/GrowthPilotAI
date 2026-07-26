@@ -1,6 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 import 'inventory_category_entity.dart';
 import 'inventory_item_attribute_entity.dart';
+import 'vendor_entity.dart';
 
 /// A tracked stock item (Issue #435) — the foundational SKU/inventory data
 /// model this app previously lacked. SKU generation is #437; camera-based
@@ -34,6 +35,9 @@ class InventoryItemEntity {
 
   /// Optional hierarchical category (Issue #436).
   final category = ToOne<InventoryCategoryEntity>();
+
+  /// Optional supplier this item is sourced from (Issue #442).
+  final vendor = ToOne<VendorEntity>();
 
   /// Dynamic custom attributes, e.g. size/color (Issue #438).
   @Backlink('item')

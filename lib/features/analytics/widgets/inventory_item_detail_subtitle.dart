@@ -16,6 +16,7 @@ class InventoryItemDetailSubtitle extends StatelessWidget {
         TextStyle(fontSize: 11, color: scheme.onSurface.withValues(alpha: 0.5));
     final details = <String>[
       if (item.categoryPath != null) item.categoryPath!,
+      if (item.vendorName != null) 'from ${item.vendorName}',
       if (item.serialNumber.isNotEmpty) 'SN: ${item.serialNumber}',
       for (final entry in item.attributes.entries) '${entry.key}: ${entry.value}',
     ];

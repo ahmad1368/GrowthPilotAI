@@ -17,10 +17,12 @@ import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_stock_take_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_category_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/vendor_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
 import 'package:growth_pilot_ai/core/enum/compass_period.dart';
@@ -41,6 +43,7 @@ class BusinessCompassController extends GetxController {
   late InventoryItemRepository _inventoryItems;
   late InventoryCategoryRepository _inventoryCategories;
   late InventoryStockTakeRepository _stockTakes;
+  late VendorRepository _vendors;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -188,6 +191,7 @@ class BusinessCompassController extends GetxController {
         data: {
           'items': _inventoryItems.getAll(),
           'categories': _inventoryCategories.getAll(),
+          'vendors': _vendors.getAll(),
         },
       ),
       ReportWidgetSpec(
@@ -197,6 +201,11 @@ class BusinessCompassController extends GetxController {
           'records': _stockTakes.getAll(),
           'items': _inventoryItems.getAll(),
         },
+      ),
+      ReportWidgetSpec(
+        id: 'SUPPLIER_DIRECTORY',
+        title: 'Local Supplier Directory',
+        data: {'vendors': _vendors.getAll()},
       ),
     ];
   }
@@ -215,6 +224,7 @@ class BusinessCompassController extends GetxController {
     _inventoryCategories =
         InventoryCategoryRepository(store.box<InventoryCategoryEntity>());
     _stockTakes = InventoryStockTakeRepository(store.box<InventoryStockTakeEntity>());
+    _vendors = VendorRepository(store.box<VendorEntity>());
     _recompute();
   }
 

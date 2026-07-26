@@ -24,6 +24,7 @@ class InventoryStockItem {
 
   final String serialNumber;
   final Map<String, String> attributes;
+  final String? vendorName;
 
   const InventoryStockItem({
     required this.name,
@@ -37,5 +38,6 @@ class InventoryStockItem {
     this.expiryLabel,
     this.serialNumber = '',
     this.attributes = const {},
+    this.vendorName,
   });
 }
