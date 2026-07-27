@@ -35,6 +35,7 @@ import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
+import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
@@ -1191,7 +1192,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(29, 7077461295627620354),
       name: 'StockMovementEntity',
-      lastPropertyId: const obx_int.IdUid(6, 4303523335206970392),
+      lastPropertyId: const obx_int.IdUid(7, 329968941315551720),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -1224,7 +1225,47 @@ final _entities = <obx_int.ModelEntity>[
             name: 'occurredAt',
             type: 10,
             flags: 8,
-            indexId: const obx_int.IdUid(33, 953067082643052537))
+            indexId: const obx_int.IdUid(33, 953067082643052537)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 329968941315551720),
+            name: 'dbChannel',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(30, 4268004160310080526),
+      name: 'StockReservationEntity',
+      lastPropertyId: const obx_int.IdUid(5, 6358374888249132265),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7849859017958451065),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 526562144726830391),
+            name: 'itemId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(34, 1053221151445157619)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 856768813147919200),
+            name: 'itemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 171742667479986669),
+            name: 'quantityReserved',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6358374888249132265),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -1265,8 +1306,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(29, 7077461295627620354),
-      lastIndexId: const obx_int.IdUid(33, 953067082643052537),
+      lastEntityId: const obx_int.IdUid(30, 4268004160310080526),
+      lastIndexId: const obx_int.IdUid(34, 1053221151445157619),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2679,13 +2720,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (StockMovementEntity object, fb.Builder fbb) {
           final itemNameOffset = fbb.writeString(object.itemName);
-          fbb.startTable(7);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, itemNameOffset);
           fbb.addInt64(2, object.quantity);
           fbb.addInt64(3, object.dbType);
           fbb.addInt64(4, object.resultingQuantityOnHand);
           fbb.addInt64(5, object.occurredAt.millisecondsSinceEpoch);
+          fbb.addInt64(6, object.dbChannel);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -2704,13 +2746,57 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
           final dbTypeParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final dbChannelParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           final object = StockMovementEntity(
               id: idParam,
               itemName: itemNameParam,
               quantity: quantityParam,
               resultingQuantityOnHand: resultingQuantityOnHandParam,
               occurredAt: occurredAtParam,
-              dbType: dbTypeParam);
+              dbType: dbTypeParam,
+              dbChannel: dbChannelParam);
+
+          return object;
+        }),
+    StockReservationEntity: obx_int.EntityDefinition<StockReservationEntity>(
+        model: _entities[28],
+        toOneRelations: (StockReservationEntity object) => [],
+        toManyRelations: (StockReservationEntity object) => {},
+        getId: (StockReservationEntity object) => object.id,
+        setId: (StockReservationEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StockReservationEntity object, fb.Builder fbb) {
+          final itemNameOffset = fbb.writeString(object.itemName);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.itemId);
+          fbb.addOffset(2, itemNameOffset);
+          fbb.addInt64(3, object.quantityReserved);
+          fbb.addInt64(4, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final itemIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final itemNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final quantityReservedParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = StockReservationEntity(
+              id: idParam,
+              itemId: itemIdParam,
+              itemName: itemNameParam,
+              quantityReserved: quantityReservedParam,
+              createdAt: createdAtParam);
 
           return object;
         })
@@ -3540,4 +3626,32 @@ class StockMovementEntity_ {
   /// see [StockMovementEntity.occurredAt]
   static final occurredAt =
       obx.QueryDateProperty<StockMovementEntity>(_entities[27].properties[5]);
+
+  /// see [StockMovementEntity.dbChannel]
+  static final dbChannel = obx.QueryIntegerProperty<StockMovementEntity>(
+      _entities[27].properties[6]);
+}
+
+/// [StockReservationEntity] entity fields to define ObjectBox queries.
+class StockReservationEntity_ {
+  /// see [StockReservationEntity.id]
+  static final id = obx.QueryIntegerProperty<StockReservationEntity>(
+      _entities[28].properties[0]);
+
+  /// see [StockReservationEntity.itemId]
+  static final itemId = obx.QueryIntegerProperty<StockReservationEntity>(
+      _entities[28].properties[1]);
+
+  /// see [StockReservationEntity.itemName]
+  static final itemName = obx.QueryStringProperty<StockReservationEntity>(
+      _entities[28].properties[2]);
+
+  /// see [StockReservationEntity.quantityReserved]
+  static final quantityReserved =
+      obx.QueryIntegerProperty<StockReservationEntity>(
+          _entities[28].properties[3]);
+
+  /// see [StockReservationEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<StockReservationEntity>(
+      _entities[28].properties[4]);
 }

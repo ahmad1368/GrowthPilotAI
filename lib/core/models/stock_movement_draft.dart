@@ -7,6 +7,12 @@ class StockMovementDraft {
   final InventoryItemEntity item;
   final int quantity;
   final StockMovementType type;
+  final SalesChannel channel;
 
-  const StockMovementDraft({required this.item, required this.quantity, required this.type});
+  const StockMovementDraft({
+    required this.item,
+    required this.quantity,
+    required this.type,
+    this.channel = SalesChannel.pos,
+  });
 }

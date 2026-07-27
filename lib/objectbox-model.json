@@ -1162,7 +1162,7 @@
     },
     {
       "id": "29:7077461295627620354",
-      "lastPropertyId": "6:4303523335206970392",
+      "lastPropertyId": "7:329968941315551720",
       "name": "StockMovementEntity",
       "properties": [
         {
@@ -1197,13 +1197,54 @@
           "type": 10,
           "flags": 8,
           "indexId": "33:953067082643052537"
+        },
+        {
+          "id": "7:329968941315551720",
+          "name": "dbChannel",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "30:4268004160310080526",
+      "lastPropertyId": "5:6358374888249132265",
+      "name": "StockReservationEntity",
+      "properties": [
+        {
+          "id": "1:7849859017958451065",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:526562144726830391",
+          "name": "itemId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "34:1053221151445157619"
+        },
+        {
+          "id": "3:856768813147919200",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "4:171742667479986669",
+          "name": "quantityReserved",
+          "type": 6
+        },
+        {
+          "id": "5:6358374888249132265",
+          "name": "createdAt",
+          "type": 10
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "29:7077461295627620354",
-  "lastIndexId": "33:953067082643052537",
+  "lastEntityId": "30:4268004160310080526",
+  "lastIndexId": "34:1053221151445157619",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
