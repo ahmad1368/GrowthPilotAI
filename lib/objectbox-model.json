@@ -1241,10 +1241,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "31:7916463474997636770",
+      "lastPropertyId": "6:2803279372281915909",
+      "name": "InventoryCostLayerEntity",
+      "properties": [
+        {
+          "id": "1:1635785134483837919",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:818080792147513622",
+          "name": "itemId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "35:5133569423408149490"
+        },
+        {
+          "id": "3:8436018779996054446",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "4:3661216039866131711",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "5:247879454894414102",
+          "name": "unitCost",
+          "type": 8
+        },
+        {
+          "id": "6:2803279372281915909",
+          "name": "receivedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "30:4268004160310080526",
-  "lastIndexId": "34:1053221151445157619",
+  "lastEntityId": "31:7916463474997636770",
+  "lastIndexId": "35:5133569423408149490",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

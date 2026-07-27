@@ -25,6 +25,7 @@ import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/inventory_category_entity.dart';
+import 'core/data/entities/inventory_cost_layer_entity.dart';
 import 'core/data/entities/inventory_item_attribute_entity.dart';
 import 'core/data/entities/inventory_item_entity.dart';
 import 'core/data/entities/inventory_stock_take_entity.dart';
@@ -1268,6 +1269,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(31, 7916463474997636770),
+      name: 'InventoryCostLayerEntity',
+      lastPropertyId: const obx_int.IdUid(6, 2803279372281915909),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1635785134483837919),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 818080792147513622),
+            name: 'itemId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(35, 5133569423408149490)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8436018779996054446),
+            name: 'itemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3661216039866131711),
+            name: 'quantity',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 247879454894414102),
+            name: 'unitCost',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2803279372281915909),
+            name: 'receivedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1306,8 +1347,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(30, 4268004160310080526),
-      lastIndexId: const obx_int.IdUid(34, 1053221151445157619),
+      lastEntityId: const obx_int.IdUid(31, 7916463474997636770),
+      lastIndexId: const obx_int.IdUid(35, 5133569423408149490),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2799,7 +2840,54 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
-        })
+        }),
+    InventoryCostLayerEntity:
+        obx_int.EntityDefinition<InventoryCostLayerEntity>(
+            model: _entities[29],
+            toOneRelations: (InventoryCostLayerEntity object) => [],
+            toManyRelations: (InventoryCostLayerEntity object) => {},
+            getId: (InventoryCostLayerEntity object) => object.id,
+            setId: (InventoryCostLayerEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (InventoryCostLayerEntity object, fb.Builder fbb) {
+              final itemNameOffset = fbb.writeString(object.itemName);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.itemId);
+              fbb.addOffset(2, itemNameOffset);
+              fbb.addInt64(3, object.quantity);
+              fbb.addFloat64(4, object.unitCost);
+              fbb.addInt64(5, object.receivedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final itemIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final itemNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final quantityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final unitCostParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final receivedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = InventoryCostLayerEntity(
+                  id: idParam,
+                  itemId: itemIdParam,
+                  itemName: itemNameParam,
+                  quantity: quantityParam,
+                  unitCost: unitCostParam,
+                  receivedAt: receivedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -3654,4 +3742,31 @@ class StockReservationEntity_ {
   /// see [StockReservationEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<StockReservationEntity>(
       _entities[28].properties[4]);
+}
+
+/// [InventoryCostLayerEntity] entity fields to define ObjectBox queries.
+class InventoryCostLayerEntity_ {
+  /// see [InventoryCostLayerEntity.id]
+  static final id = obx.QueryIntegerProperty<InventoryCostLayerEntity>(
+      _entities[29].properties[0]);
+
+  /// see [InventoryCostLayerEntity.itemId]
+  static final itemId = obx.QueryIntegerProperty<InventoryCostLayerEntity>(
+      _entities[29].properties[1]);
+
+  /// see [InventoryCostLayerEntity.itemName]
+  static final itemName = obx.QueryStringProperty<InventoryCostLayerEntity>(
+      _entities[29].properties[2]);
+
+  /// see [InventoryCostLayerEntity.quantity]
+  static final quantity = obx.QueryIntegerProperty<InventoryCostLayerEntity>(
+      _entities[29].properties[3]);
+
+  /// see [InventoryCostLayerEntity.unitCost]
+  static final unitCost = obx.QueryDoubleProperty<InventoryCostLayerEntity>(
+      _entities[29].properties[4]);
+
+  /// see [InventoryCostLayerEntity.receivedAt]
+  static final receivedAt = obx.QueryDateProperty<InventoryCostLayerEntity>(
+      _entities[29].properties[5]);
 }

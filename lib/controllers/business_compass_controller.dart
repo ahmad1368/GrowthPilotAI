@@ -22,6 +22,8 @@ import 'package:growth_pilot_ai/core/data/entities/purchase_order_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/goods_receipt_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/stock_movement_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/stock_reservation_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_cost_layer_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/inventory_cost_layer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
@@ -56,6 +58,7 @@ class BusinessCompassController extends GetxController {
   late GoodsReceiptRepository _goodsReceipts;
   late StockMovementRepository _stockMovements;
   late StockReservationRepository _stockReservations;
+  late InventoryCostLayerRepository _costLayers;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -238,6 +241,11 @@ class BusinessCompassController extends GetxController {
           'reservations': _stockReservations.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'INVENTORY_VALUATION',
+        title: 'Inventory Valuation Reporting',
+        data: {'items': _inventoryItems.getAll(), 'layers': _costLayers.getAll()},
+      ),
     ];
   }
 
@@ -260,6 +268,7 @@ class BusinessCompassController extends GetxController {
     _goodsReceipts = GoodsReceiptRepository(store.box<GoodsReceiptEntity>());
     _stockMovements = StockMovementRepository(store.box<StockMovementEntity>());
     _stockReservations = StockReservationRepository(store.box<StockReservationEntity>());
+    _costLayers = InventoryCostLayerRepository(store.box<InventoryCostLayerEntity>());
     _recompute();
   }
 
