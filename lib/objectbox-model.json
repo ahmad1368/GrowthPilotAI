@@ -1159,10 +1159,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "29:7077461295627620354",
+      "lastPropertyId": "6:4303523335206970392",
+      "name": "StockMovementEntity",
+      "properties": [
+        {
+          "id": "1:711424487284789781",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4303663542852660656",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "3:2010103645863782180",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "4:9114957688925187097",
+          "name": "dbType",
+          "type": 6
+        },
+        {
+          "id": "5:6948761787245630978",
+          "name": "resultingQuantityOnHand",
+          "type": 6
+        },
+        {
+          "id": "6:4303523335206970392",
+          "name": "occurredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "33:953067082643052537"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "28:7845887884931364772",
-  "lastIndexId": "32:2337846106402815771",
+  "lastEntityId": "29:7077461295627620354",
+  "lastIndexId": "33:953067082643052537",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
