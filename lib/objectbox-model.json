@@ -1110,10 +1110,59 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "28:7845887884931364772",
+      "lastPropertyId": "7:7611598337128057925",
+      "name": "GoodsReceiptEntity",
+      "properties": [
+        {
+          "id": "1:3226421195735685636",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3196684684934749543",
+          "name": "purchaseOrderId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "31:5457000744657076294",
+          "relationTarget": "PurchaseOrderEntity"
+        },
+        {
+          "id": "3:7524705831482478254",
+          "name": "receivedItemsSummary",
+          "type": 9
+        },
+        {
+          "id": "4:4822109638552703567",
+          "name": "damagedOrMissingNotes",
+          "type": 9
+        },
+        {
+          "id": "5:8058257751431442114",
+          "name": "invoiceReference",
+          "type": 9
+        },
+        {
+          "id": "6:2991708766530949341",
+          "name": "invoiceAmount",
+          "type": 8
+        },
+        {
+          "id": "7:7611598337128057925",
+          "name": "receivedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "32:2337846106402815771"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "27:8277370032489067981",
-  "lastIndexId": "30:185843924825212111",
+  "lastEntityId": "28:7845887884931364772",
+  "lastIndexId": "32:2337846106402815771",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

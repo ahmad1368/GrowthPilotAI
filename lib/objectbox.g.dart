@@ -20,6 +20,7 @@ import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
+import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
@@ -1138,6 +1139,53 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(28, 7845887884931364772),
+      name: 'GoodsReceiptEntity',
+      lastPropertyId: const obx_int.IdUid(7, 7611598337128057925),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3226421195735685636),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3196684684934749543),
+            name: 'purchaseOrderId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(31, 5457000744657076294),
+            relationTarget: 'PurchaseOrderEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7524705831482478254),
+            name: 'receivedItemsSummary',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4822109638552703567),
+            name: 'damagedOrMissingNotes',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8058257751431442114),
+            name: 'invoiceReference',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2991708766530949341),
+            name: 'invoiceAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7611598337128057925),
+            name: 'receivedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(32, 2337846106402815771))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1176,8 +1224,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(27, 8277370032489067981),
-      lastIndexId: const obx_int.IdUid(30, 185843924825212111),
+      lastEntityId: const obx_int.IdUid(28, 7845887884931364772),
+      lastIndexId: const obx_int.IdUid(32, 2337846106402815771),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2523,6 +2571,62 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbStatus: dbStatusParam);
 
           return object;
+        }),
+    GoodsReceiptEntity: obx_int.EntityDefinition<GoodsReceiptEntity>(
+        model: _entities[26],
+        toOneRelations: (GoodsReceiptEntity object) => [object.purchaseOrder],
+        toManyRelations: (GoodsReceiptEntity object) => {},
+        getId: (GoodsReceiptEntity object) => object.id,
+        setId: (GoodsReceiptEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (GoodsReceiptEntity object, fb.Builder fbb) {
+          final receivedItemsSummaryOffset =
+              fbb.writeString(object.receivedItemsSummary);
+          final damagedOrMissingNotesOffset =
+              fbb.writeString(object.damagedOrMissingNotes);
+          final invoiceReferenceOffset =
+              fbb.writeString(object.invoiceReference);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.purchaseOrder.targetId);
+          fbb.addOffset(2, receivedItemsSummaryOffset);
+          fbb.addOffset(3, damagedOrMissingNotesOffset);
+          fbb.addOffset(4, invoiceReferenceOffset);
+          fbb.addFloat64(5, object.invoiceAmount);
+          fbb.addInt64(6, object.receivedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final receivedItemsSummaryParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final damagedOrMissingNotesParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final invoiceReferenceParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final invoiceAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final receivedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = GoodsReceiptEntity(
+              id: idParam,
+              receivedItemsSummary: receivedItemsSummaryParam,
+              damagedOrMissingNotes: damagedOrMissingNotesParam,
+              invoiceReference: invoiceReferenceParam,
+              invoiceAmount: invoiceAmountParam,
+              receivedAt: receivedAtParam);
+          object.purchaseOrder.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.purchaseOrder.attach(store);
+          return object;
         })
   };
 
@@ -3290,4 +3394,36 @@ class PurchaseOrderEntity_ {
   /// see [PurchaseOrderEntity.dbStatus]
   static final dbStatus = obx.QueryIntegerProperty<PurchaseOrderEntity>(
       _entities[25].properties[5]);
+}
+
+/// [GoodsReceiptEntity] entity fields to define ObjectBox queries.
+class GoodsReceiptEntity_ {
+  /// see [GoodsReceiptEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<GoodsReceiptEntity>(_entities[26].properties[0]);
+
+  /// see [GoodsReceiptEntity.purchaseOrder]
+  static final purchaseOrder =
+      obx.QueryRelationToOne<GoodsReceiptEntity, PurchaseOrderEntity>(
+          _entities[26].properties[1]);
+
+  /// see [GoodsReceiptEntity.receivedItemsSummary]
+  static final receivedItemsSummary =
+      obx.QueryStringProperty<GoodsReceiptEntity>(_entities[26].properties[2]);
+
+  /// see [GoodsReceiptEntity.damagedOrMissingNotes]
+  static final damagedOrMissingNotes =
+      obx.QueryStringProperty<GoodsReceiptEntity>(_entities[26].properties[3]);
+
+  /// see [GoodsReceiptEntity.invoiceReference]
+  static final invoiceReference =
+      obx.QueryStringProperty<GoodsReceiptEntity>(_entities[26].properties[4]);
+
+  /// see [GoodsReceiptEntity.invoiceAmount]
+  static final invoiceAmount =
+      obx.QueryDoubleProperty<GoodsReceiptEntity>(_entities[26].properties[5]);
+
+  /// see [GoodsReceiptEntity.receivedAt]
+  static final receivedAt =
+      obx.QueryDateProperty<GoodsReceiptEntity>(_entities[26].properties[6]);
 }
