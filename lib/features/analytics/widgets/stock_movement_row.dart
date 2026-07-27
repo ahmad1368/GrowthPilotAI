@@ -19,7 +19,17 @@ class StockMovementRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: Text(movement.itemName, overflow: TextOverflow.ellipsis)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(movement.itemName, overflow: TextOverflow.ellipsis),
+                Text(movement.channel == SalesChannel.pos ? 'In-Store (POS)' : 'Online',
+                    style:
+                        TextStyle(fontSize: 11, color: scheme.onSurface.withValues(alpha: 0.5))),
+              ],
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

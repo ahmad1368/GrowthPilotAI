@@ -21,11 +21,13 @@ import 'package:growth_pilot_ai/core/data/entities/vendor_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/purchase_order_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/goods_receipt_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/stock_movement_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/stock_reservation_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_movement_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
@@ -53,6 +55,7 @@ class BusinessCompassController extends GetxController {
   late PurchaseOrderRepository _purchaseOrders;
   late GoodsReceiptRepository _goodsReceipts;
   late StockMovementRepository _stockMovements;
+  late StockReservationRepository _stockReservations;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -229,7 +232,11 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'STOCK_MOVEMENT',
         title: 'Real-Time Stock Tracking',
-        data: {'movements': _stockMovements.getAll(), 'items': _inventoryItems.getAll()},
+        data: {
+          'movements': _stockMovements.getAll(),
+          'items': _inventoryItems.getAll(),
+          'reservations': _stockReservations.getAll(),
+        },
       ),
     ];
   }
@@ -252,6 +259,7 @@ class BusinessCompassController extends GetxController {
     _purchaseOrders = PurchaseOrderRepository(store.box<PurchaseOrderEntity>());
     _goodsReceipts = GoodsReceiptRepository(store.box<GoodsReceiptEntity>());
     _stockMovements = StockMovementRepository(store.box<StockMovementEntity>());
+    _stockReservations = StockReservationRepository(store.box<StockReservationEntity>());
     _recompute();
   }
 

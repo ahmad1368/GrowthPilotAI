@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/stock_movement_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/stock_reservation_entity.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_movement_report_widget.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -25,7 +26,11 @@ StockMovementEntity _movement(StockMovementType type, {int quantity = 4}) {
 void main() {
   testWidgets('shows a placeholder when no stock movements exist', (tester) async {
     await tester.pumpWidget(_wrap(const StockMovementReportWidget(
-        data: {'movements': <StockMovementEntity>[], 'items': <InventoryItemEntity>[]},
+        data: {
+          'movements': <StockMovementEntity>[],
+          'items': <InventoryItemEntity>[],
+          'reservations': <StockReservationEntity>[],
+        },
         title: 'x')));
 
     expect(find.text('No stock movements recorded yet.'), findsOneWidget);
@@ -36,6 +41,7 @@ void main() {
         data: {
           'movements': [_movement(StockMovementType.sale)],
           'items': const <InventoryItemEntity>[],
+          'reservations': const <StockReservationEntity>[],
         },
         title: 'x')));
 
@@ -48,6 +54,7 @@ void main() {
         data: {
           'movements': [_movement(StockMovementType.returnStock)],
           'items': const <InventoryItemEntity>[],
+          'reservations': const <StockReservationEntity>[],
         },
         title: 'x')));
 
@@ -57,7 +64,11 @@ void main() {
 
   testWidgets('shows the "+ Record Movement" button', (tester) async {
     await tester.pumpWidget(_wrap(const StockMovementReportWidget(
-        data: {'movements': <StockMovementEntity>[], 'items': <InventoryItemEntity>[]},
+        data: {
+          'movements': <StockMovementEntity>[],
+          'items': <InventoryItemEntity>[],
+          'reservations': <StockReservationEntity>[],
+        },
         title: 'x')));
 
     expect(find.text('+ Record Movement'), findsOneWidget);

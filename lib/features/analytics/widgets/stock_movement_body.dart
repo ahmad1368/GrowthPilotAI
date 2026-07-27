@@ -28,8 +28,9 @@ class _StockMovementBodyState extends State<StockMovementBody> {
     if (draft == null) return;
 
     final store = Get.find<ObjectBox>().store;
-    final result =
-        await ApplyStockMovement.call(store, draft.item.id, draft.quantity, draft.type);
+    final result = await ApplyStockMovement.call(
+        store, draft.item.id, draft.quantity, draft.type,
+        channel: draft.channel);
 
     if (!result.success) {
       if (!mounted) return;

@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/stock_movement_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/stock_reservation_entity.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_movement_report_widget.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -29,10 +30,13 @@ void main() {
 
   final movements = [sale, returnStock];
 
+  final reservation = StockReservationEntity(
+      itemId: 1, itemName: 'Flour', quantityReserved: 2, createdAt: DateTime(2026, 1, 6));
+
   Future<void> capture(WidgetTester tester, Brightness brightness, String file) async {
     final bg = brightness == Brightness.dark ? const Color(0xFF09090B) : const Color(0xFFFFFFFF);
     final key = GlobalKey();
-    await tester.binding.setSurfaceSize(const Size(380, 340));
+    await tester.binding.setSurfaceSize(const Size(380, 480));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(MaterialApp(
       home: ShadTheme(
@@ -44,7 +48,11 @@ void main() {
               color: bg,
               padding: const EdgeInsets.all(12),
               child: StockMovementReportWidget(
-                  data: {'movements': movements, 'items': const <InventoryItemEntity>[]},
+                  data: {
+                    'movements': movements,
+                    'items': const <InventoryItemEntity>[],
+                    'reservations': [reservation],
+                  },
                   title: 'Real-Time Stock Tracking'),
             ),
           ),

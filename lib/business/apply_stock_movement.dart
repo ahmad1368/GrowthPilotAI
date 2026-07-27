@@ -13,7 +13,8 @@ import 'package:objectbox/objectbox.dart';
 /// sales can't both pass a stale check and oversell.
 class ApplyStockMovement {
   static OmniResult<StockMovementEntity> call(
-      Store store, int itemId, int quantity, StockMovementType type) async {
+      Store store, int itemId, int quantity, StockMovementType type,
+      {SalesChannel channel = SalesChannel.pos}) async {
     try {
       final itemBox = store.box<InventoryItemEntity>();
       final movementBox = store.box<StockMovementEntity>();
@@ -34,7 +35,9 @@ class ApplyStockMovement {
           quantity: quantity,
           resultingQuantityOnHand: calc.resultingQuantityOnHand!,
           occurredAt: DateTime.now(),
-        )..type = type;
+        )
+          ..type = type
+          ..channel = channel;
         movementBox.put(movement);
       });
 
