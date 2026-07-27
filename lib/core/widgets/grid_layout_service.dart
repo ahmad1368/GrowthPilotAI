@@ -24,6 +24,7 @@ class GridLayoutService {
     'STOCK_TAKE',
     'SUPPLIER_DIRECTORY',
     'PURCHASE_ORDER',
+    'GOODS_RECEIPT',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
