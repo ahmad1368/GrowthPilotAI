@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/business/compute_inventory_stock_status.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_item_row.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/low_stock_alerts_panel.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Renders the inventory stock rows + quick-add buttons (Issue #435, +
@@ -29,7 +30,8 @@ class InventoryReportView extends StatelessWidget {
       children: [
         Text('Stock on hand vs. reorder threshold',
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 12, color: scheme.onSurface.withValues(alpha: 0.6))),
+            style: TextStyle(
+                fontSize: 12, color: scheme.onSurface.withValues(alpha: 0.6))),
         const SizedBox(height: 8),
         Wrap(
           alignment: WrapAlignment.end,
@@ -38,15 +40,18 @@ class InventoryReportView extends StatelessWidget {
           children: [
             ShadButton.outline(
               onPressed: onAddCategory,
-              child: Text('+ Category', style: TextStyle(color: scheme.onSurface)),
+              child:
+                  Text('+ Category', style: TextStyle(color: scheme.onSurface)),
             ),
             ShadButton.outline(
               onPressed: onAddItem,
-              child: Text('+ Add Item', style: TextStyle(color: scheme.onSurface)),
+              child:
+                  Text('+ Add Item', style: TextStyle(color: scheme.onSurface)),
             ),
           ],
         ),
         const SizedBox(height: 8),
+        LowStockAlertsPanel(items: items),
         if (stockItems.isEmpty)
           const Text('No inventory items tracked yet.')
         else
