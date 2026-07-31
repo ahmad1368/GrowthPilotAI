@@ -37,6 +37,7 @@ import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
+import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
@@ -1427,6 +1428,36 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(38, 4141602465019896620))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(35, 6340990257950518916),
+      name: 'StaffShiftEntity',
+      lastPropertyId: const obx_int.IdUid(4, 8313409079363814190),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6853559530499649215),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8018431565252726803),
+            name: 'staffName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7345571278541791765),
+            name: 'startTime',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(39, 8260257148702625132)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8313409079363814190),
+            name: 'endTime',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1465,8 +1496,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(34, 8009711261415448339),
-      lastIndexId: const obx_int.IdUid(38, 4141602465019896620),
+      lastEntityId: const obx_int.IdUid(35, 6340990257950518916),
+      lastIndexId: const obx_int.IdUid(39, 8260257148702625132),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3136,6 +3167,43 @@ obx_int.ModelDefinition getObjectBoxModel() {
               date: dateParam);
 
           return object;
+        }),
+    StaffShiftEntity: obx_int.EntityDefinition<StaffShiftEntity>(
+        model: _entities[33],
+        toOneRelations: (StaffShiftEntity object) => [],
+        toManyRelations: (StaffShiftEntity object) => {},
+        getId: (StaffShiftEntity object) => object.id,
+        setId: (StaffShiftEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StaffShiftEntity object, fb.Builder fbb) {
+          final staffNameOffset = fbb.writeString(object.staffName);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, staffNameOffset);
+          fbb.addInt64(2, object.startTime.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.endTime.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final staffNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final startTimeParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final endTimeParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = StaffShiftEntity(
+              id: idParam,
+              staffName: staffNameParam,
+              startTime: startTimeParam,
+              endTime: endTimeParam);
+
+          return object;
         })
   };
 
@@ -4096,4 +4164,23 @@ class WarrantyClaimEntity_ {
   /// see [WarrantyClaimEntity.date]
   static final date =
       obx.QueryDateProperty<WarrantyClaimEntity>(_entities[32].properties[4]);
+}
+
+/// [StaffShiftEntity] entity fields to define ObjectBox queries.
+class StaffShiftEntity_ {
+  /// see [StaffShiftEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<StaffShiftEntity>(_entities[33].properties[0]);
+
+  /// see [StaffShiftEntity.staffName]
+  static final staffName =
+      obx.QueryStringProperty<StaffShiftEntity>(_entities[33].properties[1]);
+
+  /// see [StaffShiftEntity.startTime]
+  static final startTime =
+      obx.QueryDateProperty<StaffShiftEntity>(_entities[33].properties[2]);
+
+  /// see [StaffShiftEntity.endTime]
+  static final endTime =
+      obx.QueryDateProperty<StaffShiftEntity>(_entities[33].properties[3]);
 }

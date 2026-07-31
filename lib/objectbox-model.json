@@ -1400,10 +1400,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "35:6340990257950518916",
+      "lastPropertyId": "4:8313409079363814190",
+      "name": "StaffShiftEntity",
+      "properties": [
+        {
+          "id": "1:6853559530499649215",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8018431565252726803",
+          "name": "staffName",
+          "type": 9
+        },
+        {
+          "id": "3:7345571278541791765",
+          "name": "startTime",
+          "type": 10,
+          "flags": 8,
+          "indexId": "39:8260257148702625132"
+        },
+        {
+          "id": "4:8313409079363814190",
+          "name": "endTime",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "34:8009711261415448339",
-  "lastIndexId": "38:4141602465019896620",
+  "lastEntityId": "35:6340990257950518916",
+  "lastIndexId": "39:8260257148702625132",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

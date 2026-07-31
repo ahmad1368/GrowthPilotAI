@@ -32,6 +32,7 @@ import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repo
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/staff_shift_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_movement_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
@@ -40,6 +41,7 @@ import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/warranty_claim_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/warranty_claim_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/staff_shift_entity.dart';
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
 import 'package:growth_pilot_ai/core/enum/compass_period.dart';
 import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';
@@ -67,6 +69,7 @@ class BusinessCompassController extends GetxController {
   late InventoryCostLayerRepository _costLayers;
   late AdCampaignRepository _adCampaigns;
   late DiscountCampaignRepository _discountCampaigns;
+  late StaffShiftRepository _staffShifts;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -386,6 +389,14 @@ class BusinessCompassController extends GetxController {
           'transactions': _transactions.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'STAFF_WORK_EFFICIENCY',
+        title: 'Staff Work Efficiency',
+        data: {
+          'shifts': _staffShifts.getAll(),
+          'transactions': _transactions.getAll(),
+        },
+      ),
     ];
   }
 
@@ -416,6 +427,7 @@ class BusinessCompassController extends GetxController {
     _adCampaigns = AdCampaignRepository(store.box<AdCampaignEntity>());
     _discountCampaigns =
         DiscountCampaignRepository(store.box<DiscountCampaignEntity>());
+    _staffShifts = StaffShiftRepository(store.box<StaffShiftEntity>());
     _recompute();
   }
 
