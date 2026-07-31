@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/holiday_impact_report
 import 'package:growth_pilot_ai/features/analytics/widgets/inflation_impact_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/inventory_turnover_aging_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_valuation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
@@ -38,34 +39,28 @@ import 'package:growth_pilot_ai/features/analytics/widgets/waste_log_report_widg
 /// only needs one more line like these.
 class ReportWidgetsBootstrap {
   static void register() {
-    ReportWidgetRegistry.register(
-        'RADAR_CHART', (spec) => RadarReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register(
-        'METRIC_LEGEND',
-        (spec) =>
-            MetricLegendReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('RADAR_CHART',
+        (spec) => RadarReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('METRIC_LEGEND',
+        (spec) => MetricLegendReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register(
         'INSIGHT_TEXT',
-        (spec) => InsightNarrativeReportWidget(
-            data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register(
-        'MAPPED_RADAR_CHART',
-        (spec) => MappedRadarReportWidget(
-            data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register(
-        'PROFIT_MARGIN_CHART',
-        (spec) => ProfitMarginReportWidget(
-            data: spec.data, title: spec.title));
+        (spec) =>
+            InsightNarrativeReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('MAPPED_RADAR_CHART',
+        (spec) => MappedRadarReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('PROFIT_MARGIN_CHART',
+        (spec) => ProfitMarginReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register(
         'SEASONAL_DEMAND_CHART',
-        (spec) => SeasonalDemandReportWidget(
-            data: spec.data, title: spec.title));
+        (spec) =>
+            SeasonalDemandReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('PL_REPORT',
         (spec) => PLReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register(
         'BRAND_PENETRATION_INDEX',
-        (spec) => BrandPenetrationReportWidget(
-            data: spec.data, title: spec.title));
+        (spec) =>
+            BrandPenetrationReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register(
         'CATEGORY_PROFITABILITY',
         (spec) => CategoryProfitabilityReportWidget(
@@ -74,46 +69,82 @@ class ReportWidgetsBootstrap {
         (spec) => TrafficReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('OVERHEAD_ANALYSIS',
         (spec) => OverheadReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('CASH_FLOW_FORECAST',
-        (spec) => CashFlowForecastReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('SUPPLIER_SCORECARD',
-        (spec) => SupplierScorecardReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('INFLATION_IMPACT',
-        (spec) => InflationImpactReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CASH_FLOW_FORECAST',
+        (spec) =>
+            CashFlowForecastReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SUPPLIER_SCORECARD',
+        (spec) =>
+            SupplierScorecardReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'INFLATION_IMPACT',
+        (spec) =>
+            InflationImpactReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('WASTE_LOG',
         (spec) => WasteLogReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('CATEGORY_ELASTICITY',
-        (spec) => CategoryElasticityReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('BUDGET_VARIANCE',
-        (spec) => BudgetVarianceReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('FINANCIAL_HEALTH',
-        (spec) => FinancialHealthReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('SEASONAL_OVERHEAD_CHART',
-        (spec) => SeasonalOverheadReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('HOLIDAY_IMPACT',
-        (spec) => HolidayImpactReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('COMPLIANCE_RISK',
-        (spec) => ComplianceRiskReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('REGIONAL_AFFORDABILITY',
-        (spec) => RegionalAffordabilityReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('SPACE_PRODUCTIVITY',
-        (spec) => SpaceProductivityReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('ANNUAL_PROFIT_FORECAST',
-        (spec) => AnnualProfitForecastReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CATEGORY_ELASTICITY',
+        (spec) =>
+            CategoryElasticityReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'BUDGET_VARIANCE',
+        (spec) =>
+            BudgetVarianceReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'FINANCIAL_HEALTH',
+        (spec) =>
+            FinancialHealthReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SEASONAL_OVERHEAD_CHART',
+        (spec) =>
+            SeasonalOverheadReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'HOLIDAY_IMPACT',
+        (spec) =>
+            HolidayImpactReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'COMPLIANCE_RISK',
+        (spec) =>
+            ComplianceRiskReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'REGIONAL_AFFORDABILITY',
+        (spec) => RegionalAffordabilityReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SPACE_PRODUCTIVITY',
+        (spec) =>
+            SpaceProductivityReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'ANNUAL_PROFIT_FORECAST',
+        (spec) => AnnualProfitForecastReportWidget(
+            data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('INVENTORY_STOCK',
         (spec) => InventoryReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('STOCK_TAKE',
         (spec) => StockTakeReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('SUPPLIER_DIRECTORY',
-        (spec) => SupplierDirectoryReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('PURCHASE_ORDER',
-        (spec) => PurchaseOrderReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SUPPLIER_DIRECTORY',
+        (spec) =>
+            SupplierDirectoryReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'PURCHASE_ORDER',
+        (spec) =>
+            PurchaseOrderReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('GOODS_RECEIPT',
         (spec) => GoodsReceiptReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('STOCK_MOVEMENT',
-        (spec) => StockMovementReportWidget(data: spec.data, title: spec.title));
-    ReportWidgetRegistry.register('INVENTORY_VALUATION',
-        (spec) => InventoryValuationReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'STOCK_MOVEMENT',
+        (spec) =>
+            StockMovementReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'INVENTORY_VALUATION',
+        (spec) =>
+            InventoryValuationReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'INVENTORY_TURNOVER_AGING',
+        (spec) => InventoryTurnoverAgingReportWidget(
+            data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

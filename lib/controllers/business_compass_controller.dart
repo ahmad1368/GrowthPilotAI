@@ -163,7 +163,10 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'BUDGET_VARIANCE',
         title: 'Budget Variance Alerts',
-        data: {'transactions': _transactions.getAll(), 'limits': _budgetLimits.getAll()},
+        data: {
+          'transactions': _transactions.getAll(),
+          'limits': _budgetLimits.getAll()
+        },
       ),
       ReportWidgetSpec(
         id: 'FINANCIAL_HEALTH',
@@ -193,7 +196,10 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'SPACE_PRODUCTIVITY',
         title: 'Commercial Space Productivity Index',
-        data: {'transactions': _transactions.getAll(), 'storeProfile': _storeProfile.get()},
+        data: {
+          'transactions': _transactions.getAll(),
+          'storeProfile': _storeProfile.get()
+        },
       ),
       ReportWidgetSpec(
         id: 'ANNUAL_PROFIT_FORECAST',
@@ -225,12 +231,18 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'PURCHASE_ORDER',
         title: 'Automated Purchase Orders',
-        data: {'orders': _purchaseOrders.getAll(), 'items': _inventoryItems.getAll()},
+        data: {
+          'orders': _purchaseOrders.getAll(),
+          'items': _inventoryItems.getAll()
+        },
       ),
       ReportWidgetSpec(
         id: 'GOODS_RECEIPT',
         title: 'Goods Receipt & Invoice Matching',
-        data: {'receipts': _goodsReceipts.getAll(), 'orders': _purchaseOrders.getAll()},
+        data: {
+          'receipts': _goodsReceipts.getAll(),
+          'orders': _purchaseOrders.getAll()
+        },
       ),
       ReportWidgetSpec(
         id: 'STOCK_MOVEMENT',
@@ -244,7 +256,20 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'INVENTORY_VALUATION',
         title: 'Inventory Valuation Reporting',
-        data: {'items': _inventoryItems.getAll(), 'layers': _costLayers.getAll()},
+        data: {
+          'items': _inventoryItems.getAll(),
+          'layers': _costLayers.getAll()
+        },
+      ),
+      ReportWidgetSpec(
+        id: 'INVENTORY_TURNOVER_AGING',
+        title: 'Turnover & Aging Dashboard',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+          'layers': _costLayers.getAll(),
+          'sector': selectedSector.value,
+        },
       ),
     ];
   }
@@ -257,18 +282,22 @@ class BusinessCompassController extends GetxController {
     _wasteLog = WasteLogRepository(store.box<WasteLogEntity>());
     _budgetLimits = BudgetLimitRepository(store.box<BudgetLimitEntity>());
     _linkedAccounts = LinkedAccountRepository(store.box<LinkedAccountEntity>());
-    _complianceItems = ComplianceItemRepository(store.box<ComplianceItemEntity>());
+    _complianceItems =
+        ComplianceItemRepository(store.box<ComplianceItemEntity>());
     _storeProfile = StoreProfileRepository(store.box<StoreProfileEntity>());
     _inventoryItems = InventoryItemRepository(store.box<InventoryItemEntity>());
     _inventoryCategories =
         InventoryCategoryRepository(store.box<InventoryCategoryEntity>());
-    _stockTakes = InventoryStockTakeRepository(store.box<InventoryStockTakeEntity>());
+    _stockTakes =
+        InventoryStockTakeRepository(store.box<InventoryStockTakeEntity>());
     _vendors = VendorRepository(store.box<VendorEntity>());
     _purchaseOrders = PurchaseOrderRepository(store.box<PurchaseOrderEntity>());
     _goodsReceipts = GoodsReceiptRepository(store.box<GoodsReceiptEntity>());
     _stockMovements = StockMovementRepository(store.box<StockMovementEntity>());
-    _stockReservations = StockReservationRepository(store.box<StockReservationEntity>());
-    _costLayers = InventoryCostLayerRepository(store.box<InventoryCostLayerEntity>());
+    _stockReservations =
+        StockReservationRepository(store.box<StockReservationEntity>());
+    _costLayers =
+        InventoryCostLayerRepository(store.box<InventoryCostLayerEntity>());
     _recompute();
   }
 
