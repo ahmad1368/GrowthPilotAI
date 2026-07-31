@@ -1,5 +1,5 @@
 ---
-description: Pick the next GitHub issue (by logical dependency order), implement it on a new branch, test/QA it, open a PR, and post an English report — then stop. Token-optimized.
+description: Pick the next GitHub issue (by logical dependency order), implement it on a new branch, open a PR, and post an English report — then stop. Token-optimized.
 ---
 
 نقش: دولوپر ارشد GrowthPilotAI. ریپو: https://github.com/ahmad1368/GrowthPilotAI
@@ -10,10 +10,10 @@ description: Pick the next GitHub issue (by logical dependency order), implement
 - خروجی چت مینیمال: بدون narration مرحله‌به‌مرحله، بدون تکرار این قوانین در پاسخ. فقط پیام‌های کوتاه ۱ خطی در نقاط کلیدی + خلاصه پایانی.
 - هیچ فایلی رو دوباره Read نکن اگر همین اجرا قبلاً خوندیش.
 - به‌جای کاوش گسترده در کل ریپو، مستقیم سراغ فایل‌های مرتبط با ایشیو انتخابی برو (Grep/Glob هدفمند، نه اکسپلور کامل درخت پروژه).
-- برای انتخاب ایشیو فقط از `gh issue list`/`gh pr list` استفاده کن (متن ساده)؛ مرورگر یا اسکرین‌شات لازم نیست تا مرحله QA.
+- برای انتخاب ایشیو فقط از `gh issue list`/`gh pr list` استفاده کن (متن ساده)؛ مرورگر یا اسکرین‌شات اصلاً لازم نیست، این پایپلاین QA بصری نداره.
 - Subagent فقط اگر واقعاً کار مستقل و موازی‌پذیر باشه؛ برای این پایپلاین معمولاً لازم نیست.
 - `flutter analyze` رو فقط یک‌بار در انتها اجرا کن، نه بعد از هر فایل. `flutter test` رو در این پایپلاین اصلاً اجرا نکن (نه کل سوئیت، نه فایل‌های تست جدید) — فقط فایل تست رو بنویس و کنارش بذار؛ اجرای تست‌ها یک تصمیم/تسک جدا از کاربره که خودش هروقت خواست دستی انجام می‌ده.
-- اسکرین‌شات فقط از صفحه(های) واقعاً تغییر‌یافته، هر کدام یک بار لایت + یک بار دارک (نه بیشتر، نه صفحات دست‌نخورده).
+- QA بصری (اجرای emulator/شبیه‌ساز، اسکرین‌شات، تست دستی UI) هم در این پایپلاین اصلاً انجام نده — کند و ناپایدار بوده. اگر کاربر بعداً خواست، دستور `/emulator-qa` جدا برای همین کار هست.
 - تحلیل «چرا این ایشیو» رو فقط ۲-۳ خط در بدنه PR بنویس، نه به‌صورت مکالمه‌ی مفصل در چت.
 - دستورات git/gh مرتبط رو تا حد امکان در یک فراخوانی ترمینال بچین (مثلاً add+commit پشت‌سرهم) به‌جای چند تول‌کال جدا.
 
@@ -54,9 +54,8 @@ description: Pick the next GitHub issue (by logical dependency order), implement
    - **سازگاری با build وب (Vercel)**: پروژه با `flutter build web` روی Vercel هم دیپلوی می‌شه، پس هر کدی که فقط native/موبایل باشه (`dart:io`، بایندینگ‌های نیتیو ObjectBox، متدهای پلتفرمی `path_provider`/`image_picker`/`permission_handler` و مشابه، یا هر پکیجی که پیاده‌سازی وب نداره) باید با `kIsWeb` (از `package:flutter/foundation.dart`) گارد بشه و یک مسیر جایگزین/fallback امن برای وب داشته باشه — نه این‌که بدون گارد کامپایل وب رو بشکنه. اگر یک قابلیت اصلاً روی وب معنا نداره (مثلاً دسترسی به فایل‌سیستم نیتیو)، پشت `if (kIsWeb) { ... } else { ... }` مخفی و در وب یک حالت no-op/پیام مناسب نشون بده، نه کرش یا خطای کامپایل.
    - قبل از باز کردن PR، اگه فایلی که تغییر دادی احتمال داره روی وب کامپایل نشه، حتماً `flutter build web --release` رو هم (علاوه بر analyze/test) یک‌بار لوکال امتحان کن؛ خطای کامپایل وب را رفع کن.
 6. **تست**: فایل Unit test جدا با نام صریح در `test/` برای منطق جدید.
-7. **بررسی نهایی**: یک‌بار `flutter analyze` (کامل) اجرا کن؛ `flutter test` رو اجرا نکن (کاربر خودش جدا هروقت تصمیم گرفت اجرا می‌کنه). اگر فایل‌های تغییر‌یافته احتمال ناسازگاری با وب دارن (پلتفرم-محور/native) یک‌بار `flutter build web --release` هم اجرا کن؛ خطا → رفع.
-8. **QA بصری**: فقط صفحات تغییر‌یافته، لایت+دارک، هر کدام یک اسکرین‌شات؛ چک سریع overflow در عرض موبایل/دسکتاپ.
-9. **کامیت/پوش/PR**: کامیت انگلیسی → push → `gh pr create --base stage` (فقط به `stage`، هرگز مستقیم به `main`؛ بدون merge خودکار) → روی همون PR ریپورت انگلیسی کوتاه:
+7. **بررسی نهایی**: یک‌بار `flutter analyze` (کامل) اجرا کن؛ `flutter test` رو اجرا نکن (کاربر خودش جدا هروقت تصمیم گرفت اجرا می‌کنه). اگر فایل‌های تغییر‌یافته احتمال ناسازگاری با وب دارن (پلتفرم-محور/native) یک‌بار `flutter build web --release` هم اجرا کن؛ خطا → رفع. اجرای emulator/شبیه‌ساز یا هر نوع QA بصری اینجا لازم نیست (کاربر خودش جدا با `/emulator-qa` انجام می‌ده).
+8. **کامیت/پوش/PR**: کامیت انگلیسی → push → `gh pr create --base stage` (فقط به `stage`، هرگز مستقیم به `main`؛ بدون merge خودکار) → روی همون PR ریپورت انگلیسی کوتاه:
    ```
    ## Summary
    - Why this issue now (1-3 lines)
@@ -64,7 +63,6 @@ description: Pick the next GitHub issue (by logical dependency order), implement
    - Legacy widgets removed/replaced (if any)
    - Tests added (not executed — run `flutter test` manually when ready)
    - analyze result
-   ## Screenshots
-   ## Notes (open follow-ups for future issues)
+   ## Notes (open follow-ups for future issues, incl. "visual QA not run — use /emulator-qa")
    ```
-10. **پایان**: بعد از باز شدن PR متوقف شو. خروجی نهایی چت: فقط شماره ایشیو، نام برنچ، لینک PR.
+9. **پایان**: بعد از باز شدن PR متوقف شو. خروجی نهایی چت: فقط شماره ایشیو، نام برنچ، لینک PR.
