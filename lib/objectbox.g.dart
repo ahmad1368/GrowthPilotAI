@@ -24,6 +24,7 @@ import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
+import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
@@ -1556,6 +1557,51 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(42, 8908425039240650818))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(39, 8915107045714942245),
+      name: 'ExchangeRateObservationEntity',
+      lastPropertyId: const obx_int.IdUid(7, 1738077262374924187),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2654902642932058806),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 527328707937155078),
+            name: 'currencyPair',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1602972896616006559),
+            name: 'baselineRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2241097363150352372),
+            name: 'currentRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2506047784217810984),
+            name: 'productName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4706279785211756246),
+            name: 'importCostForeign',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1738077262374924187),
+            name: 'observedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(43, 9200135933081044316))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1594,8 +1640,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(38, 8851261058019556831),
-      lastIndexId: const obx_int.IdUid(42, 8908425039240650818),
+      lastEntityId: const obx_int.IdUid(39, 8915107045714942245),
+      lastIndexId: const obx_int.IdUid(43, 9200135933081044316),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3416,7 +3462,60 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam, visitorCount: visitorCountParam, date: dateParam);
 
           return object;
-        })
+        }),
+    ExchangeRateObservationEntity:
+        obx_int.EntityDefinition<ExchangeRateObservationEntity>(
+            model: _entities[37],
+            toOneRelations: (ExchangeRateObservationEntity object) => [],
+            toManyRelations: (ExchangeRateObservationEntity object) => {},
+            getId: (ExchangeRateObservationEntity object) => object.id,
+            setId: (ExchangeRateObservationEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ExchangeRateObservationEntity object, fb.Builder fbb) {
+              final currencyPairOffset = fbb.writeString(object.currencyPair);
+              final productNameOffset = fbb.writeString(object.productName);
+              fbb.startTable(8);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, currencyPairOffset);
+              fbb.addFloat64(2, object.baselineRate);
+              fbb.addFloat64(3, object.currentRate);
+              fbb.addOffset(4, productNameOffset);
+              fbb.addFloat64(5, object.importCostForeign);
+              fbb.addInt64(6, object.observedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final currencyPairParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final baselineRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final currentRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final productNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+              final importCostForeignParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final observedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+              final object = ExchangeRateObservationEntity(
+                  id: idParam,
+                  currencyPair: currencyPairParam,
+                  baselineRate: baselineRateParam,
+                  currentRate: currentRateParam,
+                  productName: productNameParam,
+                  importCostForeign: importCostForeignParam,
+                  observedAt: observedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -4461,4 +4560,41 @@ class VisitorCountEntity_ {
   /// see [VisitorCountEntity.date]
   static final date =
       obx.QueryDateProperty<VisitorCountEntity>(_entities[36].properties[2]);
+}
+
+/// [ExchangeRateObservationEntity] entity fields to define ObjectBox queries.
+class ExchangeRateObservationEntity_ {
+  /// see [ExchangeRateObservationEntity.id]
+  static final id = obx.QueryIntegerProperty<ExchangeRateObservationEntity>(
+      _entities[37].properties[0]);
+
+  /// see [ExchangeRateObservationEntity.currencyPair]
+  static final currencyPair =
+      obx.QueryStringProperty<ExchangeRateObservationEntity>(
+          _entities[37].properties[1]);
+
+  /// see [ExchangeRateObservationEntity.baselineRate]
+  static final baselineRate =
+      obx.QueryDoubleProperty<ExchangeRateObservationEntity>(
+          _entities[37].properties[2]);
+
+  /// see [ExchangeRateObservationEntity.currentRate]
+  static final currentRate =
+      obx.QueryDoubleProperty<ExchangeRateObservationEntity>(
+          _entities[37].properties[3]);
+
+  /// see [ExchangeRateObservationEntity.productName]
+  static final productName =
+      obx.QueryStringProperty<ExchangeRateObservationEntity>(
+          _entities[37].properties[4]);
+
+  /// see [ExchangeRateObservationEntity.importCostForeign]
+  static final importCostForeign =
+      obx.QueryDoubleProperty<ExchangeRateObservationEntity>(
+          _entities[37].properties[5]);
+
+  /// see [ExchangeRateObservationEntity.observedAt]
+  static final observedAt =
+      obx.QueryDateProperty<ExchangeRateObservationEntity>(
+          _entities[37].properties[6]);
 }

@@ -11,6 +11,7 @@ import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/competitor_price_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
@@ -20,6 +21,7 @@ import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repositor
 import 'package:growth_pilot_ai/core/data/repositories/competitor_price_observation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/csat_rating_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/exchange_rate_observation_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
@@ -79,6 +81,7 @@ class BusinessCompassController extends GetxController {
   late CsatRatingRepository _csatRatings;
   late CompetitorPriceObservationRepository _competitorPrices;
   late VisitorCountRepository _visitorCounts;
+  late ExchangeRateObservationRepository _exchangeRateObservations;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -424,6 +427,11 @@ class BusinessCompassController extends GetxController {
           'transactions': _transactions.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'EXCHANGE_RATE_IMPACT',
+        title: 'Exchange Rate Impact',
+        data: {'observations': _exchangeRateObservations.getAll()},
+      ),
     ];
   }
 
@@ -459,6 +467,8 @@ class BusinessCompassController extends GetxController {
     _competitorPrices = CompetitorPriceObservationRepository(
         store.box<CompetitorPriceObservationEntity>());
     _visitorCounts = VisitorCountRepository(store.box<VisitorCountEntity>());
+    _exchangeRateObservations = ExchangeRateObservationRepository(
+        store.box<ExchangeRateObservationEntity>());
     _recompute();
   }
 

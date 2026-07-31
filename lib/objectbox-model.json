@@ -1529,10 +1529,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "39:8915107045714942245",
+      "lastPropertyId": "7:1738077262374924187",
+      "name": "ExchangeRateObservationEntity",
+      "properties": [
+        {
+          "id": "1:2654902642932058806",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:527328707937155078",
+          "name": "currencyPair",
+          "type": 9
+        },
+        {
+          "id": "3:1602972896616006559",
+          "name": "baselineRate",
+          "type": 8
+        },
+        {
+          "id": "4:2241097363150352372",
+          "name": "currentRate",
+          "type": 8
+        },
+        {
+          "id": "5:2506047784217810984",
+          "name": "productName",
+          "type": 9
+        },
+        {
+          "id": "6:4706279785211756246",
+          "name": "importCostForeign",
+          "type": 8
+        },
+        {
+          "id": "7:1738077262374924187",
+          "name": "observedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "43:9200135933081044316"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "38:8851261058019556831",
-  "lastIndexId": "42:8908425039240650818",
+  "lastEntityId": "39:8915107045714942245",
+  "lastIndexId": "43:9200135933081044316",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

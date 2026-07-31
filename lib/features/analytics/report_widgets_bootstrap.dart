@@ -17,6 +17,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/compliance_risk_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/csat_summary_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/dead_stock_liquidation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/discount_campaign_impact_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/exchange_rate_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/goods_receipt_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/holiday_impact_report_widget.dart';
@@ -244,6 +245,10 @@ class ReportWidgetsBootstrap {
         'VISITOR_CONVERSION_RATE',
         (spec) =>
             ConversionRateReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'EXCHANGE_RATE_IMPACT',
+        (spec) =>
+            ExchangeRateReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
