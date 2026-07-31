@@ -21,6 +21,7 @@ import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
+import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
@@ -1356,6 +1357,76 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(33, 2329418280245091850),
+      name: 'DiscountCampaignEntity',
+      lastPropertyId: const obx_int.IdUid(5, 8212316261586826417),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5583101286178146640),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2909026533288414837),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5817442673677766671),
+            name: 'discountPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7531546758761555620),
+            name: 'startDate',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(37, 6874040009643424718)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8212316261586826417),
+            name: 'endDate',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(34, 8009711261415448339),
+      name: 'WarrantyClaimEntity',
+      lastPropertyId: const obx_int.IdUid(5, 3703991834489704274),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7530882836551096172),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8450545697654334785),
+            name: 'itemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3397295290492680577),
+            name: 'claimCost',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7576343864162997483),
+            name: 'coverageRevenue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3703991834489704274),
+            name: 'date',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(38, 4141602465019896620))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1394,8 +1465,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(32, 502959191077348769),
-      lastIndexId: const obx_int.IdUid(36, 4281031142851997230),
+      lastEntityId: const obx_int.IdUid(34, 8009711261415448339),
+      lastIndexId: const obx_int.IdUid(38, 4141602465019896620),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2983,6 +3054,88 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbChannel: dbChannelParam);
 
           return object;
+        }),
+    DiscountCampaignEntity: obx_int.EntityDefinition<DiscountCampaignEntity>(
+        model: _entities[31],
+        toOneRelations: (DiscountCampaignEntity object) => [],
+        toManyRelations: (DiscountCampaignEntity object) => {},
+        getId: (DiscountCampaignEntity object) => object.id,
+        setId: (DiscountCampaignEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (DiscountCampaignEntity object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addFloat64(2, object.discountPercent);
+          fbb.addInt64(3, object.startDate.millisecondsSinceEpoch);
+          fbb.addInt64(4, object.endDate.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final discountPercentParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final startDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final endDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = DiscountCampaignEntity(
+              id: idParam,
+              name: nameParam,
+              discountPercent: discountPercentParam,
+              startDate: startDateParam,
+              endDate: endDateParam);
+
+          return object;
+        }),
+    WarrantyClaimEntity: obx_int.EntityDefinition<WarrantyClaimEntity>(
+        model: _entities[32],
+        toOneRelations: (WarrantyClaimEntity object) => [],
+        toManyRelations: (WarrantyClaimEntity object) => {},
+        getId: (WarrantyClaimEntity object) => object.id,
+        setId: (WarrantyClaimEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WarrantyClaimEntity object, fb.Builder fbb) {
+          final itemNameOffset = fbb.writeString(object.itemName);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, itemNameOffset);
+          fbb.addFloat64(2, object.claimCost);
+          fbb.addFloat64(3, object.coverageRevenue);
+          fbb.addInt64(4, object.date.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final itemNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final claimCostParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final coverageRevenueParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = WarrantyClaimEntity(
+              id: idParam,
+              itemName: itemNameParam,
+              claimCost: claimCostParam,
+              coverageRevenue: coverageRevenueParam,
+              date: dateParam);
+
+          return object;
         })
   };
 
@@ -3896,4 +4049,51 @@ class AdCampaignEntity_ {
   /// see [AdCampaignEntity.endDate]
   static final endDate =
       obx.QueryDateProperty<AdCampaignEntity>(_entities[30].properties[5]);
+}
+
+/// [DiscountCampaignEntity] entity fields to define ObjectBox queries.
+class DiscountCampaignEntity_ {
+  /// see [DiscountCampaignEntity.id]
+  static final id = obx.QueryIntegerProperty<DiscountCampaignEntity>(
+      _entities[31].properties[0]);
+
+  /// see [DiscountCampaignEntity.name]
+  static final name = obx.QueryStringProperty<DiscountCampaignEntity>(
+      _entities[31].properties[1]);
+
+  /// see [DiscountCampaignEntity.discountPercent]
+  static final discountPercent =
+      obx.QueryDoubleProperty<DiscountCampaignEntity>(
+          _entities[31].properties[2]);
+
+  /// see [DiscountCampaignEntity.startDate]
+  static final startDate = obx.QueryDateProperty<DiscountCampaignEntity>(
+      _entities[31].properties[3]);
+
+  /// see [DiscountCampaignEntity.endDate]
+  static final endDate = obx.QueryDateProperty<DiscountCampaignEntity>(
+      _entities[31].properties[4]);
+}
+
+/// [WarrantyClaimEntity] entity fields to define ObjectBox queries.
+class WarrantyClaimEntity_ {
+  /// see [WarrantyClaimEntity.id]
+  static final id = obx.QueryIntegerProperty<WarrantyClaimEntity>(
+      _entities[32].properties[0]);
+
+  /// see [WarrantyClaimEntity.itemName]
+  static final itemName =
+      obx.QueryStringProperty<WarrantyClaimEntity>(_entities[32].properties[1]);
+
+  /// see [WarrantyClaimEntity.claimCost]
+  static final claimCost =
+      obx.QueryDoubleProperty<WarrantyClaimEntity>(_entities[32].properties[2]);
+
+  /// see [WarrantyClaimEntity.coverageRevenue]
+  static final coverageRevenue =
+      obx.QueryDoubleProperty<WarrantyClaimEntity>(_entities[32].properties[3]);
+
+  /// see [WarrantyClaimEntity.date]
+  static final date =
+      obx.QueryDateProperty<WarrantyClaimEntity>(_entities[32].properties[4]);
 }

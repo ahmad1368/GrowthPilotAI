@@ -1328,10 +1328,82 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "33:2329418280245091850",
+      "lastPropertyId": "5:8212316261586826417",
+      "name": "DiscountCampaignEntity",
+      "properties": [
+        {
+          "id": "1:5583101286178146640",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2909026533288414837",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5817442673677766671",
+          "name": "discountPercent",
+          "type": 8
+        },
+        {
+          "id": "4:7531546758761555620",
+          "name": "startDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "37:6874040009643424718"
+        },
+        {
+          "id": "5:8212316261586826417",
+          "name": "endDate",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "34:8009711261415448339",
+      "lastPropertyId": "5:3703991834489704274",
+      "name": "WarrantyClaimEntity",
+      "properties": [
+        {
+          "id": "1:7530882836551096172",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8450545697654334785",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "3:3397295290492680577",
+          "name": "claimCost",
+          "type": 8
+        },
+        {
+          "id": "4:7576343864162997483",
+          "name": "coverageRevenue",
+          "type": 8
+        },
+        {
+          "id": "5:3703991834489704274",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "38:4141602465019896620"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "32:502959191077348769",
-  "lastIndexId": "36:4281031142851997230",
+  "lastEntityId": "34:8009711261415448339",
+  "lastIndexId": "38:4141602465019896620",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

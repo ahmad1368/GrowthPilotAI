@@ -8,11 +8,13 @@ import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
@@ -64,6 +66,7 @@ class BusinessCompassController extends GetxController {
   late StockReservationRepository _stockReservations;
   late InventoryCostLayerRepository _costLayers;
   late AdCampaignRepository _adCampaigns;
+  late DiscountCampaignRepository _discountCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -375,6 +378,14 @@ class BusinessCompassController extends GetxController {
           'transactions': _transactions.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'DISCOUNT_CAMPAIGN_IMPACT',
+        title: 'Discount Campaign Impact',
+        data: {
+          'campaigns': _discountCampaigns.getAll(),
+          'transactions': _transactions.getAll(),
+        },
+      ),
     ];
   }
 
@@ -403,6 +414,8 @@ class BusinessCompassController extends GetxController {
     _costLayers =
         InventoryCostLayerRepository(store.box<InventoryCostLayerEntity>());
     _adCampaigns = AdCampaignRepository(store.box<AdCampaignEntity>());
+    _discountCampaigns =
+        DiscountCampaignRepository(store.box<DiscountCampaignEntity>());
     _recompute();
   }
 
