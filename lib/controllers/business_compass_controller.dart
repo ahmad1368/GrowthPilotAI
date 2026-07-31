@@ -347,6 +347,11 @@ class BusinessCompassController extends GetxController {
           'layers': _costLayers.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'SEASONAL_ACQUISITION_IMPACT',
+        title: 'Seasonal Discount Acquisition Impact',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
