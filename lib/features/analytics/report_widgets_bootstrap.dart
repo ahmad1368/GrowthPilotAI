@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/churn_monitoring_repo
 import 'package:growth_pilot_ai/features/analytics/widgets/clv_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compliance_risk_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/dead_stock_liquidation_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/discount_campaign_impact_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/goods_receipt_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/holiday_impact_report_widget.dart';
@@ -219,6 +220,10 @@ class ReportWidgetsBootstrap {
         'AD_CAMPAIGN_ROI',
         (spec) =>
             AdCampaignRoiReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'DISCOUNT_CAMPAIGN_IMPACT',
+        (spec) => DiscountCampaignImpactReportWidget(
+            data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

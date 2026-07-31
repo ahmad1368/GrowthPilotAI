@@ -43,6 +43,7 @@ class GridLayoutService {
     'PAYMENT_METHOD_ANALYZER',
     'LOYALTY_PROGRAM_EFFECTIVENESS',
     'AD_CAMPAIGN_ROI',
+    'DISCOUNT_CAMPAIGN_IMPACT',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
