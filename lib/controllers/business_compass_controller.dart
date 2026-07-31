@@ -299,6 +299,11 @@ class BusinessCompassController extends GetxController {
         title: 'Vancouver Peer Benchmark',
         data: {'user': userMetrics.value, 'sector': sector},
       ),
+      ReportWidgetSpec(
+        id: 'CHURN_MONITORING',
+        title: 'Customer Churn Monitoring',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
