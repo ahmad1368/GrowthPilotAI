@@ -33,6 +33,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/purchase_order_report
 import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/regional_affordability_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/revenue_dependency_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_acquisition_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/space_productivity_report_widget.dart';
@@ -198,6 +199,10 @@ class ReportWidgetsBootstrap {
         'PRICE_RECOMMENDATION',
         (spec) =>
             PriceRecommendationReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SEASONAL_ACQUISITION_IMPACT',
+        (spec) =>
+            SeasonalAcquisitionReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
