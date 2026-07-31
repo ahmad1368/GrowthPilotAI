@@ -1287,10 +1287,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "32:5504443045563772302",
+      "lastPropertyId": "5:7503934920584822354",
+      "name": "WarrantyClaimEntity",
+      "properties": [
+        {
+          "id": "1:7047511330550640011",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8273030686840256557",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "3:1659510515937725383",
+          "name": "claimCost",
+          "type": 8
+        },
+        {
+          "id": "4:5701151726485746904",
+          "name": "coverageRevenue",
+          "type": 8
+        },
+        {
+          "id": "5:7503934920584822354",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "36:1735203001862072656"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "31:7916463474997636770",
-  "lastIndexId": "35:5133569423408149490",
+  "lastEntityId": "32:5504443045563772302",
+  "lastIndexId": "36:1735203001862072656",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
