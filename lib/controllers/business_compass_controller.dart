@@ -35,7 +35,9 @@ import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_reposit
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/warranty_claim_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/warranty_claim_entity.dart';
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
 import 'package:growth_pilot_ai/core/enum/compass_period.dart';
 import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';

@@ -43,6 +43,7 @@ import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
+import 'core/data/entities/warranty_claim_entity.dart';
 import 'core/data/entities/waste_log_entity.dart';
 import 'core/models/document_type.dart';
 import 'core/models/error_log.dart';
