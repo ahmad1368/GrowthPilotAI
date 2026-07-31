@@ -38,6 +38,7 @@ import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/message_entity.dart';
+import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
@@ -1674,6 +1675,46 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(45, 4039184606284181609))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(42, 3050219480006385017),
+      name: 'NeighborhoodExpansionEntity',
+      lastPropertyId: const obx_int.IdUid(6, 9065813694335313826),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8382931743477851056),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6276603961050420029),
+            name: 'neighborhoodName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2339410945491288258),
+            name: 'estimatedDemandGap',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2621261642568693842),
+            name: 'competitorCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2048267046939335281),
+            name: 'estimatedExpansionCost',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 9065813694335313826),
+            name: 'evaluatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(46, 8170866124572536165))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1712,8 +1753,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(41, 7986371340359669806),
-      lastIndexId: const obx_int.IdUid(45, 4039184606284181609),
+      lastEntityId: const obx_int.IdUid(42, 3050219480006385017),
+      lastIndexId: const obx_int.IdUid(46, 8170866124572536165),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3674,7 +3715,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbDomain: dbDomainParam);
 
           return object;
-        })
+        }),
+    NeighborhoodExpansionEntity:
+        obx_int.EntityDefinition<NeighborhoodExpansionEntity>(
+            model: _entities[40],
+            toOneRelations: (NeighborhoodExpansionEntity object) => [],
+            toManyRelations: (NeighborhoodExpansionEntity object) => {},
+            getId: (NeighborhoodExpansionEntity object) => object.id,
+            setId: (NeighborhoodExpansionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (NeighborhoodExpansionEntity object, fb.Builder fbb) {
+              final neighborhoodNameOffset =
+                  fbb.writeString(object.neighborhoodName);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, neighborhoodNameOffset);
+              fbb.addFloat64(2, object.estimatedDemandGap);
+              fbb.addInt64(3, object.competitorCount);
+              fbb.addFloat64(4, object.estimatedExpansionCost);
+              fbb.addInt64(5, object.evaluatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final neighborhoodNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final estimatedDemandGapParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final competitorCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final estimatedExpansionCostParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final evaluatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = NeighborhoodExpansionEntity(
+                  id: idParam,
+                  neighborhoodName: neighborhoodNameParam,
+                  estimatedDemandGap: estimatedDemandGapParam,
+                  competitorCount: competitorCountParam,
+                  estimatedExpansionCost: estimatedExpansionCostParam,
+                  evaluatedAt: evaluatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -4803,4 +4892,35 @@ class ReviewFeedbackEntity_ {
   /// see [ReviewFeedbackEntity.submittedAt]
   static final submittedAt =
       obx.QueryDateProperty<ReviewFeedbackEntity>(_entities[39].properties[3]);
+}
+
+/// [NeighborhoodExpansionEntity] entity fields to define ObjectBox queries.
+class NeighborhoodExpansionEntity_ {
+  /// see [NeighborhoodExpansionEntity.id]
+  static final id = obx.QueryIntegerProperty<NeighborhoodExpansionEntity>(
+      _entities[40].properties[0]);
+
+  /// see [NeighborhoodExpansionEntity.neighborhoodName]
+  static final neighborhoodName =
+      obx.QueryStringProperty<NeighborhoodExpansionEntity>(
+          _entities[40].properties[1]);
+
+  /// see [NeighborhoodExpansionEntity.estimatedDemandGap]
+  static final estimatedDemandGap =
+      obx.QueryDoubleProperty<NeighborhoodExpansionEntity>(
+          _entities[40].properties[2]);
+
+  /// see [NeighborhoodExpansionEntity.competitorCount]
+  static final competitorCount =
+      obx.QueryIntegerProperty<NeighborhoodExpansionEntity>(
+          _entities[40].properties[3]);
+
+  /// see [NeighborhoodExpansionEntity.estimatedExpansionCost]
+  static final estimatedExpansionCost =
+      obx.QueryDoubleProperty<NeighborhoodExpansionEntity>(
+          _entities[40].properties[4]);
+
+  /// see [NeighborhoodExpansionEntity.evaluatedAt]
+  static final evaluatedAt = obx.QueryDateProperty<NeighborhoodExpansionEntity>(
+      _entities[40].properties[5]);
 }
