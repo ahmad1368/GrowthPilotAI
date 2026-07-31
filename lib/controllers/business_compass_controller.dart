@@ -33,7 +33,9 @@ import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_reposit
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/warranty_claim_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/warranty_claim_entity.dart';
 import 'package:growth_pilot_ai/core/enum/business_sector.dart';
 import 'package:growth_pilot_ai/core/enum/compass_period.dart';
 import 'package:growth_pilot_ai/core/models/business_compass_metrics.dart';
@@ -59,6 +61,7 @@ class BusinessCompassController extends GetxController {
   late StockMovementRepository _stockMovements;
   late StockReservationRepository _stockReservations;
   late InventoryCostLayerRepository _costLayers;
+  late WarrantyClaimRepository _warrantyClaims;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -362,6 +365,11 @@ class BusinessCompassController extends GetxController {
         title: 'Loyalty Program Effectiveness',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'WARRANTY_PROFITABILITY',
+        title: 'After-Sales Warranty Profitability',
+        data: {'claims': _warrantyClaims.getAll()},
+      ),
     ];
   }
 
@@ -389,6 +397,8 @@ class BusinessCompassController extends GetxController {
         StockReservationRepository(store.box<StockReservationEntity>());
     _costLayers =
         InventoryCostLayerRepository(store.box<InventoryCostLayerEntity>());
+    _warrantyClaims =
+        WarrantyClaimRepository(store.box<WarrantyClaimEntity>());
     _recompute();
   }
 
