@@ -352,6 +352,11 @@ class BusinessCompassController extends GetxController {
         title: 'Seasonal Discount Acquisition Impact',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PAYMENT_METHOD_ANALYZER',
+        title: 'Customer Payment Patterns',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

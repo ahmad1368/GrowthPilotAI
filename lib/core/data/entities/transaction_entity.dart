@@ -7,6 +7,11 @@ enum TransactionType { expense, income }
 
 enum SyncStatus { synced, pending, error }
 
+/// Customer payment channel (Issue #391) — `unspecified` is index 0 so
+/// transactions recorded before this field existed default to it rather
+/// than a misleading guess.
+enum PaymentMethod { unspecified, cash, credit, crypto }
+
 @Entity()
 class TransactionEntity {
   @Id()
@@ -25,6 +30,10 @@ class TransactionEntity {
   // ذخیره به صورت عدد در دیتابیس
   int dbType;
   int dbSyncStatus;
+
+  /// [Issue #391] روش پرداخت مشتری؛ نال‌پذیر نیست، پیش‌فرض `unspecified`
+  /// تا رکوردهای قدیمی بدون این فیلد هم معتبر بمانند.
+  int dbPaymentMethod;
 
   // --- Relations (Issue #14) ---
   final category = ToOne<CategoryEntity>();
@@ -49,6 +58,7 @@ class TransactionEntity {
     required this.description,
     this.dbType = 0, // پیش‌فرض: هزینه
     this.dbSyncStatus = 1, // پیش‌فرض: در انتظار (Pending)
+    this.dbPaymentMethod = 0, // پیش‌فرض: نامشخص
     this.isDeleted = false,
     DateTime? lastModified,
   }) : lastModified =
@@ -61,4 +71,7 @@ class TransactionEntity {
   // متد کمکی برای تنظیم نوع تراکنش (ملموس‌تر شدن کد)
   set type(TransactionType value) => dbType = value.index;
   set syncStatus(SyncStatus value) => dbSyncStatus = value.index;
+
+  PaymentMethod get paymentMethod => PaymentMethod.values[dbPaymentMethod];
+  set paymentMethod(PaymentMethod value) => dbPaymentMethod = value.index;
 }
