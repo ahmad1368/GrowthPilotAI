@@ -2,6 +2,7 @@ import 'package:growth_pilot_ai/core/models/widget_config_option.dart';
 import 'package:growth_pilot_ai/core/widgets/report_widget_registry.dart';
 import 'package:growth_pilot_ai/core/widgets/widget_config_registry.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/annual_profit_forecast_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/basket_optimization_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/brand_penetration_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/budget_variance_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
@@ -149,6 +150,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'DEAD_STOCK_LIQUIDATION',
         (spec) => DeadStockLiquidationReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'BASKET_OPTIMIZATION',
+        (spec) => BasketOptimizationReportWidget(
             data: spec.data, title: spec.title));
   }
 
