@@ -280,6 +280,15 @@ class BusinessCompassController extends GetxController {
           'layers': _costLayers.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'BASKET_OPTIMIZATION',
+        title: 'Smart Basket Optimization',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+          'layers': _costLayers.getAll(),
+        },
+      ),
     ];
   }
 
