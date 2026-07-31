@@ -1647,10 +1647,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "42:3050219480006385017",
+      "lastPropertyId": "6:9065813694335313826",
+      "name": "NeighborhoodExpansionEntity",
+      "properties": [
+        {
+          "id": "1:8382931743477851056",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6276603961050420029",
+          "name": "neighborhoodName",
+          "type": 9
+        },
+        {
+          "id": "3:2339410945491288258",
+          "name": "estimatedDemandGap",
+          "type": 8
+        },
+        {
+          "id": "4:2621261642568693842",
+          "name": "competitorCount",
+          "type": 6
+        },
+        {
+          "id": "5:2048267046939335281",
+          "name": "estimatedExpansionCost",
+          "type": 8
+        },
+        {
+          "id": "6:9065813694335313826",
+          "name": "evaluatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "46:8170866124572536165"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "41:7986371340359669806",
-  "lastIndexId": "45:4039184606284181609",
+  "lastEntityId": "42:3050219480006385017",
+  "lastIndexId": "46:8170866124572536165",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
