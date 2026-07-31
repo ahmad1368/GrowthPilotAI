@@ -41,6 +41,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_acquisition_
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/space_productivity_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/staff_efficiency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_depletion_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_movement_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_take_report_widget.dart';
@@ -224,6 +225,10 @@ class ReportWidgetsBootstrap {
         'DISCOUNT_CAMPAIGN_IMPACT',
         (spec) => DiscountCampaignImpactReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'STAFF_WORK_EFFICIENCY',
+        (spec) =>
+            StaffEfficiencyReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
