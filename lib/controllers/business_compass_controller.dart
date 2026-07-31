@@ -330,6 +330,14 @@ class BusinessCompassController extends GetxController {
           'items': _inventoryItems.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'STOCK_DEPLETION_FORECAST',
+        title: 'Stock Depletion Forecast',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+        },
+      ),
     ];
   }
 

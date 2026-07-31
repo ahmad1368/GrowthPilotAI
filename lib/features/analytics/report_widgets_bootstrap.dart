@@ -35,6 +35,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/revenue_dependency_re
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/space_productivity_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/stock_depletion_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_movement_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_take_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_directory_report_widget.dart';
@@ -188,6 +189,10 @@ class ReportWidgetsBootstrap {
         'CHANNEL_SALES_COMPARISON',
         (spec) =>
             ChannelSalesReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'STOCK_DEPLETION_FORECAST',
+        (spec) => StockDepletionForecastReportWidget(
+            data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
