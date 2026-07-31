@@ -357,6 +357,11 @@ class BusinessCompassController extends GetxController {
         title: 'Customer Payment Patterns',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'LOYALTY_PROGRAM_EFFECTIVENESS',
+        title: 'Loyalty Program Effectiveness',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
