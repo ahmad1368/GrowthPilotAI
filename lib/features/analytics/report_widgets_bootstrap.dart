@@ -33,6 +33,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/stock_movement_report
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_take_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_directory_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_scorecard_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/traffic_heatmap_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/waste_log_report_widget.dart';
 
@@ -155,6 +156,10 @@ class ReportWidgetsBootstrap {
         'BASKET_OPTIMIZATION',
         (spec) => BasketOptimizationReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'TRAFFIC_HEATMAP',
+        (spec) =>
+            TrafficHeatmapReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
