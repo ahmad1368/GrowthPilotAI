@@ -309,6 +309,11 @@ class BusinessCompassController extends GetxController {
         title: 'Revenue Dependency on Loyal Customers',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'CLV_ANALYTICS',
+        title: 'Customer Lifetime Value',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

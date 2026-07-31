@@ -9,6 +9,8 @@ class GroupTransactionsByCustomer {
     final revenueByKey = <String, double>{};
     final countByKey = <String, int>{};
     final labelByKey = <String, String>{};
+    final firstByKey = <String, DateTime>{};
+    final lastByKey = <String, DateTime>{};
 
     for (final t in transactions) {
       if (t.type != TransactionType.income) continue;
@@ -19,6 +21,13 @@ class GroupTransactionsByCustomer {
       revenueByKey[key] = (revenueByKey[key] ?? 0) + t.amount;
       countByKey[key] = (countByKey[key] ?? 0) + 1;
       labelByKey.putIfAbsent(key, () => label);
+      firstByKey[key] =
+          firstByKey.containsKey(key) && firstByKey[key]!.isBefore(t.date)
+              ? firstByKey[key]!
+              : t.date;
+      lastByKey[key] = lastByKey.containsKey(key) && lastByKey[key]!.isAfter(t.date)
+          ? lastByKey[key]!
+          : t.date;
     }
 
     return [
@@ -28,6 +37,8 @@ class GroupTransactionsByCustomer {
           totalRevenue: revenueByKey[key]!,
           transactionCount: countByKey[key]!,
           isRepeat: countByKey[key]! >= 2,
+          firstPurchaseDate: firstByKey[key]!,
+          lastPurchaseDate: lastByKey[key]!,
         ),
     ]..sort((a, b) => b.totalRevenue.compareTo(a.totalRevenue));
   }
