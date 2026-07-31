@@ -1431,10 +1431,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "36:5980986732373940138",
+      "lastPropertyId": "4:2608736998205848133",
+      "name": "CsatRatingEntity",
+      "properties": [
+        {
+          "id": "1:3186634845707216829",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6490396538716556584",
+          "name": "score",
+          "type": 6
+        },
+        {
+          "id": "3:6851599687802635864",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "40:5241847915020380642"
+        },
+        {
+          "id": "4:2608736998205848133",
+          "name": "note",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "35:6340990257950518916",
-  "lastIndexId": "39:8260257148702625132",
+  "lastEntityId": "36:5980986732373940138",
+  "lastIndexId": "40:5241847915020380642",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

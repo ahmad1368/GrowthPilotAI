@@ -21,6 +21,7 @@ import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
+import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
@@ -1458,6 +1459,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(36, 5980986732373940138),
+      name: 'CsatRatingEntity',
+      lastPropertyId: const obx_int.IdUid(4, 2608736998205848133),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3186634845707216829),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6490396538716556584),
+            name: 'score',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6851599687802635864),
+            name: 'date',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(40, 5241847915020380642)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2608736998205848133),
+            name: 'note',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1496,8 +1527,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(35, 6340990257950518916),
-      lastIndexId: const obx_int.IdUid(39, 8260257148702625132),
+      lastEntityId: const obx_int.IdUid(36, 5980986732373940138),
+      lastIndexId: const obx_int.IdUid(40, 5241847915020380642),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3204,6 +3235,41 @@ obx_int.ModelDefinition getObjectBoxModel() {
               endTime: endTimeParam);
 
           return object;
+        }),
+    CsatRatingEntity: obx_int.EntityDefinition<CsatRatingEntity>(
+        model: _entities[34],
+        toOneRelations: (CsatRatingEntity object) => [],
+        toManyRelations: (CsatRatingEntity object) => {},
+        getId: (CsatRatingEntity object) => object.id,
+        setId: (CsatRatingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CsatRatingEntity object, fb.Builder fbb) {
+          final noteOffset =
+              object.note == null ? null : fbb.writeString(object.note!);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.score);
+          fbb.addInt64(2, object.date.millisecondsSinceEpoch);
+          fbb.addOffset(3, noteOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final scoreParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final noteParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final object = CsatRatingEntity(
+              id: idParam, score: scoreParam, date: dateParam, note: noteParam);
+
+          return object;
         })
   };
 
@@ -4183,4 +4249,23 @@ class StaffShiftEntity_ {
   /// see [StaffShiftEntity.endTime]
   static final endTime =
       obx.QueryDateProperty<StaffShiftEntity>(_entities[33].properties[3]);
+}
+
+/// [CsatRatingEntity] entity fields to define ObjectBox queries.
+class CsatRatingEntity_ {
+  /// see [CsatRatingEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<CsatRatingEntity>(_entities[34].properties[0]);
+
+  /// see [CsatRatingEntity.score]
+  static final score =
+      obx.QueryIntegerProperty<CsatRatingEntity>(_entities[34].properties[1]);
+
+  /// see [CsatRatingEntity.date]
+  static final date =
+      obx.QueryDateProperty<CsatRatingEntity>(_entities[34].properties[2]);
+
+  /// see [CsatRatingEntity.note]
+  static final note =
+      obx.QueryStringProperty<CsatRatingEntity>(_entities[34].properties[3]);
 }
