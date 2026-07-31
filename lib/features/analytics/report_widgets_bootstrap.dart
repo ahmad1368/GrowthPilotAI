@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/budget_variance_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_elasticity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_profitability_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/churn_monitoring_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compliance_risk_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/dead_stock_liquidation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_report_widget.dart';
@@ -165,6 +166,10 @@ class ReportWidgetsBootstrap {
         'PEER_BENCHMARK_COMPARISON',
         (spec) => PeerBenchmarkComparisonReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CHURN_MONITORING',
+        (spec) =>
+            ChurnMonitoringReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
