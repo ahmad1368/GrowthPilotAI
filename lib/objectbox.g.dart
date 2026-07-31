@@ -20,6 +20,7 @@ import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
+import 'core/data/entities/competitor_sighting_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
@@ -1602,6 +1603,46 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(43, 9200135933081044316))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(40, 551427037333000059),
+      name: 'CompetitorSightingEntity',
+      lastPropertyId: const obx_int.IdUid(6, 5560527202739479496),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8473704679157923851),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6222236170595198281),
+            name: 'competitorName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2020939070487278010),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 812240605505898858),
+            name: 'distanceKm',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3333758909367265952),
+            name: 'dbScale',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5560527202739479496),
+            name: 'spottedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(44, 3606871456882839712))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1640,8 +1681,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(39, 8915107045714942245),
-      lastIndexId: const obx_int.IdUid(43, 9200135933081044316),
+      lastEntityId: const obx_int.IdUid(40, 551427037333000059),
+      lastIndexId: const obx_int.IdUid(44, 3606871456882839712),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3515,6 +3556,56 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   observedAt: observedAtParam);
 
               return object;
+            }),
+    CompetitorSightingEntity:
+        obx_int.EntityDefinition<CompetitorSightingEntity>(
+            model: _entities[38],
+            toOneRelations: (CompetitorSightingEntity object) => [],
+            toManyRelations: (CompetitorSightingEntity object) => {},
+            getId: (CompetitorSightingEntity object) => object.id,
+            setId: (CompetitorSightingEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (CompetitorSightingEntity object, fb.Builder fbb) {
+              final competitorNameOffset =
+                  fbb.writeString(object.competitorName);
+              final categoryOffset = fbb.writeString(object.category);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, competitorNameOffset);
+              fbb.addOffset(2, categoryOffset);
+              fbb.addFloat64(3, object.distanceKm);
+              fbb.addInt64(4, object.dbScale);
+              fbb.addInt64(5, object.spottedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final competitorNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final categoryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final distanceKmParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final spottedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final dbScaleParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final object = CompetitorSightingEntity(
+                  id: idParam,
+                  competitorName: competitorNameParam,
+                  category: categoryParam,
+                  distanceKm: distanceKmParam,
+                  spottedAt: spottedAtParam,
+                  dbScale: dbScaleParam);
+
+              return object;
             })
   };
 
@@ -4597,4 +4688,32 @@ class ExchangeRateObservationEntity_ {
   static final observedAt =
       obx.QueryDateProperty<ExchangeRateObservationEntity>(
           _entities[37].properties[6]);
+}
+
+/// [CompetitorSightingEntity] entity fields to define ObjectBox queries.
+class CompetitorSightingEntity_ {
+  /// see [CompetitorSightingEntity.id]
+  static final id = obx.QueryIntegerProperty<CompetitorSightingEntity>(
+      _entities[38].properties[0]);
+
+  /// see [CompetitorSightingEntity.competitorName]
+  static final competitorName =
+      obx.QueryStringProperty<CompetitorSightingEntity>(
+          _entities[38].properties[1]);
+
+  /// see [CompetitorSightingEntity.category]
+  static final category = obx.QueryStringProperty<CompetitorSightingEntity>(
+      _entities[38].properties[2]);
+
+  /// see [CompetitorSightingEntity.distanceKm]
+  static final distanceKm = obx.QueryDoubleProperty<CompetitorSightingEntity>(
+      _entities[38].properties[3]);
+
+  /// see [CompetitorSightingEntity.dbScale]
+  static final dbScale = obx.QueryIntegerProperty<CompetitorSightingEntity>(
+      _entities[38].properties[4]);
+
+  /// see [CompetitorSightingEntity.spottedAt]
+  static final spottedAt = obx.QueryDateProperty<CompetitorSightingEntity>(
+      _entities[38].properties[5]);
 }

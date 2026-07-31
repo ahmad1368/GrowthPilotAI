@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/competitor_price_observation_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/competitor_sighting_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
@@ -19,6 +20,7 @@ import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.da
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/competitor_price_observation_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/competitor_sighting_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/csat_rating_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/exchange_rate_observation_repository.dart';
@@ -82,6 +84,7 @@ class BusinessCompassController extends GetxController {
   late CompetitorPriceObservationRepository _competitorPrices;
   late VisitorCountRepository _visitorCounts;
   late ExchangeRateObservationRepository _exchangeRateObservations;
+  late CompetitorSightingRepository _competitorSightings;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -440,6 +443,11 @@ class BusinessCompassController extends GetxController {
           'transactions': _transactions.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'COMPETITOR_PROXIMITY_RADAR',
+        title: 'New Competitor Proximity Radar',
+        data: {'sightings': _competitorSightings.getAll()},
+      ),
     ];
   }
 
@@ -477,6 +485,8 @@ class BusinessCompassController extends GetxController {
     _visitorCounts = VisitorCountRepository(store.box<VisitorCountEntity>());
     _exchangeRateObservations = ExchangeRateObservationRepository(
         store.box<ExchangeRateObservationEntity>());
+    _competitorSightings =
+        CompetitorSightingRepository(store.box<CompetitorSightingEntity>());
     _recompute();
   }
 
