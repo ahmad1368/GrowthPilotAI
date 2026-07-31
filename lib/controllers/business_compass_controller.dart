@@ -271,6 +271,15 @@ class BusinessCompassController extends GetxController {
           'sector': selectedSector.value,
         },
       ),
+      ReportWidgetSpec(
+        id: 'DEAD_STOCK_LIQUIDATION',
+        title: 'Dead Stock Liquidation',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+          'layers': _costLayers.getAll(),
+        },
+      ),
     ];
   }
 
