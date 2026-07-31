@@ -51,6 +51,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/supplier_directory_re
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_scorecard_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_heatmap_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/conversion_rate_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/warranty_profitability_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/waste_log_report_widget.dart';
 
@@ -239,6 +240,10 @@ class ReportWidgetsBootstrap {
         'COMPETITOR_PRICE_COMPARISON',
         (spec) =>
             CompetitorPriceReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'VISITOR_CONVERSION_RATE',
+        (spec) =>
+            ConversionRateReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

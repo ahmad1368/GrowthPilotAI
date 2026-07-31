@@ -1503,10 +1503,36 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "38:8851261058019556831",
+      "lastPropertyId": "3:3000092615977630995",
+      "name": "VisitorCountEntity",
+      "properties": [
+        {
+          "id": "1:234744676811576597",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2531158815939071937",
+          "name": "visitorCount",
+          "type": 6
+        },
+        {
+          "id": "3:3000092615977630995",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "42:8908425039240650818"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "37:1621014074479515103",
-  "lastIndexId": "41:192450060630560756",
+  "lastEntityId": "38:8851261058019556831",
+  "lastIndexId": "42:8908425039240650818",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -12,6 +12,7 @@ import 'package:growth_pilot_ai/core/data/entities/competitor_price_observation_
 import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
@@ -42,6 +43,7 @@ import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_reposit
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/visitor_count_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/warranty_claim_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/waste_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/warranty_claim_entity.dart';
@@ -76,6 +78,7 @@ class BusinessCompassController extends GetxController {
   late StaffShiftRepository _staffShifts;
   late CsatRatingRepository _csatRatings;
   late CompetitorPriceObservationRepository _competitorPrices;
+  late VisitorCountRepository _visitorCounts;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -413,6 +416,14 @@ class BusinessCompassController extends GetxController {
         title: 'Competitor Price Comparison',
         data: {'observations': _competitorPrices.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'VISITOR_CONVERSION_RATE',
+        title: 'Visitor-to-Buyer Conversion',
+        data: {
+          'counts': _visitorCounts.getAll(),
+          'transactions': _transactions.getAll(),
+        },
+      ),
     ];
   }
 
@@ -447,6 +458,7 @@ class BusinessCompassController extends GetxController {
     _csatRatings = CsatRatingRepository(store.box<CsatRatingEntity>());
     _competitorPrices = CompetitorPriceObservationRepository(
         store.box<CompetitorPriceObservationEntity>());
+    _visitorCounts = VisitorCountRepository(store.box<VisitorCountEntity>());
     _recompute();
   }
 
