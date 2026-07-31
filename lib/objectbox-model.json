@@ -24,7 +24,7 @@
     },
     {
       "id": "2:1174740264999713832",
-      "lastPropertyId": "12:3154185988222372620",
+      "lastPropertyId": "13:6620085244315712486",
       "name": "TransactionEntity",
       "properties": [
         {
@@ -97,6 +97,11 @@
           "id": "12:3154185988222372620",
           "name": "isDeleted",
           "type": 1
+        },
+        {
+          "id": "13:6620085244315712486",
+          "name": "dbPaymentMethod",
+          "type": 6
         }
       ],
       "relations": []

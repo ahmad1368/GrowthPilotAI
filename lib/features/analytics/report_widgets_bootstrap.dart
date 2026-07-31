@@ -24,6 +24,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_valuation_r
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/overhead_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/payment_method_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/peer_benchmark_comparison_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/price_recommendation_report_widget.dart';
@@ -203,6 +204,10 @@ class ReportWidgetsBootstrap {
         'SEASONAL_ACQUISITION_IMPACT',
         (spec) =>
             SeasonalAcquisitionReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'PAYMENT_METHOD_ANALYZER',
+        (spec) =>
+            PaymentMethodReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
