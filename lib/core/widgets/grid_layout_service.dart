@@ -35,6 +35,7 @@ class GridLayoutService {
     'CHURN_MONITORING',
     'REVENUE_DEPENDENCY',
     'CLV_ANALYTICS',
+    'PRODUCT_BUNDLING',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

@@ -25,6 +25,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_
 import 'package:growth_pilot_ai/features/analytics/widgets/overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/peer_benchmark_comparison_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/product_bundle_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/profit_margin_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/purchase_order_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.dart';
@@ -178,6 +179,10 @@ class ReportWidgetsBootstrap {
             RevenueDependencyReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('CLV_ANALYTICS',
         (spec) => ClvReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'PRODUCT_BUNDLING',
+        (spec) =>
+            ProductBundleReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
