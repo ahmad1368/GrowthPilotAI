@@ -1616,10 +1616,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "41:7986371340359669806",
+      "lastPropertyId": "4:4357939828924881446",
+      "name": "ReviewFeedbackEntity",
+      "properties": [
+        {
+          "id": "1:7606733891950341977",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5002661670525008346",
+          "name": "reviewText",
+          "type": 9
+        },
+        {
+          "id": "3:4777490152867160203",
+          "name": "dbDomain",
+          "type": 6
+        },
+        {
+          "id": "4:4357939828924881446",
+          "name": "submittedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "45:4039184606284181609"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "40:551427037333000059",
-  "lastIndexId": "44:3606871456882839712",
+  "lastEntityId": "41:7986371340359669806",
+  "lastIndexId": "45:4039184606284181609",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

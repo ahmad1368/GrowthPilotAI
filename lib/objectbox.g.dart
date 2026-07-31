@@ -41,6 +41,7 @@ import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
+import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
@@ -1643,6 +1644,36 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(44, 3606871456882839712))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(41, 7986371340359669806),
+      name: 'ReviewFeedbackEntity',
+      lastPropertyId: const obx_int.IdUid(4, 4357939828924881446),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7606733891950341977),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5002661670525008346),
+            name: 'reviewText',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4777490152867160203),
+            name: 'dbDomain',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4357939828924881446),
+            name: 'submittedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(45, 4039184606284181609))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1681,8 +1712,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(40, 551427037333000059),
-      lastIndexId: const obx_int.IdUid(44, 3606871456882839712),
+      lastEntityId: const obx_int.IdUid(41, 7986371340359669806),
+      lastIndexId: const obx_int.IdUid(45, 4039184606284181609),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3606,7 +3637,44 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   dbScale: dbScaleParam);
 
               return object;
-            })
+            }),
+    ReviewFeedbackEntity: obx_int.EntityDefinition<ReviewFeedbackEntity>(
+        model: _entities[39],
+        toOneRelations: (ReviewFeedbackEntity object) => [],
+        toManyRelations: (ReviewFeedbackEntity object) => {},
+        getId: (ReviewFeedbackEntity object) => object.id,
+        setId: (ReviewFeedbackEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ReviewFeedbackEntity object, fb.Builder fbb) {
+          final reviewTextOffset = fbb.writeString(object.reviewText);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, reviewTextOffset);
+          fbb.addInt64(2, object.dbDomain);
+          fbb.addInt64(3, object.submittedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final reviewTextParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final submittedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final dbDomainParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final object = ReviewFeedbackEntity(
+              id: idParam,
+              reviewText: reviewTextParam,
+              submittedAt: submittedAtParam,
+              dbDomain: dbDomainParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -4716,4 +4784,23 @@ class CompetitorSightingEntity_ {
   /// see [CompetitorSightingEntity.spottedAt]
   static final spottedAt = obx.QueryDateProperty<CompetitorSightingEntity>(
       _entities[38].properties[5]);
+}
+
+/// [ReviewFeedbackEntity] entity fields to define ObjectBox queries.
+class ReviewFeedbackEntity_ {
+  /// see [ReviewFeedbackEntity.id]
+  static final id = obx.QueryIntegerProperty<ReviewFeedbackEntity>(
+      _entities[39].properties[0]);
+
+  /// see [ReviewFeedbackEntity.reviewText]
+  static final reviewText = obx.QueryStringProperty<ReviewFeedbackEntity>(
+      _entities[39].properties[1]);
+
+  /// see [ReviewFeedbackEntity.dbDomain]
+  static final dbDomain = obx.QueryIntegerProperty<ReviewFeedbackEntity>(
+      _entities[39].properties[2]);
+
+  /// see [ReviewFeedbackEntity.submittedAt]
+  static final submittedAt =
+      obx.QueryDateProperty<ReviewFeedbackEntity>(_entities[39].properties[3]);
 }
