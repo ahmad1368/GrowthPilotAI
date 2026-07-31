@@ -432,6 +432,14 @@ class BusinessCompassController extends GetxController {
         title: 'Exchange Rate Impact',
         data: {'observations': _exchangeRateObservations.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'CHANNEL_ATTRIBUTION',
+        title: 'Marketing Channel Attribution',
+        data: {
+          'campaigns': _adCampaigns.getAll(),
+          'transactions': _transactions.getAll(),
+        },
+      ),
     ];
   }
 
