@@ -47,6 +47,7 @@ class GridLayoutService {
     'STAFF_WORK_EFFICIENCY',
     'CSAT_SCORE_ANALYZER',
     'COMPETITOR_PRICE_COMPARISON',
+    'VISITOR_CONVERSION_RATE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

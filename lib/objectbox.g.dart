@@ -47,6 +47,7 @@ import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
+import 'core/data/entities/visitor_count_entity.dart';
 import 'core/data/entities/warranty_claim_entity.dart';
 import 'core/data/entities/waste_log_entity.dart';
 import 'core/models/document_type.dart';
@@ -1530,6 +1531,31 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(41, 192450060630560756))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(38, 8851261058019556831),
+      name: 'VisitorCountEntity',
+      lastPropertyId: const obx_int.IdUid(3, 3000092615977630995),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 234744676811576597),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2531158815939071937),
+            name: 'visitorCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3000092615977630995),
+            name: 'date',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(42, 8908425039240650818))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1568,8 +1594,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(37, 1621014074479515103),
-      lastIndexId: const obx_int.IdUid(41, 192450060630560756),
+      lastEntityId: const obx_int.IdUid(38, 8851261058019556831),
+      lastIndexId: const obx_int.IdUid(42, 8908425039240650818),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3360,6 +3386,36 @@ obx_int.ModelDefinition getObjectBoxModel() {
               observedAt: observedAtParam);
 
           return object;
+        }),
+    VisitorCountEntity: obx_int.EntityDefinition<VisitorCountEntity>(
+        model: _entities[36],
+        toOneRelations: (VisitorCountEntity object) => [],
+        toManyRelations: (VisitorCountEntity object) => {},
+        getId: (VisitorCountEntity object) => object.id,
+        setId: (VisitorCountEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (VisitorCountEntity object, fb.Builder fbb) {
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.visitorCount);
+          fbb.addInt64(2, object.date.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final visitorCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final object = VisitorCountEntity(
+              id: idParam, visitorCount: visitorCountParam, date: dateParam);
+
+          return object;
         })
   };
 
@@ -4390,4 +4446,19 @@ class CompetitorPriceObservationEntity_ {
   static final observedAt =
       obx.QueryDateProperty<CompetitorPriceObservationEntity>(
           _entities[35].properties[5]);
+}
+
+/// [VisitorCountEntity] entity fields to define ObjectBox queries.
+class VisitorCountEntity_ {
+  /// see [VisitorCountEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<VisitorCountEntity>(_entities[36].properties[0]);
+
+  /// see [VisitorCountEntity.visitorCount]
+  static final visitorCount =
+      obx.QueryIntegerProperty<VisitorCountEntity>(_entities[36].properties[1]);
+
+  /// see [VisitorCountEntity.date]
+  static final date =
+      obx.QueryDateProperty<VisitorCountEntity>(_entities[36].properties[2]);
 }
