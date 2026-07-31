@@ -8,12 +8,14 @@ import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/csat_rating_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
@@ -70,6 +72,7 @@ class BusinessCompassController extends GetxController {
   late AdCampaignRepository _adCampaigns;
   late DiscountCampaignRepository _discountCampaigns;
   late StaffShiftRepository _staffShifts;
+  late CsatRatingRepository _csatRatings;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -397,6 +400,11 @@ class BusinessCompassController extends GetxController {
           'transactions': _transactions.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'CSAT_SCORE_ANALYZER',
+        title: 'Customer Satisfaction (CSAT)',
+        data: {'ratings': _csatRatings.getAll()},
+      ),
     ];
   }
 
@@ -428,6 +436,7 @@ class BusinessCompassController extends GetxController {
     _discountCampaigns =
         DiscountCampaignRepository(store.box<DiscountCampaignEntity>());
     _staffShifts = StaffShiftRepository(store.box<StaffShiftEntity>());
+    _csatRatings = CsatRatingRepository(store.box<CsatRatingEntity>());
     _recompute();
   }
 
