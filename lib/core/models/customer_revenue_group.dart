@@ -9,11 +9,15 @@ class CustomerRevenueGroup {
   final double totalRevenue;
   final int transactionCount;
   final bool isRepeat;
+  final DateTime firstPurchaseDate;
+  final DateTime lastPurchaseDate;
 
   const CustomerRevenueGroup({
     required this.label,
     required this.totalRevenue,
     required this.transactionCount,
     required this.isRepeat,
+    required this.firstPurchaseDate,
+    required this.lastPurchaseDate,
   });
 }
