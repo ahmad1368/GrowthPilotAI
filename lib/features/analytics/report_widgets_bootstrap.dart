@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/budget_variance_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/cash_flow_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_elasticity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/category_profitability_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/channel_attribution_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/channel_sales_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/churn_monitoring_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/clv_report_widget.dart';
@@ -249,6 +250,10 @@ class ReportWidgetsBootstrap {
         'EXCHANGE_RATE_IMPACT',
         (spec) =>
             ExchangeRateReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CHANNEL_ATTRIBUTION',
+        (spec) => ChannelAttributionReportWidget(
+            data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

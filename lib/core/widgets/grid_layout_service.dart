@@ -49,6 +49,7 @@ class GridLayoutService {
     'COMPETITOR_PRICE_COMPARISON',
     'VISITOR_CONVERSION_RATE',
     'EXCHANGE_RATE_IMPACT',
+    'CHANNEL_ATTRIBUTION',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
