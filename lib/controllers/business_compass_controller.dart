@@ -289,6 +289,11 @@ class BusinessCompassController extends GetxController {
           'layers': _costLayers.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'TRAFFIC_HEATMAP',
+        title: 'Store Traffic Heatmap',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
