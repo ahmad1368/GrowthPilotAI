@@ -1462,10 +1462,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "37:1621014074479515103",
+      "lastPropertyId": "6:641994770725903028",
+      "name": "CompetitorPriceObservationEntity",
+      "properties": [
+        {
+          "id": "1:453172480051582144",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4743157736530239357",
+          "name": "productName",
+          "type": 9
+        },
+        {
+          "id": "3:2126870526927890094",
+          "name": "competitorName",
+          "type": 9
+        },
+        {
+          "id": "4:4137534916378223110",
+          "name": "ourPrice",
+          "type": 8
+        },
+        {
+          "id": "5:6660218523807083827",
+          "name": "competitorPrice",
+          "type": 8
+        },
+        {
+          "id": "6:641994770725903028",
+          "name": "observedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "41:192450060630560756"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "36:5980986732373940138",
-  "lastIndexId": "40:5241847915020380642",
+  "lastEntityId": "37:1621014074479515103",
+  "lastIndexId": "41:192450060630560756",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

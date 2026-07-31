@@ -19,6 +19,7 @@ import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
@@ -1489,6 +1490,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(37, 1621014074479515103),
+      name: 'CompetitorPriceObservationEntity',
+      lastPropertyId: const obx_int.IdUid(6, 641994770725903028),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 453172480051582144),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4743157736530239357),
+            name: 'productName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2126870526927890094),
+            name: 'competitorName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4137534916378223110),
+            name: 'ourPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6660218523807083827),
+            name: 'competitorPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 641994770725903028),
+            name: 'observedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(41, 192450060630560756))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1527,8 +1568,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(36, 5980986732373940138),
-      lastIndexId: const obx_int.IdUid(40, 5241847915020380642),
+      lastEntityId: const obx_int.IdUid(37, 1621014074479515103),
+      lastIndexId: const obx_int.IdUid(41, 192450060630560756),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3270,6 +3311,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam, score: scoreParam, date: dateParam, note: noteParam);
 
           return object;
+        }),
+    CompetitorPriceObservationEntity: obx_int.EntityDefinition<
+            CompetitorPriceObservationEntity>(
+        model: _entities[35],
+        toOneRelations: (CompetitorPriceObservationEntity object) => [],
+        toManyRelations: (CompetitorPriceObservationEntity object) => {},
+        getId: (CompetitorPriceObservationEntity object) => object.id,
+        setId: (CompetitorPriceObservationEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CompetitorPriceObservationEntity object, fb.Builder fbb) {
+          final productNameOffset = fbb.writeString(object.productName);
+          final competitorNameOffset = fbb.writeString(object.competitorName);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, productNameOffset);
+          fbb.addOffset(2, competitorNameOffset);
+          fbb.addFloat64(3, object.ourPrice);
+          fbb.addFloat64(4, object.competitorPrice);
+          fbb.addInt64(5, object.observedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final productNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final competitorNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final ourPriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final competitorPriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final observedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = CompetitorPriceObservationEntity(
+              id: idParam,
+              productName: productNameParam,
+              competitorName: competitorNameParam,
+              ourPrice: ourPriceParam,
+              competitorPrice: competitorPriceParam,
+              observedAt: observedAtParam);
+
+          return object;
         })
   };
 
@@ -4268,4 +4358,36 @@ class CsatRatingEntity_ {
   /// see [CsatRatingEntity.note]
   static final note =
       obx.QueryStringProperty<CsatRatingEntity>(_entities[34].properties[3]);
+}
+
+/// [CompetitorPriceObservationEntity] entity fields to define ObjectBox queries.
+class CompetitorPriceObservationEntity_ {
+  /// see [CompetitorPriceObservationEntity.id]
+  static final id = obx.QueryIntegerProperty<CompetitorPriceObservationEntity>(
+      _entities[35].properties[0]);
+
+  /// see [CompetitorPriceObservationEntity.productName]
+  static final productName =
+      obx.QueryStringProperty<CompetitorPriceObservationEntity>(
+          _entities[35].properties[1]);
+
+  /// see [CompetitorPriceObservationEntity.competitorName]
+  static final competitorName =
+      obx.QueryStringProperty<CompetitorPriceObservationEntity>(
+          _entities[35].properties[2]);
+
+  /// see [CompetitorPriceObservationEntity.ourPrice]
+  static final ourPrice =
+      obx.QueryDoubleProperty<CompetitorPriceObservationEntity>(
+          _entities[35].properties[3]);
+
+  /// see [CompetitorPriceObservationEntity.competitorPrice]
+  static final competitorPrice =
+      obx.QueryDoubleProperty<CompetitorPriceObservationEntity>(
+          _entities[35].properties[4]);
+
+  /// see [CompetitorPriceObservationEntity.observedAt]
+  static final observedAt =
+      obx.QueryDateProperty<CompetitorPriceObservationEntity>(
+          _entities[35].properties[5]);
 }
