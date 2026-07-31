@@ -294,6 +294,11 @@ class BusinessCompassController extends GetxController {
         title: 'Store Traffic Heatmap',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PEER_BENCHMARK_COMPARISON',
+        title: 'Vancouver Peer Benchmark',
+        data: {'user': userMetrics.value, 'sector': sector},
+      ),
     ];
   }
 
