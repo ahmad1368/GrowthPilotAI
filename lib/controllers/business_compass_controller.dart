@@ -338,6 +338,15 @@ class BusinessCompassController extends GetxController {
           'movements': _stockMovements.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'PRICE_RECOMMENDATION',
+        title: 'Smart Pricing Recommendations',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+          'layers': _costLayers.getAll(),
+        },
+      ),
     ];
   }
 
