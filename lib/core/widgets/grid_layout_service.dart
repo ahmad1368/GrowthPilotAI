@@ -28,6 +28,7 @@ class GridLayoutService {
     'STOCK_MOVEMENT',
     'INVENTORY_VALUATION',
     'INVENTORY_TURNOVER_AGING',
+    'DEAD_STOCK_LIQUIDATION',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
