@@ -21,6 +21,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_rep
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_turnover_aging_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_valuation_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/loyalty_program_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/overhead_report_widget.dart';
@@ -208,6 +209,10 @@ class ReportWidgetsBootstrap {
         'PAYMENT_METHOD_ANALYZER',
         (spec) =>
             PaymentMethodReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'LOYALTY_PROGRAM_EFFECTIVENESS',
+        (spec) =>
+            LoyaltyProgramReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
