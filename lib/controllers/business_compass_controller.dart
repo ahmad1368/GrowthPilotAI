@@ -322,6 +322,14 @@ class BusinessCompassController extends GetxController {
           'items': _inventoryItems.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'CHANNEL_SALES_COMPARISON',
+        title: 'Online vs In-Store Sales',
+        data: {
+          'movements': _stockMovements.getAll(),
+          'items': _inventoryItems.getAll(),
+        },
+      ),
     ];
   }
 
