@@ -51,6 +51,7 @@ class GridLayoutService {
     'EXCHANGE_RATE_IMPACT',
     'CHANNEL_ATTRIBUTION',
     'COMPETITOR_PROXIMITY_RADAR',
+    'REVIEW_SENTIMENT_ANALYSIS',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

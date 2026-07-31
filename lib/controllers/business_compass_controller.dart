@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
@@ -41,6 +42,7 @@ import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repo
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/review_feedback_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/staff_shift_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_movement_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_repository.dart';
@@ -85,6 +87,7 @@ class BusinessCompassController extends GetxController {
   late VisitorCountRepository _visitorCounts;
   late ExchangeRateObservationRepository _exchangeRateObservations;
   late CompetitorSightingRepository _competitorSightings;
+  late ReviewFeedbackRepository _reviewFeedback;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -448,6 +451,11 @@ class BusinessCompassController extends GetxController {
         title: 'New Competitor Proximity Radar',
         data: {'sightings': _competitorSightings.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'REVIEW_SENTIMENT_ANALYSIS',
+        title: 'Market Feedback Sentiment',
+        data: {'reviews': _reviewFeedback.getAll()},
+      ),
     ];
   }
 
@@ -487,6 +495,8 @@ class BusinessCompassController extends GetxController {
         store.box<ExchangeRateObservationEntity>());
     _competitorSightings =
         CompetitorSightingRepository(store.box<CompetitorSightingEntity>());
+    _reviewFeedback =
+        ReviewFeedbackRepository(store.box<ReviewFeedbackEntity>());
     _recompute();
   }
 
