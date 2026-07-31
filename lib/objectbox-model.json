@@ -1575,10 +1575,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "40:551427037333000059",
+      "lastPropertyId": "6:5560527202739479496",
+      "name": "CompetitorSightingEntity",
+      "properties": [
+        {
+          "id": "1:8473704679157923851",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6222236170595198281",
+          "name": "competitorName",
+          "type": 9
+        },
+        {
+          "id": "3:2020939070487278010",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "4:812240605505898858",
+          "name": "distanceKm",
+          "type": 8
+        },
+        {
+          "id": "5:3333758909367265952",
+          "name": "dbScale",
+          "type": 6
+        },
+        {
+          "id": "6:5560527202739479496",
+          "name": "spottedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "44:3606871456882839712"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "39:8915107045714942245",
-  "lastIndexId": "43:9200135933081044316",
+  "lastEntityId": "40:551427037333000059",
+  "lastIndexId": "44:3606871456882839712",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

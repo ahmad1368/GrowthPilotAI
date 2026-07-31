@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/channel_sales_report_
 import 'package:growth_pilot_ai/features/analytics/widgets/churn_monitoring_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/clv_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/competitor_price_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/competitor_proximity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compliance_risk_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/csat_summary_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/dead_stock_liquidation_report_widget.dart';
@@ -253,6 +254,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'CHANNEL_ATTRIBUTION',
         (spec) => ChannelAttributionReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'COMPETITOR_PROXIMITY_RADAR',
+        (spec) => CompetitorProximityReportWidget(
             data: spec.data, title: spec.title));
   }
 
