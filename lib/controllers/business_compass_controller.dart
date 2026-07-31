@@ -304,6 +304,11 @@ class BusinessCompassController extends GetxController {
         title: 'Customer Churn Monitoring',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'REVENUE_DEPENDENCY',
+        title: 'Revenue Dependency on Loyal Customers',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 

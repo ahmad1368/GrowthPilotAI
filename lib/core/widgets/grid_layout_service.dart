@@ -33,6 +33,7 @@ class GridLayoutService {
     'TRAFFIC_HEATMAP',
     'PEER_BENCHMARK_COMPARISON',
     'CHURN_MONITORING',
+    'REVENUE_DEPENDENCY',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
