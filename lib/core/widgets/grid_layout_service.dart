@@ -31,6 +31,7 @@ class GridLayoutService {
     'DEAD_STOCK_LIQUIDATION',
     'BASKET_OPTIMIZATION',
     'TRAFFIC_HEATMAP',
+    'PEER_BENCHMARK_COMPARISON',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
