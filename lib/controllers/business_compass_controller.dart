@@ -314,6 +314,14 @@ class BusinessCompassController extends GetxController {
         title: 'Customer Lifetime Value',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PRODUCT_BUNDLING',
+        title: 'Smart Product Bundling',
+        data: {
+          'movements': _stockMovements.getAll(),
+          'items': _inventoryItems.getAll(),
+        },
+      ),
     ];
   }
 
