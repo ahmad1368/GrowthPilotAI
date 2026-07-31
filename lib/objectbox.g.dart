@@ -16,6 +16,7 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/accounting_sync_status_entity.dart';
+import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
@@ -1314,6 +1315,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(32, 502959191077348769),
+      name: 'AdCampaignEntity',
+      lastPropertyId: const obx_int.IdUid(6, 2772262869502845266),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6091110012600112897),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3843920091982082154),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2323227089290969433),
+            name: 'cost',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1478039995201978653),
+            name: 'dbChannel',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8383022781056234468),
+            name: 'startDate',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(36, 4281031142851997230)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2772262869502845266),
+            name: 'endDate',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1352,8 +1393,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(31, 7916463474997636770),
-      lastIndexId: const obx_int.IdUid(35, 5133569423408149490),
+      lastEntityId: const obx_int.IdUid(32, 502959191077348769),
+      lastIndexId: const obx_int.IdUid(36, 4281031142851997230),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -2896,7 +2937,52 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   receivedAt: receivedAtParam);
 
               return object;
-            })
+            }),
+    AdCampaignEntity: obx_int.EntityDefinition<AdCampaignEntity>(
+        model: _entities[30],
+        toOneRelations: (AdCampaignEntity object) => [],
+        toManyRelations: (AdCampaignEntity object) => {},
+        getId: (AdCampaignEntity object) => object.id,
+        setId: (AdCampaignEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AdCampaignEntity object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.addFloat64(2, object.cost);
+          fbb.addInt64(3, object.dbChannel);
+          fbb.addInt64(4, object.startDate.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.endDate.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final costParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final startDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final endDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final dbChannelParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final object = AdCampaignEntity(
+              id: idParam,
+              name: nameParam,
+              cost: costParam,
+              startDate: startDateParam,
+              endDate: endDateParam,
+              dbChannel: dbChannelParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -3782,4 +3868,31 @@ class InventoryCostLayerEntity_ {
   /// see [InventoryCostLayerEntity.receivedAt]
   static final receivedAt = obx.QueryDateProperty<InventoryCostLayerEntity>(
       _entities[29].properties[5]);
+}
+
+/// [AdCampaignEntity] entity fields to define ObjectBox queries.
+class AdCampaignEntity_ {
+  /// see [AdCampaignEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AdCampaignEntity>(_entities[30].properties[0]);
+
+  /// see [AdCampaignEntity.name]
+  static final name =
+      obx.QueryStringProperty<AdCampaignEntity>(_entities[30].properties[1]);
+
+  /// see [AdCampaignEntity.cost]
+  static final cost =
+      obx.QueryDoubleProperty<AdCampaignEntity>(_entities[30].properties[2]);
+
+  /// see [AdCampaignEntity.dbChannel]
+  static final dbChannel =
+      obx.QueryIntegerProperty<AdCampaignEntity>(_entities[30].properties[3]);
+
+  /// see [AdCampaignEntity.startDate]
+  static final startDate =
+      obx.QueryDateProperty<AdCampaignEntity>(_entities[30].properties[4]);
+
+  /// see [AdCampaignEntity.endDate]
+  static final endDate =
+      obx.QueryDateProperty<AdCampaignEntity>(_entities[30].properties[5]);
 }

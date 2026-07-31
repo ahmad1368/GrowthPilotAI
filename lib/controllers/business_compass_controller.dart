@@ -3,12 +3,14 @@ import 'package:growth_pilot_ai/business/build_compass_insight_narrative.dart';
 import 'package:growth_pilot_ai/business/compute_business_compass_metrics.dart';
 import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
+import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
@@ -59,6 +61,7 @@ class BusinessCompassController extends GetxController {
   late StockMovementRepository _stockMovements;
   late StockReservationRepository _stockReservations;
   late InventoryCostLayerRepository _costLayers;
+  late AdCampaignRepository _adCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -362,6 +365,14 @@ class BusinessCompassController extends GetxController {
         title: 'Loyalty Program Effectiveness',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'AD_CAMPAIGN_ROI',
+        title: 'Ad Campaign ROI',
+        data: {
+          'campaigns': _adCampaigns.getAll(),
+          'transactions': _transactions.getAll(),
+        },
+      ),
     ];
   }
 
@@ -389,6 +400,7 @@ class BusinessCompassController extends GetxController {
         StockReservationRepository(store.box<StockReservationEntity>());
     _costLayers =
         InventoryCostLayerRepository(store.box<InventoryCostLayerEntity>());
+    _adCampaigns = AdCampaignRepository(store.box<AdCampaignEntity>());
     _recompute();
   }
 
