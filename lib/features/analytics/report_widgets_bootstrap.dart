@@ -56,6 +56,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/stock_movement_report
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_take_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_directory_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/supplier_scorecard_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/traffic_analytics_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_heatmap_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/conversion_rate_report_widget.dart';
@@ -278,6 +279,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'CONSUMER_BEHAVIOR_SEGMENTS',
         (spec) => ConsumerBehaviorReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'FOOT_VEHICLE_TRAFFIC_ANALYTICS',
+        (spec) => TrafficAnalyticsReportWidget(
             data: spec.data, title: spec.title));
   }
 

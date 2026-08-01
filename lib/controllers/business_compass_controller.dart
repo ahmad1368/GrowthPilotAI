@@ -17,6 +17,7 @@ import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/traffic_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
@@ -51,6 +52,7 @@ import 'package:growth_pilot_ai/core/data/repositories/staff_shift_repository.da
 import 'package:growth_pilot_ai/core/data/repositories/stock_movement_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traffic_count_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/visitor_count_repository.dart';
@@ -94,6 +96,7 @@ class BusinessCompassController extends GetxController {
   late ReviewFeedbackRepository _reviewFeedback;
   late NeighborhoodExpansionRepository _neighborhoodExpansions;
   late MerchantPartnershipRepository _merchantPartnerships;
+  late TrafficCountRepository _trafficCounts;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -477,6 +480,14 @@ class BusinessCompassController extends GetxController {
         title: 'Consumer Behavior & Low-Income Demographic Fit',
         data: {'transactions': _transactions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'FOOT_VEHICLE_TRAFFIC_ANALYTICS',
+        title: 'Foot and Vehicular Traffic Analytics',
+        data: {
+          'counts': _trafficCounts.getAll(),
+          'transactions': _transactions.getAll(),
+        },
+      ),
     ];
   }
 
@@ -522,6 +533,7 @@ class BusinessCompassController extends GetxController {
         store.box<NeighborhoodExpansionEntity>());
     _merchantPartnerships =
         MerchantPartnershipRepository(store.box<MerchantPartnershipEntity>());
+    _trafficCounts = TrafficCountRepository(store.box<TrafficCountEntity>());
     _recompute();
   }
 
