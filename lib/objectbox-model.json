@@ -1765,10 +1765,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "45:6552528320428670960",
+      "lastPropertyId": "5:6452193352568693498",
+      "name": "MerchantBranchEntity",
+      "properties": [
+        {
+          "id": "1:5103084387871000092",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:471943092298381982",
+          "name": "branchName",
+          "type": 9
+        },
+        {
+          "id": "3:145762483655297773",
+          "name": "salesTotal",
+          "type": 8
+        },
+        {
+          "id": "4:4589595219126035033",
+          "name": "dbInventoryStatus",
+          "type": 6
+        },
+        {
+          "id": "5:6452193352568693498",
+          "name": "reportedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "49:2216379568406679010"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "44:7428528040005466096",
-  "lastIndexId": "48:2274179513405207962",
+  "lastEntityId": "45:6552528320428670960",
+  "lastIndexId": "49:2216379568406679010",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
