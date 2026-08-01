@@ -1688,10 +1688,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "43:5636826017553077132",
+      "lastPropertyId": "7:8034535718949044567",
+      "name": "MerchantPartnershipEntity",
+      "properties": [
+        {
+          "id": "1:18712717569019346",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4422173139637036493",
+          "name": "partnerBusinessName",
+          "type": 9
+        },
+        {
+          "id": "3:6005267687033753279",
+          "name": "partnerCategory",
+          "type": 9
+        },
+        {
+          "id": "4:1260134227048556020",
+          "name": "customerOverlapScore",
+          "type": 8
+        },
+        {
+          "id": "5:2699437996295641923",
+          "name": "jointCampaignRevenue",
+          "type": 8
+        },
+        {
+          "id": "6:3680189065731832033",
+          "name": "referralCount",
+          "type": 6
+        },
+        {
+          "id": "7:8034535718949044567",
+          "name": "partneredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "47:916625376951321682"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "42:3050219480006385017",
-  "lastIndexId": "46:8170866124572536165",
+  "lastEntityId": "43:5636826017553077132",
+  "lastIndexId": "47:916625376951321682",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -30,6 +30,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_turnover_ag
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_valuation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/loyalty_program_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/merchant_partnership_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/neighborhood_expansion_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/overhead_report_widget.dart';
@@ -268,6 +269,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'NEIGHBORHOOD_EXPANSION_ANALYZER',
         (spec) => NeighborhoodExpansionReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MERCHANT_PARTNERSHIP_ANALYZER',
+        (spec) => MerchantPartnershipReportWidget(
             data: spec.data, title: spec.title));
   }
 

@@ -37,6 +37,7 @@ import 'core/data/entities/inventory_item_entity.dart';
 import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
+import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
@@ -1715,6 +1716,51 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(46, 8170866124572536165))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(43, 5636826017553077132),
+      name: 'MerchantPartnershipEntity',
+      lastPropertyId: const obx_int.IdUid(7, 8034535718949044567),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 18712717569019346),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4422173139637036493),
+            name: 'partnerBusinessName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6005267687033753279),
+            name: 'partnerCategory',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1260134227048556020),
+            name: 'customerOverlapScore',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2699437996295641923),
+            name: 'jointCampaignRevenue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3680189065731832033),
+            name: 'referralCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8034535718949044567),
+            name: 'partneredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(47, 916625376951321682))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1753,8 +1799,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(42, 3050219480006385017),
-      lastIndexId: const obx_int.IdUid(46, 8170866124572536165),
+      lastEntityId: const obx_int.IdUid(43, 5636826017553077132),
+      lastIndexId: const obx_int.IdUid(47, 916625376951321682),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3763,6 +3809,61 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   evaluatedAt: evaluatedAtParam);
 
               return object;
+            }),
+    MerchantPartnershipEntity:
+        obx_int.EntityDefinition<MerchantPartnershipEntity>(
+            model: _entities[41],
+            toOneRelations: (MerchantPartnershipEntity object) => [],
+            toManyRelations: (MerchantPartnershipEntity object) => {},
+            getId: (MerchantPartnershipEntity object) => object.id,
+            setId: (MerchantPartnershipEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (MerchantPartnershipEntity object, fb.Builder fbb) {
+              final partnerBusinessNameOffset =
+                  fbb.writeString(object.partnerBusinessName);
+              final partnerCategoryOffset =
+                  fbb.writeString(object.partnerCategory);
+              fbb.startTable(8);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, partnerBusinessNameOffset);
+              fbb.addOffset(2, partnerCategoryOffset);
+              fbb.addFloat64(3, object.customerOverlapScore);
+              fbb.addFloat64(4, object.jointCampaignRevenue);
+              fbb.addInt64(5, object.referralCount);
+              fbb.addInt64(6, object.partneredAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final partnerBusinessNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final partnerCategoryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final customerOverlapScoreParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final jointCampaignRevenueParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final referralCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final partneredAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+              final object = MerchantPartnershipEntity(
+                  id: idParam,
+                  partnerBusinessName: partnerBusinessNameParam,
+                  partnerCategory: partnerCategoryParam,
+                  customerOverlapScore: customerOverlapScoreParam,
+                  jointCampaignRevenue: jointCampaignRevenueParam,
+                  referralCount: referralCountParam,
+                  partneredAt: partneredAtParam);
+
+              return object;
             })
   };
 
@@ -4923,4 +5024,40 @@ class NeighborhoodExpansionEntity_ {
   /// see [NeighborhoodExpansionEntity.evaluatedAt]
   static final evaluatedAt = obx.QueryDateProperty<NeighborhoodExpansionEntity>(
       _entities[40].properties[5]);
+}
+
+/// [MerchantPartnershipEntity] entity fields to define ObjectBox queries.
+class MerchantPartnershipEntity_ {
+  /// see [MerchantPartnershipEntity.id]
+  static final id = obx.QueryIntegerProperty<MerchantPartnershipEntity>(
+      _entities[41].properties[0]);
+
+  /// see [MerchantPartnershipEntity.partnerBusinessName]
+  static final partnerBusinessName =
+      obx.QueryStringProperty<MerchantPartnershipEntity>(
+          _entities[41].properties[1]);
+
+  /// see [MerchantPartnershipEntity.partnerCategory]
+  static final partnerCategory =
+      obx.QueryStringProperty<MerchantPartnershipEntity>(
+          _entities[41].properties[2]);
+
+  /// see [MerchantPartnershipEntity.customerOverlapScore]
+  static final customerOverlapScore =
+      obx.QueryDoubleProperty<MerchantPartnershipEntity>(
+          _entities[41].properties[3]);
+
+  /// see [MerchantPartnershipEntity.jointCampaignRevenue]
+  static final jointCampaignRevenue =
+      obx.QueryDoubleProperty<MerchantPartnershipEntity>(
+          _entities[41].properties[4]);
+
+  /// see [MerchantPartnershipEntity.referralCount]
+  static final referralCount =
+      obx.QueryIntegerProperty<MerchantPartnershipEntity>(
+          _entities[41].properties[5]);
+
+  /// see [MerchantPartnershipEntity.partneredAt]
+  static final partneredAt = obx.QueryDateProperty<MerchantPartnershipEntity>(
+      _entities[41].properties[6]);
 }
