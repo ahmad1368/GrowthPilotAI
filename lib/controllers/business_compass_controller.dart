@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
@@ -43,6 +44,7 @@ import 'package:growth_pilot_ai/core/data/entities/inventory_cost_layer_entity.d
 import 'package:growth_pilot_ai/core/data/repositories/inventory_cost_layer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/merchant_branch_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
@@ -97,6 +99,7 @@ class BusinessCompassController extends GetxController {
   late NeighborhoodExpansionRepository _neighborhoodExpansions;
   late MerchantPartnershipRepository _merchantPartnerships;
   late TrafficCountRepository _trafficCounts;
+  late MerchantBranchRepository _merchantBranches;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -488,6 +491,11 @@ class BusinessCompassController extends GetxController {
           'transactions': _transactions.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'MULTI_MERCHANT_MASTER_DASHBOARD',
+        title: 'Enterprise Multi-Merchant Master Dashboard',
+        data: {'branches': _merchantBranches.getAll()},
+      ),
     ];
   }
 
@@ -534,6 +542,8 @@ class BusinessCompassController extends GetxController {
     _merchantPartnerships =
         MerchantPartnershipRepository(store.box<MerchantPartnershipEntity>());
     _trafficCounts = TrafficCountRepository(store.box<TrafficCountEntity>());
+    _merchantBranches =
+        MerchantBranchRepository(store.box<MerchantBranchEntity>());
     _recompute();
   }
 

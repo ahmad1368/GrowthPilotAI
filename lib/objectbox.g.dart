@@ -37,6 +37,7 @@ import 'core/data/entities/inventory_item_entity.dart';
 import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
+import 'core/data/entities/merchant_branch_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
@@ -1792,6 +1793,41 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(48, 2274179513405207962))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(45, 6552528320428670960),
+      name: 'MerchantBranchEntity',
+      lastPropertyId: const obx_int.IdUid(5, 6452193352568693498),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5103084387871000092),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 471943092298381982),
+            name: 'branchName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 145762483655297773),
+            name: 'salesTotal',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4589595219126035033),
+            name: 'dbInventoryStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6452193352568693498),
+            name: 'reportedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(49, 2216379568406679010))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1830,8 +1866,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(44, 7428528040005466096),
-      lastIndexId: const obx_int.IdUid(48, 2274179513405207962),
+      lastEntityId: const obx_int.IdUid(45, 6552528320428670960),
+      lastIndexId: const obx_int.IdUid(49, 2216379568406679010),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3931,6 +3967,47 @@ obx_int.ModelDefinition getObjectBoxModel() {
               date: dateParam);
 
           return object;
+        }),
+    MerchantBranchEntity: obx_int.EntityDefinition<MerchantBranchEntity>(
+        model: _entities[43],
+        toOneRelations: (MerchantBranchEntity object) => [],
+        toManyRelations: (MerchantBranchEntity object) => {},
+        getId: (MerchantBranchEntity object) => object.id,
+        setId: (MerchantBranchEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MerchantBranchEntity object, fb.Builder fbb) {
+          final branchNameOffset = fbb.writeString(object.branchName);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, branchNameOffset);
+          fbb.addFloat64(2, object.salesTotal);
+          fbb.addInt64(3, object.dbInventoryStatus);
+          fbb.addInt64(4, object.reportedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final branchNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final salesTotalParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dbInventoryStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final reportedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = MerchantBranchEntity(
+              id: idParam,
+              branchName: branchNameParam,
+              salesTotal: salesTotalParam,
+              dbInventoryStatus: dbInventoryStatusParam,
+              reportedAt: reportedAtParam);
+
+          return object;
         })
   };
 
@@ -5146,4 +5223,28 @@ class TrafficCountEntity_ {
   /// see [TrafficCountEntity.date]
   static final date =
       obx.QueryDateProperty<TrafficCountEntity>(_entities[42].properties[3]);
+}
+
+/// [MerchantBranchEntity] entity fields to define ObjectBox queries.
+class MerchantBranchEntity_ {
+  /// see [MerchantBranchEntity.id]
+  static final id = obx.QueryIntegerProperty<MerchantBranchEntity>(
+      _entities[43].properties[0]);
+
+  /// see [MerchantBranchEntity.branchName]
+  static final branchName = obx.QueryStringProperty<MerchantBranchEntity>(
+      _entities[43].properties[1]);
+
+  /// see [MerchantBranchEntity.salesTotal]
+  static final salesTotal = obx.QueryDoubleProperty<MerchantBranchEntity>(
+      _entities[43].properties[2]);
+
+  /// see [MerchantBranchEntity.dbInventoryStatus]
+  static final dbInventoryStatus =
+      obx.QueryIntegerProperty<MerchantBranchEntity>(
+          _entities[43].properties[3]);
+
+  /// see [MerchantBranchEntity.reportedAt]
+  static final reportedAt =
+      obx.QueryDateProperty<MerchantBranchEntity>(_entities[43].properties[4]);
 }
