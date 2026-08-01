@@ -1801,10 +1801,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "46:1595845490344560714",
+      "lastPropertyId": "7:3380193382005227920",
+      "name": "PromotionalOfferEntity",
+      "properties": [
+        {
+          "id": "1:2279445873309109227",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3245320388717469027",
+          "name": "offerText",
+          "type": 9
+        },
+        {
+          "id": "3:7766572787002412813",
+          "name": "targetFilter",
+          "type": 9
+        },
+        {
+          "id": "4:4876569754371607598",
+          "name": "sentCount",
+          "type": 6
+        },
+        {
+          "id": "5:7716595305254047537",
+          "name": "openedCount",
+          "type": 6
+        },
+        {
+          "id": "6:4740594042288731190",
+          "name": "usedCount",
+          "type": 6
+        },
+        {
+          "id": "7:3380193382005227920",
+          "name": "dispatchedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "50:3474758466030017671"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "45:6552528320428670960",
-  "lastIndexId": "49:2216379568406679010",
+  "lastEntityId": "46:1595845490344560714",
+  "lastIndexId": "50:3474758466030017671",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

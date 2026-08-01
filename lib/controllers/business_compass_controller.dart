@@ -17,6 +17,7 @@ import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/promotional_offer_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
@@ -47,6 +48,7 @@ import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository
 import 'package:growth_pilot_ai/core/data/repositories/merchant_branch_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/promotional_offer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/review_feedback_repository.dart';
@@ -100,6 +102,7 @@ class BusinessCompassController extends GetxController {
   late MerchantPartnershipRepository _merchantPartnerships;
   late TrafficCountRepository _trafficCounts;
   late MerchantBranchRepository _merchantBranches;
+  late PromotionalOfferRepository _promotionalOffers;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -496,6 +499,11 @@ class BusinessCompassController extends GetxController {
         title: 'Enterprise Multi-Merchant Master Dashboard',
         data: {'branches': _merchantBranches.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PROMOTIONAL_OFFER_DISPATCHER',
+        title: 'Targeted Offer and Promotional Dispatcher',
+        data: {'offers': _promotionalOffers.getAll()},
+      ),
     ];
   }
 
@@ -544,6 +552,8 @@ class BusinessCompassController extends GetxController {
     _trafficCounts = TrafficCountRepository(store.box<TrafficCountEntity>());
     _merchantBranches =
         MerchantBranchRepository(store.box<MerchantBranchEntity>());
+    _promotionalOffers =
+        PromotionalOfferRepository(store.box<PromotionalOfferEntity>());
     _recompute();
   }
 

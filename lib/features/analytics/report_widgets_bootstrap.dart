@@ -41,6 +41,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/peer_benchmark_compar
 import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/price_recommendation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/product_bundle_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/promotional_offer_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/profit_margin_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/purchase_order_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.dart';
@@ -288,6 +289,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'MULTI_MERCHANT_MASTER_DASHBOARD',
         (spec) => MerchantBranchReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'PROMOTIONAL_OFFER_DISPATCHER',
+        (spec) => PromotionalOfferReportWidget(
             data: spec.data, title: spec.title));
   }
 
