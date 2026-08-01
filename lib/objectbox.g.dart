@@ -48,6 +48,7 @@ import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
+import 'core/data/entities/traffic_count_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
@@ -1761,6 +1762,36 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(47, 916625376951321682))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(44, 7428528040005466096),
+      name: 'TrafficCountEntity',
+      lastPropertyId: const obx_int.IdUid(4, 2645166405148102416),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2142975879054246184),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6740009958608390599),
+            name: 'footTraffic',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5944175909854800804),
+            name: 'vehicleTraffic',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2645166405148102416),
+            name: 'date',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(48, 2274179513405207962))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1799,8 +1830,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(43, 5636826017553077132),
-      lastIndexId: const obx_int.IdUid(47, 916625376951321682),
+      lastEntityId: const obx_int.IdUid(44, 7428528040005466096),
+      lastIndexId: const obx_int.IdUid(48, 2274179513405207962),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -3864,7 +3895,43 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   partneredAt: partneredAtParam);
 
               return object;
-            })
+            }),
+    TrafficCountEntity: obx_int.EntityDefinition<TrafficCountEntity>(
+        model: _entities[42],
+        toOneRelations: (TrafficCountEntity object) => [],
+        toManyRelations: (TrafficCountEntity object) => {},
+        getId: (TrafficCountEntity object) => object.id,
+        setId: (TrafficCountEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TrafficCountEntity object, fb.Builder fbb) {
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.footTraffic);
+          fbb.addInt64(2, object.vehicleTraffic);
+          fbb.addInt64(3, object.date.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final footTrafficParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final vehicleTrafficParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = TrafficCountEntity(
+              id: idParam,
+              footTraffic: footTrafficParam,
+              vehicleTraffic: vehicleTrafficParam,
+              date: dateParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -5060,4 +5127,23 @@ class MerchantPartnershipEntity_ {
   /// see [MerchantPartnershipEntity.partneredAt]
   static final partneredAt = obx.QueryDateProperty<MerchantPartnershipEntity>(
       _entities[41].properties[6]);
+}
+
+/// [TrafficCountEntity] entity fields to define ObjectBox queries.
+class TrafficCountEntity_ {
+  /// see [TrafficCountEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<TrafficCountEntity>(_entities[42].properties[0]);
+
+  /// see [TrafficCountEntity.footTraffic]
+  static final footTraffic =
+      obx.QueryIntegerProperty<TrafficCountEntity>(_entities[42].properties[1]);
+
+  /// see [TrafficCountEntity.vehicleTraffic]
+  static final vehicleTraffic =
+      obx.QueryIntegerProperty<TrafficCountEntity>(_entities[42].properties[2]);
+
+  /// see [TrafficCountEntity.date]
+  static final date =
+      obx.QueryDateProperty<TrafficCountEntity>(_entities[42].properties[3]);
 }

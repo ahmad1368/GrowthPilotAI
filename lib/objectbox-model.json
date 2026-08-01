@@ -1734,10 +1734,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "44:7428528040005466096",
+      "lastPropertyId": "4:2645166405148102416",
+      "name": "TrafficCountEntity",
+      "properties": [
+        {
+          "id": "1:2142975879054246184",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6740009958608390599",
+          "name": "footTraffic",
+          "type": 6
+        },
+        {
+          "id": "3:5944175909854800804",
+          "name": "vehicleTraffic",
+          "type": 6
+        },
+        {
+          "id": "4:2645166405148102416",
+          "name": "date",
+          "type": 10,
+          "flags": 8,
+          "indexId": "48:2274179513405207962"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "43:5636826017553077132",
-  "lastIndexId": "47:916625376951321682",
+  "lastEntityId": "44:7428528040005466096",
+  "lastIndexId": "48:2274179513405207962",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
