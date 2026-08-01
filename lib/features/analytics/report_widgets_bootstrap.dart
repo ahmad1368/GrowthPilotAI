@@ -16,6 +16,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/clv_report_widget.dar
 import 'package:growth_pilot_ai/features/analytics/widgets/competitor_price_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/competitor_proximity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/compliance_risk_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/consumer_behavior_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/csat_summary_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/dead_stock_liquidation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/discount_campaign_impact_report_widget.dart';
@@ -273,6 +274,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'MERCHANT_PARTNERSHIP_ANALYZER',
         (spec) => MerchantPartnershipReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CONSUMER_BEHAVIOR_SEGMENTS',
+        (spec) => ConsumerBehaviorReportWidget(
             data: spec.data, title: spec.title));
   }
 
