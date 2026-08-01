@@ -51,6 +51,7 @@ import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/traffic_count_entity.dart';
+import 'core/data/entities/traffic_steering_directive_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
