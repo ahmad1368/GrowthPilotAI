@@ -472,6 +472,11 @@ class BusinessCompassController extends GetxController {
         title: 'Complementary Merchant Partnerships',
         data: {'partnerships': _merchantPartnerships.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'CONSUMER_BEHAVIOR_SEGMENTS',
+        title: 'Consumer Behavior & Low-Income Demographic Fit',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
