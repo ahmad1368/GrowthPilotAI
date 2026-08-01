@@ -19,6 +19,7 @@ import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.d
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_count_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/traffic_steering_directive_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
@@ -55,6 +56,7 @@ import 'package:growth_pilot_ai/core/data/repositories/stock_movement_repository
 import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/store_profile_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/traffic_count_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traffic_steering_directive_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/vendor_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/visitor_count_repository.dart';
@@ -100,6 +102,7 @@ class BusinessCompassController extends GetxController {
   late MerchantPartnershipRepository _merchantPartnerships;
   late TrafficCountRepository _trafficCounts;
   late MerchantBranchRepository _merchantBranches;
+  late TrafficSteeringDirectiveRepository _trafficSteeringDirectives;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -496,6 +499,11 @@ class BusinessCompassController extends GetxController {
         title: 'Enterprise Multi-Merchant Master Dashboard',
         data: {'branches': _merchantBranches.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'TRAFFIC_STEERING_ENGINE',
+        title: 'Targeted Merchant Traffic Steering Engine',
+        data: {'directives': _trafficSteeringDirectives.getAll()},
+      ),
     ];
   }
 
@@ -544,6 +552,8 @@ class BusinessCompassController extends GetxController {
     _trafficCounts = TrafficCountRepository(store.box<TrafficCountEntity>());
     _merchantBranches =
         MerchantBranchRepository(store.box<MerchantBranchEntity>());
+    _trafficSteeringDirectives = TrafficSteeringDirectiveRepository(
+        store.box<TrafficSteeringDirectiveEntity>());
     _recompute();
   }
 
