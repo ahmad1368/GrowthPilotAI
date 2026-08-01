@@ -42,6 +42,7 @@ import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
+import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
@@ -1831,37 +1832,47 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(46, 2552647761695352814),
-      name: 'TrafficSteeringDirectiveEntity',
-      lastPropertyId: const obx_int.IdUid(5, 6607159283812576072),
+      id: const obx_int.IdUid(46, 1595845490344560714),
+      name: 'PromotionalOfferEntity',
+      lastPropertyId: const obx_int.IdUid(7, 3380193382005227920),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 591295571915651991),
+            id: const obx_int.IdUid(1, 2279445873309109227),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 2412114083997399869),
-            name: 'targetName',
+            id: const obx_int.IdUid(2, 3245320388717469027),
+            name: 'offerText',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 6530183626370308410),
-            name: 'destinationLabel',
+            id: const obx_int.IdUid(3, 7766572787002412813),
+            name: 'targetFilter',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 2650394266168497758),
-            name: 'redirectCount',
+            id: const obx_int.IdUid(4, 4876569754371607598),
+            name: 'sentCount',
             type: 6,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 6607159283812576072),
-            name: 'createdAt',
+            id: const obx_int.IdUid(5, 7716595305254047537),
+            name: 'openedCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4740594042288731190),
+            name: 'usedCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 3380193382005227920),
+            name: 'dispatchedAt',
             type: 10,
             flags: 8,
-            indexId: const obx_int.IdUid(50, 286001031574895506))
+            indexId: const obx_int.IdUid(50, 3474758466030017671))
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -1902,8 +1913,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(46, 2552647761695352814),
-      lastIndexId: const obx_int.IdUid(50, 286001031574895506),
+      lastEntityId: const obx_int.IdUid(46, 1595845490344560714),
+      lastIndexId: const obx_int.IdUid(50, 3474758466030017671),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4045,25 +4056,25 @@ obx_int.ModelDefinition getObjectBoxModel() {
 
           return object;
         }),
-    TrafficSteeringDirectiveEntity: obx_int.EntityDefinition<
-            TrafficSteeringDirectiveEntity>(
+    PromotionalOfferEntity: obx_int.EntityDefinition<PromotionalOfferEntity>(
         model: _entities[44],
-        toOneRelations: (TrafficSteeringDirectiveEntity object) => [],
-        toManyRelations: (TrafficSteeringDirectiveEntity object) => {},
-        getId: (TrafficSteeringDirectiveEntity object) => object.id,
-        setId: (TrafficSteeringDirectiveEntity object, int id) {
+        toOneRelations: (PromotionalOfferEntity object) => [],
+        toManyRelations: (PromotionalOfferEntity object) => {},
+        getId: (PromotionalOfferEntity object) => object.id,
+        setId: (PromotionalOfferEntity object, int id) {
           object.id = id;
         },
-        objectToFB: (TrafficSteeringDirectiveEntity object, fb.Builder fbb) {
-          final targetNameOffset = fbb.writeString(object.targetName);
-          final destinationLabelOffset =
-              fbb.writeString(object.destinationLabel);
-          fbb.startTable(6);
+        objectToFB: (PromotionalOfferEntity object, fb.Builder fbb) {
+          final offerTextOffset = fbb.writeString(object.offerText);
+          final targetFilterOffset = fbb.writeString(object.targetFilter);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, targetNameOffset);
-          fbb.addOffset(2, destinationLabelOffset);
-          fbb.addInt64(3, object.redirectCount);
-          fbb.addInt64(4, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(1, offerTextOffset);
+          fbb.addOffset(2, targetFilterOffset);
+          fbb.addInt64(3, object.sentCount);
+          fbb.addInt64(4, object.openedCount);
+          fbb.addInt64(5, object.usedCount);
+          fbb.addInt64(6, object.dispatchedAt.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4072,21 +4083,27 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final idParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final targetNameParam = const fb.StringReader(asciiOptimization: true)
+          final offerTextParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
-          final destinationLabelParam =
+          final targetFilterParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, '');
-          final redirectCountParam =
+          final sentCountParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
-          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
-          final object = TrafficSteeringDirectiveEntity(
+          final openedCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final usedCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dispatchedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = PromotionalOfferEntity(
               id: idParam,
-              targetName: targetNameParam,
-              destinationLabel: destinationLabelParam,
-              redirectCount: redirectCountParam,
-              createdAt: createdAtParam);
+              offerText: offerTextParam,
+              targetFilter: targetFilterParam,
+              sentCount: sentCountParam,
+              openedCount: openedCountParam,
+              usedCount: usedCountParam,
+              dispatchedAt: dispatchedAtParam);
 
           return object;
         })
@@ -5330,29 +5347,33 @@ class MerchantBranchEntity_ {
       obx.QueryDateProperty<MerchantBranchEntity>(_entities[43].properties[4]);
 }
 
-/// [TrafficSteeringDirectiveEntity] entity fields to define ObjectBox queries.
-class TrafficSteeringDirectiveEntity_ {
-  /// see [TrafficSteeringDirectiveEntity.id]
-  static final id = obx.QueryIntegerProperty<TrafficSteeringDirectiveEntity>(
+/// [PromotionalOfferEntity] entity fields to define ObjectBox queries.
+class PromotionalOfferEntity_ {
+  /// see [PromotionalOfferEntity.id]
+  static final id = obx.QueryIntegerProperty<PromotionalOfferEntity>(
       _entities[44].properties[0]);
 
-  /// see [TrafficSteeringDirectiveEntity.targetName]
-  static final targetName =
-      obx.QueryStringProperty<TrafficSteeringDirectiveEntity>(
-          _entities[44].properties[1]);
+  /// see [PromotionalOfferEntity.offerText]
+  static final offerText = obx.QueryStringProperty<PromotionalOfferEntity>(
+      _entities[44].properties[1]);
 
-  /// see [TrafficSteeringDirectiveEntity.destinationLabel]
-  static final destinationLabel =
-      obx.QueryStringProperty<TrafficSteeringDirectiveEntity>(
-          _entities[44].properties[2]);
+  /// see [PromotionalOfferEntity.targetFilter]
+  static final targetFilter = obx.QueryStringProperty<PromotionalOfferEntity>(
+      _entities[44].properties[2]);
 
-  /// see [TrafficSteeringDirectiveEntity.redirectCount]
-  static final redirectCount =
-      obx.QueryIntegerProperty<TrafficSteeringDirectiveEntity>(
-          _entities[44].properties[3]);
+  /// see [PromotionalOfferEntity.sentCount]
+  static final sentCount = obx.QueryIntegerProperty<PromotionalOfferEntity>(
+      _entities[44].properties[3]);
 
-  /// see [TrafficSteeringDirectiveEntity.createdAt]
-  static final createdAt =
-      obx.QueryDateProperty<TrafficSteeringDirectiveEntity>(
-          _entities[44].properties[4]);
+  /// see [PromotionalOfferEntity.openedCount]
+  static final openedCount = obx.QueryIntegerProperty<PromotionalOfferEntity>(
+      _entities[44].properties[4]);
+
+  /// see [PromotionalOfferEntity.usedCount]
+  static final usedCount = obx.QueryIntegerProperty<PromotionalOfferEntity>(
+      _entities[44].properties[5]);
+
+  /// see [PromotionalOfferEntity.dispatchedAt]
+  static final dispatchedAt = obx.QueryDateProperty<PromotionalOfferEntity>(
+      _entities[44].properties[6]);
 }
