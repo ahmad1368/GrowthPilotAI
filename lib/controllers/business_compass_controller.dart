@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
@@ -41,6 +42,7 @@ import 'package:growth_pilot_ai/core/data/entities/inventory_cost_layer_entity.d
 import 'package:growth_pilot_ai/core/data/repositories/inventory_cost_layer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
@@ -91,6 +93,7 @@ class BusinessCompassController extends GetxController {
   late CompetitorSightingRepository _competitorSightings;
   late ReviewFeedbackRepository _reviewFeedback;
   late NeighborhoodExpansionRepository _neighborhoodExpansions;
+  late MerchantPartnershipRepository _merchantPartnerships;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -464,6 +467,11 @@ class BusinessCompassController extends GetxController {
         title: 'Adjacent Neighborhood Expansion Potential',
         data: {'evaluations': _neighborhoodExpansions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'MERCHANT_PARTNERSHIP_ANALYZER',
+        title: 'Complementary Merchant Partnerships',
+        data: {'partnerships': _merchantPartnerships.getAll()},
+      ),
     ];
   }
 
@@ -507,6 +515,8 @@ class BusinessCompassController extends GetxController {
         ReviewFeedbackRepository(store.box<ReviewFeedbackEntity>());
     _neighborhoodExpansions = NeighborhoodExpansionRepository(
         store.box<NeighborhoodExpansionEntity>());
+    _merchantPartnerships =
+        MerchantPartnershipRepository(store.box<MerchantPartnershipEntity>());
     _recompute();
   }
 
