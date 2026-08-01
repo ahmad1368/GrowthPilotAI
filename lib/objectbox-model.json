@@ -1801,10 +1801,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "46:2552647761695352814",
+      "lastPropertyId": "5:6607159283812576072",
+      "name": "TrafficSteeringDirectiveEntity",
+      "properties": [
+        {
+          "id": "1:591295571915651991",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2412114083997399869",
+          "name": "targetName",
+          "type": 9
+        },
+        {
+          "id": "3:6530183626370308410",
+          "name": "destinationLabel",
+          "type": 9
+        },
+        {
+          "id": "4:2650394266168497758",
+          "name": "redirectCount",
+          "type": 6
+        },
+        {
+          "id": "5:6607159283812576072",
+          "name": "createdAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "50:286001031574895506"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "45:6552528320428670960",
-  "lastIndexId": "49:2216379568406679010",
+  "lastEntityId": "46:2552647761695352814",
+  "lastIndexId": "50:286001031574895506",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
