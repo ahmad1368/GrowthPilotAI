@@ -17,6 +17,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
+import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
@@ -1875,6 +1876,91 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(50, 3474758466030017671))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(47, 5926185682853321060),
+      name: 'AnalyticsPricingTierEntity',
+      lastPropertyId: const obx_int.IdUid(8, 1394774714843835319),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2861091214684467420),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8352455469333696621),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7364859809961250411),
+            name: 'tierName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7264547823090412009),
+            name: 'monthlyFee',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 9139739286343928310),
+            name: 'previousTierName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3176850929194559920),
+            name: 'previousMonthlyFee',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2686623527000895875),
+            name: 'invoicedAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1394774714843835319),
+            name: 'effectiveAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(51, 7031737964533449320))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(48, 651963811580335584),
+      name: 'TrafficSteeringDirectiveEntity',
+      lastPropertyId: const obx_int.IdUid(5, 1877570264709929532),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4288019015651206610),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8044630830823363014),
+            name: 'targetName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8863573362309472726),
+            name: 'destinationLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 475640037463938247),
+            name: 'redirectCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1877570264709929532),
+            name: 'createdAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(52, 4981903050180421258))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1913,8 +1999,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(46, 1595845490344560714),
-      lastIndexId: const obx_int.IdUid(50, 3474758466030017671),
+      lastEntityId: const obx_int.IdUid(48, 651963811580335584),
+      lastIndexId: const obx_int.IdUid(52, 4981903050180421258),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4106,6 +4192,111 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dispatchedAt: dispatchedAtParam);
 
           return object;
+        }),
+    AnalyticsPricingTierEntity:
+        obx_int.EntityDefinition<AnalyticsPricingTierEntity>(
+            model: _entities[45],
+            toOneRelations: (AnalyticsPricingTierEntity object) => [],
+            toManyRelations: (AnalyticsPricingTierEntity object) => {},
+            getId: (AnalyticsPricingTierEntity object) => object.id,
+            setId: (AnalyticsPricingTierEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (AnalyticsPricingTierEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              final tierNameOffset = fbb.writeString(object.tierName);
+              final previousTierNameOffset =
+                  fbb.writeString(object.previousTierName);
+              fbb.startTable(9);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addOffset(2, tierNameOffset);
+              fbb.addFloat64(3, object.monthlyFee);
+              fbb.addOffset(4, previousTierNameOffset);
+              fbb.addFloat64(5, object.previousMonthlyFee);
+              fbb.addFloat64(6, object.invoicedAmount);
+              fbb.addInt64(7, object.effectiveAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final tierNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final monthlyFeeParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final previousTierNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+              final previousMonthlyFeeParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final invoicedAmountParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final effectiveAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+              final object = AnalyticsPricingTierEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  tierName: tierNameParam,
+                  monthlyFee: monthlyFeeParam,
+                  previousTierName: previousTierNameParam,
+                  previousMonthlyFee: previousMonthlyFeeParam,
+                  invoicedAmount: invoicedAmountParam,
+                  effectiveAt: effectiveAtParam);
+
+              return object;
+            }),
+    TrafficSteeringDirectiveEntity: obx_int.EntityDefinition<
+            TrafficSteeringDirectiveEntity>(
+        model: _entities[46],
+        toOneRelations: (TrafficSteeringDirectiveEntity object) => [],
+        toManyRelations: (TrafficSteeringDirectiveEntity object) => {},
+        getId: (TrafficSteeringDirectiveEntity object) => object.id,
+        setId: (TrafficSteeringDirectiveEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TrafficSteeringDirectiveEntity object, fb.Builder fbb) {
+          final targetNameOffset = fbb.writeString(object.targetName);
+          final destinationLabelOffset =
+              fbb.writeString(object.destinationLabel);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, targetNameOffset);
+          fbb.addOffset(2, destinationLabelOffset);
+          fbb.addInt64(3, object.redirectCount);
+          fbb.addInt64(4, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final targetNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final destinationLabelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final redirectCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = TrafficSteeringDirectiveEntity(
+              id: idParam,
+              targetName: targetNameParam,
+              destinationLabel: destinationLabelParam,
+              redirectCount: redirectCountParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -5376,4 +5567,70 @@ class PromotionalOfferEntity_ {
   /// see [PromotionalOfferEntity.dispatchedAt]
   static final dispatchedAt = obx.QueryDateProperty<PromotionalOfferEntity>(
       _entities[44].properties[6]);
+}
+
+/// [AnalyticsPricingTierEntity] entity fields to define ObjectBox queries.
+class AnalyticsPricingTierEntity_ {
+  /// see [AnalyticsPricingTierEntity.id]
+  static final id = obx.QueryIntegerProperty<AnalyticsPricingTierEntity>(
+      _entities[45].properties[0]);
+
+  /// see [AnalyticsPricingTierEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<AnalyticsPricingTierEntity>(
+          _entities[45].properties[1]);
+
+  /// see [AnalyticsPricingTierEntity.tierName]
+  static final tierName = obx.QueryStringProperty<AnalyticsPricingTierEntity>(
+      _entities[45].properties[2]);
+
+  /// see [AnalyticsPricingTierEntity.monthlyFee]
+  static final monthlyFee = obx.QueryDoubleProperty<AnalyticsPricingTierEntity>(
+      _entities[45].properties[3]);
+
+  /// see [AnalyticsPricingTierEntity.previousTierName]
+  static final previousTierName =
+      obx.QueryStringProperty<AnalyticsPricingTierEntity>(
+          _entities[45].properties[4]);
+
+  /// see [AnalyticsPricingTierEntity.previousMonthlyFee]
+  static final previousMonthlyFee =
+      obx.QueryDoubleProperty<AnalyticsPricingTierEntity>(
+          _entities[45].properties[5]);
+
+  /// see [AnalyticsPricingTierEntity.invoicedAmount]
+  static final invoicedAmount =
+      obx.QueryDoubleProperty<AnalyticsPricingTierEntity>(
+          _entities[45].properties[6]);
+
+  /// see [AnalyticsPricingTierEntity.effectiveAt]
+  static final effectiveAt = obx.QueryDateProperty<AnalyticsPricingTierEntity>(
+      _entities[45].properties[7]);
+}
+
+/// [TrafficSteeringDirectiveEntity] entity fields to define ObjectBox queries.
+class TrafficSteeringDirectiveEntity_ {
+  /// see [TrafficSteeringDirectiveEntity.id]
+  static final id = obx.QueryIntegerProperty<TrafficSteeringDirectiveEntity>(
+      _entities[46].properties[0]);
+
+  /// see [TrafficSteeringDirectiveEntity.targetName]
+  static final targetName =
+      obx.QueryStringProperty<TrafficSteeringDirectiveEntity>(
+          _entities[46].properties[1]);
+
+  /// see [TrafficSteeringDirectiveEntity.destinationLabel]
+  static final destinationLabel =
+      obx.QueryStringProperty<TrafficSteeringDirectiveEntity>(
+          _entities[46].properties[2]);
+
+  /// see [TrafficSteeringDirectiveEntity.redirectCount]
+  static final redirectCount =
+      obx.QueryIntegerProperty<TrafficSteeringDirectiveEntity>(
+          _entities[46].properties[3]);
+
+  /// see [TrafficSteeringDirectiveEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<TrafficSteeringDirectiveEntity>(
+          _entities[46].properties[4]);
 }
