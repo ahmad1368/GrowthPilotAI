@@ -39,6 +39,7 @@ import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/merchant_branch_entity.dart';
+import 'core/data/entities/merchant_config_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
@@ -2002,6 +2003,51 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(53, 8256143803127701579))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(50, 6726192733887807847),
+      name: 'MerchantConfigEntity',
+      lastPropertyId: const obx_int.IdUid(7, 5668624991428446027),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4852417909877844720),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6855475585578023772),
+            name: 'businessName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 440035232224501814),
+            name: 'businessId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3403695501372878894),
+            name: 'commissionRatePercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2834208436186667294),
+            name: 'transactionCapAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8468421318788941200),
+            name: 'notes',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5668624991428446027),
+            name: 'updatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(54, 7974693037178003911))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2040,8 +2086,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(49, 1165489856300808193),
-      lastIndexId: const obx_int.IdUid(53, 8256143803127701579),
+      lastEntityId: const obx_int.IdUid(50, 6726192733887807847),
+      lastIndexId: const obx_int.IdUid(54, 7974693037178003911),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4389,7 +4435,59 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   updatedAt: updatedAtParam);
 
               return object;
-            })
+            }),
+    MerchantConfigEntity: obx_int.EntityDefinition<MerchantConfigEntity>(
+        model: _entities[48],
+        toOneRelations: (MerchantConfigEntity object) => [],
+        toManyRelations: (MerchantConfigEntity object) => {},
+        getId: (MerchantConfigEntity object) => object.id,
+        setId: (MerchantConfigEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MerchantConfigEntity object, fb.Builder fbb) {
+          final businessNameOffset = fbb.writeString(object.businessName);
+          final businessIdOffset = fbb.writeString(object.businessId);
+          final notesOffset = fbb.writeString(object.notes);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, businessNameOffset);
+          fbb.addOffset(2, businessIdOffset);
+          fbb.addFloat64(3, object.commissionRatePercent);
+          fbb.addFloat64(4, object.transactionCapAmount);
+          fbb.addOffset(5, notesOffset);
+          fbb.addInt64(6, object.updatedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final businessNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final businessIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final commissionRatePercentParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final transactionCapAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final notesParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = MerchantConfigEntity(
+              id: idParam,
+              businessName: businessNameParam,
+              businessId: businessIdParam,
+              commissionRatePercent: commissionRatePercentParam,
+              transactionCapAmount: transactionCapAmountParam,
+              notes: notesParam,
+              updatedAt: updatedAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -5753,4 +5851,37 @@ class ServiceRestrictionEntity_ {
   /// see [ServiceRestrictionEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<ServiceRestrictionEntity>(
       _entities[47].properties[5]);
+}
+
+/// [MerchantConfigEntity] entity fields to define ObjectBox queries.
+class MerchantConfigEntity_ {
+  /// see [MerchantConfigEntity.id]
+  static final id = obx.QueryIntegerProperty<MerchantConfigEntity>(
+      _entities[48].properties[0]);
+
+  /// see [MerchantConfigEntity.businessName]
+  static final businessName = obx.QueryStringProperty<MerchantConfigEntity>(
+      _entities[48].properties[1]);
+
+  /// see [MerchantConfigEntity.businessId]
+  static final businessId = obx.QueryStringProperty<MerchantConfigEntity>(
+      _entities[48].properties[2]);
+
+  /// see [MerchantConfigEntity.commissionRatePercent]
+  static final commissionRatePercent =
+      obx.QueryDoubleProperty<MerchantConfigEntity>(
+          _entities[48].properties[3]);
+
+  /// see [MerchantConfigEntity.transactionCapAmount]
+  static final transactionCapAmount =
+      obx.QueryDoubleProperty<MerchantConfigEntity>(
+          _entities[48].properties[4]);
+
+  /// see [MerchantConfigEntity.notes]
+  static final notes = obx.QueryStringProperty<MerchantConfigEntity>(
+      _entities[48].properties[5]);
+
+  /// see [MerchantConfigEntity.updatedAt]
+  static final updatedAt =
+      obx.QueryDateProperty<MerchantConfigEntity>(_entities[48].properties[6]);
 }

@@ -16,6 +16,7 @@ import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/promotional_offer_entity.dart';
@@ -49,6 +50,7 @@ import 'package:growth_pilot_ai/core/data/repositories/inventory_cost_layer_repo
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_branch_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/merchant_config_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/analytics_pricing_tier_repository.dart';
@@ -111,6 +113,7 @@ class BusinessCompassController extends GetxController {
   late PromotionalOfferRepository _promotionalOffers;
   late AnalyticsPricingTierRepository _analyticsPricingTiers;
   late ServiceRestrictionRepository _serviceRestrictions;
+  late MerchantConfigRepository _merchantConfigs;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -522,6 +525,11 @@ class BusinessCompassController extends GetxController {
         title: 'Granular Service Lockdown and Restriction Engine',
         data: {'restrictions': _serviceRestrictions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'MERCHANT_CONFIG_PANEL',
+        title: 'Single-User Granular Configuration Panel',
+        data: {'configs': _merchantConfigs.getAll()},
+      ),
     ];
   }
 
@@ -576,6 +584,8 @@ class BusinessCompassController extends GetxController {
         store.box<AnalyticsPricingTierEntity>());
     _serviceRestrictions =
         ServiceRestrictionRepository(store.box<ServiceRestrictionEntity>());
+    _merchantConfigs =
+        MerchantConfigRepository(store.box<MerchantConfigEntity>());
     _recompute();
   }
 

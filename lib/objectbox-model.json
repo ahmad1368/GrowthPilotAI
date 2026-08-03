@@ -1975,10 +1975,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "50:6726192733887807847",
+      "lastPropertyId": "7:5668624991428446027",
+      "name": "MerchantConfigEntity",
+      "properties": [
+        {
+          "id": "1:4852417909877844720",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6855475585578023772",
+          "name": "businessName",
+          "type": 9
+        },
+        {
+          "id": "3:440035232224501814",
+          "name": "businessId",
+          "type": 9
+        },
+        {
+          "id": "4:3403695501372878894",
+          "name": "commissionRatePercent",
+          "type": 8
+        },
+        {
+          "id": "5:2834208436186667294",
+          "name": "transactionCapAmount",
+          "type": 8
+        },
+        {
+          "id": "6:8468421318788941200",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "7:5668624991428446027",
+          "name": "updatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "54:7974693037178003911"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "49:1165489856300808193",
-  "lastIndexId": "53:8256143803127701579",
+  "lastEntityId": "50:6726192733887807847",
+  "lastIndexId": "54:7974693037178003911",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
