@@ -2021,10 +2021,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "51:201054124002079652",
+      "lastPropertyId": "5:6001826191979032015",
+      "name": "FeatureModuleToggleEntity",
+      "properties": [
+        {
+          "id": "1:4565519182786792510",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7859872373956784363",
+          "name": "moduleName",
+          "type": 9
+        },
+        {
+          "id": "3:6170948007649747725",
+          "name": "routeName",
+          "type": 9
+        },
+        {
+          "id": "4:8775754285687279975",
+          "name": "isEnabled",
+          "type": 1
+        },
+        {
+          "id": "5:6001826191979032015",
+          "name": "updatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "55:683963597254462612"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "50:6726192733887807847",
-  "lastIndexId": "54:7974693037178003911",
+  "lastEntityId": "51:201054124002079652",
+  "lastIndexId": "55:683963597254462612",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
