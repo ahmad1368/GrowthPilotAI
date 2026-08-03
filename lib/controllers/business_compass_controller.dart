@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/core/data/entities/competitor_sighting_entity.da
 import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/feature_module_toggle_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
@@ -34,6 +35,7 @@ import 'package:growth_pilot_ai/core/data/repositories/competitor_sighting_repos
 import 'package:growth_pilot_ai/core/data/repositories/csat_rating_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/exchange_rate_observation_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/feature_module_toggle_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
@@ -114,6 +116,7 @@ class BusinessCompassController extends GetxController {
   late AnalyticsPricingTierRepository _analyticsPricingTiers;
   late ServiceRestrictionRepository _serviceRestrictions;
   late MerchantConfigRepository _merchantConfigs;
+  late FeatureModuleToggleRepository _featureModuleToggles;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -530,6 +533,11 @@ class BusinessCompassController extends GetxController {
         title: 'Single-User Granular Configuration Panel',
         data: {'configs': _merchantConfigs.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'FEATURE_TOGGLE_ENGINE',
+        title: 'Modular Feature Toggle Engine',
+        data: {'toggles': _featureModuleToggles.getAll()},
+      ),
     ];
   }
 
@@ -586,6 +594,8 @@ class BusinessCompassController extends GetxController {
         ServiceRestrictionRepository(store.box<ServiceRestrictionEntity>());
     _merchantConfigs =
         MerchantConfigRepository(store.box<MerchantConfigEntity>());
+    _featureModuleToggles = FeatureModuleToggleRepository(
+        store.box<FeatureModuleToggleEntity>());
     _recompute();
   }
 

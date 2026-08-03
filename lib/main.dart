@@ -31,6 +31,7 @@ import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard
 import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_screen.dart';
 import 'package:growth_pilot_ai/features/transactions/screens/duplicate_matches_screen.dart';
 import 'package:growth_pilot_ai/features/inbox/screens/inbox_screen.dart';
+import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -90,11 +91,20 @@ class MyApp extends StatelessWidget {
           darkTheme: darkTheme,
           home: const HomeLayout(),
           getPages: [
-            GetPage(name: '/settings', page: () => const SettingsScreen()),
-            GetPage(name: '/forecast', page: () => const ForecastScreen()),
+            GetPage(
+              name: '/settings',
+              page: () => const SettingsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/forecast',
+              page: () => const ForecastScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
             GetPage(
               name: '/category-mapping',
               page: () => const CategoryMappingScreen(),
+              middlewares: [ModuleAccessMiddleware()],
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => CategoryMappingController()),
               ),
@@ -102,6 +112,7 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/settings/integrations',
               page: () => const IntegrationsDashboardScreen(),
+              middlewares: [ModuleAccessMiddleware()],
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => AccountingIntegrationsController()),
               ),
@@ -109,6 +120,7 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/settings/connected-accounts',
               page: () => const ConnectedAccountsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => ConnectedAccountsController()),
               ),
@@ -116,6 +128,7 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/transactions/duplicates',
               page: () => const DuplicateMatchesScreen(),
+              middlewares: [ModuleAccessMiddleware()],
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => TransactionMatchController()),
               ),
@@ -123,6 +136,7 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/inbox',
               page: () => const InboxScreen(),
+              middlewares: [ModuleAccessMiddleware()],
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => InboxController()),
               ),
@@ -130,6 +144,7 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/business-compass',
               page: () => const BusinessCompassScreen(),
+              middlewares: [ModuleAccessMiddleware()],
               binding: BindingsBuilder(() {
                 Get.lazyPut(() => BusinessCompassController());
                 Get.lazyPut(() => WidgetLayoutController(

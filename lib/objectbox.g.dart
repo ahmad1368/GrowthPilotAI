@@ -27,6 +27,7 @@ import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
+import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
@@ -2048,6 +2049,41 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(54, 7974693037178003911))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(51, 201054124002079652),
+      name: 'FeatureModuleToggleEntity',
+      lastPropertyId: const obx_int.IdUid(5, 6001826191979032015),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4565519182786792510),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7859872373956784363),
+            name: 'moduleName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6170948007649747725),
+            name: 'routeName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8775754285687279975),
+            name: 'isEnabled',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6001826191979032015),
+            name: 'updatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(55, 683963597254462612))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2086,8 +2122,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(50, 6726192733887807847),
-      lastIndexId: const obx_int.IdUid(54, 7974693037178003911),
+      lastEntityId: const obx_int.IdUid(51, 201054124002079652),
+      lastIndexId: const obx_int.IdUid(55, 683963597254462612),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4487,7 +4523,52 @@ obx_int.ModelDefinition getObjectBoxModel() {
               updatedAt: updatedAtParam);
 
           return object;
-        })
+        }),
+    FeatureModuleToggleEntity:
+        obx_int.EntityDefinition<FeatureModuleToggleEntity>(
+            model: _entities[49],
+            toOneRelations: (FeatureModuleToggleEntity object) => [],
+            toManyRelations: (FeatureModuleToggleEntity object) => {},
+            getId: (FeatureModuleToggleEntity object) => object.id,
+            setId: (FeatureModuleToggleEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (FeatureModuleToggleEntity object, fb.Builder fbb) {
+              final moduleNameOffset = fbb.writeString(object.moduleName);
+              final routeNameOffset = fbb.writeString(object.routeName);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, moduleNameOffset);
+              fbb.addOffset(2, routeNameOffset);
+              fbb.addBool(3, object.isEnabled);
+              fbb.addInt64(4, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final moduleNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final routeNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final isEnabledParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false);
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = FeatureModuleToggleEntity(
+                  id: idParam,
+                  moduleName: moduleNameParam,
+                  routeName: routeNameParam,
+                  isEnabled: isEnabledParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -5884,4 +5965,27 @@ class MerchantConfigEntity_ {
   /// see [MerchantConfigEntity.updatedAt]
   static final updatedAt =
       obx.QueryDateProperty<MerchantConfigEntity>(_entities[48].properties[6]);
+}
+
+/// [FeatureModuleToggleEntity] entity fields to define ObjectBox queries.
+class FeatureModuleToggleEntity_ {
+  /// see [FeatureModuleToggleEntity.id]
+  static final id = obx.QueryIntegerProperty<FeatureModuleToggleEntity>(
+      _entities[49].properties[0]);
+
+  /// see [FeatureModuleToggleEntity.moduleName]
+  static final moduleName = obx.QueryStringProperty<FeatureModuleToggleEntity>(
+      _entities[49].properties[1]);
+
+  /// see [FeatureModuleToggleEntity.routeName]
+  static final routeName = obx.QueryStringProperty<FeatureModuleToggleEntity>(
+      _entities[49].properties[2]);
+
+  /// see [FeatureModuleToggleEntity.isEnabled]
+  static final isEnabled = obx.QueryBooleanProperty<FeatureModuleToggleEntity>(
+      _entities[49].properties[3]);
+
+  /// see [FeatureModuleToggleEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<FeatureModuleToggleEntity>(
+      _entities[49].properties[4]);
 }
