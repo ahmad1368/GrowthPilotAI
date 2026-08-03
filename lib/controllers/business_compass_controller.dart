@@ -4,6 +4,7 @@ import 'package:growth_pilot_ai/business/compute_business_compass_metrics.dart';
 import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
@@ -49,6 +50,7 @@ import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository
 import 'package:growth_pilot_ai/core/data/repositories/merchant_branch_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/analytics_pricing_tier_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/promotional_offer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
@@ -105,6 +107,7 @@ class BusinessCompassController extends GetxController {
   late TrafficCountRepository _trafficCounts;
   late MerchantBranchRepository _merchantBranches;
   late PromotionalOfferRepository _promotionalOffers;
+  late AnalyticsPricingTierRepository _analyticsPricingTiers;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -506,6 +509,11 @@ class BusinessCompassController extends GetxController {
         title: 'Targeted Offer and Promotional Dispatcher',
         data: {'offers': _promotionalOffers.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'ANALYTICS_PRICING_TIERS',
+        title: 'Dynamic Monetization & Advanced Analytics Pricing',
+        data: {'tiers': _analyticsPricingTiers.getAll()},
+      ),
     ];
   }
 
@@ -556,6 +564,8 @@ class BusinessCompassController extends GetxController {
         MerchantBranchRepository(store.box<MerchantBranchEntity>());
     _promotionalOffers =
         PromotionalOfferRepository(store.box<PromotionalOfferEntity>());
+    _analyticsPricingTiers = AnalyticsPricingTierRepository(
+        store.box<AnalyticsPricingTierEntity>());
     _recompute();
   }
 

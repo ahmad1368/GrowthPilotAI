@@ -1847,10 +1847,97 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "47:5926185682853321060",
+      "lastPropertyId": "8:1394774714843835319",
+      "name": "AnalyticsPricingTierEntity",
+      "properties": [
+        {
+          "id": "1:2861091214684467420",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8352455469333696621",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "3:7364859809961250411",
+          "name": "tierName",
+          "type": 9
+        },
+        {
+          "id": "4:7264547823090412009",
+          "name": "monthlyFee",
+          "type": 8
+        },
+        {
+          "id": "5:9139739286343928310",
+          "name": "previousTierName",
+          "type": 9
+        },
+        {
+          "id": "6:3176850929194559920",
+          "name": "previousMonthlyFee",
+          "type": 8
+        },
+        {
+          "id": "7:2686623527000895875",
+          "name": "invoicedAmount",
+          "type": 8
+        },
+        {
+          "id": "8:1394774714843835319",
+          "name": "effectiveAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "51:7031737964533449320"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "48:651963811580335584",
+      "lastPropertyId": "5:1877570264709929532",
+      "name": "TrafficSteeringDirectiveEntity",
+      "properties": [
+        {
+          "id": "1:4288019015651206610",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8044630830823363014",
+          "name": "targetName",
+          "type": 9
+        },
+        {
+          "id": "3:8863573362309472726",
+          "name": "destinationLabel",
+          "type": 9
+        },
+        {
+          "id": "4:475640037463938247",
+          "name": "redirectCount",
+          "type": 6
+        },
+        {
+          "id": "5:1877570264709929532",
+          "name": "createdAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "52:4981903050180421258"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "46:1595845490344560714",
-  "lastIndexId": "50:3474758466030017671",
+  "lastEntityId": "48:651963811580335584",
+  "lastIndexId": "52:4981903050180421258",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
