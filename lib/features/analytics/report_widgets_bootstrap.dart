@@ -33,6 +33,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_valuation_r
 import 'package:growth_pilot_ai/features/analytics/widgets/loyalty_program_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_branch_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_partnership_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/neighborhood_expansion_report_widget.dart';
@@ -305,6 +306,10 @@ class ReportWidgetsBootstrap {
         'SERVICE_LOCKDOWN_ENGINE',
         (spec) => ServiceRestrictionReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MERCHANT_CONFIG_PANEL',
+        (spec) =>
+            MerchantConfigReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
