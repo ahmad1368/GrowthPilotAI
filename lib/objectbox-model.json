@@ -1934,10 +1934,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "49:1165489856300808193",
+      "lastPropertyId": "6:452161555814720185",
+      "name": "ServiceRestrictionEntity",
+      "properties": [
+        {
+          "id": "1:9079121040447467413",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6295934595141554700",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "3:7422805575634319408",
+          "name": "serviceName",
+          "type": 9
+        },
+        {
+          "id": "4:260766671702142825",
+          "name": "isBlocked",
+          "type": 1
+        },
+        {
+          "id": "5:6136223836694508949",
+          "name": "reasonMessage",
+          "type": 9
+        },
+        {
+          "id": "6:452161555814720185",
+          "name": "updatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "53:8256143803127701579"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "48:651963811580335584",
-  "lastIndexId": "52:4981903050180421258",
+  "lastEntityId": "49:1165489856300808193",
+  "lastIndexId": "53:8256143803127701579",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

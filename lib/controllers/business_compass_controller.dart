@@ -20,6 +20,7 @@ import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.d
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/promotional_offer_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/service_restriction_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_steering_directive_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
@@ -52,6 +53,7 @@ import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repo
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/analytics_pricing_tier_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/promotional_offer_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/service_restriction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/review_feedback_repository.dart';
@@ -108,6 +110,7 @@ class BusinessCompassController extends GetxController {
   late MerchantBranchRepository _merchantBranches;
   late PromotionalOfferRepository _promotionalOffers;
   late AnalyticsPricingTierRepository _analyticsPricingTiers;
+  late ServiceRestrictionRepository _serviceRestrictions;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -514,6 +517,11 @@ class BusinessCompassController extends GetxController {
         title: 'Dynamic Monetization & Advanced Analytics Pricing',
         data: {'tiers': _analyticsPricingTiers.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SERVICE_LOCKDOWN_ENGINE',
+        title: 'Granular Service Lockdown and Restriction Engine',
+        data: {'restrictions': _serviceRestrictions.getAll()},
+      ),
     ];
   }
 
@@ -566,6 +574,8 @@ class BusinessCompassController extends GetxController {
         PromotionalOfferRepository(store.box<PromotionalOfferEntity>());
     _analyticsPricingTiers = AnalyticsPricingTierRepository(
         store.box<AnalyticsPricingTierEntity>());
+    _serviceRestrictions =
+        ServiceRestrictionRepository(store.box<ServiceRestrictionEntity>());
     _recompute();
   }
 

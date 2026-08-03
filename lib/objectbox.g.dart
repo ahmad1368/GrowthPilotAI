@@ -47,6 +47,7 @@ import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
+import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
@@ -1961,6 +1962,46 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(52, 4981903050180421258))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(49, 1165489856300808193),
+      name: 'ServiceRestrictionEntity',
+      lastPropertyId: const obx_int.IdUid(6, 452161555814720185),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 9079121040447467413),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6295934595141554700),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7422805575634319408),
+            name: 'serviceName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 260766671702142825),
+            name: 'isBlocked',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6136223836694508949),
+            name: 'reasonMessage',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 452161555814720185),
+            name: 'updatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(53, 8256143803127701579))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -1999,8 +2040,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(48, 651963811580335584),
-      lastIndexId: const obx_int.IdUid(52, 4981903050180421258),
+      lastEntityId: const obx_int.IdUid(49, 1165489856300808193),
+      lastIndexId: const obx_int.IdUid(53, 8256143803127701579),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4297,7 +4338,58 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
-        })
+        }),
+    ServiceRestrictionEntity:
+        obx_int.EntityDefinition<ServiceRestrictionEntity>(
+            model: _entities[47],
+            toOneRelations: (ServiceRestrictionEntity object) => [],
+            toManyRelations: (ServiceRestrictionEntity object) => {},
+            getId: (ServiceRestrictionEntity object) => object.id,
+            setId: (ServiceRestrictionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ServiceRestrictionEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              final serviceNameOffset = fbb.writeString(object.serviceName);
+              final reasonMessageOffset = fbb.writeString(object.reasonMessage);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addOffset(2, serviceNameOffset);
+              fbb.addBool(3, object.isBlocked);
+              fbb.addOffset(4, reasonMessageOffset);
+              fbb.addInt64(5, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final serviceNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final isBlockedParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false);
+              final reasonMessageParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = ServiceRestrictionEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  serviceName: serviceNameParam,
+                  isBlocked: isBlockedParam,
+                  reasonMessage: reasonMessageParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -5633,4 +5725,32 @@ class TrafficSteeringDirectiveEntity_ {
   static final createdAt =
       obx.QueryDateProperty<TrafficSteeringDirectiveEntity>(
           _entities[46].properties[4]);
+}
+
+/// [ServiceRestrictionEntity] entity fields to define ObjectBox queries.
+class ServiceRestrictionEntity_ {
+  /// see [ServiceRestrictionEntity.id]
+  static final id = obx.QueryIntegerProperty<ServiceRestrictionEntity>(
+      _entities[47].properties[0]);
+
+  /// see [ServiceRestrictionEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<ServiceRestrictionEntity>(
+      _entities[47].properties[1]);
+
+  /// see [ServiceRestrictionEntity.serviceName]
+  static final serviceName = obx.QueryStringProperty<ServiceRestrictionEntity>(
+      _entities[47].properties[2]);
+
+  /// see [ServiceRestrictionEntity.isBlocked]
+  static final isBlocked = obx.QueryBooleanProperty<ServiceRestrictionEntity>(
+      _entities[47].properties[3]);
+
+  /// see [ServiceRestrictionEntity.reasonMessage]
+  static final reasonMessage =
+      obx.QueryStringProperty<ServiceRestrictionEntity>(
+          _entities[47].properties[4]);
+
+  /// see [ServiceRestrictionEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<ServiceRestrictionEntity>(
+      _entities[47].properties[5]);
 }

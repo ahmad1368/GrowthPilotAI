@@ -58,6 +58,7 @@ class GridLayoutService {
     'MULTI_MERCHANT_MASTER_DASHBOARD',
     'PROMOTIONAL_OFFER_DISPATCHER',
     'ANALYTICS_PRICING_TIERS',
+    'SERVICE_LOCKDOWN_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
