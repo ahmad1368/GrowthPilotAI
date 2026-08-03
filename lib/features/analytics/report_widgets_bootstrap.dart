@@ -52,6 +52,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/review_sentiment_repo
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_acquisition_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/service_restriction_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/space_productivity_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/staff_efficiency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/stock_depletion_forecast_report_widget.dart';
@@ -299,6 +300,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'ANALYTICS_PRICING_TIERS',
         (spec) => AnalyticsPricingReportWidget(
+            data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SERVICE_LOCKDOWN_ENGINE',
+        (spec) => ServiceRestrictionReportWidget(
             data: spec.data, title: spec.title));
   }
 
