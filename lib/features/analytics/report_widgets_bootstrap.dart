@@ -43,6 +43,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/payment_method_report
 import 'package:growth_pilot_ai/features/analytics/widgets/peer_benchmark_comparison_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/price_recommendation_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/price_volatility_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/product_bundle_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/promotional_offer_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/profit_margin_report_widget.dart';
@@ -315,6 +316,10 @@ class ReportWidgetsBootstrap {
         'FEATURE_TOGGLE_ENGINE',
         (spec) =>
             FeatureToggleReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'PRICE_VOLATILITY_ALERT',
+        (spec) =>
+            PriceVolatilityReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

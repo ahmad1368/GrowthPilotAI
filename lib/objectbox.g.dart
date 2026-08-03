@@ -45,6 +45,7 @@ import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
+import 'core/data/entities/price_alert_threshold_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
@@ -2084,6 +2085,25 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(55, 683963597254462612))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(52, 668583595667115485),
+      name: 'PriceAlertThresholdEntity',
+      lastPropertyId: const obx_int.IdUid(2, 6221738259672383969),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2754291618290742370),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6221738259672383969),
+            name: 'thresholdPercent',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2122,7 +2142,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(51, 201054124002079652),
+      lastEntityId: const obx_int.IdUid(52, 668583595667115485),
       lastIndexId: const obx_int.IdUid(55, 683963597254462612),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -4568,6 +4588,34 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   updatedAt: updatedAtParam);
 
               return object;
+            }),
+    PriceAlertThresholdEntity:
+        obx_int.EntityDefinition<PriceAlertThresholdEntity>(
+            model: _entities[50],
+            toOneRelations: (PriceAlertThresholdEntity object) => [],
+            toManyRelations: (PriceAlertThresholdEntity object) => {},
+            getId: (PriceAlertThresholdEntity object) => object.id,
+            setId: (PriceAlertThresholdEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (PriceAlertThresholdEntity object, fb.Builder fbb) {
+              fbb.startTable(3);
+              fbb.addInt64(0, object.id);
+              fbb.addFloat64(1, object.thresholdPercent);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final thresholdPercentParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final object = PriceAlertThresholdEntity(
+                  id: idParam, thresholdPercent: thresholdPercentParam);
+
+              return object;
             })
   };
 
@@ -5988,4 +6036,16 @@ class FeatureModuleToggleEntity_ {
   /// see [FeatureModuleToggleEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<FeatureModuleToggleEntity>(
       _entities[49].properties[4]);
+}
+
+/// [PriceAlertThresholdEntity] entity fields to define ObjectBox queries.
+class PriceAlertThresholdEntity_ {
+  /// see [PriceAlertThresholdEntity.id]
+  static final id = obx.QueryIntegerProperty<PriceAlertThresholdEntity>(
+      _entities[50].properties[0]);
+
+  /// see [PriceAlertThresholdEntity.thresholdPercent]
+  static final thresholdPercent =
+      obx.QueryDoubleProperty<PriceAlertThresholdEntity>(
+          _entities[50].properties[1]);
 }
