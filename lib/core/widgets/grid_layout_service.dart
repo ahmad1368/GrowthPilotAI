@@ -61,6 +61,7 @@ class GridLayoutService {
     'SERVICE_LOCKDOWN_ENGINE',
     'MERCHANT_CONFIG_PANEL',
     'FEATURE_TOGGLE_ENGINE',
+    'PRICE_VOLATILITY_ALERT',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

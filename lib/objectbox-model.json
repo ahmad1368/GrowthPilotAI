@@ -2057,9 +2057,28 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "52:668583595667115485",
+      "lastPropertyId": "2:6221738259672383969",
+      "name": "PriceAlertThresholdEntity",
+      "properties": [
+        {
+          "id": "1:2754291618290742370",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6221738259672383969",
+          "name": "thresholdPercent",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "51:201054124002079652",
+  "lastEntityId": "52:668583595667115485",
   "lastIndexId": "55:683963597254462612",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

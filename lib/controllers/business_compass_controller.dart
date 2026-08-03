@@ -20,6 +20,7 @@ import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/price_alert_threshold_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/promotional_offer_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/service_restriction_entity.dart';
@@ -56,6 +57,7 @@ import 'package:growth_pilot_ai/core/data/repositories/merchant_config_repositor
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/analytics_pricing_tier_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/price_alert_threshold_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/promotional_offer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/service_restriction_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository.dart';
@@ -117,6 +119,7 @@ class BusinessCompassController extends GetxController {
   late ServiceRestrictionRepository _serviceRestrictions;
   late MerchantConfigRepository _merchantConfigs;
   late FeatureModuleToggleRepository _featureModuleToggles;
+  late PriceAlertThresholdRepository _priceAlertThreshold;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -538,6 +541,14 @@ class BusinessCompassController extends GetxController {
         title: 'Modular Feature Toggle Engine',
         data: {'toggles': _featureModuleToggles.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'PRICE_VOLATILITY_ALERT',
+        title: 'Automated Price Fluctuation & Grocery Risk Alert System',
+        data: {
+          'observations': _competitorPrices.getAll(),
+          'thresholdPercent': _priceAlertThreshold.get().thresholdPercent,
+        },
+      ),
     ];
   }
 
@@ -596,6 +607,8 @@ class BusinessCompassController extends GetxController {
         MerchantConfigRepository(store.box<MerchantConfigEntity>());
     _featureModuleToggles = FeatureModuleToggleRepository(
         store.box<FeatureModuleToggleEntity>());
+    _priceAlertThreshold =
+        PriceAlertThresholdRepository(store.box<PriceAlertThresholdEntity>());
     _recompute();
   }
 
