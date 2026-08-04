@@ -33,6 +33,8 @@ import 'package:growth_pilot_ai/core/data/entities/price_alert_threshold_entity.
 import 'package:growth_pilot_ai/core/data/entities/promotional_offer_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/review_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/rewarded_unlock_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/scheduled_task_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/task_execution_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/service_restriction_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_steering_directive_entity.dart';
@@ -83,6 +85,8 @@ import 'package:growth_pilot_ai/core/data/repositories/purchase_order_repository
 import 'package:growth_pilot_ai/core/data/repositories/goods_receipt_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/review_feedback_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/rewarded_unlock_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/scheduled_task_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/task_execution_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/staff_shift_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_movement_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/stock_reservation_repository.dart';
@@ -150,6 +154,8 @@ class BusinessCompassController extends GetxController {
   late AdvertisingRequestRepository _advertisingRequests;
   late BannerMatchingRuleRepository _bannerMatchingRules;
   late RewardedUnlockRepository _rewardedUnlocks;
+  late ScheduledTaskRepository _scheduledTasks;
+  late TaskExecutionLogRepository _taskExecutionLogs;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -661,6 +667,14 @@ class BusinessCompassController extends GetxController {
         title: 'Value-Exchange Rewarded Promos',
         data: {'unlocks': _rewardedUnlocks.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SCHEDULED_TASK_ENGINE',
+        title: 'Advanced Background Scheduler',
+        data: {
+          'tasks': _scheduledTasks.getAll(),
+          'logs': _taskExecutionLogs.getAll(),
+        },
+      ),
     ];
   }
 
@@ -737,6 +751,9 @@ class BusinessCompassController extends GetxController {
     _bannerMatchingRules =
         BannerMatchingRuleRepository(store.box<BannerMatchingRuleEntity>());
     _rewardedUnlocks = RewardedUnlockRepository(store.box<RewardedUnlockEntity>());
+    _scheduledTasks = ScheduledTaskRepository(store.box<ScheduledTaskEntity>());
+    _taskExecutionLogs =
+        TaskExecutionLogRepository(store.box<TaskExecutionLogEntity>());
     _recompute();
   }
 

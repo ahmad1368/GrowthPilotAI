@@ -61,11 +61,13 @@ import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
+import 'core/data/entities/scheduled_task_entity.dart';
 import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
+import 'core/data/entities/task_execution_log_entity.dart';
 import 'core/data/entities/traffic_count_entity.dart';
 import 'core/data/entities/traffic_steering_directive_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
@@ -2531,6 +2533,102 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(67, 3563059751286245146))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(64, 5989162251137097025),
+      name: 'ScheduledTaskEntity',
+      lastPropertyId: const obx_int.IdUid(9, 9172915675877605761),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8901195715673418857),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7590762615058110153),
+            name: 'taskName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8217611047659717606),
+            name: 'targetSegment',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6627917137156371901),
+            name: 'intervalMinutes',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1427277554282587350),
+            name: 'lastRunAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6779535549050670358),
+            name: 'nextRunAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(68, 9182886764078738502)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6730947049470942935),
+            name: 'retryCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7692172862401775222),
+            name: 'maxRetries',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 9172915675877605761),
+            name: 'updatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(69, 2787379701125221149))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(65, 6259365945749490568),
+      name: 'TaskExecutionLogEntity',
+      lastPropertyId: const obx_int.IdUid(6, 4895814382909316811),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 503031513473861574),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8561480207465704415),
+            name: 'taskName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(70, 1962644151739248737)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7489962828203171402),
+            name: 'executedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4934477126840521007),
+            name: 'dbOutcome',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4733272264392104305),
+            name: 'failureReason',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4895814382909316811),
+            name: 'attemptNumber',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2569,8 +2667,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(63, 1765092240849019757),
-      lastIndexId: const obx_int.IdUid(67, 3563059751286245146),
+      lastEntityId: const obx_int.IdUid(65, 6259365945749490568),
+      lastIndexId: const obx_int.IdUid(70, 1962644151739248737),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5546,6 +5644,115 @@ obx_int.ModelDefinition getObjectBoxModel() {
               expiresAt: expiresAtParam);
 
           return object;
+        }),
+    ScheduledTaskEntity: obx_int.EntityDefinition<ScheduledTaskEntity>(
+        model: _entities[62],
+        toOneRelations: (ScheduledTaskEntity object) => [],
+        toManyRelations: (ScheduledTaskEntity object) => {},
+        getId: (ScheduledTaskEntity object) => object.id,
+        setId: (ScheduledTaskEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ScheduledTaskEntity object, fb.Builder fbb) {
+          final taskNameOffset = fbb.writeString(object.taskName);
+          final targetSegmentOffset = fbb.writeString(object.targetSegment);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, taskNameOffset);
+          fbb.addOffset(2, targetSegmentOffset);
+          fbb.addInt64(3, object.intervalMinutes);
+          fbb.addInt64(4, object.lastRunAt?.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.nextRunAt.millisecondsSinceEpoch);
+          fbb.addInt64(6, object.retryCount);
+          fbb.addInt64(7, object.maxRetries);
+          fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final lastRunAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final taskNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final targetSegmentParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final intervalMinutesParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final lastRunAtParam = lastRunAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(lastRunAtValue);
+          final nextRunAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final retryCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final maxRetriesParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = ScheduledTaskEntity(
+              id: idParam,
+              taskName: taskNameParam,
+              targetSegment: targetSegmentParam,
+              intervalMinutes: intervalMinutesParam,
+              lastRunAt: lastRunAtParam,
+              nextRunAt: nextRunAtParam,
+              retryCount: retryCountParam,
+              maxRetries: maxRetriesParam,
+              updatedAt: updatedAtParam);
+
+          return object;
+        }),
+    TaskExecutionLogEntity: obx_int.EntityDefinition<TaskExecutionLogEntity>(
+        model: _entities[63],
+        toOneRelations: (TaskExecutionLogEntity object) => [],
+        toManyRelations: (TaskExecutionLogEntity object) => {},
+        getId: (TaskExecutionLogEntity object) => object.id,
+        setId: (TaskExecutionLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TaskExecutionLogEntity object, fb.Builder fbb) {
+          final taskNameOffset = fbb.writeString(object.taskName);
+          final failureReasonOffset = fbb.writeString(object.failureReason);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, taskNameOffset);
+          fbb.addInt64(2, object.executedAt.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.dbOutcome);
+          fbb.addOffset(4, failureReasonOffset);
+          fbb.addInt64(5, object.attemptNumber);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final taskNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final executedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final dbOutcomeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final failureReasonParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final attemptNumberParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final object = TaskExecutionLogEntity(
+              id: idParam,
+              taskName: taskNameParam,
+              executedAt: executedAtParam,
+              dbOutcome: dbOutcomeParam,
+              failureReason: failureReasonParam,
+              attemptNumber: attemptNumberParam);
+
+          return object;
         })
   };
 
@@ -7265,4 +7472,70 @@ class RewardedUnlockEntity_ {
   /// see [RewardedUnlockEntity.expiresAt]
   static final expiresAt =
       obx.QueryDateProperty<RewardedUnlockEntity>(_entities[61].properties[5]);
+}
+
+/// [ScheduledTaskEntity] entity fields to define ObjectBox queries.
+class ScheduledTaskEntity_ {
+  /// see [ScheduledTaskEntity.id]
+  static final id = obx.QueryIntegerProperty<ScheduledTaskEntity>(
+      _entities[62].properties[0]);
+
+  /// see [ScheduledTaskEntity.taskName]
+  static final taskName =
+      obx.QueryStringProperty<ScheduledTaskEntity>(_entities[62].properties[1]);
+
+  /// see [ScheduledTaskEntity.targetSegment]
+  static final targetSegment =
+      obx.QueryStringProperty<ScheduledTaskEntity>(_entities[62].properties[2]);
+
+  /// see [ScheduledTaskEntity.intervalMinutes]
+  static final intervalMinutes = obx.QueryIntegerProperty<ScheduledTaskEntity>(
+      _entities[62].properties[3]);
+
+  /// see [ScheduledTaskEntity.lastRunAt]
+  static final lastRunAt =
+      obx.QueryDateProperty<ScheduledTaskEntity>(_entities[62].properties[4]);
+
+  /// see [ScheduledTaskEntity.nextRunAt]
+  static final nextRunAt =
+      obx.QueryDateProperty<ScheduledTaskEntity>(_entities[62].properties[5]);
+
+  /// see [ScheduledTaskEntity.retryCount]
+  static final retryCount = obx.QueryIntegerProperty<ScheduledTaskEntity>(
+      _entities[62].properties[6]);
+
+  /// see [ScheduledTaskEntity.maxRetries]
+  static final maxRetries = obx.QueryIntegerProperty<ScheduledTaskEntity>(
+      _entities[62].properties[7]);
+
+  /// see [ScheduledTaskEntity.updatedAt]
+  static final updatedAt =
+      obx.QueryDateProperty<ScheduledTaskEntity>(_entities[62].properties[8]);
+}
+
+/// [TaskExecutionLogEntity] entity fields to define ObjectBox queries.
+class TaskExecutionLogEntity_ {
+  /// see [TaskExecutionLogEntity.id]
+  static final id = obx.QueryIntegerProperty<TaskExecutionLogEntity>(
+      _entities[63].properties[0]);
+
+  /// see [TaskExecutionLogEntity.taskName]
+  static final taskName = obx.QueryStringProperty<TaskExecutionLogEntity>(
+      _entities[63].properties[1]);
+
+  /// see [TaskExecutionLogEntity.executedAt]
+  static final executedAt = obx.QueryDateProperty<TaskExecutionLogEntity>(
+      _entities[63].properties[2]);
+
+  /// see [TaskExecutionLogEntity.dbOutcome]
+  static final dbOutcome = obx.QueryIntegerProperty<TaskExecutionLogEntity>(
+      _entities[63].properties[3]);
+
+  /// see [TaskExecutionLogEntity.failureReason]
+  static final failureReason = obx.QueryStringProperty<TaskExecutionLogEntity>(
+      _entities[63].properties[4]);
+
+  /// see [TaskExecutionLogEntity.attemptNumber]
+  static final attemptNumber = obx.QueryIntegerProperty<TaskExecutionLogEntity>(
+      _entities[63].properties[5]);
 }
