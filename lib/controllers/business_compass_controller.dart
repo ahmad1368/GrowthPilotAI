@@ -20,6 +20,7 @@ import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart
 import 'package:growth_pilot_ai/core/data/entities/emergency_broadcast_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/feature_module_toggle_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/geofence_zone_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
@@ -48,6 +49,7 @@ import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_reposit
 import 'package:growth_pilot_ai/core/data/repositories/emergency_broadcast_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/exchange_rate_observation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/feature_module_toggle_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/geofence_zone_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/store_profile_entity.dart';
@@ -138,6 +140,7 @@ class BusinessCompassController extends GetxController {
   late DailyTransactionCapRepository _dailyTransactionCap;
   late CapExpansionRequestRepository _capExpansionRequests;
   late EmergencyBroadcastRepository _emergencyBroadcasts;
+  late GeofenceZoneRepository _geofenceZones;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -599,6 +602,11 @@ class BusinessCompassController extends GetxController {
         title: 'Regional Emergency Broadcast & Messaging Tool',
         data: {'broadcasts': _emergencyBroadcasts.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'GEOFENCING_ACCESS_CONTROL',
+        title: 'Geofencing Access Control',
+        data: {'zones': _geofenceZones.getAll()},
+      ),
     ];
   }
 
@@ -669,6 +677,7 @@ class BusinessCompassController extends GetxController {
         CapExpansionRequestRepository(store.box<CapExpansionRequestEntity>());
     _emergencyBroadcasts =
         EmergencyBroadcastRepository(store.box<EmergencyBroadcastEntity>());
+    _geofenceZones = GeofenceZoneRepository(store.box<GeofenceZoneEntity>());
     _recompute();
   }
 

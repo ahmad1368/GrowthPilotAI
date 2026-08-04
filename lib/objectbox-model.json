@@ -2294,10 +2294,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "59:3389884457643283209",
+      "lastPropertyId": "7:2671847506731967404",
+      "name": "GeofenceZoneEntity",
+      "properties": [
+        {
+          "id": "1:3127980736142332716",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8302593656047891313",
+          "name": "featureName",
+          "type": 9
+        },
+        {
+          "id": "3:7063221951440590501",
+          "name": "centerLatitude",
+          "type": 8
+        },
+        {
+          "id": "4:20951347039278322",
+          "name": "centerLongitude",
+          "type": 8
+        },
+        {
+          "id": "5:808070399525459885",
+          "name": "radiusKm",
+          "type": 8
+        },
+        {
+          "id": "6:1131238423882153895",
+          "name": "isEnabled",
+          "type": 1
+        },
+        {
+          "id": "7:2671847506731967404",
+          "name": "updatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "63:23953734427334272"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "58:2612675886221579106",
-  "lastIndexId": "62:4253512431835718596",
+  "lastEntityId": "59:3389884457643283209",
+  "lastIndexId": "63:23953734427334272",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
