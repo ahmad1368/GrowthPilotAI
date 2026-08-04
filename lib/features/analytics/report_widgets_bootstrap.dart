@@ -28,6 +28,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/emergency_broadcast_r
 import 'package:growth_pilot_ai/features/analytics/widgets/exchange_rate_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/feature_toggle_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/geofence_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/goods_receipt_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/holiday_impact_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inflation_impact_report_widget.dart';
@@ -342,6 +343,8 @@ class ReportWidgetsBootstrap {
         'EMERGENCY_BROADCAST_TOOL',
         (spec) => EmergencyBroadcastReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('GEOFENCING_ACCESS_CONTROL',
+        (spec) => GeofenceReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

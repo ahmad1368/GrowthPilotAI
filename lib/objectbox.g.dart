@@ -33,6 +33,7 @@ import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
+import 'core/data/entities/geofence_zone_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
@@ -2321,6 +2322,51 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(62, 4253512431835718596))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(59, 3389884457643283209),
+      name: 'GeofenceZoneEntity',
+      lastPropertyId: const obx_int.IdUid(7, 2671847506731967404),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3127980736142332716),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8302593656047891313),
+            name: 'featureName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7063221951440590501),
+            name: 'centerLatitude',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 20951347039278322),
+            name: 'centerLongitude',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 808070399525459885),
+            name: 'radiusKm',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1131238423882153895),
+            name: 'isEnabled',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2671847506731967404),
+            name: 'updatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(63, 23953734427334272))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2359,8 +2405,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(58, 2612675886221579106),
-      lastIndexId: const obx_int.IdUid(62, 4253512431835718596),
+      lastEntityId: const obx_int.IdUid(59, 3389884457643283209),
+      lastIndexId: const obx_int.IdUid(63, 23953734427334272),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5095,7 +5141,57 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   dispatchedAt: dispatchedAtParam);
 
               return object;
-            })
+            }),
+    GeofenceZoneEntity: obx_int.EntityDefinition<GeofenceZoneEntity>(
+        model: _entities[57],
+        toOneRelations: (GeofenceZoneEntity object) => [],
+        toManyRelations: (GeofenceZoneEntity object) => {},
+        getId: (GeofenceZoneEntity object) => object.id,
+        setId: (GeofenceZoneEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (GeofenceZoneEntity object, fb.Builder fbb) {
+          final featureNameOffset = fbb.writeString(object.featureName);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, featureNameOffset);
+          fbb.addFloat64(2, object.centerLatitude);
+          fbb.addFloat64(3, object.centerLongitude);
+          fbb.addFloat64(4, object.radiusKm);
+          fbb.addBool(5, object.isEnabled);
+          fbb.addInt64(6, object.updatedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final featureNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final centerLatitudeParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final centerLongitudeParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final radiusKmParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final isEnabledParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = GeofenceZoneEntity(
+              id: idParam,
+              featureName: featureNameParam,
+              centerLatitude: centerLatitudeParam,
+              centerLongitude: centerLongitudeParam,
+              radiusKm: radiusKmParam,
+              isEnabled: isEnabledParam,
+              updatedAt: updatedAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -6669,4 +6765,35 @@ class EmergencyBroadcastEntity_ {
   /// see [EmergencyBroadcastEntity.dispatchedAt]
   static final dispatchedAt = obx.QueryDateProperty<EmergencyBroadcastEntity>(
       _entities[56].properties[5]);
+}
+
+/// [GeofenceZoneEntity] entity fields to define ObjectBox queries.
+class GeofenceZoneEntity_ {
+  /// see [GeofenceZoneEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<GeofenceZoneEntity>(_entities[57].properties[0]);
+
+  /// see [GeofenceZoneEntity.featureName]
+  static final featureName =
+      obx.QueryStringProperty<GeofenceZoneEntity>(_entities[57].properties[1]);
+
+  /// see [GeofenceZoneEntity.centerLatitude]
+  static final centerLatitude =
+      obx.QueryDoubleProperty<GeofenceZoneEntity>(_entities[57].properties[2]);
+
+  /// see [GeofenceZoneEntity.centerLongitude]
+  static final centerLongitude =
+      obx.QueryDoubleProperty<GeofenceZoneEntity>(_entities[57].properties[3]);
+
+  /// see [GeofenceZoneEntity.radiusKm]
+  static final radiusKm =
+      obx.QueryDoubleProperty<GeofenceZoneEntity>(_entities[57].properties[4]);
+
+  /// see [GeofenceZoneEntity.isEnabled]
+  static final isEnabled =
+      obx.QueryBooleanProperty<GeofenceZoneEntity>(_entities[57].properties[5]);
+
+  /// see [GeofenceZoneEntity.updatedAt]
+  static final updatedAt =
+      obx.QueryDateProperty<GeofenceZoneEntity>(_entities[57].properties[6]);
 }
