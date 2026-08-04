@@ -2198,10 +2198,65 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "56:2281070142987658203",
+      "lastPropertyId": "5:2947685957622746682",
+      "name": "CapExpansionRequestEntity",
+      "properties": [
+        {
+          "id": "1:7534877991736057826",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2492419374012936967",
+          "name": "requestedCapAmount",
+          "type": 8
+        },
+        {
+          "id": "3:629507455734159491",
+          "name": "reason",
+          "type": 9
+        },
+        {
+          "id": "4:218799737826665919",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:2947685957622746682",
+          "name": "requestedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "61:8128368220005707478"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "57:6303445753844131975",
+      "lastPropertyId": "2:9214917558279420499",
+      "name": "DailyTransactionCapEntity",
+      "properties": [
+        {
+          "id": "1:4043230869031586746",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9214917558279420499",
+          "name": "capAmount",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "55:1792087216998601854",
-  "lastIndexId": "60:3047225184989674966",
+  "lastEntityId": "57:6303445753844131975",
+  "lastIndexId": "61:8128368220005707478",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

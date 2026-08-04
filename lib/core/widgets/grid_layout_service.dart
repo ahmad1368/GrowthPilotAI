@@ -65,6 +65,7 @@ class GridLayoutService {
     'ACCOUNT_SUSPENSION_MODULE',
     'MERCHANT_TAG_TOOL',
     'AUDIT_TRAIL_PANEL',
+    'DAILY_TRANSACTION_CAP_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

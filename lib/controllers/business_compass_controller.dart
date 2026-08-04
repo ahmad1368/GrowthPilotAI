@@ -13,7 +13,9 @@ import 'package:growth_pilot_ai/core/data/entities/budget_limit_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/compliance_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/competitor_price_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/competitor_sighting_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/cap_expansion_request_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/daily_transaction_cap_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/feature_module_toggle_entity.dart';
@@ -38,7 +40,9 @@ import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.d
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/competitor_price_observation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/competitor_sighting_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/cap_expansion_request_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/csat_rating_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/daily_transaction_cap_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/exchange_rate_observation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/feature_module_toggle_repository.dart';
@@ -129,6 +133,8 @@ class BusinessCompassController extends GetxController {
   late AccountSuspensionRepository _accountSuspensions;
   late MerchantTagRepository _merchantTags;
   late AuditLogRepository _auditLogs;
+  late DailyTransactionCapRepository _dailyTransactionCap;
+  late CapExpansionRequestRepository _capExpansionRequests;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -576,6 +582,15 @@ class BusinessCompassController extends GetxController {
         title: 'Comprehensive Audit Trail & Activity Logging Panel',
         data: {'logs': _auditLogs.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'DAILY_TRANSACTION_CAP_ENGINE',
+        title: 'Daily Transaction Cap Engine',
+        data: {
+          'transactions': _transactions.getAll(),
+          'capAmount': _dailyTransactionCap.get().capAmount,
+          'requests': _capExpansionRequests.getAll(),
+        },
+      ),
     ];
   }
 
@@ -640,6 +655,10 @@ class BusinessCompassController extends GetxController {
         AccountSuspensionRepository(store.box<AccountSuspensionEntity>());
     _merchantTags = MerchantTagRepository(store.box<MerchantTagEntity>());
     _auditLogs = AuditLogRepository(store.box<AuditLogEntity>());
+    _dailyTransactionCap =
+        DailyTransactionCapRepository(store.box<DailyTransactionCapEntity>());
+    _capExpansionRequests =
+        CapExpansionRequestRepository(store.box<CapExpansionRequestEntity>());
     _recompute();
   }
 
