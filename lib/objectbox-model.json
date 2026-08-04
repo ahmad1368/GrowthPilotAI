@@ -2253,10 +2253,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "58:2612675886221579106",
+      "lastPropertyId": "6:6349686548377170538",
+      "name": "EmergencyBroadcastEntity",
+      "properties": [
+        {
+          "id": "1:3332823940997638110",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7216796934057488523",
+          "name": "messageBody",
+          "type": 9
+        },
+        {
+          "id": "3:2863678625433776111",
+          "name": "targetNeighborhoods",
+          "type": 9
+        },
+        {
+          "id": "4:7096248444903497494",
+          "name": "recipientCount",
+          "type": 6
+        },
+        {
+          "id": "5:2870440758396631405",
+          "name": "readCount",
+          "type": 6
+        },
+        {
+          "id": "6:6349686548377170538",
+          "name": "dispatchedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "62:4253512431835718596"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "57:6303445753844131975",
-  "lastIndexId": "61:8128368220005707478",
+  "lastEntityId": "58:2612675886221579106",
+  "lastIndexId": "62:4253512431835718596",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

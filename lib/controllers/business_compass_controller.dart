@@ -17,6 +17,7 @@ import 'package:growth_pilot_ai/core/data/entities/cap_expansion_request_entity.
 import 'package:growth_pilot_ai/core/data/entities/csat_rating_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/daily_transaction_cap_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/discount_campaign_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/emergency_broadcast_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/feature_module_toggle_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
@@ -44,6 +45,7 @@ import 'package:growth_pilot_ai/core/data/repositories/cap_expansion_request_rep
 import 'package:growth_pilot_ai/core/data/repositories/csat_rating_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/daily_transaction_cap_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/discount_campaign_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/emergency_broadcast_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/exchange_rate_observation_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/feature_module_toggle_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
@@ -135,6 +137,7 @@ class BusinessCompassController extends GetxController {
   late AuditLogRepository _auditLogs;
   late DailyTransactionCapRepository _dailyTransactionCap;
   late CapExpansionRequestRepository _capExpansionRequests;
+  late EmergencyBroadcastRepository _emergencyBroadcasts;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -591,6 +594,11 @@ class BusinessCompassController extends GetxController {
           'requests': _capExpansionRequests.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'EMERGENCY_BROADCAST_TOOL',
+        title: 'Regional Emergency Broadcast & Messaging Tool',
+        data: {'broadcasts': _emergencyBroadcasts.getAll()},
+      ),
     ];
   }
 
@@ -659,6 +667,8 @@ class BusinessCompassController extends GetxController {
         DailyTransactionCapRepository(store.box<DailyTransactionCapEntity>());
     _capExpansionRequests =
         CapExpansionRequestRepository(store.box<CapExpansionRequestEntity>());
+    _emergencyBroadcasts =
+        EmergencyBroadcastRepository(store.box<EmergencyBroadcastEntity>());
     _recompute();
   }
 
