@@ -2148,10 +2148,60 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "55:1792087216998601854",
+      "lastPropertyId": "7:1919327818504573544",
+      "name": "AuditLogEntity",
+      "properties": [
+        {
+          "id": "1:973958495256925511",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2895944091014394398",
+          "name": "adminId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "58:4891311624402335313"
+        },
+        {
+          "id": "3:7484068559482881672",
+          "name": "changeType",
+          "type": 9
+        },
+        {
+          "id": "4:4823600496104353332",
+          "name": "targetMerchant",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "59:1547758740846111810"
+        },
+        {
+          "id": "5:249962448928131334",
+          "name": "previousValue",
+          "type": 9
+        },
+        {
+          "id": "6:7937594463615465790",
+          "name": "newValue",
+          "type": 9
+        },
+        {
+          "id": "7:1919327818504573544",
+          "name": "timestamp",
+          "type": 10,
+          "flags": 8,
+          "indexId": "60:3047225184989674966"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "54:8322116309182182362",
-  "lastIndexId": "57:1467979851965827168",
+  "lastEntityId": "55:1792087216998601854",
+  "lastIndexId": "60:3047225184989674966",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

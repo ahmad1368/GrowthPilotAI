@@ -19,6 +19,7 @@ import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
+import 'core/data/entities/audit_log_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
@@ -2176,6 +2177,53 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(57, 1467979851965827168))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(55, 1792087216998601854),
+      name: 'AuditLogEntity',
+      lastPropertyId: const obx_int.IdUid(7, 1919327818504573544),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 973958495256925511),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2895944091014394398),
+            name: 'adminId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(58, 4891311624402335313)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7484068559482881672),
+            name: 'changeType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4823600496104353332),
+            name: 'targetMerchant',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(59, 1547758740846111810)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 249962448928131334),
+            name: 'previousValue',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7937594463615465790),
+            name: 'newValue',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1919327818504573544),
+            name: 'timestamp',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(60, 3047225184989674966))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2214,8 +2262,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(54, 8322116309182182362),
-      lastIndexId: const obx_int.IdUid(57, 1467979851965827168),
+      lastEntityId: const obx_int.IdUid(55, 1792087216998601854),
+      lastIndexId: const obx_int.IdUid(60, 3047225184989674966),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4775,6 +4823,61 @@ obx_int.ModelDefinition getObjectBoxModel() {
               taggedAt: taggedAtParam);
 
           return object;
+        }),
+    AuditLogEntity: obx_int.EntityDefinition<AuditLogEntity>(
+        model: _entities[53],
+        toOneRelations: (AuditLogEntity object) => [],
+        toManyRelations: (AuditLogEntity object) => {},
+        getId: (AuditLogEntity object) => object.id,
+        setId: (AuditLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AuditLogEntity object, fb.Builder fbb) {
+          final adminIdOffset = fbb.writeString(object.adminId);
+          final changeTypeOffset = fbb.writeString(object.changeType);
+          final targetMerchantOffset = fbb.writeString(object.targetMerchant);
+          final previousValueOffset = fbb.writeString(object.previousValue);
+          final newValueOffset = fbb.writeString(object.newValue);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, adminIdOffset);
+          fbb.addOffset(2, changeTypeOffset);
+          fbb.addOffset(3, targetMerchantOffset);
+          fbb.addOffset(4, previousValueOffset);
+          fbb.addOffset(5, newValueOffset);
+          fbb.addInt64(6, object.timestamp.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final adminIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final changeTypeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final targetMerchantParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final previousValueParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final newValueParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final timestampParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = AuditLogEntity(
+              id: idParam,
+              adminId: adminIdParam,
+              changeType: changeTypeParam,
+              targetMerchant: targetMerchantParam,
+              previousValue: previousValueParam,
+              newValue: newValueParam,
+              timestamp: timestampParam);
+
+          return object;
         })
   };
 
@@ -6254,4 +6357,35 @@ class MerchantTagEntity_ {
   /// see [MerchantTagEntity.taggedAt]
   static final taggedAt =
       obx.QueryDateProperty<MerchantTagEntity>(_entities[52].properties[3]);
+}
+
+/// [AuditLogEntity] entity fields to define ObjectBox queries.
+class AuditLogEntity_ {
+  /// see [AuditLogEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AuditLogEntity>(_entities[53].properties[0]);
+
+  /// see [AuditLogEntity.adminId]
+  static final adminId =
+      obx.QueryStringProperty<AuditLogEntity>(_entities[53].properties[1]);
+
+  /// see [AuditLogEntity.changeType]
+  static final changeType =
+      obx.QueryStringProperty<AuditLogEntity>(_entities[53].properties[2]);
+
+  /// see [AuditLogEntity.targetMerchant]
+  static final targetMerchant =
+      obx.QueryStringProperty<AuditLogEntity>(_entities[53].properties[3]);
+
+  /// see [AuditLogEntity.previousValue]
+  static final previousValue =
+      obx.QueryStringProperty<AuditLogEntity>(_entities[53].properties[4]);
+
+  /// see [AuditLogEntity.newValue]
+  static final newValue =
+      obx.QueryStringProperty<AuditLogEntity>(_entities[53].properties[5]);
+
+  /// see [AuditLogEntity.timestamp]
+  static final timestamp =
+      obx.QueryDateProperty<AuditLogEntity>(_entities[53].properties[6]);
 }

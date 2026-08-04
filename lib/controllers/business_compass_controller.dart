@@ -5,6 +5,7 @@ import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
@@ -32,6 +33,7 @@ import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/account_suspension_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/competitor_price_observation_repository.dart';
@@ -126,6 +128,7 @@ class BusinessCompassController extends GetxController {
   late PriceAlertThresholdRepository _priceAlertThreshold;
   late AccountSuspensionRepository _accountSuspensions;
   late MerchantTagRepository _merchantTags;
+  late AuditLogRepository _auditLogs;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -568,6 +571,11 @@ class BusinessCompassController extends GetxController {
           'tags': _merchantTags.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'AUDIT_TRAIL_PANEL',
+        title: 'Comprehensive Audit Trail & Activity Logging Panel',
+        data: {'logs': _auditLogs.getAll()},
+      ),
     ];
   }
 
@@ -631,6 +639,7 @@ class BusinessCompassController extends GetxController {
     _accountSuspensions =
         AccountSuspensionRepository(store.box<AccountSuspensionEntity>());
     _merchantTags = MerchantTagRepository(store.box<MerchantTagEntity>());
+    _auditLogs = AuditLogRepository(store.box<AuditLogEntity>());
     _recompute();
   }
 
