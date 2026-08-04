@@ -62,6 +62,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/radar_report_widget.d
 import 'package:growth_pilot_ai/features/analytics/widgets/regional_affordability_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/revenue_dependency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/review_sentiment_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/rewarded_unlock_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_acquisition_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/search_results_report_widget.dart';
@@ -364,6 +365,10 @@ class ReportWidgetsBootstrap {
         'SPONSORED_SEARCH_DASHBOARD',
         (spec) =>
             SearchResultsReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'REWARDED_UNLOCK_LOG',
+        (spec) =>
+            RewardedUnlockReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

@@ -2463,10 +2463,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "63:1765092240849019757",
+      "lastPropertyId": "6:3745659441356739521",
+      "name": "RewardedUnlockEntity",
+      "properties": [
+        {
+          "id": "1:2622316180112928860",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7896312620500820824",
+          "name": "moduleName",
+          "type": 9
+        },
+        {
+          "id": "3:9052699457412969441",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "4:6600173403127081296",
+          "name": "completionToken",
+          "type": 9
+        },
+        {
+          "id": "5:4794004209967923033",
+          "name": "unlockedAt",
+          "type": 10
+        },
+        {
+          "id": "6:3745659441356739521",
+          "name": "expiresAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "67:3563059751286245146"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "62:6870033083647819603",
-  "lastIndexId": "66:8001896920414552136",
+  "lastEntityId": "63:1765092240849019757",
+  "lastIndexId": "67:3563059751286245146",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
