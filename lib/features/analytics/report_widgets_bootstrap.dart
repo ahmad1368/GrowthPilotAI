@@ -64,6 +64,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/revenue_dependency_re
 import 'package:growth_pilot_ai/features/analytics/widgets/review_sentiment_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_acquisition_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_demand_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/search_results_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_overhead_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/service_restriction_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/space_productivity_report_widget.dart';
@@ -359,6 +360,10 @@ class ReportWidgetsBootstrap {
         (spec) => PromoCardReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('BANNER_MATCHING_RULES_PANEL',
         (spec) => BannerRuleReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SPONSORED_SEARCH_DASHBOARD',
+        (spec) =>
+            SearchResultsReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
