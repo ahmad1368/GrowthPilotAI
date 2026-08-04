@@ -5,6 +5,7 @@ import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/advertising_request_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -37,6 +38,7 @@ import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/account_suspension_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/advertising_request_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
@@ -141,6 +143,7 @@ class BusinessCompassController extends GetxController {
   late CapExpansionRequestRepository _capExpansionRequests;
   late EmergencyBroadcastRepository _emergencyBroadcasts;
   late GeofenceZoneRepository _geofenceZones;
+  late AdvertisingRequestRepository _advertisingRequests;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -617,6 +620,11 @@ class BusinessCompassController extends GetxController {
         title: 'Real-Time Impact Analysis & Profitability Reporting Dashboard',
         data: {'logs': _auditLogs.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'AD_REQUEST_DASHBOARD',
+        title: 'Merchant Self-Service Advertising Request Dashboard',
+        data: {'requests': _advertisingRequests.getAll()},
+      ),
     ];
   }
 
@@ -688,6 +696,8 @@ class BusinessCompassController extends GetxController {
     _emergencyBroadcasts =
         EmergencyBroadcastRepository(store.box<EmergencyBroadcastEntity>());
     _geofenceZones = GeofenceZoneRepository(store.box<GeofenceZoneEntity>());
+    _advertisingRequests =
+        AdvertisingRequestRepository(store.box<AdvertisingRequestEntity>());
     _recompute();
   }
 

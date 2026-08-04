@@ -69,6 +69,7 @@ class GridLayoutService {
     'EMERGENCY_BROADCAST_TOOL',
     'GEOFENCING_ACCESS_CONTROL',
     'IMPACT_ANALYSIS_DASHBOARD',
+    'AD_REQUEST_DASHBOARD',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
