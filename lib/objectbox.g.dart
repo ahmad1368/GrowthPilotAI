@@ -54,6 +54,7 @@ import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
+import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
@@ -2418,6 +2419,41 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(64, 208846975849974496))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(61, 760167217880611750),
+      name: 'PromoCardMetricsEntity',
+      lastPropertyId: const obx_int.IdUid(5, 7663294765409240642),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7953807561746729708),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1857779425264033822),
+            name: 'advertisingRequestId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(65, 9033843149998890499)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2739946704216498603),
+            name: 'impressionCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2535387095811829188),
+            name: 'clickCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7663294765409240642),
+            name: 'lastImpressionAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2456,8 +2492,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(60, 5678787626860937443),
-      lastIndexId: const obx_int.IdUid(64, 208846975849974496),
+      lastEntityId: const obx_int.IdUid(61, 760167217880611750),
+      lastIndexId: const obx_int.IdUid(65, 9033843149998890499),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5299,7 +5335,47 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   requestedAt: requestedAtParam);
 
               return object;
-            })
+            }),
+    PromoCardMetricsEntity: obx_int.EntityDefinition<PromoCardMetricsEntity>(
+        model: _entities[59],
+        toOneRelations: (PromoCardMetricsEntity object) => [],
+        toManyRelations: (PromoCardMetricsEntity object) => {},
+        getId: (PromoCardMetricsEntity object) => object.id,
+        setId: (PromoCardMetricsEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PromoCardMetricsEntity object, fb.Builder fbb) {
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.advertisingRequestId);
+          fbb.addInt64(2, object.impressionCount);
+          fbb.addInt64(3, object.clickCount);
+          fbb.addInt64(4, object.lastImpressionAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final advertisingRequestIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final impressionCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final clickCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final lastImpressionAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = PromoCardMetricsEntity(
+              id: idParam,
+              advertisingRequestId: advertisingRequestIdParam,
+              impressionCount: impressionCountParam,
+              clickCount: clickCountParam,
+              lastImpressionAt: lastImpressionAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -6942,4 +7018,29 @@ class AdvertisingRequestEntity_ {
   /// see [AdvertisingRequestEntity.requestedAt]
   static final requestedAt = obx.QueryDateProperty<AdvertisingRequestEntity>(
       _entities[58].properties[5]);
+}
+
+/// [PromoCardMetricsEntity] entity fields to define ObjectBox queries.
+class PromoCardMetricsEntity_ {
+  /// see [PromoCardMetricsEntity.id]
+  static final id = obx.QueryIntegerProperty<PromoCardMetricsEntity>(
+      _entities[59].properties[0]);
+
+  /// see [PromoCardMetricsEntity.advertisingRequestId]
+  static final advertisingRequestId =
+      obx.QueryIntegerProperty<PromoCardMetricsEntity>(
+          _entities[59].properties[1]);
+
+  /// see [PromoCardMetricsEntity.impressionCount]
+  static final impressionCount =
+      obx.QueryIntegerProperty<PromoCardMetricsEntity>(
+          _entities[59].properties[2]);
+
+  /// see [PromoCardMetricsEntity.clickCount]
+  static final clickCount = obx.QueryIntegerProperty<PromoCardMetricsEntity>(
+      _entities[59].properties[3]);
+
+  /// see [PromoCardMetricsEntity.lastImpressionAt]
+  static final lastImpressionAt = obx.QueryDateProperty<PromoCardMetricsEntity>(
+      _entities[59].properties[4]);
 }

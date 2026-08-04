@@ -625,6 +625,14 @@ class BusinessCompassController extends GetxController {
         title: 'Merchant Self-Service Advertising Request Dashboard',
         data: {'requests': _advertisingRequests.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'NATIVE_FEED_PROMO_CARD',
+        title: 'Sponsored',
+        data: {
+          'requests': _advertisingRequests.getAll(),
+          'sector': selectedSector.value,
+        },
+      ),
     ];
   }
 
