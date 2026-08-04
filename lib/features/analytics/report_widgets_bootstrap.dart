@@ -31,6 +31,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_repo
 import 'package:growth_pilot_ai/features/analytics/widgets/geofence_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/goods_receipt_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/holiday_impact_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/impact_analysis_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inflation_impact_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/insight_narrative_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_report_widget.dart';
@@ -345,6 +346,10 @@ class ReportWidgetsBootstrap {
             data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('GEOFENCING_ACCESS_CONTROL',
         (spec) => GeofenceReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'IMPACT_ANALYSIS_DASHBOARD',
+        (spec) =>
+            ImpactAnalysisReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
