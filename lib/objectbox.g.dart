@@ -2016,7 +2016,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(50, 6726192733887807847),
       name: 'MerchantConfigEntity',
-      lastPropertyId: const obx_int.IdUid(7, 5668624991428446027),
+      lastPropertyId: const obx_int.IdUid(9, 4443659713355940726),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -2054,7 +2054,17 @@ final _entities = <obx_int.ModelEntity>[
             name: 'updatedAt',
             type: 10,
             flags: 8,
-            indexId: const obx_int.IdUid(54, 7974693037178003911))
+            indexId: const obx_int.IdUid(54, 7974693037178003911)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 2685341083890227378),
+            name: 'commissionFixedAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 4443659713355940726),
+            name: 'dbCommissionType',
+            type: 6,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -4767,7 +4777,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final businessNameOffset = fbb.writeString(object.businessName);
           final businessIdOffset = fbb.writeString(object.businessId);
           final notesOffset = fbb.writeString(object.notes);
-          fbb.startTable(8);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, businessNameOffset);
           fbb.addOffset(2, businessIdOffset);
@@ -4775,6 +4785,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(4, object.transactionCapAmount);
           fbb.addOffset(5, notesOffset);
           fbb.addInt64(6, object.updatedAt.millisecondsSinceEpoch);
+          fbb.addFloat64(7, object.commissionFixedAmount);
+          fbb.addInt64(8, object.dbCommissionType);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -4790,6 +4802,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 8, '');
           final commissionRatePercentParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final commissionFixedAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final dbCommissionTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
           final transactionCapAmountParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final notesParam = const fb.StringReader(asciiOptimization: true)
@@ -4801,6 +4817,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               businessName: businessNameParam,
               businessId: businessIdParam,
               commissionRatePercent: commissionRatePercentParam,
+              commissionFixedAmount: commissionFixedAmountParam,
+              dbCommissionType: dbCommissionTypeParam,
               transactionCapAmount: transactionCapAmountParam,
               notes: notesParam,
               updatedAt: updatedAtParam);
@@ -6588,6 +6606,16 @@ class MerchantConfigEntity_ {
   /// see [MerchantConfigEntity.updatedAt]
   static final updatedAt =
       obx.QueryDateProperty<MerchantConfigEntity>(_entities[48].properties[6]);
+
+  /// see [MerchantConfigEntity.commissionFixedAmount]
+  static final commissionFixedAmount =
+      obx.QueryDoubleProperty<MerchantConfigEntity>(
+          _entities[48].properties[7]);
+
+  /// see [MerchantConfigEntity.dbCommissionType]
+  static final dbCommissionType =
+      obx.QueryIntegerProperty<MerchantConfigEntity>(
+          _entities[48].properties[8]);
 }
 
 /// [FeatureModuleToggleEntity] entity fields to define ObjectBox queries.
