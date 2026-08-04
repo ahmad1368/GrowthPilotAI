@@ -2427,10 +2427,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "62:6870033083647819603",
+      "lastPropertyId": "5:5378244952910401865",
+      "name": "BannerMatchingRuleEntity",
+      "properties": [
+        {
+          "id": "1:2841141272424937928",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8153286540566206319",
+          "name": "reportTopic",
+          "type": 9
+        },
+        {
+          "id": "3:7156901227038204195",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "4:4872690589134393487",
+          "name": "priorityWeight",
+          "type": 6
+        },
+        {
+          "id": "5:5378244952910401865",
+          "name": "updatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "66:8001896920414552136"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "61:760167217880611750",
-  "lastIndexId": "65:9033843149998890499",
+  "lastEntityId": "62:6870033083647819603",
+  "lastIndexId": "66:8001896920414552136",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
