@@ -2117,10 +2117,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "54:8322116309182182362",
+      "lastPropertyId": "4:6833530916576629975",
+      "name": "MerchantTagEntity",
+      "properties": [
+        {
+          "id": "1:8244176199209796350",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2241907945315807931",
+          "name": "merchantBusinessId",
+          "type": 9
+        },
+        {
+          "id": "3:5737473470319798967",
+          "name": "tagLabel",
+          "type": 9
+        },
+        {
+          "id": "4:6833530916576629975",
+          "name": "taggedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "57:1467979851965827168"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "53:4732853890033243301",
-  "lastIndexId": "56:8025333489923570043",
+  "lastEntityId": "54:8322116309182182362",
+  "lastIndexId": "57:1467979851965827168",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

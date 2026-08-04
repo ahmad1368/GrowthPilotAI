@@ -43,6 +43,7 @@ import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/merchant_branch_entity.dart';
 import 'core/data/entities/merchant_config_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
+import 'core/data/entities/merchant_tag_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
@@ -2145,6 +2146,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(54, 8322116309182182362),
+      name: 'MerchantTagEntity',
+      lastPropertyId: const obx_int.IdUid(4, 6833530916576629975),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8244176199209796350),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2241907945315807931),
+            name: 'merchantBusinessId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5737473470319798967),
+            name: 'tagLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6833530916576629975),
+            name: 'taggedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(57, 1467979851965827168))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2183,8 +2214,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(53, 4732853890033243301),
-      lastIndexId: const obx_int.IdUid(56, 8025333489923570043),
+      lastEntityId: const obx_int.IdUid(54, 8322116309182182362),
+      lastIndexId: const obx_int.IdUid(57, 1467979851965827168),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4704,6 +4735,46 @@ obx_int.ModelDefinition getObjectBoxModel() {
               isManuallyLifted: isManuallyLiftedParam);
 
           return object;
+        }),
+    MerchantTagEntity: obx_int.EntityDefinition<MerchantTagEntity>(
+        model: _entities[52],
+        toOneRelations: (MerchantTagEntity object) => [],
+        toManyRelations: (MerchantTagEntity object) => {},
+        getId: (MerchantTagEntity object) => object.id,
+        setId: (MerchantTagEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MerchantTagEntity object, fb.Builder fbb) {
+          final merchantBusinessIdOffset =
+              fbb.writeString(object.merchantBusinessId);
+          final tagLabelOffset = fbb.writeString(object.tagLabel);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, merchantBusinessIdOffset);
+          fbb.addOffset(2, tagLabelOffset);
+          fbb.addInt64(3, object.taggedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final merchantBusinessIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final tagLabelParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final taggedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = MerchantTagEntity(
+              id: idParam,
+              merchantBusinessId: merchantBusinessIdParam,
+              tagLabel: tagLabelParam,
+              taggedAt: taggedAtParam);
+
+          return object;
         })
   };
 
@@ -6164,4 +6235,23 @@ class AccountSuspensionEntity_ {
   static final isManuallyLifted =
       obx.QueryBooleanProperty<AccountSuspensionEntity>(
           _entities[51].properties[5]);
+}
+
+/// [MerchantTagEntity] entity fields to define ObjectBox queries.
+class MerchantTagEntity_ {
+  /// see [MerchantTagEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<MerchantTagEntity>(_entities[52].properties[0]);
+
+  /// see [MerchantTagEntity.merchantBusinessId]
+  static final merchantBusinessId =
+      obx.QueryStringProperty<MerchantTagEntity>(_entities[52].properties[1]);
+
+  /// see [MerchantTagEntity.tagLabel]
+  static final tagLabel =
+      obx.QueryStringProperty<MerchantTagEntity>(_entities[52].properties[2]);
+
+  /// see [MerchantTagEntity.taggedAt]
+  static final taggedAt =
+      obx.QueryDateProperty<MerchantTagEntity>(_entities[52].properties[3]);
 }
