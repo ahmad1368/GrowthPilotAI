@@ -15,6 +15,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
@@ -2104,6 +2105,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(53, 4732853890033243301),
+      name: 'AccountSuspensionEntity',
+      lastPropertyId: const obx_int.IdUid(6, 4354533413883851716),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4396415466988240064),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5032793600018162068),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2854109110191743992),
+            name: 'reason',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6959855774788118181),
+            name: 'suspendedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2708860270221770684),
+            name: 'expiresAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(56, 8025333489923570043)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4354533413883851716),
+            name: 'isManuallyLifted',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2142,8 +2183,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(52, 668583595667115485),
-      lastIndexId: const obx_int.IdUid(55, 683963597254462612),
+      lastEntityId: const obx_int.IdUid(53, 4732853890033243301),
+      lastIndexId: const obx_int.IdUid(56, 8025333489923570043),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4616,7 +4657,54 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   id: idParam, thresholdPercent: thresholdPercentParam);
 
               return object;
-            })
+            }),
+    AccountSuspensionEntity: obx_int.EntityDefinition<AccountSuspensionEntity>(
+        model: _entities[51],
+        toOneRelations: (AccountSuspensionEntity object) => [],
+        toManyRelations: (AccountSuspensionEntity object) => {},
+        getId: (AccountSuspensionEntity object) => object.id,
+        setId: (AccountSuspensionEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AccountSuspensionEntity object, fb.Builder fbb) {
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          final reasonOffset = fbb.writeString(object.reason);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, merchantNameOffset);
+          fbb.addOffset(2, reasonOffset);
+          fbb.addInt64(3, object.suspendedAt.millisecondsSinceEpoch);
+          fbb.addInt64(4, object.expiresAt.millisecondsSinceEpoch);
+          fbb.addBool(5, object.isManuallyLifted);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final reasonParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final suspendedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final expiresAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final isManuallyLiftedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final object = AccountSuspensionEntity(
+              id: idParam,
+              merchantName: merchantNameParam,
+              reason: reasonParam,
+              suspendedAt: suspendedAtParam,
+              expiresAt: expiresAtParam,
+              isManuallyLifted: isManuallyLiftedParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -6048,4 +6136,32 @@ class PriceAlertThresholdEntity_ {
   static final thresholdPercent =
       obx.QueryDoubleProperty<PriceAlertThresholdEntity>(
           _entities[50].properties[1]);
+}
+
+/// [AccountSuspensionEntity] entity fields to define ObjectBox queries.
+class AccountSuspensionEntity_ {
+  /// see [AccountSuspensionEntity.id]
+  static final id = obx.QueryIntegerProperty<AccountSuspensionEntity>(
+      _entities[51].properties[0]);
+
+  /// see [AccountSuspensionEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<AccountSuspensionEntity>(
+      _entities[51].properties[1]);
+
+  /// see [AccountSuspensionEntity.reason]
+  static final reason = obx.QueryStringProperty<AccountSuspensionEntity>(
+      _entities[51].properties[2]);
+
+  /// see [AccountSuspensionEntity.suspendedAt]
+  static final suspendedAt = obx.QueryDateProperty<AccountSuspensionEntity>(
+      _entities[51].properties[3]);
+
+  /// see [AccountSuspensionEntity.expiresAt]
+  static final expiresAt = obx.QueryDateProperty<AccountSuspensionEntity>(
+      _entities[51].properties[4]);
+
+  /// see [AccountSuspensionEntity.isManuallyLifted]
+  static final isManuallyLifted =
+      obx.QueryBooleanProperty<AccountSuspensionEntity>(
+          _entities[51].properties[5]);
 }
