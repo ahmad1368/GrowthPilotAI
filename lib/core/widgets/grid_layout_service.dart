@@ -71,6 +71,7 @@ class GridLayoutService {
     'IMPACT_ANALYSIS_DASHBOARD',
     'AD_REQUEST_DASHBOARD',
     'BANNER_MATCHING_RULES_PANEL',
+    'SPONSORED_SEARCH_DASHBOARD',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

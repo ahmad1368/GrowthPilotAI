@@ -645,6 +645,14 @@ class BusinessCompassController extends GetxController {
         title: 'Contextual Banner Dispatcher',
         data: {'rules': _bannerMatchingRules.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SPONSORED_SEARCH_DASHBOARD',
+        title: 'Sponsored Search Results',
+        data: {
+          'configs': _merchantConfigs.getAll(),
+          'adRequests': _advertisingRequests.getAll(),
+        },
+      ),
     ];
   }
 
