@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/business/describe_commission_structure.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
 import 'package:growth_pilot_ai/core/models/merchant_trust_score.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/trust_score_badge.dart';
@@ -32,7 +33,7 @@ class MerchantConfigRow extends StatelessWidget {
               TrustScoreBadge(trustScore: trustScore!),
               const SizedBox(width: 8),
             ],
-            Text('${config.commissionRatePercent.toStringAsFixed(1)}%',
+            Text(DescribeCommissionStructure.call(config),
                 style: TextStyle(fontWeight: FontWeight.w600, color: scheme.primary)),
             const SizedBox(width: 8),
             Icon(Icons.chevron_right, size: 18, color: scheme.onSurface.withValues(alpha: 0.5)),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_audit_log_entry.dart';
 import 'package:growth_pilot_ai/business/compute_merchant_trust_scores.dart';
+import 'package:growth_pilot_ai/business/describe_commission_structure.dart';
 import 'package:growth_pilot_ai/business/search_merchant_configs.dart';
 import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
@@ -49,12 +50,13 @@ class _MerchantConfigBodyState extends State<MerchantConfigBody> {
     final repo = MerchantConfigRepository(store.box<MerchantConfigEntity>());
     final savedId = repo.save(config);
     AuditLogRepository(store.box<AuditLogEntity>()).record(BuildAuditLogEntry.call(
-      changeType: existing == null ? 'created profile' : 'updated profile',
+      changeType: existing == null ? 'created profile' : 'updated commission structure',
       targetMerchant: config.businessName,
       previousValue: existing == null
           ? ''
-          : '${existing.commissionRatePercent}% / \$${existing.transactionCapAmount}',
-      newValue: '${config.commissionRatePercent}% / \$${config.transactionCapAmount}',
+          : '${DescribeCommissionStructure.call(existing)} / \$${existing.transactionCapAmount}',
+      newValue:
+          '${DescribeCommissionStructure.call(config)} / \$${config.transactionCapAmount}',
     ));
     setState(() {
       _configs = [
@@ -65,6 +67,8 @@ class _MerchantConfigBodyState extends State<MerchantConfigBody> {
             businessName: config.businessName,
             businessId: config.businessId,
             commissionRatePercent: config.commissionRatePercent,
+            commissionFixedAmount: config.commissionFixedAmount,
+            dbCommissionType: config.dbCommissionType,
             transactionCapAmount: config.transactionCapAmount,
             notes: config.notes,
             updatedAt: config.updatedAt),

@@ -1978,7 +1978,7 @@
     },
     {
       "id": "50:6726192733887807847",
-      "lastPropertyId": "7:5668624991428446027",
+      "lastPropertyId": "9:4443659713355940726",
       "name": "MerchantConfigEntity",
       "properties": [
         {
@@ -2018,6 +2018,16 @@
           "type": 10,
           "flags": 8,
           "indexId": "54:7974693037178003911"
+        },
+        {
+          "id": "8:2685341083890227378",
+          "name": "commissionFixedAmount",
+          "type": 8
+        },
+        {
+          "id": "9:4443659713355940726",
+          "name": "dbCommissionType",
+          "type": 6
         }
       ],
       "relations": []
