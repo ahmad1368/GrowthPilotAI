@@ -30,6 +30,7 @@ import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/daily_transaction_cap_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
+import 'core/data/entities/emergency_broadcast_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
@@ -2280,6 +2281,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(58, 2612675886221579106),
+      name: 'EmergencyBroadcastEntity',
+      lastPropertyId: const obx_int.IdUid(6, 6349686548377170538),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3332823940997638110),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7216796934057488523),
+            name: 'messageBody',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2863678625433776111),
+            name: 'targetNeighborhoods',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7096248444903497494),
+            name: 'recipientCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2870440758396631405),
+            name: 'readCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6349686548377170538),
+            name: 'dispatchedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(62, 4253512431835718596))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2318,8 +2359,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(57, 6303445753844131975),
-      lastIndexId: const obx_int.IdUid(61, 8128368220005707478),
+      lastEntityId: const obx_int.IdUid(58, 2612675886221579106),
+      lastIndexId: const obx_int.IdUid(62, 4253512431835718596),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5004,6 +5045,56 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   id: idParam, capAmount: capAmountParam);
 
               return object;
+            }),
+    EmergencyBroadcastEntity:
+        obx_int.EntityDefinition<EmergencyBroadcastEntity>(
+            model: _entities[56],
+            toOneRelations: (EmergencyBroadcastEntity object) => [],
+            toManyRelations: (EmergencyBroadcastEntity object) => {},
+            getId: (EmergencyBroadcastEntity object) => object.id,
+            setId: (EmergencyBroadcastEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (EmergencyBroadcastEntity object, fb.Builder fbb) {
+              final messageBodyOffset = fbb.writeString(object.messageBody);
+              final targetNeighborhoodsOffset =
+                  fbb.writeString(object.targetNeighborhoods);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, messageBodyOffset);
+              fbb.addOffset(2, targetNeighborhoodsOffset);
+              fbb.addInt64(3, object.recipientCount);
+              fbb.addInt64(4, object.readCount);
+              fbb.addInt64(5, object.dispatchedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final messageBodyParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final targetNeighborhoodsParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final recipientCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final readCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final dispatchedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = EmergencyBroadcastEntity(
+                  id: idParam,
+                  messageBody: messageBodyParam,
+                  targetNeighborhoods: targetNeighborhoodsParam,
+                  recipientCount: recipientCountParam,
+                  readCount: readCountParam,
+                  dispatchedAt: dispatchedAtParam);
+
+              return object;
             })
   };
 
@@ -6549,4 +6640,33 @@ class DailyTransactionCapEntity_ {
   /// see [DailyTransactionCapEntity.capAmount]
   static final capAmount = obx.QueryDoubleProperty<DailyTransactionCapEntity>(
       _entities[55].properties[1]);
+}
+
+/// [EmergencyBroadcastEntity] entity fields to define ObjectBox queries.
+class EmergencyBroadcastEntity_ {
+  /// see [EmergencyBroadcastEntity.id]
+  static final id = obx.QueryIntegerProperty<EmergencyBroadcastEntity>(
+      _entities[56].properties[0]);
+
+  /// see [EmergencyBroadcastEntity.messageBody]
+  static final messageBody = obx.QueryStringProperty<EmergencyBroadcastEntity>(
+      _entities[56].properties[1]);
+
+  /// see [EmergencyBroadcastEntity.targetNeighborhoods]
+  static final targetNeighborhoods =
+      obx.QueryStringProperty<EmergencyBroadcastEntity>(
+          _entities[56].properties[2]);
+
+  /// see [EmergencyBroadcastEntity.recipientCount]
+  static final recipientCount =
+      obx.QueryIntegerProperty<EmergencyBroadcastEntity>(
+          _entities[56].properties[3]);
+
+  /// see [EmergencyBroadcastEntity.readCount]
+  static final readCount = obx.QueryIntegerProperty<EmergencyBroadcastEntity>(
+      _entities[56].properties[4]);
+
+  /// see [EmergencyBroadcastEntity.dispatchedAt]
+  static final dispatchedAt = obx.QueryDateProperty<EmergencyBroadcastEntity>(
+      _entities[56].properties[5]);
 }

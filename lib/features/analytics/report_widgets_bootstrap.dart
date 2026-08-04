@@ -24,6 +24,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/csat_summary_report_w
 import 'package:growth_pilot_ai/features/analytics/widgets/daily_cap_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/dead_stock_liquidation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/discount_campaign_impact_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/emergency_broadcast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/exchange_rate_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/feature_toggle_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/financial_health_report_widget.dart';
@@ -337,6 +338,10 @@ class ReportWidgetsBootstrap {
     ReportWidgetRegistry.register(
         'DAILY_TRANSACTION_CAP_ENGINE',
         (spec) => DailyCapReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'EMERGENCY_BROADCAST_TOOL',
+        (spec) => EmergencyBroadcastReportWidget(
+            data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
