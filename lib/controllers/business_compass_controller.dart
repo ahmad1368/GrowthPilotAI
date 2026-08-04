@@ -612,6 +612,11 @@ class BusinessCompassController extends GetxController {
         title: 'Geofencing Access Control',
         data: {'zones': _geofenceZones.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'IMPACT_ANALYSIS_DASHBOARD',
+        title: 'Real-Time Impact Analysis & Profitability Reporting Dashboard',
+        data: {'logs': _auditLogs.getAll()},
+      ),
     ];
   }
 
