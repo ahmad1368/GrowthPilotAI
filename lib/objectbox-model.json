@@ -2076,10 +2076,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "53:4732853890033243301",
+      "lastPropertyId": "6:4354533413883851716",
+      "name": "AccountSuspensionEntity",
+      "properties": [
+        {
+          "id": "1:4396415466988240064",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5032793600018162068",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "3:2854109110191743992",
+          "name": "reason",
+          "type": 9
+        },
+        {
+          "id": "4:6959855774788118181",
+          "name": "suspendedAt",
+          "type": 10
+        },
+        {
+          "id": "5:2708860270221770684",
+          "name": "expiresAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "56:8025333489923570043"
+        },
+        {
+          "id": "6:4354533413883851716",
+          "name": "isManuallyLifted",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "52:668583595667115485",
-  "lastIndexId": "55:683963597254462612",
+  "lastEntityId": "53:4732853890033243301",
+  "lastIndexId": "56:8025333489923570043",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

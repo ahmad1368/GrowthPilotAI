@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/business/build_compass_insight_narrative.dart';
 import 'package:growth_pilot_ai/business/compute_business_compass_metrics.dart';
 import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
+import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -28,6 +29,7 @@ import 'package:growth_pilot_ai/core/data/entities/traffic_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traffic_steering_directive_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/account_suspension_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
@@ -120,6 +122,7 @@ class BusinessCompassController extends GetxController {
   late MerchantConfigRepository _merchantConfigs;
   late FeatureModuleToggleRepository _featureModuleToggles;
   late PriceAlertThresholdRepository _priceAlertThreshold;
+  late AccountSuspensionRepository _accountSuspensions;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -549,6 +552,11 @@ class BusinessCompassController extends GetxController {
           'thresholdPercent': _priceAlertThreshold.get().thresholdPercent,
         },
       ),
+      ReportWidgetSpec(
+        id: 'ACCOUNT_SUSPENSION_MODULE',
+        title: 'Temporary Account Suspension Module',
+        data: {'suspensions': _accountSuspensions.getAll()},
+      ),
     ];
   }
 
@@ -609,6 +617,8 @@ class BusinessCompassController extends GetxController {
         store.box<FeatureModuleToggleEntity>());
     _priceAlertThreshold =
         PriceAlertThresholdRepository(store.box<PriceAlertThresholdEntity>());
+    _accountSuspensions =
+        AccountSuspensionRepository(store.box<AccountSuspensionEntity>());
     _recompute();
   }
 
