@@ -2391,10 +2391,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "61:760167217880611750",
+      "lastPropertyId": "5:7663294765409240642",
+      "name": "PromoCardMetricsEntity",
+      "properties": [
+        {
+          "id": "1:7953807561746729708",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1857779425264033822",
+          "name": "advertisingRequestId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "65:9033843149998890499"
+        },
+        {
+          "id": "3:2739946704216498603",
+          "name": "impressionCount",
+          "type": 6
+        },
+        {
+          "id": "4:2535387095811829188",
+          "name": "clickCount",
+          "type": 6
+        },
+        {
+          "id": "5:7663294765409240642",
+          "name": "lastImpressionAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "60:5678787626860937443",
-  "lastIndexId": "64:208846975849974496",
+  "lastEntityId": "61:760167217880611750",
+  "lastIndexId": "65:9033843149998890499",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

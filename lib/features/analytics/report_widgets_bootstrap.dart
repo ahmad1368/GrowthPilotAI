@@ -53,6 +53,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/pl_report_widget.dart
 import 'package:growth_pilot_ai/features/analytics/widgets/price_recommendation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/price_volatility_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/product_bundle_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/promo_card_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/promotional_offer_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/profit_margin_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/purchase_order_report_widget.dart';
@@ -353,6 +354,8 @@ class ReportWidgetsBootstrap {
             ImpactAnalysisReportWidget(data: spec.data, title: spec.title));
     ReportWidgetRegistry.register('AD_REQUEST_DASHBOARD',
         (spec) => AdRequestReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register('NATIVE_FEED_PROMO_CARD',
+        (spec) => PromoCardReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
