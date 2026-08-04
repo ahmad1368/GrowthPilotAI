@@ -60,6 +60,7 @@ import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
+import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
@@ -2490,6 +2491,46 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(66, 8001896920414552136))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(63, 1765092240849019757),
+      name: 'RewardedUnlockEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3745659441356739521),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2622316180112928860),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7896312620500820824),
+            name: 'moduleName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 9052699457412969441),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6600173403127081296),
+            name: 'completionToken',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4794004209967923033),
+            name: 'unlockedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3745659441356739521),
+            name: 'expiresAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(67, 3563059751286245146))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2528,8 +2569,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(62, 6870033083647819603),
-      lastIndexId: const obx_int.IdUid(66, 8001896920414552136),
+      lastEntityId: const obx_int.IdUid(63, 1765092240849019757),
+      lastIndexId: const obx_int.IdUid(67, 3563059751286245146),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5456,7 +5497,56 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   updatedAt: updatedAtParam);
 
               return object;
-            })
+            }),
+    RewardedUnlockEntity: obx_int.EntityDefinition<RewardedUnlockEntity>(
+        model: _entities[61],
+        toOneRelations: (RewardedUnlockEntity object) => [],
+        toManyRelations: (RewardedUnlockEntity object) => {},
+        getId: (RewardedUnlockEntity object) => object.id,
+        setId: (RewardedUnlockEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (RewardedUnlockEntity object, fb.Builder fbb) {
+          final moduleNameOffset = fbb.writeString(object.moduleName);
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          final completionTokenOffset = fbb.writeString(object.completionToken);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, moduleNameOffset);
+          fbb.addOffset(2, merchantNameOffset);
+          fbb.addOffset(3, completionTokenOffset);
+          fbb.addInt64(4, object.unlockedAt.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.expiresAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final moduleNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final completionTokenParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final unlockedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final expiresAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = RewardedUnlockEntity(
+              id: idParam,
+              moduleName: moduleNameParam,
+              merchantName: merchantNameParam,
+              completionToken: completionTokenParam,
+              unlockedAt: unlockedAtParam,
+              expiresAt: expiresAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -7148,4 +7238,31 @@ class BannerMatchingRuleEntity_ {
   /// see [BannerMatchingRuleEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<BannerMatchingRuleEntity>(
       _entities[60].properties[4]);
+}
+
+/// [RewardedUnlockEntity] entity fields to define ObjectBox queries.
+class RewardedUnlockEntity_ {
+  /// see [RewardedUnlockEntity.id]
+  static final id = obx.QueryIntegerProperty<RewardedUnlockEntity>(
+      _entities[61].properties[0]);
+
+  /// see [RewardedUnlockEntity.moduleName]
+  static final moduleName = obx.QueryStringProperty<RewardedUnlockEntity>(
+      _entities[61].properties[1]);
+
+  /// see [RewardedUnlockEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<RewardedUnlockEntity>(
+      _entities[61].properties[2]);
+
+  /// see [RewardedUnlockEntity.completionToken]
+  static final completionToken = obx.QueryStringProperty<RewardedUnlockEntity>(
+      _entities[61].properties[3]);
+
+  /// see [RewardedUnlockEntity.unlockedAt]
+  static final unlockedAt =
+      obx.QueryDateProperty<RewardedUnlockEntity>(_entities[61].properties[4]);
+
+  /// see [RewardedUnlockEntity.expiresAt]
+  static final expiresAt =
+      obx.QueryDateProperty<RewardedUnlockEntity>(_entities[61].properties[5]);
 }
