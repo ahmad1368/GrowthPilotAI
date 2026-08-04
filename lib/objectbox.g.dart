@@ -18,6 +18,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
+import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
@@ -2377,6 +2378,46 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(63, 23953734427334272))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(60, 5678787626860937443),
+      name: 'AdvertisingRequestEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3670986491130564976),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8407597683243741308),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6277187908844586700),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 150358711158390888),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3656954006875152799),
+            name: 'dbPackageType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4717705529091427046),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3670986491130564976),
+            name: 'requestedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(64, 208846975849974496))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2415,8 +2456,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(59, 3389884457643283209),
-      lastIndexId: const obx_int.IdUid(63, 23953734427334272),
+      lastEntityId: const obx_int.IdUid(60, 5678787626860937443),
+      lastIndexId: const obx_int.IdUid(64, 208846975849974496),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5209,7 +5250,56 @@ obx_int.ModelDefinition getObjectBoxModel() {
               updatedAt: updatedAtParam);
 
           return object;
-        })
+        }),
+    AdvertisingRequestEntity:
+        obx_int.EntityDefinition<AdvertisingRequestEntity>(
+            model: _entities[58],
+            toOneRelations: (AdvertisingRequestEntity object) => [],
+            toManyRelations: (AdvertisingRequestEntity object) => {},
+            getId: (AdvertisingRequestEntity object) => object.id,
+            setId: (AdvertisingRequestEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (AdvertisingRequestEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              final categoryOffset = fbb.writeString(object.category);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addOffset(2, categoryOffset);
+              fbb.addInt64(3, object.dbPackageType);
+              fbb.addInt64(4, object.dbStatus);
+              fbb.addInt64(5, object.requestedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final categoryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final dbPackageTypeParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final requestedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = AdvertisingRequestEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  category: categoryParam,
+                  dbPackageType: dbPackageTypeParam,
+                  dbStatus: dbStatusParam,
+                  requestedAt: requestedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -6824,4 +6914,32 @@ class GeofenceZoneEntity_ {
   /// see [GeofenceZoneEntity.updatedAt]
   static final updatedAt =
       obx.QueryDateProperty<GeofenceZoneEntity>(_entities[57].properties[6]);
+}
+
+/// [AdvertisingRequestEntity] entity fields to define ObjectBox queries.
+class AdvertisingRequestEntity_ {
+  /// see [AdvertisingRequestEntity.id]
+  static final id = obx.QueryIntegerProperty<AdvertisingRequestEntity>(
+      _entities[58].properties[0]);
+
+  /// see [AdvertisingRequestEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<AdvertisingRequestEntity>(
+      _entities[58].properties[1]);
+
+  /// see [AdvertisingRequestEntity.category]
+  static final category = obx.QueryStringProperty<AdvertisingRequestEntity>(
+      _entities[58].properties[2]);
+
+  /// see [AdvertisingRequestEntity.dbPackageType]
+  static final dbPackageType =
+      obx.QueryIntegerProperty<AdvertisingRequestEntity>(
+          _entities[58].properties[3]);
+
+  /// see [AdvertisingRequestEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<AdvertisingRequestEntity>(
+      _entities[58].properties[4]);
+
+  /// see [AdvertisingRequestEntity.requestedAt]
+  static final requestedAt = obx.QueryDateProperty<AdvertisingRequestEntity>(
+      _entities[58].properties[5]);
 }

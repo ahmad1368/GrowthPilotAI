@@ -2350,10 +2350,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "60:5678787626860937443",
+      "lastPropertyId": "6:3670986491130564976",
+      "name": "AdvertisingRequestEntity",
+      "properties": [
+        {
+          "id": "1:8407597683243741308",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6277187908844586700",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "3:150358711158390888",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "4:3656954006875152799",
+          "name": "dbPackageType",
+          "type": 6
+        },
+        {
+          "id": "5:4717705529091427046",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "6:3670986491130564976",
+          "name": "requestedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "64:208846975849974496"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "59:3389884457643283209",
-  "lastIndexId": "63:23953734427334272",
+  "lastEntityId": "60:5678787626860937443",
+  "lastIndexId": "64:208846975849974496",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
