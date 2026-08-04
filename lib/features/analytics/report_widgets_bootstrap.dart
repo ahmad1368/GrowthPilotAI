@@ -37,6 +37,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_w
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_branch_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_partnership_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/merchant_tag_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/neighborhood_expansion_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/overhead_report_widget.dart';
@@ -325,6 +326,9 @@ class ReportWidgetsBootstrap {
         'ACCOUNT_SUSPENSION_MODULE',
         (spec) => AccountSuspensionReportWidget(
             data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MERCHANT_TAG_TOOL',
+        (spec) => MerchantTagReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

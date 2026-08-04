@@ -20,6 +20,7 @@ import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/merchant_tag_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/neighborhood_expansion_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/price_alert_threshold_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/promotional_offer_entity.dart';
@@ -57,6 +58,7 @@ import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository
 import 'package:growth_pilot_ai/core/data/repositories/merchant_branch_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_config_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/merchant_tag_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/neighborhood_expansion_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/analytics_pricing_tier_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/price_alert_threshold_repository.dart';
@@ -123,6 +125,7 @@ class BusinessCompassController extends GetxController {
   late FeatureModuleToggleRepository _featureModuleToggles;
   late PriceAlertThresholdRepository _priceAlertThreshold;
   late AccountSuspensionRepository _accountSuspensions;
+  late MerchantTagRepository _merchantTags;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -557,6 +560,14 @@ class BusinessCompassController extends GetxController {
         title: 'Temporary Account Suspension Module',
         data: {'suspensions': _accountSuspensions.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'MERCHANT_TAG_TOOL',
+        title: 'Advanced Tagging & Categorization Tool',
+        data: {
+          'configs': _merchantConfigs.getAll(),
+          'tags': _merchantTags.getAll(),
+        },
+      ),
     ];
   }
 
@@ -619,6 +630,7 @@ class BusinessCompassController extends GetxController {
         PriceAlertThresholdRepository(store.box<PriceAlertThresholdEntity>());
     _accountSuspensions =
         AccountSuspensionRepository(store.box<AccountSuspensionEntity>());
+    _merchantTags = MerchantTagRepository(store.box<MerchantTagEntity>());
     _recompute();
   }
 
