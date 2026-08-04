@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
+import 'package:growth_pilot_ai/core/models/merchant_trust_score.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/trust_score_badge.dart';
 
-/// One merchant's configuration profile row (Issue #338). Tapping opens
-/// its dedicated management profile for direct parameter editing.
+/// One merchant's configuration profile row (Issue #338), plus its
+/// computed trust score badge (Issue #347, acceptance criterion 2).
+/// Tapping opens its dedicated management profile for direct parameter
+/// editing.
 class MerchantConfigRow extends StatelessWidget {
   final MerchantConfigEntity config;
+  final MerchantTrustScore? trustScore;
   final VoidCallback onTap;
 
-  const MerchantConfigRow({super.key, required this.config, required this.onTap});
+  const MerchantConfigRow(
+      {super.key, required this.config, this.trustScore, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +28,10 @@ class MerchantConfigRow extends StatelessWidget {
             Expanded(
                 child: Text('${config.businessName} (${config.businessId})',
                     overflow: TextOverflow.ellipsis)),
+            if (trustScore != null) ...[
+              TrustScoreBadge(trustScore: trustScore!),
+              const SizedBox(width: 8),
+            ],
             Text('${config.commissionRatePercent.toStringAsFixed(1)}%',
                 style: TextStyle(fontWeight: FontWeight.w600, color: scheme.primary)),
             const SizedBox(width: 8),

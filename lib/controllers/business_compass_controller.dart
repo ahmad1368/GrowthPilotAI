@@ -555,7 +555,12 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'MERCHANT_CONFIG_PANEL',
         title: 'Single-User Granular Configuration Panel',
-        data: {'configs': _merchantConfigs.getAll()},
+        data: {
+          'configs': _merchantConfigs.getAll(),
+          'suspensions': _accountSuspensions.getAll(),
+          'restrictions': _serviceRestrictions.getAll(),
+          'logs': _auditLogs.getAll(),
+        },
       ),
       ReportWidgetSpec(
         id: 'FEATURE_TOGGLE_ENGINE',

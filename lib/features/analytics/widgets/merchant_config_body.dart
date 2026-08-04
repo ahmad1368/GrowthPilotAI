@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_audit_log_entry.dart';
+import 'package:growth_pilot_ai/business/compute_merchant_trust_scores.dart';
 import 'package:growth_pilot_ai/business/search_merchant_configs.dart';
+import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/service_restriction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_config_repository.dart';
@@ -12,11 +15,23 @@ import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_view.
 
 /// Owns the merchant profile list and search query (Issue #338),
 /// applying add/edit saves immediately to local state so the panel
-/// reflects the new parameters without an app restart.
+/// reflects the new parameters without an app restart. Also computes
+/// each profile's trust score (Issue #347) from the violation/activity
+/// data already logged by the suspension, restriction, and audit
+/// trail panels.
 class MerchantConfigBody extends StatefulWidget {
   final List<MerchantConfigEntity> initialConfigs;
+  final List<AccountSuspensionEntity> suspensions;
+  final List<ServiceRestrictionEntity> restrictions;
+  final List<AuditLogEntity> auditLogs;
 
-  const MerchantConfigBody({super.key, required this.initialConfigs});
+  const MerchantConfigBody({
+    super.key,
+    required this.initialConfigs,
+    required this.suspensions,
+    required this.restrictions,
+    required this.auditLogs,
+  });
 
   @override
   State<MerchantConfigBody> createState() => _MerchantConfigBodyState();
@@ -61,9 +76,12 @@ class _MerchantConfigBodyState extends State<MerchantConfigBody> {
   Widget build(BuildContext context) {
     final allResults = SearchMerchantConfigs.call(_configs, '');
     final filteredResults = SearchMerchantConfigs.call(_configs, _query);
+    final trustScores = ComputeMerchantTrustScores.call(
+        _configs, widget.suspensions, widget.restrictions, widget.auditLogs);
     return MerchantConfigView(
       filteredResults: filteredResults,
       allResults: allResults,
+      trustScores: trustScores,
       onSearchChanged: (q) => setState(() => _query = q),
       onAddProfile: () => _save(),
       onEditProfile: (config) => _save(existing: config),
