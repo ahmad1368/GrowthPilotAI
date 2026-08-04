@@ -2504,10 +2504,109 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "64:5989162251137097025",
+      "lastPropertyId": "9:9172915675877605761",
+      "name": "ScheduledTaskEntity",
+      "properties": [
+        {
+          "id": "1:8901195715673418857",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7590762615058110153",
+          "name": "taskName",
+          "type": 9
+        },
+        {
+          "id": "3:8217611047659717606",
+          "name": "targetSegment",
+          "type": 9
+        },
+        {
+          "id": "4:6627917137156371901",
+          "name": "intervalMinutes",
+          "type": 6
+        },
+        {
+          "id": "5:1427277554282587350",
+          "name": "lastRunAt",
+          "type": 10
+        },
+        {
+          "id": "6:6779535549050670358",
+          "name": "nextRunAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "68:9182886764078738502"
+        },
+        {
+          "id": "7:6730947049470942935",
+          "name": "retryCount",
+          "type": 6
+        },
+        {
+          "id": "8:7692172862401775222",
+          "name": "maxRetries",
+          "type": 6
+        },
+        {
+          "id": "9:9172915675877605761",
+          "name": "updatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "69:2787379701125221149"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "65:6259365945749490568",
+      "lastPropertyId": "6:4895814382909316811",
+      "name": "TaskExecutionLogEntity",
+      "properties": [
+        {
+          "id": "1:503031513473861574",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8561480207465704415",
+          "name": "taskName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "70:1962644151739248737"
+        },
+        {
+          "id": "3:7489962828203171402",
+          "name": "executedAt",
+          "type": 10
+        },
+        {
+          "id": "4:4934477126840521007",
+          "name": "dbOutcome",
+          "type": 6
+        },
+        {
+          "id": "5:4733272264392104305",
+          "name": "failureReason",
+          "type": 9
+        },
+        {
+          "id": "6:4895814382909316811",
+          "name": "attemptNumber",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "63:1765092240849019757",
-  "lastIndexId": "67:3563059751286245146",
+  "lastEntityId": "65:6259365945749490568",
+  "lastIndexId": "70:1962644151739248737",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
