@@ -7,6 +7,7 @@ import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dar
 import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/advertising_request_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/banner_matching_rule_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
@@ -40,6 +41,7 @@ import 'package:growth_pilot_ai/core/data/repositories/account_suspension_reposi
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/advertising_request_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/banner_matching_rule_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/compliance_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/competitor_price_observation_repository.dart';
@@ -144,6 +146,7 @@ class BusinessCompassController extends GetxController {
   late EmergencyBroadcastRepository _emergencyBroadcasts;
   late GeofenceZoneRepository _geofenceZones;
   late AdvertisingRequestRepository _advertisingRequests;
+  late BannerMatchingRuleRepository _bannerMatchingRules;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -185,7 +188,11 @@ class BusinessCompassController extends GetxController {
       ReportWidgetSpec(
         id: 'PROFIT_MARGIN_CHART',
         title: 'Profit Margin Analysis',
-        data: {'transactions': _transactions.getAll()},
+        data: {
+          'transactions': _transactions.getAll(),
+          'bannerRules': _bannerMatchingRules.getAll(),
+          'adRequests': _advertisingRequests.getAll(),
+        },
       ),
       ReportWidgetSpec(
         id: 'SEASONAL_DEMAND_CHART',
@@ -633,6 +640,11 @@ class BusinessCompassController extends GetxController {
           'sector': selectedSector.value,
         },
       ),
+      ReportWidgetSpec(
+        id: 'BANNER_MATCHING_RULES_PANEL',
+        title: 'Contextual Banner Dispatcher',
+        data: {'rules': _bannerMatchingRules.getAll()},
+      ),
     ];
   }
 
@@ -706,6 +718,8 @@ class BusinessCompassController extends GetxController {
     _geofenceZones = GeofenceZoneRepository(store.box<GeofenceZoneEntity>());
     _advertisingRequests =
         AdvertisingRequestRepository(store.box<AdvertisingRequestEntity>());
+    _bannerMatchingRules =
+        BannerMatchingRuleRepository(store.box<BannerMatchingRuleEntity>());
     _recompute();
   }
 

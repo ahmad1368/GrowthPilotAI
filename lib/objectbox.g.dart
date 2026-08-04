@@ -21,6 +21,7 @@ import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
+import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/category_entity.dart';
@@ -2454,6 +2455,41 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(62, 6870033083647819603),
+      name: 'BannerMatchingRuleEntity',
+      lastPropertyId: const obx_int.IdUid(5, 5378244952910401865),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2841141272424937928),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8153286540566206319),
+            name: 'reportTopic',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7156901227038204195),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4872690589134393487),
+            name: 'priorityWeight',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5378244952910401865),
+            name: 'updatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(66, 8001896920414552136))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2492,8 +2528,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(61, 760167217880611750),
-      lastIndexId: const obx_int.IdUid(65, 9033843149998890499),
+      lastEntityId: const obx_int.IdUid(62, 6870033083647819603),
+      lastIndexId: const obx_int.IdUid(66, 8001896920414552136),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5375,7 +5411,52 @@ obx_int.ModelDefinition getObjectBoxModel() {
               lastImpressionAt: lastImpressionAtParam);
 
           return object;
-        })
+        }),
+    BannerMatchingRuleEntity:
+        obx_int.EntityDefinition<BannerMatchingRuleEntity>(
+            model: _entities[60],
+            toOneRelations: (BannerMatchingRuleEntity object) => [],
+            toManyRelations: (BannerMatchingRuleEntity object) => {},
+            getId: (BannerMatchingRuleEntity object) => object.id,
+            setId: (BannerMatchingRuleEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (BannerMatchingRuleEntity object, fb.Builder fbb) {
+              final reportTopicOffset = fbb.writeString(object.reportTopic);
+              final categoryOffset = fbb.writeString(object.category);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, reportTopicOffset);
+              fbb.addOffset(2, categoryOffset);
+              fbb.addInt64(3, object.priorityWeight);
+              fbb.addInt64(4, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final reportTopicParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final categoryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final priorityWeightParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = BannerMatchingRuleEntity(
+                  id: idParam,
+                  reportTopic: reportTopicParam,
+                  category: categoryParam,
+                  priorityWeight: priorityWeightParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -7043,4 +7124,28 @@ class PromoCardMetricsEntity_ {
   /// see [PromoCardMetricsEntity.lastImpressionAt]
   static final lastImpressionAt = obx.QueryDateProperty<PromoCardMetricsEntity>(
       _entities[59].properties[4]);
+}
+
+/// [BannerMatchingRuleEntity] entity fields to define ObjectBox queries.
+class BannerMatchingRuleEntity_ {
+  /// see [BannerMatchingRuleEntity.id]
+  static final id = obx.QueryIntegerProperty<BannerMatchingRuleEntity>(
+      _entities[60].properties[0]);
+
+  /// see [BannerMatchingRuleEntity.reportTopic]
+  static final reportTopic = obx.QueryStringProperty<BannerMatchingRuleEntity>(
+      _entities[60].properties[1]);
+
+  /// see [BannerMatchingRuleEntity.category]
+  static final category = obx.QueryStringProperty<BannerMatchingRuleEntity>(
+      _entities[60].properties[2]);
+
+  /// see [BannerMatchingRuleEntity.priorityWeight]
+  static final priorityWeight =
+      obx.QueryIntegerProperty<BannerMatchingRuleEntity>(
+          _entities[60].properties[3]);
+
+  /// see [BannerMatchingRuleEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<BannerMatchingRuleEntity>(
+      _entities[60].properties[4]);
 }
