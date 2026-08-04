@@ -21,12 +21,14 @@ import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
+import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
+import 'core/data/entities/daily_transaction_cap_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
@@ -2224,6 +2226,60 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(60, 3047225184989674966))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(56, 2281070142987658203),
+      name: 'CapExpansionRequestEntity',
+      lastPropertyId: const obx_int.IdUid(5, 2947685957622746682),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7534877991736057826),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2492419374012936967),
+            name: 'requestedCapAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 629507455734159491),
+            name: 'reason',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 218799737826665919),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2947685957622746682),
+            name: 'requestedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(61, 8128368220005707478))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(57, 6303445753844131975),
+      name: 'DailyTransactionCapEntity',
+      lastPropertyId: const obx_int.IdUid(2, 9214917558279420499),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4043230869031586746),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 9214917558279420499),
+            name: 'capAmount',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2262,8 +2318,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(55, 1792087216998601854),
-      lastIndexId: const obx_int.IdUid(60, 3047225184989674966),
+      lastEntityId: const obx_int.IdUid(57, 6303445753844131975),
+      lastIndexId: const obx_int.IdUid(61, 8128368220005707478),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -4878,7 +4934,77 @@ obx_int.ModelDefinition getObjectBoxModel() {
               timestamp: timestampParam);
 
           return object;
-        })
+        }),
+    CapExpansionRequestEntity:
+        obx_int.EntityDefinition<CapExpansionRequestEntity>(
+            model: _entities[54],
+            toOneRelations: (CapExpansionRequestEntity object) => [],
+            toManyRelations: (CapExpansionRequestEntity object) => {},
+            getId: (CapExpansionRequestEntity object) => object.id,
+            setId: (CapExpansionRequestEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (CapExpansionRequestEntity object, fb.Builder fbb) {
+              final reasonOffset = fbb.writeString(object.reason);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addFloat64(1, object.requestedCapAmount);
+              fbb.addOffset(2, reasonOffset);
+              fbb.addInt64(3, object.dbStatus);
+              fbb.addInt64(4, object.requestedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final requestedCapAmountParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final reasonParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final requestedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = CapExpansionRequestEntity(
+                  id: idParam,
+                  requestedCapAmount: requestedCapAmountParam,
+                  reason: reasonParam,
+                  dbStatus: dbStatusParam,
+                  requestedAt: requestedAtParam);
+
+              return object;
+            }),
+    DailyTransactionCapEntity:
+        obx_int.EntityDefinition<DailyTransactionCapEntity>(
+            model: _entities[55],
+            toOneRelations: (DailyTransactionCapEntity object) => [],
+            toManyRelations: (DailyTransactionCapEntity object) => {},
+            getId: (DailyTransactionCapEntity object) => object.id,
+            setId: (DailyTransactionCapEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (DailyTransactionCapEntity object, fb.Builder fbb) {
+              fbb.startTable(3);
+              fbb.addInt64(0, object.id);
+              fbb.addFloat64(1, object.capAmount);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final capAmountParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final object = DailyTransactionCapEntity(
+                  id: idParam, capAmount: capAmountParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -6388,4 +6514,39 @@ class AuditLogEntity_ {
   /// see [AuditLogEntity.timestamp]
   static final timestamp =
       obx.QueryDateProperty<AuditLogEntity>(_entities[53].properties[6]);
+}
+
+/// [CapExpansionRequestEntity] entity fields to define ObjectBox queries.
+class CapExpansionRequestEntity_ {
+  /// see [CapExpansionRequestEntity.id]
+  static final id = obx.QueryIntegerProperty<CapExpansionRequestEntity>(
+      _entities[54].properties[0]);
+
+  /// see [CapExpansionRequestEntity.requestedCapAmount]
+  static final requestedCapAmount =
+      obx.QueryDoubleProperty<CapExpansionRequestEntity>(
+          _entities[54].properties[1]);
+
+  /// see [CapExpansionRequestEntity.reason]
+  static final reason = obx.QueryStringProperty<CapExpansionRequestEntity>(
+      _entities[54].properties[2]);
+
+  /// see [CapExpansionRequestEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<CapExpansionRequestEntity>(
+      _entities[54].properties[3]);
+
+  /// see [CapExpansionRequestEntity.requestedAt]
+  static final requestedAt = obx.QueryDateProperty<CapExpansionRequestEntity>(
+      _entities[54].properties[4]);
+}
+
+/// [DailyTransactionCapEntity] entity fields to define ObjectBox queries.
+class DailyTransactionCapEntity_ {
+  /// see [DailyTransactionCapEntity.id]
+  static final id = obx.QueryIntegerProperty<DailyTransactionCapEntity>(
+      _entities[55].properties[0]);
+
+  /// see [DailyTransactionCapEntity.capAmount]
+  static final capAmount = obx.QueryDoubleProperty<DailyTransactionCapEntity>(
+      _entities[55].properties[1]);
 }
