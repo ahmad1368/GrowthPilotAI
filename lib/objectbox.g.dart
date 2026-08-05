@@ -47,6 +47,7 @@ import 'core/data/entities/inventory_item_entity.dart';
 import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
+import 'core/data/entities/marketing_campaign_entity.dart';
 import 'core/data/entities/merchant_branch_entity.dart';
 import 'core/data/entities/merchant_config_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
@@ -2629,6 +2630,81 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(66, 184108697669407044),
+      name: 'MarketingCampaignEntity',
+      lastPropertyId: const obx_int.IdUid(13, 7532218083037445258),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8053671660654157613),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6245079615960450825),
+            name: 'subject',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8675516838255023720),
+            name: 'bodyMarkup',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4137585934581636414),
+            name: 'segmentCategory',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8372832489536275786),
+            name: 'segmentRegion',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5658198283921010871),
+            name: 'minPaymentReliability',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7435052237889999023),
+            name: 'dbRequiredTier',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 4322885228151627225),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1503648994292287966),
+            name: 'openRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 9139558344560784900),
+            name: 'clickRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4960458751128697900),
+            name: 'bounceRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4908946587451238003),
+            name: 'scheduledAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(71, 4253937795765300738)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 7532218083037445258),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2667,8 +2743,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(65, 6259365945749490568),
-      lastIndexId: const obx_int.IdUid(70, 1962644151739248737),
+      lastEntityId: const obx_int.IdUid(66, 184108697669407044),
+      lastIndexId: const obx_int.IdUid(71, 4253937795765300738),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5753,6 +5829,84 @@ obx_int.ModelDefinition getObjectBoxModel() {
               attemptNumber: attemptNumberParam);
 
           return object;
+        }),
+    MarketingCampaignEntity: obx_int.EntityDefinition<MarketingCampaignEntity>(
+        model: _entities[64],
+        toOneRelations: (MarketingCampaignEntity object) => [],
+        toManyRelations: (MarketingCampaignEntity object) => {},
+        getId: (MarketingCampaignEntity object) => object.id,
+        setId: (MarketingCampaignEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MarketingCampaignEntity object, fb.Builder fbb) {
+          final subjectOffset = fbb.writeString(object.subject);
+          final bodyMarkupOffset = fbb.writeString(object.bodyMarkup);
+          final segmentCategoryOffset = fbb.writeString(object.segmentCategory);
+          final segmentRegionOffset = fbb.writeString(object.segmentRegion);
+          fbb.startTable(14);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, subjectOffset);
+          fbb.addOffset(2, bodyMarkupOffset);
+          fbb.addOffset(3, segmentCategoryOffset);
+          fbb.addOffset(4, segmentRegionOffset);
+          fbb.addInt64(5, object.minPaymentReliability);
+          fbb.addInt64(6, object.dbRequiredTier);
+          fbb.addInt64(7, object.dbStatus);
+          fbb.addFloat64(8, object.openRate);
+          fbb.addFloat64(9, object.clickRate);
+          fbb.addFloat64(10, object.bounceRate);
+          fbb.addInt64(11, object.scheduledAt.millisecondsSinceEpoch);
+          fbb.addInt64(12, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final subjectParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final bodyMarkupParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final segmentCategoryParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final segmentRegionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final minPaymentReliabilityParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dbRequiredTierParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final openRateParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final clickRateParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final bounceRateParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          final scheduledAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0));
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0));
+          final object = MarketingCampaignEntity(
+              id: idParam,
+              subject: subjectParam,
+              bodyMarkup: bodyMarkupParam,
+              segmentCategory: segmentCategoryParam,
+              segmentRegion: segmentRegionParam,
+              minPaymentReliability: minPaymentReliabilityParam,
+              dbRequiredTier: dbRequiredTierParam,
+              dbStatus: dbStatusParam,
+              openRate: openRateParam,
+              clickRate: clickRateParam,
+              bounceRate: bounceRateParam,
+              scheduledAt: scheduledAtParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -7538,4 +7692,62 @@ class TaskExecutionLogEntity_ {
   /// see [TaskExecutionLogEntity.attemptNumber]
   static final attemptNumber = obx.QueryIntegerProperty<TaskExecutionLogEntity>(
       _entities[63].properties[5]);
+}
+
+/// [MarketingCampaignEntity] entity fields to define ObjectBox queries.
+class MarketingCampaignEntity_ {
+  /// see [MarketingCampaignEntity.id]
+  static final id = obx.QueryIntegerProperty<MarketingCampaignEntity>(
+      _entities[64].properties[0]);
+
+  /// see [MarketingCampaignEntity.subject]
+  static final subject = obx.QueryStringProperty<MarketingCampaignEntity>(
+      _entities[64].properties[1]);
+
+  /// see [MarketingCampaignEntity.bodyMarkup]
+  static final bodyMarkup = obx.QueryStringProperty<MarketingCampaignEntity>(
+      _entities[64].properties[2]);
+
+  /// see [MarketingCampaignEntity.segmentCategory]
+  static final segmentCategory =
+      obx.QueryStringProperty<MarketingCampaignEntity>(
+          _entities[64].properties[3]);
+
+  /// see [MarketingCampaignEntity.segmentRegion]
+  static final segmentRegion = obx.QueryStringProperty<MarketingCampaignEntity>(
+      _entities[64].properties[4]);
+
+  /// see [MarketingCampaignEntity.minPaymentReliability]
+  static final minPaymentReliability =
+      obx.QueryIntegerProperty<MarketingCampaignEntity>(
+          _entities[64].properties[5]);
+
+  /// see [MarketingCampaignEntity.dbRequiredTier]
+  static final dbRequiredTier =
+      obx.QueryIntegerProperty<MarketingCampaignEntity>(
+          _entities[64].properties[6]);
+
+  /// see [MarketingCampaignEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<MarketingCampaignEntity>(
+      _entities[64].properties[7]);
+
+  /// see [MarketingCampaignEntity.openRate]
+  static final openRate = obx.QueryDoubleProperty<MarketingCampaignEntity>(
+      _entities[64].properties[8]);
+
+  /// see [MarketingCampaignEntity.clickRate]
+  static final clickRate = obx.QueryDoubleProperty<MarketingCampaignEntity>(
+      _entities[64].properties[9]);
+
+  /// see [MarketingCampaignEntity.bounceRate]
+  static final bounceRate = obx.QueryDoubleProperty<MarketingCampaignEntity>(
+      _entities[64].properties[10]);
+
+  /// see [MarketingCampaignEntity.scheduledAt]
+  static final scheduledAt = obx.QueryDateProperty<MarketingCampaignEntity>(
+      _entities[64].properties[11]);
+
+  /// see [MarketingCampaignEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<MarketingCampaignEntity>(
+      _entities[64].properties[12]);
 }

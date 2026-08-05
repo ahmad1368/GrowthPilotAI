@@ -41,6 +41,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/inventory_turnover_ag
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_valuation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/loyalty_program_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/marketing_campaign_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_branch_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_partnership_report_widget.dart';
@@ -374,6 +375,10 @@ class ReportWidgetsBootstrap {
         'SCHEDULED_TASK_ENGINE',
         (spec) =>
             ScheduledTaskReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MARKETING_CAMPAIGN_STUDIO',
+        (spec) =>
+            MarketingCampaignReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

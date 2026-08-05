@@ -24,6 +24,7 @@ import 'package:growth_pilot_ai/core/data/entities/exchange_rate_observation_ent
 import 'package:growth_pilot_ai/core/data/entities/feature_module_toggle_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/geofence_zone_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/linked_account_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/marketing_campaign_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_branch_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/merchant_partnership_entity.dart';
@@ -72,6 +73,7 @@ import 'package:growth_pilot_ai/core/data/entities/inventory_cost_layer_entity.d
 import 'package:growth_pilot_ai/core/data/repositories/inventory_cost_layer_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inventory_stock_take_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/linked_account_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/marketing_campaign_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_branch_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_config_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/merchant_partnership_repository.dart';
@@ -156,6 +158,7 @@ class BusinessCompassController extends GetxController {
   late RewardedUnlockRepository _rewardedUnlocks;
   late ScheduledTaskRepository _scheduledTasks;
   late TaskExecutionLogRepository _taskExecutionLogs;
+  late MarketingCampaignRepository _marketingCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
   final selectedPeriod = CompassPeriod.monthly.obs;
@@ -675,6 +678,11 @@ class BusinessCompassController extends GetxController {
           'logs': _taskExecutionLogs.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'MARKETING_CAMPAIGN_STUDIO',
+        title: 'Marketing Campaign Studio',
+        data: {'campaigns': _marketingCampaigns.getAll()},
+      ),
     ];
   }
 
@@ -754,6 +762,8 @@ class BusinessCompassController extends GetxController {
     _scheduledTasks = ScheduledTaskRepository(store.box<ScheduledTaskEntity>());
     _taskExecutionLogs =
         TaskExecutionLogRepository(store.box<TaskExecutionLogEntity>());
+    _marketingCampaigns =
+        MarketingCampaignRepository(store.box<MarketingCampaignEntity>());
     _recompute();
   }
 
