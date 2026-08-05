@@ -22,6 +22,8 @@ import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/ad_payment_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
+import 'core/data/entities/asset_bid_entity.dart';
+import 'core/data/entities/asset_listing_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
 import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
@@ -2863,6 +2865,105 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(71, 2332197048344744092),
+      name: 'AssetBidEntity',
+      lastPropertyId: const obx_int.IdUid(6, 4797086708689871056),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1851530707657817147),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2669399836515512942),
+            name: 'listingId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(75, 5872131534508445624)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 9169162694992724783),
+            name: 'bidderName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8330057655935603408),
+            name: 'bidAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4182435513146532858),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4797086708689871056),
+            name: 'submittedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(72, 1711054503455383016),
+      name: 'AssetListingEntity',
+      lastPropertyId: const obx_int.IdUid(10, 2752477855967739568),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5174563382737362408),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1922090422387897327),
+            name: 'sellerName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1737852982768681944),
+            name: 'assetName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2923530540900082107),
+            name: 'conditionDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4795209346113113869),
+            name: 'marketValue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2944734345483184243),
+            name: 'askingPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 3643549530061872665),
+            name: 'commercialZone',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 763767004030460654),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 8545530923960094551),
+            name: 'pickupDeadline',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 2752477855967739568),
+            name: 'listedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2901,8 +3002,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(70, 6895150478383302436),
-      lastIndexId: const obx_int.IdUid(74, 2828263196617658808),
+      lastEntityId: const obx_int.IdUid(72, 1711054503455383016),
+      lastIndexId: const obx_int.IdUid(75, 5872131534508445624),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -6244,6 +6345,118 @@ obx_int.ModelDefinition getObjectBoxModel() {
               orderedAt: orderedAtParam);
 
           return object;
+        }),
+    AssetBidEntity: obx_int.EntityDefinition<AssetBidEntity>(
+        model: _entities[69],
+        toOneRelations: (AssetBidEntity object) => [],
+        toManyRelations: (AssetBidEntity object) => {},
+        getId: (AssetBidEntity object) => object.id,
+        setId: (AssetBidEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AssetBidEntity object, fb.Builder fbb) {
+          final bidderNameOffset = fbb.writeString(object.bidderName);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.listingId);
+          fbb.addOffset(2, bidderNameOffset);
+          fbb.addFloat64(3, object.bidAmount);
+          fbb.addInt64(4, object.dbStatus);
+          fbb.addInt64(5, object.submittedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final listingIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final bidderNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final bidAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final submittedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = AssetBidEntity(
+              id: idParam,
+              listingId: listingIdParam,
+              bidderName: bidderNameParam,
+              bidAmount: bidAmountParam,
+              dbStatus: dbStatusParam,
+              submittedAt: submittedAtParam);
+
+          return object;
+        }),
+    AssetListingEntity: obx_int.EntityDefinition<AssetListingEntity>(
+        model: _entities[70],
+        toOneRelations: (AssetListingEntity object) => [],
+        toManyRelations: (AssetListingEntity object) => {},
+        getId: (AssetListingEntity object) => object.id,
+        setId: (AssetListingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AssetListingEntity object, fb.Builder fbb) {
+          final sellerNameOffset = fbb.writeString(object.sellerName);
+          final assetNameOffset = fbb.writeString(object.assetName);
+          final conditionDescriptionOffset =
+              fbb.writeString(object.conditionDescription);
+          final commercialZoneOffset = fbb.writeString(object.commercialZone);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, sellerNameOffset);
+          fbb.addOffset(2, assetNameOffset);
+          fbb.addOffset(3, conditionDescriptionOffset);
+          fbb.addFloat64(4, object.marketValue);
+          fbb.addFloat64(5, object.askingPrice);
+          fbb.addOffset(6, commercialZoneOffset);
+          fbb.addInt64(7, object.dbStatus);
+          fbb.addInt64(8, object.pickupDeadline.millisecondsSinceEpoch);
+          fbb.addInt64(9, object.listedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final sellerNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final assetNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final conditionDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final marketValueParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final askingPriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final commercialZoneParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final pickupDeadlineParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final listedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+          final object = AssetListingEntity(
+              id: idParam,
+              sellerName: sellerNameParam,
+              assetName: assetNameParam,
+              conditionDescription: conditionDescriptionParam,
+              marketValue: marketValueParam,
+              askingPrice: askingPriceParam,
+              commercialZone: commercialZoneParam,
+              dbStatus: dbStatusParam,
+              pickupDeadline: pickupDeadlineParam,
+              listedAt: listedAtParam);
+
+          return object;
         })
   };
 
@@ -8197,4 +8410,74 @@ class WholesaleOrderEntity_ {
   /// see [WholesaleOrderEntity.orderedAt]
   static final orderedAt =
       obx.QueryDateProperty<WholesaleOrderEntity>(_entities[68].properties[4]);
+}
+
+/// [AssetBidEntity] entity fields to define ObjectBox queries.
+class AssetBidEntity_ {
+  /// see [AssetBidEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AssetBidEntity>(_entities[69].properties[0]);
+
+  /// see [AssetBidEntity.listingId]
+  static final listingId =
+      obx.QueryIntegerProperty<AssetBidEntity>(_entities[69].properties[1]);
+
+  /// see [AssetBidEntity.bidderName]
+  static final bidderName =
+      obx.QueryStringProperty<AssetBidEntity>(_entities[69].properties[2]);
+
+  /// see [AssetBidEntity.bidAmount]
+  static final bidAmount =
+      obx.QueryDoubleProperty<AssetBidEntity>(_entities[69].properties[3]);
+
+  /// see [AssetBidEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<AssetBidEntity>(_entities[69].properties[4]);
+
+  /// see [AssetBidEntity.submittedAt]
+  static final submittedAt =
+      obx.QueryDateProperty<AssetBidEntity>(_entities[69].properties[5]);
+}
+
+/// [AssetListingEntity] entity fields to define ObjectBox queries.
+class AssetListingEntity_ {
+  /// see [AssetListingEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AssetListingEntity>(_entities[70].properties[0]);
+
+  /// see [AssetListingEntity.sellerName]
+  static final sellerName =
+      obx.QueryStringProperty<AssetListingEntity>(_entities[70].properties[1]);
+
+  /// see [AssetListingEntity.assetName]
+  static final assetName =
+      obx.QueryStringProperty<AssetListingEntity>(_entities[70].properties[2]);
+
+  /// see [AssetListingEntity.conditionDescription]
+  static final conditionDescription =
+      obx.QueryStringProperty<AssetListingEntity>(_entities[70].properties[3]);
+
+  /// see [AssetListingEntity.marketValue]
+  static final marketValue =
+      obx.QueryDoubleProperty<AssetListingEntity>(_entities[70].properties[4]);
+
+  /// see [AssetListingEntity.askingPrice]
+  static final askingPrice =
+      obx.QueryDoubleProperty<AssetListingEntity>(_entities[70].properties[5]);
+
+  /// see [AssetListingEntity.commercialZone]
+  static final commercialZone =
+      obx.QueryStringProperty<AssetListingEntity>(_entities[70].properties[6]);
+
+  /// see [AssetListingEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<AssetListingEntity>(_entities[70].properties[7]);
+
+  /// see [AssetListingEntity.pickupDeadline]
+  static final pickupDeadline =
+      obx.QueryDateProperty<AssetListingEntity>(_entities[70].properties[8]);
+
+  /// see [AssetListingEntity.listedAt]
+  static final listedAt =
+      obx.QueryDateProperty<AssetListingEntity>(_entities[70].properties[9]);
 }

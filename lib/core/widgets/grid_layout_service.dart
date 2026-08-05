@@ -79,6 +79,7 @@ class GridLayoutService {
     'AD_CAMPAIGN_CONSTRAINT_ENGINE',
     'AD_PAYMENT_ACTIVATION_ENGINE',
     'WHOLESALE_MARKETPLACE',
+    'ASSET_LIQUIDATION_MARKETPLACE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

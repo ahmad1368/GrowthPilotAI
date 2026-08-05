@@ -2836,10 +2836,110 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "71:2332197048344744092",
+      "lastPropertyId": "6:4797086708689871056",
+      "name": "AssetBidEntity",
+      "properties": [
+        {
+          "id": "1:1851530707657817147",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2669399836515512942",
+          "name": "listingId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "75:5872131534508445624"
+        },
+        {
+          "id": "3:9169162694992724783",
+          "name": "bidderName",
+          "type": 9
+        },
+        {
+          "id": "4:8330057655935603408",
+          "name": "bidAmount",
+          "type": 8
+        },
+        {
+          "id": "5:4182435513146532858",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "6:4797086708689871056",
+          "name": "submittedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "72:1711054503455383016",
+      "lastPropertyId": "10:2752477855967739568",
+      "name": "AssetListingEntity",
+      "properties": [
+        {
+          "id": "1:5174563382737362408",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1922090422387897327",
+          "name": "sellerName",
+          "type": 9
+        },
+        {
+          "id": "3:1737852982768681944",
+          "name": "assetName",
+          "type": 9
+        },
+        {
+          "id": "4:2923530540900082107",
+          "name": "conditionDescription",
+          "type": 9
+        },
+        {
+          "id": "5:4795209346113113869",
+          "name": "marketValue",
+          "type": 8
+        },
+        {
+          "id": "6:2944734345483184243",
+          "name": "askingPrice",
+          "type": 8
+        },
+        {
+          "id": "7:3643549530061872665",
+          "name": "commercialZone",
+          "type": 9
+        },
+        {
+          "id": "8:763767004030460654",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "9:8545530923960094551",
+          "name": "pickupDeadline",
+          "type": 10
+        },
+        {
+          "id": "10:2752477855967739568",
+          "name": "listedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "70:6895150478383302436",
-  "lastIndexId": "74:2828263196617658808",
+  "lastEntityId": "72:1711054503455383016",
+  "lastIndexId": "75:5872131534508445624",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
