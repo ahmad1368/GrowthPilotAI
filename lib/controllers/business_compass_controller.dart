@@ -701,6 +701,15 @@ class BusinessCompassController extends GetxController {
         title: 'Automated Payment Detection & Instant Campaign Activation',
         data: {'requests': _advertisingRequests.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'WHOLESALE_MARKETPLACE',
+        title: 'Wholesale Dead Stock Clearance',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+          'layers': _costLayers.getAll(),
+        },
+      ),
     ];
   }
 

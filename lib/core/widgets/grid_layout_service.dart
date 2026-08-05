@@ -78,6 +78,7 @@ class GridLayoutService {
     'TOP_RANKS_LEADERBOARD',
     'AD_CAMPAIGN_CONSTRAINT_ENGINE',
     'AD_PAYMENT_ACTIVATION_ENGINE',
+    'WHOLESALE_MARKETPLACE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
