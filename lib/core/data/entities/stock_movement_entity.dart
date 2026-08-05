@@ -6,7 +6,8 @@ enum StockMovementType { sale, returnStock }
 
 /// Origin of a stock movement or reservation (Issue #445): unifies the
 /// in-store register and the online storefront in one ledger.
-enum SalesChannel { pos, online }
+/// [wholesale] covers B2B clearance sales to other merchants (#411).
+enum SalesChannel { pos, online, wholesale }
 
 /// An immutable log entry for one inventory quantity change (Issue #439),
 /// snapshotting the item name and post-movement quantity so the audit

@@ -86,6 +86,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/traffic_report_widget
 import 'package:growth_pilot_ai/features/analytics/widgets/traffic_steering_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/conversion_rate_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/warranty_profitability_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/wholesale_marketplace_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/waste_log_report_widget.dart';
 
 /// One-time registration of the analytics report widgets into
@@ -394,6 +395,10 @@ class ReportWidgetsBootstrap {
         'AD_PAYMENT_ACTIVATION_ENGINE',
         (spec) =>
             AdPaymentReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'WHOLESALE_MARKETPLACE',
+        (spec) =>
+            WholesaleMarketplaceReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

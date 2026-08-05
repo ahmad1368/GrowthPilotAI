@@ -80,6 +80,8 @@ import 'core/data/entities/vendor_entity.dart';
 import 'core/data/entities/visitor_count_entity.dart';
 import 'core/data/entities/warranty_claim_entity.dart';
 import 'core/data/entities/waste_log_entity.dart';
+import 'core/data/entities/wholesale_listing_entity.dart';
+import 'core/data/entities/wholesale_order_entity.dart';
 import 'core/models/document_type.dart';
 import 'core/models/error_log.dart';
 
@@ -2782,6 +2784,85 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(69, 3198654817010315786),
+      name: 'WholesaleListingEntity',
+      lastPropertyId: const obx_int.IdUid(7, 4552970465877340275),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5853495173929110501),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8279565434969837627),
+            name: 'inventoryItemId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(74, 2828263196617658808)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3280549486072969475),
+            name: 'itemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3342100768939119892),
+            name: 'quantityListed',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5081114781205526216),
+            name: 'wholesalePrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4098899146531583417),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4552970465877340275),
+            name: 'listedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(70, 6895150478383302436),
+      name: 'WholesaleOrderEntity',
+      lastPropertyId: const obx_int.IdUid(5, 4632539047237000775),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 94593786084549911),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 73091642819903674),
+            name: 'buyerMerchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1247655717085151038),
+            name: 'itemsSummary',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1493016471083318834),
+            name: 'totalAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4632539047237000775),
+            name: 'orderedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2820,8 +2901,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(68, 1425028219006516445),
-      lastIndexId: const obx_int.IdUid(73, 3090235601075406476),
+      lastEntityId: const obx_int.IdUid(70, 6895150478383302436),
+      lastIndexId: const obx_int.IdUid(74, 2828263196617658808),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -6069,6 +6150,100 @@ obx_int.ModelDefinition getObjectBoxModel() {
               receivedAt: receivedAtParam);
 
           return object;
+        }),
+    WholesaleListingEntity: obx_int.EntityDefinition<WholesaleListingEntity>(
+        model: _entities[67],
+        toOneRelations: (WholesaleListingEntity object) => [],
+        toManyRelations: (WholesaleListingEntity object) => {},
+        getId: (WholesaleListingEntity object) => object.id,
+        setId: (WholesaleListingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WholesaleListingEntity object, fb.Builder fbb) {
+          final itemNameOffset = fbb.writeString(object.itemName);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.inventoryItemId);
+          fbb.addOffset(2, itemNameOffset);
+          fbb.addInt64(3, object.quantityListed);
+          fbb.addFloat64(4, object.wholesalePrice);
+          fbb.addInt64(5, object.dbStatus);
+          fbb.addInt64(6, object.listedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final inventoryItemIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final itemNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final quantityListedParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final wholesalePriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final listedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = WholesaleListingEntity(
+              id: idParam,
+              inventoryItemId: inventoryItemIdParam,
+              itemName: itemNameParam,
+              quantityListed: quantityListedParam,
+              wholesalePrice: wholesalePriceParam,
+              dbStatus: dbStatusParam,
+              listedAt: listedAtParam);
+
+          return object;
+        }),
+    WholesaleOrderEntity: obx_int.EntityDefinition<WholesaleOrderEntity>(
+        model: _entities[68],
+        toOneRelations: (WholesaleOrderEntity object) => [],
+        toManyRelations: (WholesaleOrderEntity object) => {},
+        getId: (WholesaleOrderEntity object) => object.id,
+        setId: (WholesaleOrderEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WholesaleOrderEntity object, fb.Builder fbb) {
+          final buyerMerchantNameOffset =
+              fbb.writeString(object.buyerMerchantName);
+          final itemsSummaryOffset = fbb.writeString(object.itemsSummary);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, buyerMerchantNameOffset);
+          fbb.addOffset(2, itemsSummaryOffset);
+          fbb.addFloat64(3, object.totalAmount);
+          fbb.addInt64(4, object.orderedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final buyerMerchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final itemsSummaryParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final totalAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final orderedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = WholesaleOrderEntity(
+              id: idParam,
+              buyerMerchantName: buyerMerchantNameParam,
+              itemsSummary: itemsSummaryParam,
+              totalAmount: totalAmountParam,
+              orderedAt: orderedAtParam);
+
+          return object;
         })
   };
 
@@ -7965,4 +8140,61 @@ class AdPaymentEntity_ {
   /// see [AdPaymentEntity.receivedAt]
   static final receivedAt =
       obx.QueryDateProperty<AdPaymentEntity>(_entities[66].properties[4]);
+}
+
+/// [WholesaleListingEntity] entity fields to define ObjectBox queries.
+class WholesaleListingEntity_ {
+  /// see [WholesaleListingEntity.id]
+  static final id = obx.QueryIntegerProperty<WholesaleListingEntity>(
+      _entities[67].properties[0]);
+
+  /// see [WholesaleListingEntity.inventoryItemId]
+  static final inventoryItemId =
+      obx.QueryIntegerProperty<WholesaleListingEntity>(
+          _entities[67].properties[1]);
+
+  /// see [WholesaleListingEntity.itemName]
+  static final itemName = obx.QueryStringProperty<WholesaleListingEntity>(
+      _entities[67].properties[2]);
+
+  /// see [WholesaleListingEntity.quantityListed]
+  static final quantityListed =
+      obx.QueryIntegerProperty<WholesaleListingEntity>(
+          _entities[67].properties[3]);
+
+  /// see [WholesaleListingEntity.wholesalePrice]
+  static final wholesalePrice = obx.QueryDoubleProperty<WholesaleListingEntity>(
+      _entities[67].properties[4]);
+
+  /// see [WholesaleListingEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<WholesaleListingEntity>(
+      _entities[67].properties[5]);
+
+  /// see [WholesaleListingEntity.listedAt]
+  static final listedAt = obx.QueryDateProperty<WholesaleListingEntity>(
+      _entities[67].properties[6]);
+}
+
+/// [WholesaleOrderEntity] entity fields to define ObjectBox queries.
+class WholesaleOrderEntity_ {
+  /// see [WholesaleOrderEntity.id]
+  static final id = obx.QueryIntegerProperty<WholesaleOrderEntity>(
+      _entities[68].properties[0]);
+
+  /// see [WholesaleOrderEntity.buyerMerchantName]
+  static final buyerMerchantName =
+      obx.QueryStringProperty<WholesaleOrderEntity>(
+          _entities[68].properties[1]);
+
+  /// see [WholesaleOrderEntity.itemsSummary]
+  static final itemsSummary = obx.QueryStringProperty<WholesaleOrderEntity>(
+      _entities[68].properties[2]);
+
+  /// see [WholesaleOrderEntity.totalAmount]
+  static final totalAmount = obx.QueryDoubleProperty<WholesaleOrderEntity>(
+      _entities[68].properties[3]);
+
+  /// see [WholesaleOrderEntity.orderedAt]
+  static final orderedAt =
+      obx.QueryDateProperty<WholesaleOrderEntity>(_entities[68].properties[4]);
 }
