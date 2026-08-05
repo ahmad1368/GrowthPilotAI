@@ -5,6 +5,7 @@ import 'package:growth_pilot_ai/business/filter_transactions_by_period.dart';
 import 'package:growth_pilot_ai/business/get_sector_benchmark.dart';
 import 'package:growth_pilot_ai/core/data/entities/account_suspension_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/ad_campaign_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/asset_listing_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/advertising_request_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/banner_matching_rule_entity.dart';
@@ -43,6 +44,7 @@ import 'package:growth_pilot_ai/core/data/entities/visitor_count_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/waste_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/account_suspension_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/asset_listing_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/advertising_request_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/banner_matching_rule_repository.dart';
@@ -158,6 +160,7 @@ class BusinessCompassController extends GetxController {
   late RewardedUnlockRepository _rewardedUnlocks;
   late ScheduledTaskRepository _scheduledTasks;
   late TaskExecutionLogRepository _taskExecutionLogs;
+  late AssetListingRepository _assetListings;
   late MarketingCampaignRepository _marketingCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
@@ -710,6 +713,11 @@ class BusinessCompassController extends GetxController {
           'layers': _costLayers.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'ASSET_LIQUIDATION_MARKETPLACE',
+        title: 'Rapid Liquidation Marketplace',
+        data: {'listings': _assetListings.getAll()},
+      ),
     ];
   }
 
@@ -789,6 +797,7 @@ class BusinessCompassController extends GetxController {
     _scheduledTasks = ScheduledTaskRepository(store.box<ScheduledTaskEntity>());
     _taskExecutionLogs =
         TaskExecutionLogRepository(store.box<TaskExecutionLogEntity>());
+    _assetListings = AssetListingRepository(store.box<AssetListingEntity>());
     _marketingCampaigns =
         MarketingCampaignRepository(store.box<MarketingCampaignEntity>());
     _recompute();
