@@ -2720,10 +2720,46 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "68:1425028219006516445",
+      "lastPropertyId": "5:5757370010999407914",
+      "name": "AdPaymentEntity",
+      "properties": [
+        {
+          "id": "1:2877831492366472981",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3048293558442709636",
+          "name": "advertisingRequestId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "73:3090235601075406476"
+        },
+        {
+          "id": "3:3065132282453003281",
+          "name": "amountPaid",
+          "type": 8
+        },
+        {
+          "id": "4:3446104226813856526",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:5757370010999407914",
+          "name": "receivedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "67:3326208007713517559",
-  "lastIndexId": "72:4157444412232052016",
+  "lastEntityId": "68:1425028219006516445",
+  "lastIndexId": "73:3090235601075406476",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

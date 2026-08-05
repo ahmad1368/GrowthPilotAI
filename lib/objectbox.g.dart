@@ -19,6 +19,7 @@ import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_constraint_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
+import 'core/data/entities/ad_payment_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
@@ -2746,6 +2747,41 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(68, 1425028219006516445),
+      name: 'AdPaymentEntity',
+      lastPropertyId: const obx_int.IdUid(5, 5757370010999407914),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2877831492366472981),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3048293558442709636),
+            name: 'advertisingRequestId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(73, 3090235601075406476)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3065132282453003281),
+            name: 'amountPaid',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3446104226813856526),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5757370010999407914),
+            name: 'receivedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2784,8 +2820,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(67, 3326208007713517559),
-      lastIndexId: const obx_int.IdUid(72, 4157444412232052016),
+      lastEntityId: const obx_int.IdUid(68, 1425028219006516445),
+      lastIndexId: const obx_int.IdUid(73, 3090235601075406476),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5993,7 +6029,47 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   createdAt: createdAtParam);
 
               return object;
-            })
+            }),
+    AdPaymentEntity: obx_int.EntityDefinition<AdPaymentEntity>(
+        model: _entities[66],
+        toOneRelations: (AdPaymentEntity object) => [],
+        toManyRelations: (AdPaymentEntity object) => {},
+        getId: (AdPaymentEntity object) => object.id,
+        setId: (AdPaymentEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AdPaymentEntity object, fb.Builder fbb) {
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.advertisingRequestId);
+          fbb.addFloat64(2, object.amountPaid);
+          fbb.addInt64(3, object.dbStatus);
+          fbb.addInt64(4, object.receivedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final advertisingRequestIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final amountPaidParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final receivedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = AdPaymentEntity(
+              id: idParam,
+              advertisingRequestId: advertisingRequestIdParam,
+              amountPaid: amountPaidParam,
+              dbStatus: dbStatusParam,
+              receivedAt: receivedAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -7866,4 +7942,27 @@ class AdCampaignConstraintEntity_ {
   /// see [AdCampaignConstraintEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<AdCampaignConstraintEntity>(
       _entities[65].properties[5]);
+}
+
+/// [AdPaymentEntity] entity fields to define ObjectBox queries.
+class AdPaymentEntity_ {
+  /// see [AdPaymentEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AdPaymentEntity>(_entities[66].properties[0]);
+
+  /// see [AdPaymentEntity.advertisingRequestId]
+  static final advertisingRequestId =
+      obx.QueryIntegerProperty<AdPaymentEntity>(_entities[66].properties[1]);
+
+  /// see [AdPaymentEntity.amountPaid]
+  static final amountPaid =
+      obx.QueryDoubleProperty<AdPaymentEntity>(_entities[66].properties[2]);
+
+  /// see [AdPaymentEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<AdPaymentEntity>(_entities[66].properties[3]);
+
+  /// see [AdPaymentEntity.receivedAt]
+  static final receivedAt =
+      obx.QueryDateProperty<AdPaymentEntity>(_entities[66].properties[4]);
 }

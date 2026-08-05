@@ -696,6 +696,11 @@ class BusinessCompassController extends GetxController {
         title: 'Ad Campaign Constraint Enforcement',
         data: {'requests': _advertisingRequests.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'AD_PAYMENT_ACTIVATION_ENGINE',
+        title: 'Automated Payment Detection & Instant Campaign Activation',
+        data: {'requests': _advertisingRequests.getAll()},
+      ),
     ];
   }
 
