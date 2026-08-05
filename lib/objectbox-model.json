@@ -2603,10 +2603,86 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "66:184108697669407044",
+      "lastPropertyId": "13:7532218083037445258",
+      "name": "MarketingCampaignEntity",
+      "properties": [
+        {
+          "id": "1:8053671660654157613",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6245079615960450825",
+          "name": "subject",
+          "type": 9
+        },
+        {
+          "id": "3:8675516838255023720",
+          "name": "bodyMarkup",
+          "type": 9
+        },
+        {
+          "id": "4:4137585934581636414",
+          "name": "segmentCategory",
+          "type": 9
+        },
+        {
+          "id": "5:8372832489536275786",
+          "name": "segmentRegion",
+          "type": 9
+        },
+        {
+          "id": "6:5658198283921010871",
+          "name": "minPaymentReliability",
+          "type": 6
+        },
+        {
+          "id": "7:7435052237889999023",
+          "name": "dbRequiredTier",
+          "type": 6
+        },
+        {
+          "id": "8:4322885228151627225",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "9:1503648994292287966",
+          "name": "openRate",
+          "type": 8
+        },
+        {
+          "id": "10:9139558344560784900",
+          "name": "clickRate",
+          "type": 8
+        },
+        {
+          "id": "11:4960458751128697900",
+          "name": "bounceRate",
+          "type": 8
+        },
+        {
+          "id": "12:4908946587451238003",
+          "name": "scheduledAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "71:4253937795765300738"
+        },
+        {
+          "id": "13:7532218083037445258",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "65:6259365945749490568",
-  "lastIndexId": "70:1962644151739248737",
+  "lastEntityId": "66:184108697669407044",
+  "lastIndexId": "71:4253937795765300738",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
