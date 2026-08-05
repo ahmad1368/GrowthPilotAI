@@ -17,6 +17,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
+import 'core/data/entities/ad_campaign_constraint_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
@@ -2705,6 +2706,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(67, 3326208007713517559),
+      name: 'AdCampaignConstraintEntity',
+      lastPropertyId: const obx_int.IdUid(6, 6646513113592308184),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6899735331221372358),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3518996038537384070),
+            name: 'advertisingRequestId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(72, 4157444412232052016)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 220540642100059717),
+            name: 'maxDurationDays',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7620524196440148335),
+            name: 'maxImpressions',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 227128691277243831),
+            name: 'maxClicks',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6646513113592308184),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -2743,8 +2784,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(66, 184108697669407044),
-      lastIndexId: const obx_int.IdUid(71, 4253937795765300738),
+      lastEntityId: const obx_int.IdUid(67, 3326208007713517559),
+      lastIndexId: const obx_int.IdUid(72, 4157444412232052016),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -5907,7 +5948,52 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
-        })
+        }),
+    AdCampaignConstraintEntity:
+        obx_int.EntityDefinition<AdCampaignConstraintEntity>(
+            model: _entities[65],
+            toOneRelations: (AdCampaignConstraintEntity object) => [],
+            toManyRelations: (AdCampaignConstraintEntity object) => {},
+            getId: (AdCampaignConstraintEntity object) => object.id,
+            setId: (AdCampaignConstraintEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (AdCampaignConstraintEntity object, fb.Builder fbb) {
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.advertisingRequestId);
+              fbb.addInt64(2, object.maxDurationDays);
+              fbb.addInt64(3, object.maxImpressions);
+              fbb.addInt64(4, object.maxClicks);
+              fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final advertisingRequestIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final maxDurationDaysParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final maxImpressionsParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final maxClicksParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = AdCampaignConstraintEntity(
+                  id: idParam,
+                  advertisingRequestId: advertisingRequestIdParam,
+                  maxDurationDays: maxDurationDaysParam,
+                  maxImpressions: maxImpressionsParam,
+                  maxClicks: maxClicksParam,
+                  createdAt: createdAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -7750,4 +7836,34 @@ class MarketingCampaignEntity_ {
   /// see [MarketingCampaignEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<MarketingCampaignEntity>(
       _entities[64].properties[12]);
+}
+
+/// [AdCampaignConstraintEntity] entity fields to define ObjectBox queries.
+class AdCampaignConstraintEntity_ {
+  /// see [AdCampaignConstraintEntity.id]
+  static final id = obx.QueryIntegerProperty<AdCampaignConstraintEntity>(
+      _entities[65].properties[0]);
+
+  /// see [AdCampaignConstraintEntity.advertisingRequestId]
+  static final advertisingRequestId =
+      obx.QueryIntegerProperty<AdCampaignConstraintEntity>(
+          _entities[65].properties[1]);
+
+  /// see [AdCampaignConstraintEntity.maxDurationDays]
+  static final maxDurationDays =
+      obx.QueryIntegerProperty<AdCampaignConstraintEntity>(
+          _entities[65].properties[2]);
+
+  /// see [AdCampaignConstraintEntity.maxImpressions]
+  static final maxImpressions =
+      obx.QueryIntegerProperty<AdCampaignConstraintEntity>(
+          _entities[65].properties[3]);
+
+  /// see [AdCampaignConstraintEntity.maxClicks]
+  static final maxClicks = obx.QueryIntegerProperty<AdCampaignConstraintEntity>(
+      _entities[65].properties[4]);
+
+  /// see [AdCampaignConstraintEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<AdCampaignConstraintEntity>(
+      _entities[65].properties[5]);
 }

@@ -76,6 +76,7 @@ class GridLayoutService {
     'SCHEDULED_TASK_ENGINE',
     'MARKETING_CAMPAIGN_STUDIO',
     'TOP_RANKS_LEADERBOARD',
+    'AD_CAMPAIGN_CONSTRAINT_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
