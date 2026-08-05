@@ -2679,10 +2679,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "67:3326208007713517559",
+      "lastPropertyId": "6:6646513113592308184",
+      "name": "AdCampaignConstraintEntity",
+      "properties": [
+        {
+          "id": "1:6899735331221372358",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3518996038537384070",
+          "name": "advertisingRequestId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "72:4157444412232052016"
+        },
+        {
+          "id": "3:220540642100059717",
+          "name": "maxDurationDays",
+          "type": 6
+        },
+        {
+          "id": "4:7620524196440148335",
+          "name": "maxImpressions",
+          "type": 6
+        },
+        {
+          "id": "5:227128691277243831",
+          "name": "maxClicks",
+          "type": 6
+        },
+        {
+          "id": "6:6646513113592308184",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "66:184108697669407044",
-  "lastIndexId": "71:4253937795765300738",
+  "lastEntityId": "67:3326208007713517559",
+  "lastIndexId": "72:4157444412232052016",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
