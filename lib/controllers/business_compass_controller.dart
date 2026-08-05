@@ -683,6 +683,14 @@ class BusinessCompassController extends GetxController {
         title: 'Marketing Campaign Studio',
         data: {'campaigns': _marketingCampaigns.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'TOP_RANKS_LEADERBOARD',
+        title: 'Top Ranks Leaderboard',
+        data: {
+          'configs': _merchantConfigs.getAll(),
+          'adRequests': _advertisingRequests.getAll(),
+        },
+      ),
     ];
   }
 
