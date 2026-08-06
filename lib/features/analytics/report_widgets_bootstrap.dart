@@ -12,6 +12,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/barter_marketplace_re
 import 'package:growth_pilot_ai/features/analytics/widgets/group_purchase_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/escrow_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/price_intelligence_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_catalog_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/analytics_pricing_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/annual_profit_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banner_rule_report_widget.dart';
@@ -424,6 +425,10 @@ class ReportWidgetsBootstrap {
         'PRICE_INTELLIGENCE_ENGINE',
         (spec) =>
             PriceIntelligenceReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'SEASONAL_PREORDER_ENGINE',
+        (spec) =>
+            SeasonalCatalogReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

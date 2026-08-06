@@ -11,6 +11,7 @@ import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/barter_listing_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/group_purchase_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/escrow_account_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/seasonal_catalog_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/banner_matching_rule_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -52,6 +53,7 @@ import 'package:growth_pilot_ai/core/data/repositories/advertising_request_repos
 import 'package:growth_pilot_ai/core/data/repositories/barter_listing_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/group_purchase_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/escrow_account_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/seasonal_catalog_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/banner_matching_rule_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
@@ -170,6 +172,7 @@ class BusinessCompassController extends GetxController {
   late BarterListingRepository _barterListings;
   late GroupPurchaseRepository _groupPurchases;
   late EscrowAccountRepository _escrowAccounts;
+  late SeasonalCatalogItemRepository _seasonalCatalog;
   late MarketingCampaignRepository _marketingCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
@@ -747,6 +750,11 @@ class BusinessCompassController extends GetxController {
         title: 'Smart Escrow and Refund Guarantee',
         data: {'accounts': _escrowAccounts.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SEASONAL_PREORDER_ENGINE',
+        title: 'Seasonal Advance Pre-Ordering',
+        data: {'catalogItems': _seasonalCatalog.getAll()},
+      ),
     ];
   }
 
@@ -830,6 +838,7 @@ class BusinessCompassController extends GetxController {
     _barterListings = BarterListingRepository(store.box<BarterListingEntity>());
     _groupPurchases = GroupPurchaseRepository(store.box<GroupPurchaseEntity>());
     _escrowAccounts = EscrowAccountRepository(store.box<EscrowAccountEntity>());
+    _seasonalCatalog = SeasonalCatalogItemRepository(store.box<SeasonalCatalogItemEntity>());
     _marketingCampaigns =
         MarketingCampaignRepository(store.box<MarketingCampaignEntity>());
     _recompute();

@@ -3190,10 +3190,110 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "78:3905092330403840993",
+      "lastPropertyId": "7:3612407604405184609",
+      "name": "PreOrderReservationEntity",
+      "properties": [
+        {
+          "id": "1:4522542521750612380",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3596997396391850683",
+          "name": "catalogItemId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "78:5028036117935118759"
+        },
+        {
+          "id": "3:3355145684311051338",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "4:4030071275754700297",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "5:96964821548820531",
+          "name": "depositAmount",
+          "type": 8
+        },
+        {
+          "id": "6:3270327926173069439",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "7:3612407604405184609",
+          "name": "reservedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "79:5117569023051602638",
+      "lastPropertyId": "9:6575761846205879472",
+      "name": "SeasonalCatalogItemEntity",
+      "properties": [
+        {
+          "id": "1:6208824483743580169",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5465841079728632935",
+          "name": "supplierName",
+          "type": 9
+        },
+        {
+          "id": "3:6739361624102660902",
+          "name": "productName",
+          "type": 9
+        },
+        {
+          "id": "4:2769793172742545316",
+          "name": "productDescription",
+          "type": 9
+        },
+        {
+          "id": "5:226030701933482345",
+          "name": "unitPrice",
+          "type": 8
+        },
+        {
+          "id": "6:3952519521470037825",
+          "name": "depositPercent",
+          "type": 8
+        },
+        {
+          "id": "7:2254802754988837215",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "8:8496835342450456201",
+          "name": "deliveryWindowStart",
+          "type": 10
+        },
+        {
+          "id": "9:6575761846205879472",
+          "name": "listedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "77:2022094106964067975",
-  "lastIndexId": "77:355648137659916996",
+  "lastEntityId": "79:5117569023051602638",
+  "lastIndexId": "78:5028036117935118759",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
