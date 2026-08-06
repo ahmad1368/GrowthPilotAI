@@ -82,6 +82,7 @@ class GridLayoutService {
     'ASSET_LIQUIDATION_MARKETPLACE',
     'BARTER_EXCHANGE_MARKETPLACE',
     'GROUP_BUYING_COORDINATOR',
+    'SMART_ESCROW_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

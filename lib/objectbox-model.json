@@ -3146,9 +3146,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "77:2022094106964067975",
+      "lastPropertyId": "7:2960307758215953293",
+      "name": "EscrowAccountEntity",
+      "properties": [
+        {
+          "id": "1:4335655196548159675",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7833008457482246593",
+          "name": "buyerName",
+          "type": 9
+        },
+        {
+          "id": "3:8313088365311904782",
+          "name": "sellerName",
+          "type": 9
+        },
+        {
+          "id": "4:1546435075032347030",
+          "name": "itemDescription",
+          "type": 9
+        },
+        {
+          "id": "5:5253120824622249514",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "6:7613675995655614533",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "7:2960307758215953293",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "76:3388235913425414809",
+  "lastEntityId": "77:2022094106964067975",
   "lastIndexId": "77:355648137659916996",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

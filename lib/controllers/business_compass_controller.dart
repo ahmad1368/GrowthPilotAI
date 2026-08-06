@@ -10,6 +10,7 @@ import 'package:growth_pilot_ai/core/data/entities/advertising_request_entity.da
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/barter_listing_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/group_purchase_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/escrow_account_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/banner_matching_rule_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -50,6 +51,7 @@ import 'package:growth_pilot_ai/core/data/repositories/asset_listing_repository.
 import 'package:growth_pilot_ai/core/data/repositories/advertising_request_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/barter_listing_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/group_purchase_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/escrow_account_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/banner_matching_rule_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
@@ -167,6 +169,7 @@ class BusinessCompassController extends GetxController {
   late AssetListingRepository _assetListings;
   late BarterListingRepository _barterListings;
   late GroupPurchaseRepository _groupPurchases;
+  late EscrowAccountRepository _escrowAccounts;
   late MarketingCampaignRepository _marketingCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
@@ -734,6 +737,11 @@ class BusinessCompassController extends GetxController {
         title: 'Group Buying Coordinator',
         data: {'purchases': _groupPurchases.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'SMART_ESCROW_ENGINE',
+        title: 'Smart Escrow and Refund Guarantee',
+        data: {'accounts': _escrowAccounts.getAll()},
+      ),
     ];
   }
 
@@ -816,6 +824,7 @@ class BusinessCompassController extends GetxController {
     _assetListings = AssetListingRepository(store.box<AssetListingEntity>());
     _barterListings = BarterListingRepository(store.box<BarterListingEntity>());
     _groupPurchases = GroupPurchaseRepository(store.box<GroupPurchaseEntity>());
+    _escrowAccounts = EscrowAccountRepository(store.box<EscrowAccountEntity>());
     _marketingCampaigns =
         MarketingCampaignRepository(store.box<MarketingCampaignEntity>());
     _recompute();
