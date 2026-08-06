@@ -64,6 +64,7 @@ import 'core/data/entities/merchant_tag_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
+import 'core/data/entities/pre_order_reservation_entity.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
@@ -72,6 +73,7 @@ import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
+import 'core/data/entities/seasonal_catalog_item_entity.dart';
 import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
@@ -3221,6 +3223,105 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(78, 3905092330403840993),
+      name: 'PreOrderReservationEntity',
+      lastPropertyId: const obx_int.IdUid(7, 3612407604405184609),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4522542521750612380),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3596997396391850683),
+            name: 'catalogItemId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(78, 5028036117935118759)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3355145684311051338),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4030071275754700297),
+            name: 'quantity',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 96964821548820531),
+            name: 'depositAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3270327926173069439),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 3612407604405184609),
+            name: 'reservedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(79, 5117569023051602638),
+      name: 'SeasonalCatalogItemEntity',
+      lastPropertyId: const obx_int.IdUid(9, 6575761846205879472),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6208824483743580169),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5465841079728632935),
+            name: 'supplierName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6739361624102660902),
+            name: 'productName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2769793172742545316),
+            name: 'productDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 226030701933482345),
+            name: 'unitPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3952519521470037825),
+            name: 'depositPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2254802754988837215),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8496835342450456201),
+            name: 'deliveryWindowStart',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6575761846205879472),
+            name: 'listedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3259,8 +3360,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(77, 2022094106964067975),
-      lastIndexId: const obx_int.IdUid(77, 355648137659916996),
+      lastEntityId: const obx_int.IdUid(79, 5117569023051602638),
+      lastIndexId: const obx_int.IdUid(78, 5028036117935118759),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -7013,6 +7114,121 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
+        }),
+    PreOrderReservationEntity:
+        obx_int.EntityDefinition<PreOrderReservationEntity>(
+            model: _entities[76],
+            toOneRelations: (PreOrderReservationEntity object) => [],
+            toManyRelations: (PreOrderReservationEntity object) => {},
+            getId: (PreOrderReservationEntity object) => object.id,
+            setId: (PreOrderReservationEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (PreOrderReservationEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              fbb.startTable(8);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.catalogItemId);
+              fbb.addOffset(2, merchantNameOffset);
+              fbb.addInt64(3, object.quantity);
+              fbb.addFloat64(4, object.depositAmount);
+              fbb.addInt64(5, object.dbStatus);
+              fbb.addInt64(6, object.reservedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final catalogItemIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final quantityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final depositAmountParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final reservedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+              final object = PreOrderReservationEntity(
+                  id: idParam,
+                  catalogItemId: catalogItemIdParam,
+                  merchantName: merchantNameParam,
+                  quantity: quantityParam,
+                  depositAmount: depositAmountParam,
+                  dbStatus: dbStatusParam,
+                  reservedAt: reservedAtParam);
+
+              return object;
+            }),
+    SeasonalCatalogItemEntity: obx_int.EntityDefinition<
+            SeasonalCatalogItemEntity>(
+        model: _entities[77],
+        toOneRelations: (SeasonalCatalogItemEntity object) => [],
+        toManyRelations: (SeasonalCatalogItemEntity object) => {},
+        getId: (SeasonalCatalogItemEntity object) => object.id,
+        setId: (SeasonalCatalogItemEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SeasonalCatalogItemEntity object, fb.Builder fbb) {
+          final supplierNameOffset = fbb.writeString(object.supplierName);
+          final productNameOffset = fbb.writeString(object.productName);
+          final productDescriptionOffset =
+              fbb.writeString(object.productDescription);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, supplierNameOffset);
+          fbb.addOffset(2, productNameOffset);
+          fbb.addOffset(3, productDescriptionOffset);
+          fbb.addFloat64(4, object.unitPrice);
+          fbb.addFloat64(5, object.depositPercent);
+          fbb.addInt64(6, object.dbStatus);
+          fbb.addInt64(7, object.deliveryWindowStart.millisecondsSinceEpoch);
+          fbb.addInt64(8, object.listedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final supplierNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final productNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final productDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final unitPriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final depositPercentParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final deliveryWindowStartParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final listedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = SeasonalCatalogItemEntity(
+              id: idParam,
+              supplierName: supplierNameParam,
+              productName: productNameParam,
+              productDescription: productDescriptionParam,
+              unitPrice: unitPriceParam,
+              depositPercent: depositPercentParam,
+              dbStatus: dbStatusParam,
+              deliveryWindowStart: deliveryWindowStartParam,
+              listedAt: listedAtParam);
+
+          return object;
         })
   };
 
@@ -9221,4 +9437,81 @@ class EscrowAccountEntity_ {
   /// see [EscrowAccountEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<EscrowAccountEntity>(_entities[75].properties[6]);
+}
+
+/// [PreOrderReservationEntity] entity fields to define ObjectBox queries.
+class PreOrderReservationEntity_ {
+  /// see [PreOrderReservationEntity.id]
+  static final id = obx.QueryIntegerProperty<PreOrderReservationEntity>(
+      _entities[76].properties[0]);
+
+  /// see [PreOrderReservationEntity.catalogItemId]
+  static final catalogItemId =
+      obx.QueryIntegerProperty<PreOrderReservationEntity>(
+          _entities[76].properties[1]);
+
+  /// see [PreOrderReservationEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<PreOrderReservationEntity>(
+          _entities[76].properties[2]);
+
+  /// see [PreOrderReservationEntity.quantity]
+  static final quantity = obx.QueryIntegerProperty<PreOrderReservationEntity>(
+      _entities[76].properties[3]);
+
+  /// see [PreOrderReservationEntity.depositAmount]
+  static final depositAmount =
+      obx.QueryDoubleProperty<PreOrderReservationEntity>(
+          _entities[76].properties[4]);
+
+  /// see [PreOrderReservationEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<PreOrderReservationEntity>(
+      _entities[76].properties[5]);
+
+  /// see [PreOrderReservationEntity.reservedAt]
+  static final reservedAt = obx.QueryDateProperty<PreOrderReservationEntity>(
+      _entities[76].properties[6]);
+}
+
+/// [SeasonalCatalogItemEntity] entity fields to define ObjectBox queries.
+class SeasonalCatalogItemEntity_ {
+  /// see [SeasonalCatalogItemEntity.id]
+  static final id = obx.QueryIntegerProperty<SeasonalCatalogItemEntity>(
+      _entities[77].properties[0]);
+
+  /// see [SeasonalCatalogItemEntity.supplierName]
+  static final supplierName =
+      obx.QueryStringProperty<SeasonalCatalogItemEntity>(
+          _entities[77].properties[1]);
+
+  /// see [SeasonalCatalogItemEntity.productName]
+  static final productName = obx.QueryStringProperty<SeasonalCatalogItemEntity>(
+      _entities[77].properties[2]);
+
+  /// see [SeasonalCatalogItemEntity.productDescription]
+  static final productDescription =
+      obx.QueryStringProperty<SeasonalCatalogItemEntity>(
+          _entities[77].properties[3]);
+
+  /// see [SeasonalCatalogItemEntity.unitPrice]
+  static final unitPrice = obx.QueryDoubleProperty<SeasonalCatalogItemEntity>(
+      _entities[77].properties[4]);
+
+  /// see [SeasonalCatalogItemEntity.depositPercent]
+  static final depositPercent =
+      obx.QueryDoubleProperty<SeasonalCatalogItemEntity>(
+          _entities[77].properties[5]);
+
+  /// see [SeasonalCatalogItemEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<SeasonalCatalogItemEntity>(
+      _entities[77].properties[6]);
+
+  /// see [SeasonalCatalogItemEntity.deliveryWindowStart]
+  static final deliveryWindowStart =
+      obx.QueryDateProperty<SeasonalCatalogItemEntity>(
+          _entities[77].properties[7]);
+
+  /// see [SeasonalCatalogItemEntity.listedAt]
+  static final listedAt = obx.QueryDateProperty<SeasonalCatalogItemEntity>(
+      _entities[77].properties[8]);
 }
