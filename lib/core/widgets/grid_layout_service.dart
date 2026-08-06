@@ -81,6 +81,7 @@ class GridLayoutService {
     'WHOLESALE_MARKETPLACE',
     'ASSET_LIQUIDATION_MARKETPLACE',
     'BARTER_EXCHANGE_MARKETPLACE',
+    'GROUP_BUYING_COORDINATOR',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

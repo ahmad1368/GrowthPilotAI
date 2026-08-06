@@ -3056,10 +3056,100 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "75:975622113705408578",
+      "lastPropertyId": "5:1226577249309438088",
+      "name": "GroupPurchaseContributionEntity",
+      "properties": [
+        {
+          "id": "1:7341055933418868217",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4051607414867811137",
+          "name": "groupPurchaseId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "77:355648137659916996"
+        },
+        {
+          "id": "3:3943231880013395041",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "4:5715622021711202997",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "5:1226577249309438088",
+          "name": "contributedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "76:3388235913425414809",
+      "lastPropertyId": "9:5910401556965646135",
+      "name": "GroupPurchaseEntity",
+      "properties": [
+        {
+          "id": "1:8187200015694330598",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2488369786075481230",
+          "name": "organizerName",
+          "type": 9
+        },
+        {
+          "id": "3:6793396577195710819",
+          "name": "itemName",
+          "type": 9
+        },
+        {
+          "id": "4:2211706984967711602",
+          "name": "itemDescription",
+          "type": 9
+        },
+        {
+          "id": "5:4260951948485211236",
+          "name": "unitPrice",
+          "type": 8
+        },
+        {
+          "id": "6:2104019687581536419",
+          "name": "minQuantityThreshold",
+          "type": 6
+        },
+        {
+          "id": "7:527788811274190378",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "8:9160847264829758448",
+          "name": "deadline",
+          "type": 10
+        },
+        {
+          "id": "9:5910401556965646135",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "74:1518441868450828490",
-  "lastIndexId": "76:2970004941757903335",
+  "lastEntityId": "76:3388235913425414809",
+  "lastIndexId": "77:355648137659916996",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

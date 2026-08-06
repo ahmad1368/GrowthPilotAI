@@ -43,6 +43,8 @@ import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/geofence_zone_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
+import 'core/data/entities/group_purchase_contribution_entity.dart';
+import 'core/data/entities/group_purchase_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
@@ -3085,6 +3087,95 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(75, 975622113705408578),
+      name: 'GroupPurchaseContributionEntity',
+      lastPropertyId: const obx_int.IdUid(5, 1226577249309438088),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7341055933418868217),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4051607414867811137),
+            name: 'groupPurchaseId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(77, 355648137659916996)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3943231880013395041),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5715622021711202997),
+            name: 'quantity',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1226577249309438088),
+            name: 'contributedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(76, 3388235913425414809),
+      name: 'GroupPurchaseEntity',
+      lastPropertyId: const obx_int.IdUid(9, 5910401556965646135),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8187200015694330598),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2488369786075481230),
+            name: 'organizerName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6793396577195710819),
+            name: 'itemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2211706984967711602),
+            name: 'itemDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4260951948485211236),
+            name: 'unitPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2104019687581536419),
+            name: 'minQuantityThreshold',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 527788811274190378),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 9160847264829758448),
+            name: 'deadline',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 5910401556965646135),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3123,8 +3214,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(74, 1518441868450828490),
-      lastIndexId: const obx_int.IdUid(76, 2970004941757903335),
+      lastEntityId: const obx_int.IdUid(76, 3388235913425414809),
+      lastIndexId: const obx_int.IdUid(77, 355648137659916996),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -6720,6 +6811,111 @@ obx_int.ModelDefinition getObjectBoxModel() {
               proposedAt: proposedAtParam);
 
           return object;
+        }),
+    GroupPurchaseContributionEntity:
+        obx_int.EntityDefinition<GroupPurchaseContributionEntity>(
+            model: _entities[73],
+            toOneRelations: (GroupPurchaseContributionEntity object) => [],
+            toManyRelations: (GroupPurchaseContributionEntity object) => {},
+            getId: (GroupPurchaseContributionEntity object) => object.id,
+            setId: (GroupPurchaseContributionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB:
+                (GroupPurchaseContributionEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.groupPurchaseId);
+              fbb.addOffset(2, merchantNameOffset);
+              fbb.addInt64(3, object.quantity);
+              fbb.addInt64(4, object.contributedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final groupPurchaseIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final quantityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final contributedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = GroupPurchaseContributionEntity(
+                  id: idParam,
+                  groupPurchaseId: groupPurchaseIdParam,
+                  merchantName: merchantNameParam,
+                  quantity: quantityParam,
+                  contributedAt: contributedAtParam);
+
+              return object;
+            }),
+    GroupPurchaseEntity: obx_int.EntityDefinition<GroupPurchaseEntity>(
+        model: _entities[74],
+        toOneRelations: (GroupPurchaseEntity object) => [],
+        toManyRelations: (GroupPurchaseEntity object) => {},
+        getId: (GroupPurchaseEntity object) => object.id,
+        setId: (GroupPurchaseEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (GroupPurchaseEntity object, fb.Builder fbb) {
+          final organizerNameOffset = fbb.writeString(object.organizerName);
+          final itemNameOffset = fbb.writeString(object.itemName);
+          final itemDescriptionOffset = fbb.writeString(object.itemDescription);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, organizerNameOffset);
+          fbb.addOffset(2, itemNameOffset);
+          fbb.addOffset(3, itemDescriptionOffset);
+          fbb.addFloat64(4, object.unitPrice);
+          fbb.addInt64(5, object.minQuantityThreshold);
+          fbb.addInt64(6, object.dbStatus);
+          fbb.addInt64(7, object.deadline.millisecondsSinceEpoch);
+          fbb.addInt64(8, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final organizerNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final itemNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final itemDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final unitPriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final minQuantityThresholdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final deadlineParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = GroupPurchaseEntity(
+              id: idParam,
+              organizerName: organizerNameParam,
+              itemName: itemNameParam,
+              itemDescription: itemDescriptionParam,
+              unitPrice: unitPriceParam,
+              minQuantityThreshold: minQuantityThresholdParam,
+              dbStatus: dbStatusParam,
+              deadline: deadlineParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -8830,4 +9026,71 @@ class BarterProposalEntity_ {
   /// see [BarterProposalEntity.proposedAt]
   static final proposedAt =
       obx.QueryDateProperty<BarterProposalEntity>(_entities[72].properties[9]);
+}
+
+/// [GroupPurchaseContributionEntity] entity fields to define ObjectBox queries.
+class GroupPurchaseContributionEntity_ {
+  /// see [GroupPurchaseContributionEntity.id]
+  static final id = obx.QueryIntegerProperty<GroupPurchaseContributionEntity>(
+      _entities[73].properties[0]);
+
+  /// see [GroupPurchaseContributionEntity.groupPurchaseId]
+  static final groupPurchaseId =
+      obx.QueryIntegerProperty<GroupPurchaseContributionEntity>(
+          _entities[73].properties[1]);
+
+  /// see [GroupPurchaseContributionEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<GroupPurchaseContributionEntity>(
+          _entities[73].properties[2]);
+
+  /// see [GroupPurchaseContributionEntity.quantity]
+  static final quantity =
+      obx.QueryIntegerProperty<GroupPurchaseContributionEntity>(
+          _entities[73].properties[3]);
+
+  /// see [GroupPurchaseContributionEntity.contributedAt]
+  static final contributedAt =
+      obx.QueryDateProperty<GroupPurchaseContributionEntity>(
+          _entities[73].properties[4]);
+}
+
+/// [GroupPurchaseEntity] entity fields to define ObjectBox queries.
+class GroupPurchaseEntity_ {
+  /// see [GroupPurchaseEntity.id]
+  static final id = obx.QueryIntegerProperty<GroupPurchaseEntity>(
+      _entities[74].properties[0]);
+
+  /// see [GroupPurchaseEntity.organizerName]
+  static final organizerName =
+      obx.QueryStringProperty<GroupPurchaseEntity>(_entities[74].properties[1]);
+
+  /// see [GroupPurchaseEntity.itemName]
+  static final itemName =
+      obx.QueryStringProperty<GroupPurchaseEntity>(_entities[74].properties[2]);
+
+  /// see [GroupPurchaseEntity.itemDescription]
+  static final itemDescription =
+      obx.QueryStringProperty<GroupPurchaseEntity>(_entities[74].properties[3]);
+
+  /// see [GroupPurchaseEntity.unitPrice]
+  static final unitPrice =
+      obx.QueryDoubleProperty<GroupPurchaseEntity>(_entities[74].properties[4]);
+
+  /// see [GroupPurchaseEntity.minQuantityThreshold]
+  static final minQuantityThreshold =
+      obx.QueryIntegerProperty<GroupPurchaseEntity>(
+          _entities[74].properties[5]);
+
+  /// see [GroupPurchaseEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<GroupPurchaseEntity>(
+      _entities[74].properties[6]);
+
+  /// see [GroupPurchaseEntity.deadline]
+  static final deadline =
+      obx.QueryDateProperty<GroupPurchaseEntity>(_entities[74].properties[7]);
+
+  /// see [GroupPurchaseEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<GroupPurchaseEntity>(_entities[74].properties[8]);
 }
