@@ -513,6 +513,11 @@ class BusinessCompassController extends GetxController {
         data: {'observations': _competitorPrices.getAll()},
       ),
       ReportWidgetSpec(
+        id: 'PRICE_INTELLIGENCE_ENGINE',
+        title: 'Competitive Pricing Intelligence',
+        data: {'observations': _competitorPrices.getAll()},
+      ),
+      ReportWidgetSpec(
         id: 'VISITOR_CONVERSION_RATE',
         title: 'Visitor-to-Buyer Conversion',
         data: {
