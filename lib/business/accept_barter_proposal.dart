@@ -7,6 +7,11 @@ import 'package:growth_pilot_ai/core/enum/barter_proposal_status.dart';
 /// pending resolution (Issue #413, acceptance criterion 3) — other
 /// outstanding proposals on the same listing are left as-is since the
 /// UI stops offering them once the listing is no longer active.
+// TODO (Issue #415): [BarterListingStatus.matched] is a status-flag
+// stand-in for real escrow. When the smart-contract escrow/refund
+// engine lands, this should hold funds/items via that service instead
+// of just flipping a local enum, and needs a path back to `active`
+// (or a new disputed/refunded state) when automated inspection fails.
 class AcceptBarterProposal {
   static ({BarterListingEntity listing, BarterProposalEntity proposal}) call(
       BarterListingEntity listing, BarterProposalEntity proposal) {

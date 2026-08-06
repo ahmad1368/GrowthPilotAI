@@ -22,4 +22,9 @@ class MatchBarterProposal {
     final closeness = (1 - diffRatio).clamp(0, 1);
     return (closeness * 40).round();
   }
+
+  // TODO (Issue #416): [listingValue]/[offeredValue] are merchant
+  // self-declared estimates. Once the Fair Price Index lands, cross-check
+  // them against real market telemetry here (or surface a fair-value
+  // badge alongside the match score) instead of trusting the raw input.
 }

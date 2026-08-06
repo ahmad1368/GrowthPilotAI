@@ -8,6 +8,10 @@ import 'package:growth_pilot_ai/core/enum/barter_proposal_status.dart';
 /// app has no payment-holding backend, so "escrow" is represented by
 /// the [BarterListingStatus.matched] state until this transition. The
 /// caller logs the resolution for reputation tracking.
+// TODO (Issue #415): manual buyer/seller confirmation here should
+// become (or be backed by) the automated inspection/delivery
+// confirmation trigger from the smart-contract escrow engine, so a
+// failed inspection can route to refund/dispute instead of completion.
 class CompleteBarterTrade {
   static ({BarterListingEntity listing, BarterProposalEntity proposal}) call(
       BarterListingEntity listing, BarterProposalEntity proposal) {
