@@ -2936,10 +2936,130 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "73:2200565873690894985",
+      "lastPropertyId": "10:7627570741658654071",
+      "name": "BarterListingEntity",
+      "properties": [
+        {
+          "id": "1:2727809102062655128",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2156694126028001351",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "3:85113454660277372",
+          "name": "surplusItemName",
+          "type": 9
+        },
+        {
+          "id": "4:7835929659464771214",
+          "name": "surplusItemDescription",
+          "type": 9
+        },
+        {
+          "id": "5:6758125496378236453",
+          "name": "wantedItemName",
+          "type": 9
+        },
+        {
+          "id": "6:7598782998346631848",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "7:2916415024640108077",
+          "name": "estimatedValue",
+          "type": 8
+        },
+        {
+          "id": "8:1029749211540450527",
+          "name": "geoZone",
+          "type": 9
+        },
+        {
+          "id": "9:4707457082189345361",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "10:7627570741658654071",
+          "name": "listedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "74:1518441868450828490",
+      "lastPropertyId": "10:5397612396266573620",
+      "name": "BarterProposalEntity",
+      "properties": [
+        {
+          "id": "1:4941433431875005095",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5392048412877990364",
+          "name": "listingId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "76:2970004941757903335"
+        },
+        {
+          "id": "3:2475447996307988149",
+          "name": "proposerName",
+          "type": 9
+        },
+        {
+          "id": "4:6236974606587568628",
+          "name": "offeredItemName",
+          "type": 9
+        },
+        {
+          "id": "5:95229116326142136",
+          "name": "offeredItemDescription",
+          "type": 9
+        },
+        {
+          "id": "6:1119750157460541822",
+          "name": "offeredCategory",
+          "type": 9
+        },
+        {
+          "id": "7:6687261356565524291",
+          "name": "offeredValue",
+          "type": 8
+        },
+        {
+          "id": "8:6716962462797534215",
+          "name": "proposerZone",
+          "type": 9
+        },
+        {
+          "id": "9:4060367295845166532",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "10:5397612396266573620",
+          "name": "proposedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "72:1711054503455383016",
-  "lastIndexId": "75:5872131534508445624",
+  "lastEntityId": "74:1518441868450828490",
+  "lastIndexId": "76:2970004941757903335",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

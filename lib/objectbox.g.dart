@@ -26,6 +26,8 @@ import 'core/data/entities/asset_bid_entity.dart';
 import 'core/data/entities/asset_listing_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
 import 'core/data/entities/banner_matching_rule_entity.dart';
+import 'core/data/entities/barter_listing_entity.dart';
+import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/category_entity.dart';
@@ -2964,6 +2966,125 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(73, 2200565873690894985),
+      name: 'BarterListingEntity',
+      lastPropertyId: const obx_int.IdUid(10, 7627570741658654071),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2727809102062655128),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2156694126028001351),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 85113454660277372),
+            name: 'surplusItemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7835929659464771214),
+            name: 'surplusItemDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6758125496378236453),
+            name: 'wantedItemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7598782998346631848),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2916415024640108077),
+            name: 'estimatedValue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1029749211540450527),
+            name: 'geoZone',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 4707457082189345361),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7627570741658654071),
+            name: 'listedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(74, 1518441868450828490),
+      name: 'BarterProposalEntity',
+      lastPropertyId: const obx_int.IdUid(10, 5397612396266573620),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4941433431875005095),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5392048412877990364),
+            name: 'listingId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(76, 2970004941757903335)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2475447996307988149),
+            name: 'proposerName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6236974606587568628),
+            name: 'offeredItemName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 95229116326142136),
+            name: 'offeredItemDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1119750157460541822),
+            name: 'offeredCategory',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6687261356565524291),
+            name: 'offeredValue',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 6716962462797534215),
+            name: 'proposerZone',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 4060367295845166532),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5397612396266573620),
+            name: 'proposedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3002,8 +3123,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(72, 1711054503455383016),
-      lastIndexId: const obx_int.IdUid(75, 5872131534508445624),
+      lastEntityId: const obx_int.IdUid(74, 1518441868450828490),
+      lastIndexId: const obx_int.IdUid(76, 2970004941757903335),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -6457,6 +6578,148 @@ obx_int.ModelDefinition getObjectBoxModel() {
               listedAt: listedAtParam);
 
           return object;
+        }),
+    BarterListingEntity: obx_int.EntityDefinition<BarterListingEntity>(
+        model: _entities[71],
+        toOneRelations: (BarterListingEntity object) => [],
+        toManyRelations: (BarterListingEntity object) => {},
+        getId: (BarterListingEntity object) => object.id,
+        setId: (BarterListingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BarterListingEntity object, fb.Builder fbb) {
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          final surplusItemNameOffset = fbb.writeString(object.surplusItemName);
+          final surplusItemDescriptionOffset =
+              fbb.writeString(object.surplusItemDescription);
+          final wantedItemNameOffset = fbb.writeString(object.wantedItemName);
+          final categoryOffset = fbb.writeString(object.category);
+          final geoZoneOffset = fbb.writeString(object.geoZone);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, merchantNameOffset);
+          fbb.addOffset(2, surplusItemNameOffset);
+          fbb.addOffset(3, surplusItemDescriptionOffset);
+          fbb.addOffset(4, wantedItemNameOffset);
+          fbb.addOffset(5, categoryOffset);
+          fbb.addFloat64(6, object.estimatedValue);
+          fbb.addOffset(7, geoZoneOffset);
+          fbb.addInt64(8, object.dbStatus);
+          fbb.addInt64(9, object.listedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final surplusItemNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final surplusItemDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final wantedItemNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final estimatedValueParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final geoZoneParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 18, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final listedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+          final object = BarterListingEntity(
+              id: idParam,
+              merchantName: merchantNameParam,
+              surplusItemName: surplusItemNameParam,
+              surplusItemDescription: surplusItemDescriptionParam,
+              wantedItemName: wantedItemNameParam,
+              category: categoryParam,
+              estimatedValue: estimatedValueParam,
+              geoZone: geoZoneParam,
+              dbStatus: dbStatusParam,
+              listedAt: listedAtParam);
+
+          return object;
+        }),
+    BarterProposalEntity: obx_int.EntityDefinition<BarterProposalEntity>(
+        model: _entities[72],
+        toOneRelations: (BarterProposalEntity object) => [],
+        toManyRelations: (BarterProposalEntity object) => {},
+        getId: (BarterProposalEntity object) => object.id,
+        setId: (BarterProposalEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BarterProposalEntity object, fb.Builder fbb) {
+          final proposerNameOffset = fbb.writeString(object.proposerName);
+          final offeredItemNameOffset = fbb.writeString(object.offeredItemName);
+          final offeredItemDescriptionOffset =
+              fbb.writeString(object.offeredItemDescription);
+          final offeredCategoryOffset = fbb.writeString(object.offeredCategory);
+          final proposerZoneOffset = fbb.writeString(object.proposerZone);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.listingId);
+          fbb.addOffset(2, proposerNameOffset);
+          fbb.addOffset(3, offeredItemNameOffset);
+          fbb.addOffset(4, offeredItemDescriptionOffset);
+          fbb.addOffset(5, offeredCategoryOffset);
+          fbb.addFloat64(6, object.offeredValue);
+          fbb.addOffset(7, proposerZoneOffset);
+          fbb.addInt64(8, object.dbStatus);
+          fbb.addInt64(9, object.proposedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final listingIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final proposerNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final offeredItemNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final offeredItemDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final offeredCategoryParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final offeredValueParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final proposerZoneParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final proposedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+          final object = BarterProposalEntity(
+              id: idParam,
+              listingId: listingIdParam,
+              proposerName: proposerNameParam,
+              offeredItemName: offeredItemNameParam,
+              offeredItemDescription: offeredItemDescriptionParam,
+              offeredCategory: offeredCategoryParam,
+              offeredValue: offeredValueParam,
+              proposerZone: proposerZoneParam,
+              dbStatus: dbStatusParam,
+              proposedAt: proposedAtParam);
+
+          return object;
         })
   };
 
@@ -8480,4 +8743,91 @@ class AssetListingEntity_ {
   /// see [AssetListingEntity.listedAt]
   static final listedAt =
       obx.QueryDateProperty<AssetListingEntity>(_entities[70].properties[9]);
+}
+
+/// [BarterListingEntity] entity fields to define ObjectBox queries.
+class BarterListingEntity_ {
+  /// see [BarterListingEntity.id]
+  static final id = obx.QueryIntegerProperty<BarterListingEntity>(
+      _entities[71].properties[0]);
+
+  /// see [BarterListingEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<BarterListingEntity>(_entities[71].properties[1]);
+
+  /// see [BarterListingEntity.surplusItemName]
+  static final surplusItemName =
+      obx.QueryStringProperty<BarterListingEntity>(_entities[71].properties[2]);
+
+  /// see [BarterListingEntity.surplusItemDescription]
+  static final surplusItemDescription =
+      obx.QueryStringProperty<BarterListingEntity>(_entities[71].properties[3]);
+
+  /// see [BarterListingEntity.wantedItemName]
+  static final wantedItemName =
+      obx.QueryStringProperty<BarterListingEntity>(_entities[71].properties[4]);
+
+  /// see [BarterListingEntity.category]
+  static final category =
+      obx.QueryStringProperty<BarterListingEntity>(_entities[71].properties[5]);
+
+  /// see [BarterListingEntity.estimatedValue]
+  static final estimatedValue =
+      obx.QueryDoubleProperty<BarterListingEntity>(_entities[71].properties[6]);
+
+  /// see [BarterListingEntity.geoZone]
+  static final geoZone =
+      obx.QueryStringProperty<BarterListingEntity>(_entities[71].properties[7]);
+
+  /// see [BarterListingEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<BarterListingEntity>(
+      _entities[71].properties[8]);
+
+  /// see [BarterListingEntity.listedAt]
+  static final listedAt =
+      obx.QueryDateProperty<BarterListingEntity>(_entities[71].properties[9]);
+}
+
+/// [BarterProposalEntity] entity fields to define ObjectBox queries.
+class BarterProposalEntity_ {
+  /// see [BarterProposalEntity.id]
+  static final id = obx.QueryIntegerProperty<BarterProposalEntity>(
+      _entities[72].properties[0]);
+
+  /// see [BarterProposalEntity.listingId]
+  static final listingId = obx.QueryIntegerProperty<BarterProposalEntity>(
+      _entities[72].properties[1]);
+
+  /// see [BarterProposalEntity.proposerName]
+  static final proposerName = obx.QueryStringProperty<BarterProposalEntity>(
+      _entities[72].properties[2]);
+
+  /// see [BarterProposalEntity.offeredItemName]
+  static final offeredItemName = obx.QueryStringProperty<BarterProposalEntity>(
+      _entities[72].properties[3]);
+
+  /// see [BarterProposalEntity.offeredItemDescription]
+  static final offeredItemDescription =
+      obx.QueryStringProperty<BarterProposalEntity>(
+          _entities[72].properties[4]);
+
+  /// see [BarterProposalEntity.offeredCategory]
+  static final offeredCategory = obx.QueryStringProperty<BarterProposalEntity>(
+      _entities[72].properties[5]);
+
+  /// see [BarterProposalEntity.offeredValue]
+  static final offeredValue = obx.QueryDoubleProperty<BarterProposalEntity>(
+      _entities[72].properties[6]);
+
+  /// see [BarterProposalEntity.proposerZone]
+  static final proposerZone = obx.QueryStringProperty<BarterProposalEntity>(
+      _entities[72].properties[7]);
+
+  /// see [BarterProposalEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<BarterProposalEntity>(
+      _entities[72].properties[8]);
+
+  /// see [BarterProposalEntity.proposedAt]
+  static final proposedAt =
+      obx.QueryDateProperty<BarterProposalEntity>(_entities[72].properties[9]);
 }
