@@ -39,6 +39,7 @@ import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/daily_transaction_cap_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
+import 'core/data/entities/escrow_account_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/geofence_zone_entity.dart';
@@ -3176,6 +3177,50 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(77, 2022094106964067975),
+      name: 'EscrowAccountEntity',
+      lastPropertyId: const obx_int.IdUid(7, 2960307758215953293),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4335655196548159675),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7833008457482246593),
+            name: 'buyerName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8313088365311904782),
+            name: 'sellerName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1546435075032347030),
+            name: 'itemDescription',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5253120824622249514),
+            name: 'amount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7613675995655614533),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2960307758215953293),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3214,7 +3259,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(76, 3388235913425414809),
+      lastEntityId: const obx_int.IdUid(77, 2022094106964067975),
       lastIndexId: const obx_int.IdUid(77, 355648137659916996),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -6916,6 +6961,58 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
+        }),
+    EscrowAccountEntity: obx_int.EntityDefinition<EscrowAccountEntity>(
+        model: _entities[75],
+        toOneRelations: (EscrowAccountEntity object) => [],
+        toManyRelations: (EscrowAccountEntity object) => {},
+        getId: (EscrowAccountEntity object) => object.id,
+        setId: (EscrowAccountEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (EscrowAccountEntity object, fb.Builder fbb) {
+          final buyerNameOffset = fbb.writeString(object.buyerName);
+          final sellerNameOffset = fbb.writeString(object.sellerName);
+          final itemDescriptionOffset = fbb.writeString(object.itemDescription);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, buyerNameOffset);
+          fbb.addOffset(2, sellerNameOffset);
+          fbb.addOffset(3, itemDescriptionOffset);
+          fbb.addFloat64(4, object.amount);
+          fbb.addInt64(5, object.dbStatus);
+          fbb.addInt64(6, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final buyerNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final sellerNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final itemDescriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final amountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = EscrowAccountEntity(
+              id: idParam,
+              buyerName: buyerNameParam,
+              sellerName: sellerNameParam,
+              itemDescription: itemDescriptionParam,
+              amount: amountParam,
+              dbStatus: dbStatusParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -9093,4 +9190,35 @@ class GroupPurchaseEntity_ {
   /// see [GroupPurchaseEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<GroupPurchaseEntity>(_entities[74].properties[8]);
+}
+
+/// [EscrowAccountEntity] entity fields to define ObjectBox queries.
+class EscrowAccountEntity_ {
+  /// see [EscrowAccountEntity.id]
+  static final id = obx.QueryIntegerProperty<EscrowAccountEntity>(
+      _entities[75].properties[0]);
+
+  /// see [EscrowAccountEntity.buyerName]
+  static final buyerName =
+      obx.QueryStringProperty<EscrowAccountEntity>(_entities[75].properties[1]);
+
+  /// see [EscrowAccountEntity.sellerName]
+  static final sellerName =
+      obx.QueryStringProperty<EscrowAccountEntity>(_entities[75].properties[2]);
+
+  /// see [EscrowAccountEntity.itemDescription]
+  static final itemDescription =
+      obx.QueryStringProperty<EscrowAccountEntity>(_entities[75].properties[3]);
+
+  /// see [EscrowAccountEntity.amount]
+  static final amount =
+      obx.QueryDoubleProperty<EscrowAccountEntity>(_entities[75].properties[4]);
+
+  /// see [EscrowAccountEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<EscrowAccountEntity>(
+      _entities[75].properties[5]);
+
+  /// see [EscrowAccountEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<EscrowAccountEntity>(_entities[75].properties[6]);
 }
