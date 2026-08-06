@@ -40,6 +40,8 @@ class BarterProposalActions {
     final result = CompleteBarterTrade.call(listing, proposal);
     repos.listings.save(result.listing);
     repos.proposals.save(result.proposal);
+    // TODO (Issue #420): decide whether a no-cash barter counts as a
+    // qualifying "first transaction" for the zero-commission incentive.
     repos.auditLogs.record(BuildAuditLogEntry.call(
       changeType: 'completed barter trade',
       targetMerchant: listing.merchantName,
