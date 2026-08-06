@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/core/data/entities/asset_listing_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/advertising_request_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/barter_listing_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/group_purchase_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/banner_matching_rule_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/analytics_pricing_tier_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -48,6 +49,7 @@ import 'package:growth_pilot_ai/core/data/repositories/ad_campaign_repository.da
 import 'package:growth_pilot_ai/core/data/repositories/asset_listing_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/advertising_request_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/barter_listing_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/group_purchase_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/audit_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/banner_matching_rule_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/budget_limit_repository.dart';
@@ -164,6 +166,7 @@ class BusinessCompassController extends GetxController {
   late TaskExecutionLogRepository _taskExecutionLogs;
   late AssetListingRepository _assetListings;
   late BarterListingRepository _barterListings;
+  late GroupPurchaseRepository _groupPurchases;
   late MarketingCampaignRepository _marketingCampaigns;
 
   final selectedSector = BusinessSector.tech.obs;
@@ -726,6 +729,11 @@ class BusinessCompassController extends GetxController {
         title: 'Barter and Goods Exchange',
         data: {'listings': _barterListings.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'GROUP_BUYING_COORDINATOR',
+        title: 'Group Buying Coordinator',
+        data: {'purchases': _groupPurchases.getAll()},
+      ),
     ];
   }
 
@@ -807,6 +815,7 @@ class BusinessCompassController extends GetxController {
         TaskExecutionLogRepository(store.box<TaskExecutionLogEntity>());
     _assetListings = AssetListingRepository(store.box<AssetListingEntity>());
     _barterListings = BarterListingRepository(store.box<BarterListingEntity>());
+    _groupPurchases = GroupPurchaseRepository(store.box<GroupPurchaseEntity>());
     _marketingCampaigns =
         MarketingCampaignRepository(store.box<MarketingCampaignEntity>());
     _recompute();

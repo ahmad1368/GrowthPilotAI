@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/ad_request_report_wid
 import 'package:growth_pilot_ai/features/analytics/widgets/asset_marketplace_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/audit_trail_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/barter_marketplace_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/group_purchase_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/analytics_pricing_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/annual_profit_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banner_rule_report_widget.dart';
@@ -409,6 +410,10 @@ class ReportWidgetsBootstrap {
         'BARTER_EXCHANGE_MARKETPLACE',
         (spec) =>
             BarterMarketplaceReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'GROUP_BUYING_COORDINATOR',
+        (spec) =>
+            GroupPurchaseReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
