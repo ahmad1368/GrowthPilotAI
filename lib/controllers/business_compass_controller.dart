@@ -814,6 +814,11 @@ class BusinessCompassController extends GetxController {
         title: 'Find Friends on App',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'REFERRAL_INVITATION_ENGINE',
+        title: 'Referral & Invitation Engine',
+        data: {},
+      ),
     ];
   }
 

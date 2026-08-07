@@ -85,6 +85,8 @@ import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_feedback_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
+import 'core/data/entities/referral_invite_entity.dart';
+import 'core/data/entities/referral_reward_entity.dart';
 import 'core/data/entities/registered_user_directory_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
@@ -101,6 +103,7 @@ import 'core/data/entities/traffic_steering_directive_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
+import 'core/data/entities/unmatched_contact_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
 import 'core/data/entities/visitor_count_entity.dart';
 import 'core/data/entities/warranty_claim_entity.dart';
@@ -4052,6 +4055,117 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(96, 1736665576357028023),
+      name: 'ReferralInviteEntity',
+      lastPropertyId: const obx_int.IdUid(8, 8514581356095556967),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2246745661599659917),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8561095208197829908),
+            name: 'inviterName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1033085256194565790),
+            name: 'contactIdentifier',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(99, 5513444478048226423)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 75719438818144703),
+            name: 'referralCode',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(100, 5088843329253807025)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5583592229255238821),
+            name: 'dbChannel',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7797052989799241189),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6557387619860799407),
+            name: 'issuedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8514581356095556967),
+            name: 'expiresAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(97, 1188163525722284782),
+      name: 'ReferralRewardEntity',
+      lastPropertyId: const obx_int.IdUid(5, 9141404409752518463),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3326641941930087592),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8953061249639267296),
+            name: 'referralInviteId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(101, 5992082187480816500)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2096966226595675208),
+            name: 'dbRecipientRole',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4424339792465860564),
+            name: 'rewardPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 9141404409752518463),
+            name: 'grantedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(98, 2010970175496136513),
+      name: 'UnmatchedContactEntity',
+      lastPropertyId: const obx_int.IdUid(3, 8525812270294712942),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7310509338164394404),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1483146599249754100),
+            name: 'rawIdentifier',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(102, 174529733436404019)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8525812270294712942),
+            name: 'firstSeenAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4090,8 +4204,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(95, 7226247964641915561),
-      lastIndexId: const obx_int.IdUid(98, 2230745779183930022),
+      lastEntityId: const obx_int.IdUid(98, 2010970175496136513),
+      lastIndexId: const obx_int.IdUid(102, 174529733436404019),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -8788,7 +8902,140 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   addedAt: addedAtParam);
 
               return object;
-            })
+            }),
+    ReferralInviteEntity: obx_int.EntityDefinition<ReferralInviteEntity>(
+        model: _entities[94],
+        toOneRelations: (ReferralInviteEntity object) => [],
+        toManyRelations: (ReferralInviteEntity object) => {},
+        getId: (ReferralInviteEntity object) => object.id,
+        setId: (ReferralInviteEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ReferralInviteEntity object, fb.Builder fbb) {
+          final inviterNameOffset = fbb.writeString(object.inviterName);
+          final contactIdentifierOffset =
+              fbb.writeString(object.contactIdentifier);
+          final referralCodeOffset = fbb.writeString(object.referralCode);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, inviterNameOffset);
+          fbb.addOffset(2, contactIdentifierOffset);
+          fbb.addOffset(3, referralCodeOffset);
+          fbb.addInt64(4, object.dbChannel);
+          fbb.addInt64(5, object.dbStatus);
+          fbb.addInt64(6, object.issuedAt.millisecondsSinceEpoch);
+          fbb.addInt64(7, object.expiresAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final inviterNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final contactIdentifierParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final referralCodeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final dbChannelParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final issuedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final expiresAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final object = ReferralInviteEntity(
+              id: idParam,
+              inviterName: inviterNameParam,
+              contactIdentifier: contactIdentifierParam,
+              referralCode: referralCodeParam,
+              dbChannel: dbChannelParam,
+              dbStatus: dbStatusParam,
+              issuedAt: issuedAtParam,
+              expiresAt: expiresAtParam);
+
+          return object;
+        }),
+    ReferralRewardEntity: obx_int.EntityDefinition<ReferralRewardEntity>(
+        model: _entities[95],
+        toOneRelations: (ReferralRewardEntity object) => [],
+        toManyRelations: (ReferralRewardEntity object) => {},
+        getId: (ReferralRewardEntity object) => object.id,
+        setId: (ReferralRewardEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ReferralRewardEntity object, fb.Builder fbb) {
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.referralInviteId);
+          fbb.addInt64(2, object.dbRecipientRole);
+          fbb.addFloat64(3, object.rewardPercent);
+          fbb.addInt64(4, object.grantedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final referralInviteIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final dbRecipientRoleParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final rewardPercentParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final grantedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = ReferralRewardEntity(
+              id: idParam,
+              referralInviteId: referralInviteIdParam,
+              dbRecipientRole: dbRecipientRoleParam,
+              rewardPercent: rewardPercentParam,
+              grantedAt: grantedAtParam);
+
+          return object;
+        }),
+    UnmatchedContactEntity: obx_int.EntityDefinition<UnmatchedContactEntity>(
+        model: _entities[96],
+        toOneRelations: (UnmatchedContactEntity object) => [],
+        toManyRelations: (UnmatchedContactEntity object) => {},
+        getId: (UnmatchedContactEntity object) => object.id,
+        setId: (UnmatchedContactEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UnmatchedContactEntity object, fb.Builder fbb) {
+          final rawIdentifierOffset = fbb.writeString(object.rawIdentifier);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, rawIdentifierOffset);
+          fbb.addInt64(2, object.firstSeenAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final rawIdentifierParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final firstSeenAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final object = UnmatchedContactEntity(
+              id: idParam,
+              rawIdentifier: rawIdentifierParam,
+              firstSeenAt: firstSeenAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -11612,4 +11859,79 @@ class RegisteredUserDirectoryEntity_ {
   /// see [RegisteredUserDirectoryEntity.addedAt]
   static final addedAt = obx.QueryDateProperty<RegisteredUserDirectoryEntity>(
       _entities[93].properties[4]);
+}
+
+/// [ReferralInviteEntity] entity fields to define ObjectBox queries.
+class ReferralInviteEntity_ {
+  /// see [ReferralInviteEntity.id]
+  static final id = obx.QueryIntegerProperty<ReferralInviteEntity>(
+      _entities[94].properties[0]);
+
+  /// see [ReferralInviteEntity.inviterName]
+  static final inviterName = obx.QueryStringProperty<ReferralInviteEntity>(
+      _entities[94].properties[1]);
+
+  /// see [ReferralInviteEntity.contactIdentifier]
+  static final contactIdentifier =
+      obx.QueryStringProperty<ReferralInviteEntity>(
+          _entities[94].properties[2]);
+
+  /// see [ReferralInviteEntity.referralCode]
+  static final referralCode = obx.QueryStringProperty<ReferralInviteEntity>(
+      _entities[94].properties[3]);
+
+  /// see [ReferralInviteEntity.dbChannel]
+  static final dbChannel = obx.QueryIntegerProperty<ReferralInviteEntity>(
+      _entities[94].properties[4]);
+
+  /// see [ReferralInviteEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<ReferralInviteEntity>(
+      _entities[94].properties[5]);
+
+  /// see [ReferralInviteEntity.issuedAt]
+  static final issuedAt =
+      obx.QueryDateProperty<ReferralInviteEntity>(_entities[94].properties[6]);
+
+  /// see [ReferralInviteEntity.expiresAt]
+  static final expiresAt =
+      obx.QueryDateProperty<ReferralInviteEntity>(_entities[94].properties[7]);
+}
+
+/// [ReferralRewardEntity] entity fields to define ObjectBox queries.
+class ReferralRewardEntity_ {
+  /// see [ReferralRewardEntity.id]
+  static final id = obx.QueryIntegerProperty<ReferralRewardEntity>(
+      _entities[95].properties[0]);
+
+  /// see [ReferralRewardEntity.referralInviteId]
+  static final referralInviteId =
+      obx.QueryIntegerProperty<ReferralRewardEntity>(
+          _entities[95].properties[1]);
+
+  /// see [ReferralRewardEntity.dbRecipientRole]
+  static final dbRecipientRole = obx.QueryIntegerProperty<ReferralRewardEntity>(
+      _entities[95].properties[2]);
+
+  /// see [ReferralRewardEntity.rewardPercent]
+  static final rewardPercent = obx.QueryDoubleProperty<ReferralRewardEntity>(
+      _entities[95].properties[3]);
+
+  /// see [ReferralRewardEntity.grantedAt]
+  static final grantedAt =
+      obx.QueryDateProperty<ReferralRewardEntity>(_entities[95].properties[4]);
+}
+
+/// [UnmatchedContactEntity] entity fields to define ObjectBox queries.
+class UnmatchedContactEntity_ {
+  /// see [UnmatchedContactEntity.id]
+  static final id = obx.QueryIntegerProperty<UnmatchedContactEntity>(
+      _entities[96].properties[0]);
+
+  /// see [UnmatchedContactEntity.rawIdentifier]
+  static final rawIdentifier = obx.QueryStringProperty<UnmatchedContactEntity>(
+      _entities[96].properties[1]);
+
+  /// see [UnmatchedContactEntity.firstSeenAt]
+  static final firstSeenAt = obx.QueryDateProperty<UnmatchedContactEntity>(
+      _entities[96].properties[2]);
 }

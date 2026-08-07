@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:growth_pilot_ai/business/hash_contact_identifier.dart';
 import 'package:growth_pilot_ai/business/match_contact_hashes.dart';
 import 'package:growth_pilot_ai/core/data/entities/contact_sync_match_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/unmatched_contact_entity.dart';
 import 'package:growth_pilot_ai/core/models/contact_sync_result.dart';
 import 'package:growth_pilot_ai/features/contacts/widgets/contact_sync_repos.dart';
 import 'package:growth_pilot_ai/features/contacts/widgets/seed_registered_user_directory.dart';
@@ -31,6 +32,12 @@ class ContactSyncActions {
     final result = MatchContactHashes.call(hashedByRaw, repos.directory.getAll());
     for (final name in result.matchedNames) {
       repos.matches.save(ContactSyncMatchEntity(matchedUserName: name, matchedAt: DateTime.now()));
+    }
+    for (final contact in result.unmatchedIdentifiers) {
+      if (!repos.unmatchedContacts.exists(contact)) {
+        repos.unmatchedContacts
+            .save(UnmatchedContactEntity(rawIdentifier: contact, firstSeenAt: DateTime.now()));
+      }
     }
     return result;
   }
