@@ -1,4 +1,5 @@
 import 'package:growth_pilot_ai/business/build_audit_log_entry.dart';
+import 'package:growth_pilot_ai/business/build_settlement_notification.dart';
 import 'package:growth_pilot_ai/business/confirm_escrow_delivery.dart';
 import 'package:growth_pilot_ai/business/fail_gateway_transaction.dart';
 import 'package:growth_pilot_ai/business/refund_gateway_transaction.dart';
@@ -12,6 +13,8 @@ import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_repos
 /// criteria 3 and 5) — settling a crypto/stablecoin transaction also
 /// releases its matching held [EscrowAccountEntity] (#415), the
 /// "smart contract" release for Issue #423, acceptance criterion 2.
+/// Every terminal transition also fires an Inbox alert (Issue #426,
+/// acceptance criterion 3).
 class BankingGatewaySettlementActions {
   final BankingGatewayRepos repos;
 
@@ -27,6 +30,7 @@ class BankingGatewaySettlementActions {
       newValue: 'settled',
     ));
     if (transaction.provider.isCrypto) _releaseEscrow(transaction);
+    repos.notifications.upsert(BuildSettlementNotification.call(updated, DateTime.now()));
     return updated;
   }
 
@@ -48,6 +52,7 @@ class BankingGatewaySettlementActions {
   BankingGatewayTransactionEntity fail(BankingGatewayTransactionEntity transaction) {
     final updated = FailGatewayTransaction.call(transaction);
     repos.transactions.save(updated);
+    repos.notifications.upsert(BuildSettlementNotification.call(updated, DateTime.now()));
     return updated;
   }
 
@@ -59,6 +64,7 @@ class BankingGatewaySettlementActions {
       targetMerchant: transaction.merchantName,
       newValue: '${transaction.currency} ${transaction.amount.toStringAsFixed(2)} refunded',
     ));
+    repos.notifications.upsert(BuildSettlementNotification.call(updated, DateTime.now()));
     return updated;
   }
 }
