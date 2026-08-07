@@ -60,6 +60,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_dependency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/accounting_reports_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/cra_compliance_report_widget.dart';
+import 'package:growth_pilot_ai/features/contacts/widgets/contact_sync_report_widget.dart';
 import 'package:growth_pilot_ai/features/messaging/widgets/translation_chat_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/settlement_tracking_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/tiered_commission_report_widget.dart';
@@ -479,6 +480,10 @@ class ReportWidgetsBootstrap {
         'ON_DEVICE_TRANSLATION_BRIDGE',
         (spec) =>
             TranslationChatReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CONTACT_SYNC_FIND_FRIENDS',
+        (spec) =>
+            ContactSyncReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

@@ -809,6 +809,11 @@ class BusinessCompassController extends GetxController {
         title: 'On-Device Translation Bridge',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'CONTACT_SYNC_FIND_FRIENDS',
+        title: 'Find Friends on App',
+        data: {},
+      ),
     ];
   }
 
