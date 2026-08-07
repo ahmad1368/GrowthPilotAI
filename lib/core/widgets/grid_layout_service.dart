@@ -94,6 +94,7 @@ class GridLayoutService {
     'SETTLEMENT_TRACKING_DASHBOARD',
     'ACCOUNTING_REPORTS_ENGINE',
     'CRA_COMPLIANCE_LOGGING_ENGINE',
+    'ON_DEVICE_TRANSLATION_BRIDGE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

@@ -3887,10 +3887,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "92:8860505853395559817",
+      "lastPropertyId": "8:7229967371246997788",
+      "name": "ChatMessageEntity",
+      "properties": [
+        {
+          "id": "1:8777153649499803934",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1526448430480397599",
+          "name": "senderName",
+          "type": 9
+        },
+        {
+          "id": "3:2149615929391027060",
+          "name": "originalText",
+          "type": 9
+        },
+        {
+          "id": "4:3539336696321429366",
+          "name": "originalLanguageCode",
+          "type": 9
+        },
+        {
+          "id": "5:6183463255964046369",
+          "name": "translatedText",
+          "type": 9
+        },
+        {
+          "id": "6:6657062767033385422",
+          "name": "translatedLanguageCode",
+          "type": 9
+        },
+        {
+          "id": "7:8560933552736484845",
+          "name": "translationConfidence",
+          "type": 8
+        },
+        {
+          "id": "8:7229967371246997788",
+          "name": "sentAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "96:5027148752694019641"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "91:2763709580763116480",
-  "lastIndexId": "95:8444170058080363097",
+  "lastEntityId": "92:8860505853395559817",
+  "lastIndexId": "96:5027148752694019641",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

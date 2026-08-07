@@ -804,6 +804,11 @@ class BusinessCompassController extends GetxController {
         title: 'CRA Transaction Compliance Log',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'ON_DEVICE_TRANSLATION_BRIDGE',
+        title: 'On-Device Translation Bridge',
+        data: {},
+      ),
     ];
   }
 
