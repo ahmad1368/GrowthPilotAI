@@ -69,6 +69,7 @@ import 'core/data/entities/price_alert_threshold_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
+import 'core/data/entities/recommendation_feedback_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
@@ -3322,6 +3323,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(80, 2524884885367168578),
+      name: 'RecommendationFeedbackEntity',
+      lastPropertyId: const obx_int.IdUid(4, 9064631275573913241),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 223890576399014553),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8382159797867278405),
+            name: 'itemName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(79, 4355334581273667631)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1836279656988705914),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 9064631275573913241),
+            name: 'recordedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3360,8 +3391,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(79, 5117569023051602638),
-      lastIndexId: const obx_int.IdUid(78, 5028036117935118759),
+      lastEntityId: const obx_int.IdUid(80, 2524884885367168578),
+      lastIndexId: const obx_int.IdUid(79, 4355334581273667631),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -7229,7 +7260,46 @@ obx_int.ModelDefinition getObjectBoxModel() {
               listedAt: listedAtParam);
 
           return object;
-        })
+        }),
+    RecommendationFeedbackEntity:
+        obx_int.EntityDefinition<RecommendationFeedbackEntity>(
+            model: _entities[78],
+            toOneRelations: (RecommendationFeedbackEntity object) => [],
+            toManyRelations: (RecommendationFeedbackEntity object) => {},
+            getId: (RecommendationFeedbackEntity object) => object.id,
+            setId: (RecommendationFeedbackEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (RecommendationFeedbackEntity object, fb.Builder fbb) {
+              final itemNameOffset = fbb.writeString(object.itemName);
+              fbb.startTable(5);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, itemNameOffset);
+              fbb.addInt64(2, object.dbStatus);
+              fbb.addInt64(3, object.recordedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final itemNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final recordedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+              final object = RecommendationFeedbackEntity(
+                  id: idParam,
+                  itemName: itemNameParam,
+                  dbStatus: dbStatusParam,
+                  recordedAt: recordedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -9514,4 +9584,24 @@ class SeasonalCatalogItemEntity_ {
   /// see [SeasonalCatalogItemEntity.listedAt]
   static final listedAt = obx.QueryDateProperty<SeasonalCatalogItemEntity>(
       _entities[77].properties[8]);
+}
+
+/// [RecommendationFeedbackEntity] entity fields to define ObjectBox queries.
+class RecommendationFeedbackEntity_ {
+  /// see [RecommendationFeedbackEntity.id]
+  static final id = obx.QueryIntegerProperty<RecommendationFeedbackEntity>(
+      _entities[78].properties[0]);
+
+  /// see [RecommendationFeedbackEntity.itemName]
+  static final itemName = obx.QueryStringProperty<RecommendationFeedbackEntity>(
+      _entities[78].properties[1]);
+
+  /// see [RecommendationFeedbackEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<RecommendationFeedbackEntity>(
+          _entities[78].properties[2]);
+
+  /// see [RecommendationFeedbackEntity.recordedAt]
+  static final recordedAt = obx.QueryDateProperty<RecommendationFeedbackEntity>(
+      _entities[78].properties[3]);
 }

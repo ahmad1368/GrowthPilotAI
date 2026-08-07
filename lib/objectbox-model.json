@@ -3290,10 +3290,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "80:2524884885367168578",
+      "lastPropertyId": "4:9064631275573913241",
+      "name": "RecommendationFeedbackEntity",
+      "properties": [
+        {
+          "id": "1:223890576399014553",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8382159797867278405",
+          "name": "itemName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "79:4355334581273667631"
+        },
+        {
+          "id": "3:1836279656988705914",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "4:9064631275573913241",
+          "name": "recordedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "79:5117569023051602638",
-  "lastIndexId": "78:5028036117935118759",
+  "lastEntityId": "80:2524884885367168578",
+  "lastIndexId": "79:4355334581273667631",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
