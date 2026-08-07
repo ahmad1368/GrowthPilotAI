@@ -62,6 +62,8 @@ import 'core/data/entities/merchant_config_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/merchant_tag_entity.dart';
 import 'core/data/entities/message_entity.dart';
+import 'core/data/entities/micro_credit_account_entity.dart';
+import 'core/data/entities/micro_credit_loan_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
@@ -3353,6 +3355,95 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(81, 8612487678255723875),
+      name: 'MicroCreditAccountEntity',
+      lastPropertyId: const obx_int.IdUid(5, 2897806221802901510),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5507836339200780871),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6638350355900589730),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5018834615038691453),
+            name: 'creditLimit',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6894491434089473726),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2897806221802901510),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(82, 1372133852007559773),
+      name: 'MicroCreditLoanEntity',
+      lastPropertyId: const obx_int.IdUid(9, 7304079183731014762),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2285563250542048751),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5798384132014226877),
+            name: 'creditAccountId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(80, 2394617465633827378)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1175935428792310952),
+            name: 'escrowAccountId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4656085144836960315),
+            name: 'principal',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5978300367317975662),
+            name: 'feeAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3726329411659952191),
+            name: 'termDays',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6071284407604123393),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 5845651576329814041),
+            name: 'disbursedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7304079183731014762),
+            name: 'dueDate',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3391,8 +3482,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(80, 2524884885367168578),
-      lastIndexId: const obx_int.IdUid(79, 4355334581273667631),
+      lastEntityId: const obx_int.IdUid(82, 1372133852007559773),
+      lastIndexId: const obx_int.IdUid(80, 2394617465633827378),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -7299,7 +7390,106 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   recordedAt: recordedAtParam);
 
               return object;
-            })
+            }),
+    MicroCreditAccountEntity:
+        obx_int.EntityDefinition<MicroCreditAccountEntity>(
+            model: _entities[79],
+            toOneRelations: (MicroCreditAccountEntity object) => [],
+            toManyRelations: (MicroCreditAccountEntity object) => {},
+            getId: (MicroCreditAccountEntity object) => object.id,
+            setId: (MicroCreditAccountEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (MicroCreditAccountEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addFloat64(2, object.creditLimit);
+              fbb.addInt64(3, object.dbStatus);
+              fbb.addInt64(4, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final creditLimitParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = MicroCreditAccountEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  creditLimit: creditLimitParam,
+                  dbStatus: dbStatusParam,
+                  createdAt: createdAtParam);
+
+              return object;
+            }),
+    MicroCreditLoanEntity: obx_int.EntityDefinition<MicroCreditLoanEntity>(
+        model: _entities[80],
+        toOneRelations: (MicroCreditLoanEntity object) => [],
+        toManyRelations: (MicroCreditLoanEntity object) => {},
+        getId: (MicroCreditLoanEntity object) => object.id,
+        setId: (MicroCreditLoanEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MicroCreditLoanEntity object, fb.Builder fbb) {
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.creditAccountId);
+          fbb.addInt64(2, object.escrowAccountId);
+          fbb.addFloat64(3, object.principal);
+          fbb.addFloat64(4, object.feeAmount);
+          fbb.addInt64(5, object.termDays);
+          fbb.addInt64(6, object.dbStatus);
+          fbb.addInt64(7, object.disbursedAt.millisecondsSinceEpoch);
+          fbb.addInt64(8, object.dueDate.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final creditAccountIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final escrowAccountIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final principalParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final feeAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final termDaysParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final disbursedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final dueDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = MicroCreditLoanEntity(
+              id: idParam,
+              creditAccountId: creditAccountIdParam,
+              escrowAccountId: escrowAccountIdParam,
+              principal: principalParam,
+              feeAmount: feeAmountParam,
+              termDays: termDaysParam,
+              dbStatus: dbStatusParam,
+              disbursedAt: disbursedAtParam,
+              dueDate: dueDateParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -9604,4 +9794,68 @@ class RecommendationFeedbackEntity_ {
   /// see [RecommendationFeedbackEntity.recordedAt]
   static final recordedAt = obx.QueryDateProperty<RecommendationFeedbackEntity>(
       _entities[78].properties[3]);
+}
+
+/// [MicroCreditAccountEntity] entity fields to define ObjectBox queries.
+class MicroCreditAccountEntity_ {
+  /// see [MicroCreditAccountEntity.id]
+  static final id = obx.QueryIntegerProperty<MicroCreditAccountEntity>(
+      _entities[79].properties[0]);
+
+  /// see [MicroCreditAccountEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<MicroCreditAccountEntity>(
+      _entities[79].properties[1]);
+
+  /// see [MicroCreditAccountEntity.creditLimit]
+  static final creditLimit = obx.QueryDoubleProperty<MicroCreditAccountEntity>(
+      _entities[79].properties[2]);
+
+  /// see [MicroCreditAccountEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<MicroCreditAccountEntity>(
+      _entities[79].properties[3]);
+
+  /// see [MicroCreditAccountEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<MicroCreditAccountEntity>(
+      _entities[79].properties[4]);
+}
+
+/// [MicroCreditLoanEntity] entity fields to define ObjectBox queries.
+class MicroCreditLoanEntity_ {
+  /// see [MicroCreditLoanEntity.id]
+  static final id = obx.QueryIntegerProperty<MicroCreditLoanEntity>(
+      _entities[80].properties[0]);
+
+  /// see [MicroCreditLoanEntity.creditAccountId]
+  static final creditAccountId =
+      obx.QueryIntegerProperty<MicroCreditLoanEntity>(
+          _entities[80].properties[1]);
+
+  /// see [MicroCreditLoanEntity.escrowAccountId]
+  static final escrowAccountId =
+      obx.QueryIntegerProperty<MicroCreditLoanEntity>(
+          _entities[80].properties[2]);
+
+  /// see [MicroCreditLoanEntity.principal]
+  static final principal = obx.QueryDoubleProperty<MicroCreditLoanEntity>(
+      _entities[80].properties[3]);
+
+  /// see [MicroCreditLoanEntity.feeAmount]
+  static final feeAmount = obx.QueryDoubleProperty<MicroCreditLoanEntity>(
+      _entities[80].properties[4]);
+
+  /// see [MicroCreditLoanEntity.termDays]
+  static final termDays = obx.QueryIntegerProperty<MicroCreditLoanEntity>(
+      _entities[80].properties[5]);
+
+  /// see [MicroCreditLoanEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<MicroCreditLoanEntity>(
+      _entities[80].properties[6]);
+
+  /// see [MicroCreditLoanEntity.disbursedAt]
+  static final disbursedAt =
+      obx.QueryDateProperty<MicroCreditLoanEntity>(_entities[80].properties[7]);
+
+  /// see [MicroCreditLoanEntity.dueDate]
+  static final dueDate =
+      obx.QueryDateProperty<MicroCreditLoanEntity>(_entities[80].properties[8]);
 }

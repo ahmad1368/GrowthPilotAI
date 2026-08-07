@@ -764,6 +764,11 @@ class BusinessCompassController extends GetxController {
           'budgetLimits': _budgetLimits.getAll(),
         },
       ),
+      ReportWidgetSpec(
+        id: 'MICRO_CREDIT_FACILITY',
+        title: 'Micro-Credit and Working Capital',
+        data: {'transactions': _transactions.getAll()},
+      ),
     ];
   }
 
