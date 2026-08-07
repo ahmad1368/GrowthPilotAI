@@ -16,6 +16,7 @@ class RefundGatewayTransaction {
       exchangeRate: transaction.exchangeRate,
       feeAmount: transaction.feeAmount,
       dbStatus: GatewayTransactionStatus.refunded.index,
+      transactionHash: transaction.transactionHash,
       initiatedAt: transaction.initiatedAt,
       settledAt: transaction.settledAt,
     );

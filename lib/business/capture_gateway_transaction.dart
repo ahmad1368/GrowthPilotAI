@@ -17,6 +17,7 @@ class CaptureGatewayTransaction {
       exchangeRate: transaction.exchangeRate,
       feeAmount: transaction.feeAmount,
       dbStatus: GatewayTransactionStatus.captured.index,
+      transactionHash: transaction.transactionHash,
       initiatedAt: transaction.initiatedAt,
     );
   }

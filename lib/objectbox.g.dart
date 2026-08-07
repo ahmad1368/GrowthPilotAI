@@ -3506,7 +3506,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(84, 3905315127030752685),
       name: 'BankingGatewayTransactionEntity',
-      lastPropertyId: const obx_int.IdUid(12, 1271638984305422991),
+      lastPropertyId: const obx_int.IdUid(13, 5597431621308000265),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -3568,6 +3568,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(12, 1271638984305422991),
             name: 'settledAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 5597431621308000265),
+            name: 'transactionHash',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -7689,7 +7694,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final counterpartyNameOffset =
               fbb.writeString(object.counterpartyName);
           final currencyOffset = fbb.writeString(object.currency);
-          fbb.startTable(13);
+          final transactionHashOffset = fbb.writeString(object.transactionHash);
+          fbb.startTable(14);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.dbProvider);
           fbb.addOffset(2, merchantNameOffset);
@@ -7702,6 +7708,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(9, object.dbStatus);
           fbb.addInt64(10, object.initiatedAt.millisecondsSinceEpoch);
           fbb.addInt64(11, object.settledAt?.millisecondsSinceEpoch);
+          fbb.addOffset(12, transactionHashOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -7732,6 +7739,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
           final dbStatusParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final transactionHashParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 28, '');
           final initiatedAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
           final settledAtParam = settledAtValue == null
@@ -7748,6 +7758,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               exchangeRate: exchangeRateParam,
               feeAmount: feeAmountParam,
               dbStatus: dbStatusParam,
+              transactionHash: transactionHashParam,
               initiatedAt: initiatedAtParam,
               settledAt: settledAtParam);
 
@@ -10223,4 +10234,9 @@ class BankingGatewayTransactionEntity_ {
   static final settledAt =
       obx.QueryDateProperty<BankingGatewayTransactionEntity>(
           _entities[82].properties[11]);
+
+  /// see [BankingGatewayTransactionEntity.transactionHash]
+  static final transactionHash =
+      obx.QueryStringProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[12]);
 }

@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 /// UnionPay): data-residency and regional-banking-authority
 /// compliance (acceptance criterion 5) is likewise not claimed —
 /// that's a regulatory audit, not something achievable in code.
+/// Extended again for Issue #423: "transaction hashes" and "wallet
+/// balances" are simulated placeholders, not a real blockchain node
+/// connection or wallet — nothing is verifiable on any real chain.
 class BankingGatewayDisclaimer extends StatelessWidget {
   const BankingGatewayDisclaimer({super.key});
 
@@ -23,8 +26,8 @@ class BankingGatewayDisclaimer extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        'Simulation only — no live Stripe/PayPal/SWIFT/SEPA/Interac/UnionPay connection, forex feed, '
-        'real fund movement, or claimed regulatory/data-residency compliance.',
+        'Simulation only — no live Stripe/PayPal/SWIFT/SEPA/Interac/UnionPay/blockchain connection, '
+        'forex/price feed, real fund movement, real wallet, or claimed regulatory/data-residency compliance.',
         style: TextStyle(fontSize: 11, color: scheme.error),
       ),
     );

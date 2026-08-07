@@ -24,4 +24,14 @@ void main() {
     expect(result.exchangeRate, 1.0);
     expect(result.convertedAmount, 100);
   });
+
+  test('stablecoins convert at the same rate as their USD peg (Issue #423)', () {
+    final usdt = ComputeExchangeConversion.call(100, 'USDT');
+    expect(usdt.exchangeRate, ComputeExchangeConversion.ratesToCad['USD']);
+  });
+
+  test('applies the configured static rate for a volatile crypto asset (Issue #423)', () {
+    final btc = ComputeExchangeConversion.call(1, 'BTC');
+    expect(btc.exchangeRate, ComputeExchangeConversion.ratesToCad['BTC']);
+  });
 }

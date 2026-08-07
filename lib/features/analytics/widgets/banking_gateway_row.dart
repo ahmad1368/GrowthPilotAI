@@ -41,6 +41,9 @@ class BankingGatewayRow extends StatelessWidget {
               '(CAD ${transaction.convertedAmount.toStringAsFixed(2)}, fee \$${transaction.feeAmount.toStringAsFixed(2)}) '
               '— ${transaction.status.name}',
               style: const TextStyle(fontSize: 12)),
+          if (transaction.transactionHash.isNotEmpty)
+            Text('tx hash: ${transaction.transactionHash}',
+                style: TextStyle(fontSize: 10, color: scheme.onSurface.withValues(alpha: 0.6))),
           const SizedBox(height: 4),
           BankingGatewayRowActions(
             transaction: transaction,
