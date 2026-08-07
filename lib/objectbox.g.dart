@@ -37,6 +37,7 @@ import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
+import 'core/data/entities/cra_transaction_log_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/daily_transaction_cap_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
@@ -3847,6 +3848,72 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(93, 8577335016689342177))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(91, 2763709580763116480),
+      name: 'CraTransactionLogEntity',
+      lastPropertyId: const obx_int.IdUid(11, 1518183555596697753),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2731798935253642449),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 791200885761128417),
+            name: 'gatewayTransactionId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(94, 5349331189565880898)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6650395804396897389),
+            name: 'counterpartyNameEncrypted',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8346827317722842801),
+            name: 'amount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 113463561494192519),
+            name: 'currency',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5865653807441904000),
+            name: 'exchangeRateAtSettlement',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4554030447961231193),
+            name: 'feeAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8716363687739751590),
+            name: 'transactionHash',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1795846942677297482),
+            name: 'dbTaxCategory',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 4333467497921702337),
+            name: 'checksum',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 1518183555596697753),
+            name: 'loggedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(95, 8444170058080363097))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3885,8 +3952,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(90, 3702461949675558770),
-      lastIndexId: const obx_int.IdUid(93, 8577335016689342177),
+      lastEntityId: const obx_int.IdUid(91, 2763709580763116480),
+      lastIndexId: const obx_int.IdUid(95, 8444170058080363097),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -8335,6 +8402,77 @@ obx_int.ModelDefinition getObjectBoxModel() {
               submittedAt: submittedAtParam);
 
           return object;
+        }),
+    CraTransactionLogEntity: obx_int.EntityDefinition<CraTransactionLogEntity>(
+        model: _entities[89],
+        toOneRelations: (CraTransactionLogEntity object) => [],
+        toManyRelations: (CraTransactionLogEntity object) => {},
+        getId: (CraTransactionLogEntity object) => object.id,
+        setId: (CraTransactionLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CraTransactionLogEntity object, fb.Builder fbb) {
+          final counterpartyNameEncryptedOffset =
+              fbb.writeString(object.counterpartyNameEncrypted);
+          final currencyOffset = fbb.writeString(object.currency);
+          final transactionHashOffset = fbb.writeString(object.transactionHash);
+          final checksumOffset = fbb.writeString(object.checksum);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.gatewayTransactionId);
+          fbb.addOffset(2, counterpartyNameEncryptedOffset);
+          fbb.addFloat64(3, object.amount);
+          fbb.addOffset(4, currencyOffset);
+          fbb.addFloat64(5, object.exchangeRateAtSettlement);
+          fbb.addFloat64(6, object.feeAmount);
+          fbb.addOffset(7, transactionHashOffset);
+          fbb.addInt64(8, object.dbTaxCategory);
+          fbb.addOffset(9, checksumOffset);
+          fbb.addInt64(10, object.loggedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final gatewayTransactionIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final counterpartyNameEncryptedParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final amountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final currencyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final exchangeRateAtSettlementParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final feeAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final transactionHashParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final dbTaxCategoryParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final checksumParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
+          final loggedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
+          final object = CraTransactionLogEntity(
+              id: idParam,
+              gatewayTransactionId: gatewayTransactionIdParam,
+              counterpartyNameEncrypted: counterpartyNameEncryptedParam,
+              amount: amountParam,
+              currency: currencyParam,
+              exchangeRateAtSettlement: exchangeRateAtSettlementParam,
+              feeAmount: feeAmountParam,
+              transactionHash: transactionHashParam,
+              dbTaxCategory: dbTaxCategoryParam,
+              checksum: checksumParam,
+              loggedAt: loggedAtParam);
+
+          return object;
         })
   };
 
@@ -11014,4 +11152,56 @@ class DisputeEvidenceEntity_ {
   /// see [DisputeEvidenceEntity.submittedAt]
   static final submittedAt =
       obx.QueryDateProperty<DisputeEvidenceEntity>(_entities[88].properties[5]);
+}
+
+/// [CraTransactionLogEntity] entity fields to define ObjectBox queries.
+class CraTransactionLogEntity_ {
+  /// see [CraTransactionLogEntity.id]
+  static final id = obx.QueryIntegerProperty<CraTransactionLogEntity>(
+      _entities[89].properties[0]);
+
+  /// see [CraTransactionLogEntity.gatewayTransactionId]
+  static final gatewayTransactionId =
+      obx.QueryIntegerProperty<CraTransactionLogEntity>(
+          _entities[89].properties[1]);
+
+  /// see [CraTransactionLogEntity.counterpartyNameEncrypted]
+  static final counterpartyNameEncrypted =
+      obx.QueryStringProperty<CraTransactionLogEntity>(
+          _entities[89].properties[2]);
+
+  /// see [CraTransactionLogEntity.amount]
+  static final amount = obx.QueryDoubleProperty<CraTransactionLogEntity>(
+      _entities[89].properties[3]);
+
+  /// see [CraTransactionLogEntity.currency]
+  static final currency = obx.QueryStringProperty<CraTransactionLogEntity>(
+      _entities[89].properties[4]);
+
+  /// see [CraTransactionLogEntity.exchangeRateAtSettlement]
+  static final exchangeRateAtSettlement =
+      obx.QueryDoubleProperty<CraTransactionLogEntity>(
+          _entities[89].properties[5]);
+
+  /// see [CraTransactionLogEntity.feeAmount]
+  static final feeAmount = obx.QueryDoubleProperty<CraTransactionLogEntity>(
+      _entities[89].properties[6]);
+
+  /// see [CraTransactionLogEntity.transactionHash]
+  static final transactionHash =
+      obx.QueryStringProperty<CraTransactionLogEntity>(
+          _entities[89].properties[7]);
+
+  /// see [CraTransactionLogEntity.dbTaxCategory]
+  static final dbTaxCategory =
+      obx.QueryIntegerProperty<CraTransactionLogEntity>(
+          _entities[89].properties[8]);
+
+  /// see [CraTransactionLogEntity.checksum]
+  static final checksum = obx.QueryStringProperty<CraTransactionLogEntity>(
+      _entities[89].properties[9]);
+
+  /// see [CraTransactionLogEntity.loggedAt]
+  static final loggedAt = obx.QueryDateProperty<CraTransactionLogEntity>(
+      _entities[89].properties[10]);
 }

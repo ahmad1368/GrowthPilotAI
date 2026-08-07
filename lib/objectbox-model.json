@@ -3819,10 +3819,78 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "91:2763709580763116480",
+      "lastPropertyId": "11:1518183555596697753",
+      "name": "CraTransactionLogEntity",
+      "properties": [
+        {
+          "id": "1:2731798935253642449",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:791200885761128417",
+          "name": "gatewayTransactionId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "94:5349331189565880898"
+        },
+        {
+          "id": "3:6650395804396897389",
+          "name": "counterpartyNameEncrypted",
+          "type": 9
+        },
+        {
+          "id": "4:8346827317722842801",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "5:113463561494192519",
+          "name": "currency",
+          "type": 9
+        },
+        {
+          "id": "6:5865653807441904000",
+          "name": "exchangeRateAtSettlement",
+          "type": 8
+        },
+        {
+          "id": "7:4554030447961231193",
+          "name": "feeAmount",
+          "type": 8
+        },
+        {
+          "id": "8:8716363687739751590",
+          "name": "transactionHash",
+          "type": 9
+        },
+        {
+          "id": "9:1795846942677297482",
+          "name": "dbTaxCategory",
+          "type": 6
+        },
+        {
+          "id": "10:4333467497921702337",
+          "name": "checksum",
+          "type": 9
+        },
+        {
+          "id": "11:1518183555596697753",
+          "name": "loggedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "95:8444170058080363097"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "90:3702461949675558770",
-  "lastIndexId": "93:8577335016689342177",
+  "lastEntityId": "91:2763709580763116480",
+  "lastIndexId": "95:8444170058080363097",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
