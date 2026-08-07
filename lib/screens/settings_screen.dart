@@ -6,6 +6,7 @@ import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
 import '../widgets/omni_glass_panel.dart';
 import '../features/settings/widgets/settings_nav_tile.dart';
+import '../features/settings/widgets/language_settings_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -67,6 +68,20 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   trailing: const ThemeToggle(),
                 ),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Language settings (Issue #429)
+              _buildSectionHeader("Language"),
+              const SizedBox(height: 12),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const LanguageSettingsSection(),
               ),
 
               const SizedBox(height: 32),
