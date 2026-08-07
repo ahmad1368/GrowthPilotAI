@@ -3411,10 +3411,68 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "83:2506782492058121084",
+      "lastPropertyId": "9:1621260190951266630",
+      "name": "FeeWaiverRecordEntity",
+      "properties": [
+        {
+          "id": "1:8297892706775232040",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4100814141110041406",
+          "name": "orderId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "81:6988738246424367325"
+        },
+        {
+          "id": "3:1055269566172619481",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "82:2437075669585359133"
+        },
+        {
+          "id": "4:1110143377134030051",
+          "name": "grossAmount",
+          "type": 8
+        },
+        {
+          "id": "5:816745852765730353",
+          "name": "commissionRate",
+          "type": 8
+        },
+        {
+          "id": "6:4324027109188974973",
+          "name": "commissionAmount",
+          "type": 8
+        },
+        {
+          "id": "7:7566608771139241658",
+          "name": "waivedAmount",
+          "type": 8
+        },
+        {
+          "id": "8:4966679642161593558",
+          "name": "isWaived",
+          "type": 1
+        },
+        {
+          "id": "9:1621260190951266630",
+          "name": "recordedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "82:1372133852007559773",
-  "lastIndexId": "80:2394617465633827378",
+  "lastEntityId": "83:2506782492058121084",
+  "lastIndexId": "82:2437075669585359133",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -769,6 +769,11 @@ class BusinessCompassController extends GetxController {
         title: 'Micro-Credit and Working Capital',
         data: {'transactions': _transactions.getAll()},
       ),
+      const ReportWidgetSpec(
+        id: 'FEE_WAIVER_INCENTIVE',
+        title: 'Zero-Commission Incentive',
+        data: {},
+      ),
     ];
   }
 

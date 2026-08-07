@@ -42,6 +42,7 @@ import 'core/data/entities/emergency_broadcast_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
+import 'core/data/entities/fee_waiver_record_entity.dart';
 import 'core/data/entities/geofence_zone_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/group_purchase_contribution_entity.dart';
@@ -3444,6 +3445,62 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(83, 2506782492058121084),
+      name: 'FeeWaiverRecordEntity',
+      lastPropertyId: const obx_int.IdUid(9, 1621260190951266630),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8297892706775232040),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4100814141110041406),
+            name: 'orderId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(81, 6988738246424367325)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1055269566172619481),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(82, 2437075669585359133)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1110143377134030051),
+            name: 'grossAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 816745852765730353),
+            name: 'commissionRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4324027109188974973),
+            name: 'commissionAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7566608771139241658),
+            name: 'waivedAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 4966679642161593558),
+            name: 'isWaived',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1621260190951266630),
+            name: 'recordedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3482,8 +3539,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(82, 1372133852007559773),
-      lastIndexId: const obx_int.IdUid(80, 2394617465633827378),
+      lastEntityId: const obx_int.IdUid(83, 2506782492058121084),
+      lastIndexId: const obx_int.IdUid(82, 2437075669585359133),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -7489,6 +7546,64 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dueDate: dueDateParam);
 
           return object;
+        }),
+    FeeWaiverRecordEntity: obx_int.EntityDefinition<FeeWaiverRecordEntity>(
+        model: _entities[81],
+        toOneRelations: (FeeWaiverRecordEntity object) => [],
+        toManyRelations: (FeeWaiverRecordEntity object) => {},
+        getId: (FeeWaiverRecordEntity object) => object.id,
+        setId: (FeeWaiverRecordEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FeeWaiverRecordEntity object, fb.Builder fbb) {
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.orderId);
+          fbb.addOffset(2, merchantNameOffset);
+          fbb.addFloat64(3, object.grossAmount);
+          fbb.addFloat64(4, object.commissionRate);
+          fbb.addFloat64(5, object.commissionAmount);
+          fbb.addFloat64(6, object.waivedAmount);
+          fbb.addBool(7, object.isWaived);
+          fbb.addInt64(8, object.recordedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final orderIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final grossAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final commissionRateParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final commissionAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final waivedAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final isWaivedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
+          final recordedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = FeeWaiverRecordEntity(
+              id: idParam,
+              orderId: orderIdParam,
+              merchantName: merchantNameParam,
+              grossAmount: grossAmountParam,
+              commissionRate: commissionRateParam,
+              commissionAmount: commissionAmountParam,
+              waivedAmount: waivedAmountParam,
+              isWaived: isWaivedParam,
+              recordedAt: recordedAtParam);
+
+          return object;
         })
   };
 
@@ -9858,4 +9973,44 @@ class MicroCreditLoanEntity_ {
   /// see [MicroCreditLoanEntity.dueDate]
   static final dueDate =
       obx.QueryDateProperty<MicroCreditLoanEntity>(_entities[80].properties[8]);
+}
+
+/// [FeeWaiverRecordEntity] entity fields to define ObjectBox queries.
+class FeeWaiverRecordEntity_ {
+  /// see [FeeWaiverRecordEntity.id]
+  static final id = obx.QueryIntegerProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[0]);
+
+  /// see [FeeWaiverRecordEntity.orderId]
+  static final orderId = obx.QueryIntegerProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[1]);
+
+  /// see [FeeWaiverRecordEntity.merchantName]
+  static final merchantName = obx.QueryStringProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[2]);
+
+  /// see [FeeWaiverRecordEntity.grossAmount]
+  static final grossAmount = obx.QueryDoubleProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[3]);
+
+  /// see [FeeWaiverRecordEntity.commissionRate]
+  static final commissionRate = obx.QueryDoubleProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[4]);
+
+  /// see [FeeWaiverRecordEntity.commissionAmount]
+  static final commissionAmount =
+      obx.QueryDoubleProperty<FeeWaiverRecordEntity>(
+          _entities[81].properties[5]);
+
+  /// see [FeeWaiverRecordEntity.waivedAmount]
+  static final waivedAmount = obx.QueryDoubleProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[6]);
+
+  /// see [FeeWaiverRecordEntity.isWaived]
+  static final isWaived = obx.QueryBooleanProperty<FeeWaiverRecordEntity>(
+      _entities[81].properties[7]);
+
+  /// see [FeeWaiverRecordEntity.recordedAt]
+  static final recordedAt =
+      obx.QueryDateProperty<FeeWaiverRecordEntity>(_entities[81].properties[8]);
 }
