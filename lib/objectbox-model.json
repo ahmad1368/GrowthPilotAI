@@ -4139,10 +4139,210 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "99:7608025554369849817",
+      "lastPropertyId": "14:6399625391431453035",
+      "name": "CatalogListingEntity",
+      "properties": [
+        {
+          "id": "1:6329183958512206189",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:601142711349098842",
+          "name": "ownerId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "103:7020399567742526008"
+        },
+        {
+          "id": "3:2777271349164505539",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:1468544706513514116",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:8054595673619954339",
+          "name": "industry",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "104:4724589135344117735"
+        },
+        {
+          "id": "6:5407447239695114657",
+          "name": "sector",
+          "type": 9
+        },
+        {
+          "id": "7:505664704761505278",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "8:9196231605860825177",
+          "name": "tagsCsv",
+          "type": 9
+        },
+        {
+          "id": "9:3518152410130840029",
+          "name": "dbListingType",
+          "type": 6
+        },
+        {
+          "id": "10:468358889878571409",
+          "name": "dbAvailability",
+          "type": 6
+        },
+        {
+          "id": "11:971596695010239758",
+          "name": "locationLat",
+          "type": 8
+        },
+        {
+          "id": "12:8328355368186694708",
+          "name": "locationLng",
+          "type": 8
+        },
+        {
+          "id": "13:6214669446338333533",
+          "name": "attributesJson",
+          "type": 9
+        },
+        {
+          "id": "14:6399625391431453035",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "100:4206431594643477678",
+      "lastPropertyId": "9:307540975885365418",
+      "name": "ProductListingDetailsEntity",
+      "properties": [
+        {
+          "id": "1:5058311971279208392",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8072836247419043237",
+          "name": "listingId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "105:1468335355133965231"
+        },
+        {
+          "id": "3:4533706309081002589",
+          "name": "sku",
+          "type": 9
+        },
+        {
+          "id": "4:6531411067850854341",
+          "name": "stockLevel",
+          "type": 6
+        },
+        {
+          "id": "5:4627885685434664814",
+          "name": "weightKg",
+          "type": 8
+        },
+        {
+          "id": "6:14445711848598015",
+          "name": "dbPricingMode",
+          "type": 6
+        },
+        {
+          "id": "7:7814932043771233818",
+          "name": "fixedPrice",
+          "type": 8
+        },
+        {
+          "id": "8:6096697564047657902",
+          "name": "priceRangeMin",
+          "type": 8
+        },
+        {
+          "id": "9:307540975885365418",
+          "name": "priceRangeMax",
+          "type": 8
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "101:4051363359371688828",
+      "lastPropertyId": "10:1760677439077479765",
+      "name": "ServiceListingDetailsEntity",
+      "properties": [
+        {
+          "id": "1:1798621047302506469",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1284237063300941406",
+          "name": "listingId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "106:4772048302535993675"
+        },
+        {
+          "id": "3:5913639144607179288",
+          "name": "hourlyRate",
+          "type": 8
+        },
+        {
+          "id": "4:5128638169979398750",
+          "name": "durationEstimateMinutes",
+          "type": 6
+        },
+        {
+          "id": "5:4961741400949875585",
+          "name": "serviceRadiusKm",
+          "type": 8
+        },
+        {
+          "id": "6:5794002565756533295",
+          "name": "certificationRequired",
+          "type": 1
+        },
+        {
+          "id": "7:5076850688864946445",
+          "name": "dbPricingMode",
+          "type": 6
+        },
+        {
+          "id": "8:6209280580077956572",
+          "name": "fixedPrice",
+          "type": 8
+        },
+        {
+          "id": "9:7292133011652677884",
+          "name": "priceRangeMin",
+          "type": 8
+        },
+        {
+          "id": "10:1760677439077479765",
+          "name": "priceRangeMax",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "98:2010970175496136513",
-  "lastIndexId": "102:174529733436404019",
+  "lastEntityId": "101:4051363359371688828",
+  "lastIndexId": "106:4772048302535993675",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

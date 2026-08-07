@@ -31,6 +31,7 @@ import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
+import 'core/data/entities/catalog_listing_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/chat_message_entity.dart';
 import 'core/data/entities/commission_tier_record_entity.dart';
@@ -80,6 +81,7 @@ import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
+import 'core/data/entities/product_listing_details_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
@@ -92,6 +94,7 @@ import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
 import 'core/data/entities/seasonal_catalog_item_entity.dart';
+import 'core/data/entities/service_listing_details_entity.dart';
 import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
@@ -4166,6 +4169,202 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(99, 7608025554369849817),
+      name: 'CatalogListingEntity',
+      lastPropertyId: const obx_int.IdUid(14, 6399625391431453035),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6329183958512206189),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 601142711349098842),
+            name: 'ownerId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(103, 7020399567742526008)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2777271349164505539),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1468544706513514116),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8054595673619954339),
+            name: 'industry',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(104, 4724589135344117735)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5407447239695114657),
+            name: 'sector',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 505664704761505278),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 9196231605860825177),
+            name: 'tagsCsv',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 3518152410130840029),
+            name: 'dbListingType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 468358889878571409),
+            name: 'dbAvailability',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 971596695010239758),
+            name: 'locationLat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 8328355368186694708),
+            name: 'locationLng',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 6214669446338333533),
+            name: 'attributesJson',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 6399625391431453035),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(100, 4206431594643477678),
+      name: 'ProductListingDetailsEntity',
+      lastPropertyId: const obx_int.IdUid(9, 307540975885365418),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5058311971279208392),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8072836247419043237),
+            name: 'listingId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(105, 1468335355133965231)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4533706309081002589),
+            name: 'sku',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6531411067850854341),
+            name: 'stockLevel',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4627885685434664814),
+            name: 'weightKg',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 14445711848598015),
+            name: 'dbPricingMode',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7814932043771233818),
+            name: 'fixedPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 6096697564047657902),
+            name: 'priceRangeMin',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 307540975885365418),
+            name: 'priceRangeMax',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(101, 4051363359371688828),
+      name: 'ServiceListingDetailsEntity',
+      lastPropertyId: const obx_int.IdUid(10, 1760677439077479765),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1798621047302506469),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1284237063300941406),
+            name: 'listingId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(106, 4772048302535993675)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5913639144607179288),
+            name: 'hourlyRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5128638169979398750),
+            name: 'durationEstimateMinutes',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4961741400949875585),
+            name: 'serviceRadiusKm',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5794002565756533295),
+            name: 'certificationRequired',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5076850688864946445),
+            name: 'dbPricingMode',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 6209280580077956572),
+            name: 'fixedPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7292133011652677884),
+            name: 'priceRangeMin',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 1760677439077479765),
+            name: 'priceRangeMax',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4204,8 +4403,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(98, 2010970175496136513),
-      lastIndexId: const obx_int.IdUid(102, 174529733436404019),
+      lastEntityId: const obx_int.IdUid(101, 4051363359371688828),
+      lastIndexId: const obx_int.IdUid(106, 4772048302535993675),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -9035,7 +9234,212 @@ obx_int.ModelDefinition getObjectBoxModel() {
               firstSeenAt: firstSeenAtParam);
 
           return object;
-        })
+        }),
+    CatalogListingEntity: obx_int.EntityDefinition<CatalogListingEntity>(
+        model: _entities[97],
+        toOneRelations: (CatalogListingEntity object) => [],
+        toManyRelations: (CatalogListingEntity object) => {},
+        getId: (CatalogListingEntity object) => object.id,
+        setId: (CatalogListingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CatalogListingEntity object, fb.Builder fbb) {
+          final ownerIdOffset = fbb.writeString(object.ownerId);
+          final titleOffset = fbb.writeString(object.title);
+          final descriptionOffset = fbb.writeString(object.description);
+          final industryOffset = fbb.writeString(object.industry);
+          final sectorOffset = fbb.writeString(object.sector);
+          final categoryOffset = fbb.writeString(object.category);
+          final tagsCsvOffset = fbb.writeString(object.tagsCsv);
+          final attributesJsonOffset = fbb.writeString(object.attributesJson);
+          fbb.startTable(15);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, ownerIdOffset);
+          fbb.addOffset(2, titleOffset);
+          fbb.addOffset(3, descriptionOffset);
+          fbb.addOffset(4, industryOffset);
+          fbb.addOffset(5, sectorOffset);
+          fbb.addOffset(6, categoryOffset);
+          fbb.addOffset(7, tagsCsvOffset);
+          fbb.addInt64(8, object.dbListingType);
+          fbb.addInt64(9, object.dbAvailability);
+          fbb.addFloat64(10, object.locationLat);
+          fbb.addFloat64(11, object.locationLng);
+          fbb.addOffset(12, attributesJsonOffset);
+          fbb.addInt64(13, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final ownerIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final industryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final sectorParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
+          final tagsCsvParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 18, '');
+          final dbListingTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final dbAvailabilityParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final locationLatParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          final locationLngParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 26, 0);
+          final attributesJsonParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 28, '');
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0));
+          final object = CatalogListingEntity(
+              id: idParam,
+              ownerId: ownerIdParam,
+              title: titleParam,
+              description: descriptionParam,
+              industry: industryParam,
+              sector: sectorParam,
+              category: categoryParam,
+              tagsCsv: tagsCsvParam,
+              dbListingType: dbListingTypeParam,
+              dbAvailability: dbAvailabilityParam,
+              locationLat: locationLatParam,
+              locationLng: locationLngParam,
+              attributesJson: attributesJsonParam,
+              createdAt: createdAtParam);
+
+          return object;
+        }),
+    ProductListingDetailsEntity:
+        obx_int.EntityDefinition<ProductListingDetailsEntity>(
+            model: _entities[98],
+            toOneRelations: (ProductListingDetailsEntity object) => [],
+            toManyRelations: (ProductListingDetailsEntity object) => {},
+            getId: (ProductListingDetailsEntity object) => object.id,
+            setId: (ProductListingDetailsEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ProductListingDetailsEntity object, fb.Builder fbb) {
+              final skuOffset = fbb.writeString(object.sku);
+              fbb.startTable(10);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.listingId);
+              fbb.addOffset(2, skuOffset);
+              fbb.addInt64(3, object.stockLevel);
+              fbb.addFloat64(4, object.weightKg);
+              fbb.addInt64(5, object.dbPricingMode);
+              fbb.addFloat64(6, object.fixedPrice);
+              fbb.addFloat64(7, object.priceRangeMin);
+              fbb.addFloat64(8, object.priceRangeMax);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final listingIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final skuParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+              final stockLevelParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final weightKgParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final dbPricingModeParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final fixedPriceParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final priceRangeMinParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+              final priceRangeMaxParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              final object = ProductListingDetailsEntity(
+                  id: idParam,
+                  listingId: listingIdParam,
+                  sku: skuParam,
+                  stockLevel: stockLevelParam,
+                  weightKg: weightKgParam,
+                  dbPricingMode: dbPricingModeParam,
+                  fixedPrice: fixedPriceParam,
+                  priceRangeMin: priceRangeMinParam,
+                  priceRangeMax: priceRangeMaxParam);
+
+              return object;
+            }),
+    ServiceListingDetailsEntity:
+        obx_int.EntityDefinition<ServiceListingDetailsEntity>(
+            model: _entities[99],
+            toOneRelations: (ServiceListingDetailsEntity object) => [],
+            toManyRelations: (ServiceListingDetailsEntity object) => {},
+            getId: (ServiceListingDetailsEntity object) => object.id,
+            setId: (ServiceListingDetailsEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ServiceListingDetailsEntity object, fb.Builder fbb) {
+              fbb.startTable(11);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.listingId);
+              fbb.addFloat64(2, object.hourlyRate);
+              fbb.addInt64(3, object.durationEstimateMinutes);
+              fbb.addFloat64(4, object.serviceRadiusKm);
+              fbb.addBool(5, object.certificationRequired);
+              fbb.addInt64(6, object.dbPricingMode);
+              fbb.addFloat64(7, object.fixedPrice);
+              fbb.addFloat64(8, object.priceRangeMin);
+              fbb.addFloat64(9, object.priceRangeMax);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final listingIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final hourlyRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final durationEstimateMinutesParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final serviceRadiusKmParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final certificationRequiredParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 14, false);
+              final dbPricingModeParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final fixedPriceParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+              final priceRangeMinParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              final priceRangeMaxParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
+              final object = ServiceListingDetailsEntity(
+                  id: idParam,
+                  listingId: listingIdParam,
+                  hourlyRate: hourlyRateParam,
+                  durationEstimateMinutes: durationEstimateMinutesParam,
+                  serviceRadiusKm: serviceRadiusKmParam,
+                  certificationRequired: certificationRequiredParam,
+                  dbPricingMode: dbPricingModeParam,
+                  fixedPrice: fixedPriceParam,
+                  priceRangeMin: priceRangeMinParam,
+                  priceRangeMax: priceRangeMaxParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -11934,4 +12338,160 @@ class UnmatchedContactEntity_ {
   /// see [UnmatchedContactEntity.firstSeenAt]
   static final firstSeenAt = obx.QueryDateProperty<UnmatchedContactEntity>(
       _entities[96].properties[2]);
+}
+
+/// [CatalogListingEntity] entity fields to define ObjectBox queries.
+class CatalogListingEntity_ {
+  /// see [CatalogListingEntity.id]
+  static final id = obx.QueryIntegerProperty<CatalogListingEntity>(
+      _entities[97].properties[0]);
+
+  /// see [CatalogListingEntity.ownerId]
+  static final ownerId = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[1]);
+
+  /// see [CatalogListingEntity.title]
+  static final title = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[2]);
+
+  /// see [CatalogListingEntity.description]
+  static final description = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[3]);
+
+  /// see [CatalogListingEntity.industry]
+  static final industry = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[4]);
+
+  /// see [CatalogListingEntity.sector]
+  static final sector = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[5]);
+
+  /// see [CatalogListingEntity.category]
+  static final category = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[6]);
+
+  /// see [CatalogListingEntity.tagsCsv]
+  static final tagsCsv = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[7]);
+
+  /// see [CatalogListingEntity.dbListingType]
+  static final dbListingType = obx.QueryIntegerProperty<CatalogListingEntity>(
+      _entities[97].properties[8]);
+
+  /// see [CatalogListingEntity.dbAvailability]
+  static final dbAvailability = obx.QueryIntegerProperty<CatalogListingEntity>(
+      _entities[97].properties[9]);
+
+  /// see [CatalogListingEntity.locationLat]
+  static final locationLat = obx.QueryDoubleProperty<CatalogListingEntity>(
+      _entities[97].properties[10]);
+
+  /// see [CatalogListingEntity.locationLng]
+  static final locationLng = obx.QueryDoubleProperty<CatalogListingEntity>(
+      _entities[97].properties[11]);
+
+  /// see [CatalogListingEntity.attributesJson]
+  static final attributesJson = obx.QueryStringProperty<CatalogListingEntity>(
+      _entities[97].properties[12]);
+
+  /// see [CatalogListingEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<CatalogListingEntity>(_entities[97].properties[13]);
+}
+
+/// [ProductListingDetailsEntity] entity fields to define ObjectBox queries.
+class ProductListingDetailsEntity_ {
+  /// see [ProductListingDetailsEntity.id]
+  static final id = obx.QueryIntegerProperty<ProductListingDetailsEntity>(
+      _entities[98].properties[0]);
+
+  /// see [ProductListingDetailsEntity.listingId]
+  static final listingId =
+      obx.QueryIntegerProperty<ProductListingDetailsEntity>(
+          _entities[98].properties[1]);
+
+  /// see [ProductListingDetailsEntity.sku]
+  static final sku = obx.QueryStringProperty<ProductListingDetailsEntity>(
+      _entities[98].properties[2]);
+
+  /// see [ProductListingDetailsEntity.stockLevel]
+  static final stockLevel =
+      obx.QueryIntegerProperty<ProductListingDetailsEntity>(
+          _entities[98].properties[3]);
+
+  /// see [ProductListingDetailsEntity.weightKg]
+  static final weightKg = obx.QueryDoubleProperty<ProductListingDetailsEntity>(
+      _entities[98].properties[4]);
+
+  /// see [ProductListingDetailsEntity.dbPricingMode]
+  static final dbPricingMode =
+      obx.QueryIntegerProperty<ProductListingDetailsEntity>(
+          _entities[98].properties[5]);
+
+  /// see [ProductListingDetailsEntity.fixedPrice]
+  static final fixedPrice =
+      obx.QueryDoubleProperty<ProductListingDetailsEntity>(
+          _entities[98].properties[6]);
+
+  /// see [ProductListingDetailsEntity.priceRangeMin]
+  static final priceRangeMin =
+      obx.QueryDoubleProperty<ProductListingDetailsEntity>(
+          _entities[98].properties[7]);
+
+  /// see [ProductListingDetailsEntity.priceRangeMax]
+  static final priceRangeMax =
+      obx.QueryDoubleProperty<ProductListingDetailsEntity>(
+          _entities[98].properties[8]);
+}
+
+/// [ServiceListingDetailsEntity] entity fields to define ObjectBox queries.
+class ServiceListingDetailsEntity_ {
+  /// see [ServiceListingDetailsEntity.id]
+  static final id = obx.QueryIntegerProperty<ServiceListingDetailsEntity>(
+      _entities[99].properties[0]);
+
+  /// see [ServiceListingDetailsEntity.listingId]
+  static final listingId =
+      obx.QueryIntegerProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[1]);
+
+  /// see [ServiceListingDetailsEntity.hourlyRate]
+  static final hourlyRate =
+      obx.QueryDoubleProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[2]);
+
+  /// see [ServiceListingDetailsEntity.durationEstimateMinutes]
+  static final durationEstimateMinutes =
+      obx.QueryIntegerProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[3]);
+
+  /// see [ServiceListingDetailsEntity.serviceRadiusKm]
+  static final serviceRadiusKm =
+      obx.QueryDoubleProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[4]);
+
+  /// see [ServiceListingDetailsEntity.certificationRequired]
+  static final certificationRequired =
+      obx.QueryBooleanProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[5]);
+
+  /// see [ServiceListingDetailsEntity.dbPricingMode]
+  static final dbPricingMode =
+      obx.QueryIntegerProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[6]);
+
+  /// see [ServiceListingDetailsEntity.fixedPrice]
+  static final fixedPrice =
+      obx.QueryDoubleProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[7]);
+
+  /// see [ServiceListingDetailsEntity.priceRangeMin]
+  static final priceRangeMin =
+      obx.QueryDoubleProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[8]);
+
+  /// see [ServiceListingDetailsEntity.priceRangeMax]
+  static final priceRangeMax =
+      obx.QueryDoubleProperty<ServiceListingDetailsEntity>(
+          _entities[99].properties[9]);
 }

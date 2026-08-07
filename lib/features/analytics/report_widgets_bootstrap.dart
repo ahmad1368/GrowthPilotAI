@@ -60,6 +60,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_dependency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/accounting_reports_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/cra_compliance_report_widget.dart';
+import 'package:growth_pilot_ai/features/catalog/widgets/catalog_report_widget.dart';
 import 'package:growth_pilot_ai/features/contacts/widgets/contact_sync_report_widget.dart';
 import 'package:growth_pilot_ai/features/referrals/widgets/referral_report_widget.dart';
 import 'package:growth_pilot_ai/features/messaging/widgets/translation_chat_report_widget.dart';
@@ -489,6 +490,10 @@ class ReportWidgetsBootstrap {
         'REFERRAL_INVITATION_ENGINE',
         (spec) =>
             ReferralReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CATALOG_LISTING_MODEL',
+        (spec) =>
+            CatalogReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
