@@ -789,6 +789,11 @@ class BusinessCompassController extends GetxController {
         title: 'Tiered Commission Revenue',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'SETTLEMENT_TRACKING_DASHBOARD',
+        title: 'Settlement Tracking',
+        data: {},
+      ),
     ];
   }
 
