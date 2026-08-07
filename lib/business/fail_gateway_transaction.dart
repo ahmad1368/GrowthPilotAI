@@ -17,6 +17,7 @@ class FailGatewayTransaction {
       exchangeRate: transaction.exchangeRate,
       feeAmount: transaction.feeAmount,
       dbStatus: GatewayTransactionStatus.failed.index,
+      transactionHash: transaction.transactionHash,
       initiatedAt: transaction.initiatedAt,
     );
   }

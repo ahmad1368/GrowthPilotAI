@@ -8,7 +8,8 @@ import 'package:growth_pilot_ai/core/enum/gateway_transaction_status.dart';
 /// infrastructure; those are explicitly out of reach for an
 /// automated code-gen pipeline (no real credentials, no backend to
 /// receive webhooks, and PCI-DSS is an audit, not code). This models
-/// the orchestration shape only, per the user's direction.
+/// the orchestration shape only, per the user's direction. [transactionHash]
+/// (Issue #423) is likewise simulated, not a real on-chain hash.
 @Entity()
 class BankingGatewayTransactionEntity {
   @Id()
@@ -23,6 +24,7 @@ class BankingGatewayTransactionEntity {
   double exchangeRate;
   double feeAmount;
   int dbStatus; // GatewayTransactionStatus index
+  String transactionHash;
 
   @Property(type: PropertyType.date)
   DateTime initiatedAt;
@@ -41,6 +43,7 @@ class BankingGatewayTransactionEntity {
     required this.exchangeRate,
     required this.feeAmount,
     this.dbStatus = 0, // GatewayTransactionStatus.authorized
+    this.transactionHash = '',
     required this.initiatedAt,
     this.settledAt,
   });

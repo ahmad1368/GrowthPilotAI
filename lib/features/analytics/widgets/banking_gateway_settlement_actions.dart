@@ -1,39 +1,21 @@
-import 'package:growth_pilot_ai/business/authorize_gateway_transaction.dart';
 import 'package:growth_pilot_ai/business/build_audit_log_entry.dart';
+import 'package:growth_pilot_ai/business/confirm_escrow_delivery.dart';
 import 'package:growth_pilot_ai/business/fail_gateway_transaction.dart';
 import 'package:growth_pilot_ai/business/refund_gateway_transaction.dart';
-import 'package:growth_pilot_ai/business/route_gateway_fallback.dart';
 import 'package:growth_pilot_ai/business/settle_gateway_transaction.dart';
 import 'package:growth_pilot_ai/core/data/entities/banking_gateway_transaction_entity.dart';
+import 'package:growth_pilot_ai/core/enum/banking_gateway_provider.dart';
+import 'package:growth_pilot_ai/core/enum/escrow_status.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_repos.dart';
 
-/// Settlement, failure, refund, and fallback-retry handling (Issue
-/// #421, acceptance criteria 3 and 5; retry added for Issue #422,
-/// acceptance criteria 3-4) — split out of [BankingGatewayBody].
+/// Settlement, failure, and refund handling (Issue #421, acceptance
+/// criteria 3 and 5) — settling a crypto/stablecoin transaction also
+/// releases its matching held [EscrowAccountEntity] (#415), the
+/// "smart contract" release for Issue #423, acceptance criterion 2.
 class BankingGatewaySettlementActions {
   final BankingGatewayRepos repos;
 
   BankingGatewaySettlementActions(this.repos);
-
-  BankingGatewayTransactionEntity retryWithFallback(BankingGatewayTransactionEntity failed) {
-    final fallbackProvider = RouteGatewayFallback.call(failed.provider);
-    final retry = AuthorizeGatewayTransaction.call(
-      provider: fallbackProvider,
-      merchantName: failed.merchantName,
-      counterpartyName: failed.counterpartyName,
-      amount: failed.amount,
-      currency: failed.currency,
-      now: DateTime.now(),
-    );
-    repos.transactions.save(retry);
-    repos.auditLogs.record(BuildAuditLogEntry.call(
-      changeType: 'routed gateway fallback',
-      targetMerchant: failed.merchantName,
-      previousValue: failed.provider.name,
-      newValue: '${fallbackProvider.name} (retry after failure)',
-    ));
-    return retry;
-  }
 
   BankingGatewayTransactionEntity settle(BankingGatewayTransactionEntity transaction) {
     final updated = SettleGatewayTransaction.call(transaction, DateTime.now());
@@ -44,7 +26,23 @@ class BankingGatewaySettlementActions {
       previousValue: 'captured',
       newValue: 'settled',
     ));
+    if (transaction.provider.isCrypto) _releaseEscrow(transaction);
     return updated;
+  }
+
+  void _releaseEscrow(BankingGatewayTransactionEntity transaction) {
+    final held = repos.escrowAccounts
+        .getAll()
+        .where((e) =>
+            e.itemDescription == 'gateway-tx-${transaction.id}' && e.status == EscrowStatus.held)
+        .firstOrNull;
+    if (held == null) return;
+    repos.escrowAccounts.save(ConfirmEscrowDelivery.call(held));
+    repos.auditLogs.record(BuildAuditLogEntry.call(
+      changeType: 'released smart contract escrow',
+      targetMerchant: transaction.merchantName,
+      newValue: '${transaction.provider.name} tx #${transaction.id} released to seller',
+    ));
   }
 
   BankingGatewayTransactionEntity fail(BankingGatewayTransactionEntity transaction) {

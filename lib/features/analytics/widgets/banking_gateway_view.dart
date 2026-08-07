@@ -3,11 +3,13 @@ import 'package:growth_pilot_ai/business/build_gateway_narrative.dart';
 import 'package:growth_pilot_ai/core/data/entities/banking_gateway_transaction_entity.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_disclaimer.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_row.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_wallet_dashboard.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Renders the simulation disclaimer, a new-transaction button, every
-/// transaction card, and a narrative (Issue #421). Purely
-/// presentational.
+/// Renders the simulation disclaimer, wallet dashboard, a
+/// new-transaction button, every transaction card, and a narrative
+/// (Issue #421; wallet dashboard added for Issue #423, acceptance
+/// criterion 5). Purely presentational.
 class BankingGatewayView extends StatelessWidget {
   final List<BankingGatewayTransactionEntity> transactions;
   final VoidCallback onCreate;
@@ -35,6 +37,7 @@ class BankingGatewayView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const BankingGatewayDisclaimer(),
+        BankingGatewayWalletDashboard(transactions: transactions),
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           ShadButton.outline(
               onPressed: onCreate, child: Text('+ New Transaction', style: TextStyle(color: fg))),

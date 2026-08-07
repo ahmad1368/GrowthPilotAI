@@ -3472,7 +3472,7 @@
     },
     {
       "id": "84:3905315127030752685",
-      "lastPropertyId": "12:1271638984305422991",
+      "lastPropertyId": "13:5597431621308000265",
       "name": "BankingGatewayTransactionEntity",
       "properties": [
         {
@@ -3535,6 +3535,11 @@
           "id": "12:1271638984305422991",
           "name": "settledAt",
           "type": 10
+        },
+        {
+          "id": "13:5597431621308000265",
+          "name": "transactionHash",
+          "type": 9
         }
       ],
       "relations": []

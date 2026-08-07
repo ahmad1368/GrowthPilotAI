@@ -20,6 +20,7 @@ class SettleGatewayTransaction {
       exchangeRate: transaction.exchangeRate,
       feeAmount: transaction.feeAmount,
       dbStatus: GatewayTransactionStatus.settled.index,
+      transactionHash: transaction.transactionHash,
       initiatedAt: transaction.initiatedAt,
       settledAt: now,
     );

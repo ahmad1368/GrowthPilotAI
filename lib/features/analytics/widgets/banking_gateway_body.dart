@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/data/entities/banking_gateway_transaction_entity.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_actions.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_dialog.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_fallback_actions.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_repos.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_settlement_actions.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_view.dart';
@@ -23,6 +24,7 @@ class _BankingGatewayBodyState extends State<BankingGatewayBody> {
   final _repos = BankingGatewayRepos();
   late final _actions = BankingGatewayActions(_repos);
   late final _settlementActions = BankingGatewaySettlementActions(_repos);
+  late final _fallbackActions = BankingGatewayFallbackActions(_repos);
   late List<BankingGatewayTransactionEntity> _transactions = _repos.transactions.getAll();
 
   void _mutate(BankingGatewayTransactionEntity Function() action) {
@@ -46,7 +48,7 @@ class _BankingGatewayBodyState extends State<BankingGatewayBody> {
       onSettle: (t) => _mutate(() => _settlementActions.settle(t)),
       onFail: (t) => _mutate(() => _settlementActions.fail(t)),
       onRefund: (t) => _mutate(() => _settlementActions.refund(t)),
-      onRetryWithFallback: (t) => _mutate(() => _settlementActions.retryWithFallback(t)),
+      onRetryWithFallback: (t) => _mutate(() => _fallbackActions.retryWithFallback(t)),
     );
   }
 }
