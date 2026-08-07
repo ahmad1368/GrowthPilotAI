@@ -32,6 +32,7 @@ import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/commission_tier_record_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
@@ -66,6 +67,7 @@ import 'core/data/entities/merchant_dependency_evaluation_entity.dart';
 import 'core/data/entities/merchant_dependency_input_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/merchant_tag_entity.dart';
+import 'core/data/entities/merchant_tier_override_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/micro_credit_account_entity.dart';
 import 'core/data/entities/micro_credit_loan_entity.dart';
@@ -3706,6 +3708,103 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(88, 6355433803735270063),
+      name: 'CommissionTierRecordEntity',
+      lastPropertyId: const obx_int.IdUid(10, 5455359193039601086),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4784002220129157674),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 973982406190724230),
+            name: 'orderId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(88, 4460331561770405268)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6758929833908319456),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(89, 73100205051408397)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5983030217491734720),
+            name: 'cumulativeTransactionCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5887973179952907321),
+            name: 'dbTierBand',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8500315572761013382),
+            name: 'commissionRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5791615994250965114),
+            name: 'commissionAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 5995379252362181809),
+            name: 'isOverridden',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6618902707946271476),
+            name: 'dependencyVerified',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5455359193039601086),
+            name: 'recordedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(90, 7667317443046295561))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(89, 1722016506439603127),
+      name: 'MerchantTierOverrideEntity',
+      lastPropertyId: const obx_int.IdUid(5, 2120478185320007137),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6531409650421538167),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 9124975540532621543),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(91, 4116157710293814297)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6176570551691484101),
+            name: 'dbTierBand',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2552629150662748684),
+            name: 'reason',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2120478185320007137),
+            name: 'setAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3744,8 +3843,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(87, 5926039941065073942),
-      lastIndexId: const obx_int.IdUid(87, 7172556803416953805),
+      lastEntityId: const obx_int.IdUid(89, 1722016506439603127),
+      lastIndexId: const obx_int.IdUid(91, 4116157710293814297),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -8039,6 +8138,113 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   updatedAt: updatedAtParam);
 
               return object;
+            }),
+    CommissionTierRecordEntity:
+        obx_int.EntityDefinition<CommissionTierRecordEntity>(
+            model: _entities[86],
+            toOneRelations: (CommissionTierRecordEntity object) => [],
+            toManyRelations: (CommissionTierRecordEntity object) => {},
+            getId: (CommissionTierRecordEntity object) => object.id,
+            setId: (CommissionTierRecordEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (CommissionTierRecordEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              fbb.startTable(11);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.orderId);
+              fbb.addOffset(2, merchantNameOffset);
+              fbb.addInt64(3, object.cumulativeTransactionCount);
+              fbb.addInt64(4, object.dbTierBand);
+              fbb.addFloat64(5, object.commissionRate);
+              fbb.addFloat64(6, object.commissionAmount);
+              fbb.addBool(7, object.isOverridden);
+              fbb.addBool(8, object.dependencyVerified);
+              fbb.addInt64(9, object.recordedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final orderIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final cumulativeTransactionCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final dbTierBandParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final commissionRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final commissionAmountParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final isOverriddenParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 18, false);
+              final dependencyVerifiedParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 20, false);
+              final recordedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+              final object = CommissionTierRecordEntity(
+                  id: idParam,
+                  orderId: orderIdParam,
+                  merchantName: merchantNameParam,
+                  cumulativeTransactionCount: cumulativeTransactionCountParam,
+                  dbTierBand: dbTierBandParam,
+                  commissionRate: commissionRateParam,
+                  commissionAmount: commissionAmountParam,
+                  isOverridden: isOverriddenParam,
+                  dependencyVerified: dependencyVerifiedParam,
+                  recordedAt: recordedAtParam);
+
+              return object;
+            }),
+    MerchantTierOverrideEntity:
+        obx_int.EntityDefinition<MerchantTierOverrideEntity>(
+            model: _entities[87],
+            toOneRelations: (MerchantTierOverrideEntity object) => [],
+            toManyRelations: (MerchantTierOverrideEntity object) => {},
+            getId: (MerchantTierOverrideEntity object) => object.id,
+            setId: (MerchantTierOverrideEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (MerchantTierOverrideEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              final reasonOffset = fbb.writeString(object.reason);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addInt64(2, object.dbTierBand);
+              fbb.addOffset(3, reasonOffset);
+              fbb.addInt64(4, object.setAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final dbTierBandParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final reasonParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+              final setAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = MerchantTierOverrideEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  dbTierBand: dbTierBandParam,
+                  reason: reasonParam,
+                  setAt: setAtParam);
+
+              return object;
             })
   };
 
@@ -10615,4 +10821,79 @@ class MerchantDependencyInputEntity_ {
   /// see [MerchantDependencyInputEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<MerchantDependencyInputEntity>(
       _entities[85].properties[4]);
+}
+
+/// [CommissionTierRecordEntity] entity fields to define ObjectBox queries.
+class CommissionTierRecordEntity_ {
+  /// see [CommissionTierRecordEntity.id]
+  static final id = obx.QueryIntegerProperty<CommissionTierRecordEntity>(
+      _entities[86].properties[0]);
+
+  /// see [CommissionTierRecordEntity.orderId]
+  static final orderId = obx.QueryIntegerProperty<CommissionTierRecordEntity>(
+      _entities[86].properties[1]);
+
+  /// see [CommissionTierRecordEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[2]);
+
+  /// see [CommissionTierRecordEntity.cumulativeTransactionCount]
+  static final cumulativeTransactionCount =
+      obx.QueryIntegerProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[3]);
+
+  /// see [CommissionTierRecordEntity.dbTierBand]
+  static final dbTierBand =
+      obx.QueryIntegerProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[4]);
+
+  /// see [CommissionTierRecordEntity.commissionRate]
+  static final commissionRate =
+      obx.QueryDoubleProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[5]);
+
+  /// see [CommissionTierRecordEntity.commissionAmount]
+  static final commissionAmount =
+      obx.QueryDoubleProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[6]);
+
+  /// see [CommissionTierRecordEntity.isOverridden]
+  static final isOverridden =
+      obx.QueryBooleanProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[7]);
+
+  /// see [CommissionTierRecordEntity.dependencyVerified]
+  static final dependencyVerified =
+      obx.QueryBooleanProperty<CommissionTierRecordEntity>(
+          _entities[86].properties[8]);
+
+  /// see [CommissionTierRecordEntity.recordedAt]
+  static final recordedAt = obx.QueryDateProperty<CommissionTierRecordEntity>(
+      _entities[86].properties[9]);
+}
+
+/// [MerchantTierOverrideEntity] entity fields to define ObjectBox queries.
+class MerchantTierOverrideEntity_ {
+  /// see [MerchantTierOverrideEntity.id]
+  static final id = obx.QueryIntegerProperty<MerchantTierOverrideEntity>(
+      _entities[87].properties[0]);
+
+  /// see [MerchantTierOverrideEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<MerchantTierOverrideEntity>(
+          _entities[87].properties[1]);
+
+  /// see [MerchantTierOverrideEntity.dbTierBand]
+  static final dbTierBand =
+      obx.QueryIntegerProperty<MerchantTierOverrideEntity>(
+          _entities[87].properties[2]);
+
+  /// see [MerchantTierOverrideEntity.reason]
+  static final reason = obx.QueryStringProperty<MerchantTierOverrideEntity>(
+      _entities[87].properties[3]);
+
+  /// see [MerchantTierOverrideEntity.setAt]
+  static final setAt = obx.QueryDateProperty<MerchantTierOverrideEntity>(
+      _entities[87].properties[4]);
 }

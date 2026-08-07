@@ -784,6 +784,11 @@ class BusinessCompassController extends GetxController {
         title: 'Merchant Dependency Detection',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'TIERED_COMMISSION_ENGINE',
+        title: 'Tiered Commission Revenue',
+        data: {},
+      ),
     ];
   }
 
