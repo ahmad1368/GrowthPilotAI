@@ -16,6 +16,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_catalog_repo
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_recommendation_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/micro_credit_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/fee_waiver_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/analytics_pricing_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/annual_profit_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banner_rule_report_widget.dart';
@@ -444,6 +445,10 @@ class ReportWidgetsBootstrap {
         'FEE_WAIVER_INCENTIVE',
         (spec) =>
             FeeWaiverReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'BANKING_GATEWAY_ORCHESTRATION',
+        (spec) =>
+            BankingGatewayReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

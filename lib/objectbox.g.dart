@@ -25,6 +25,7 @@ import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/asset_bid_entity.dart';
 import 'core/data/entities/asset_listing_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
+import 'core/data/entities/banking_gateway_transaction_entity.dart';
 import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
@@ -3501,6 +3502,75 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(84, 3905315127030752685),
+      name: 'BankingGatewayTransactionEntity',
+      lastPropertyId: const obx_int.IdUid(12, 1271638984305422991),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6595266975925161889),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8827142343038429833),
+            name: 'dbProvider',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5770893804341985928),
+            name: 'merchantName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1086570095503115595),
+            name: 'counterpartyName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8026988086895995840),
+            name: 'amount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4110869964723601070),
+            name: 'currency',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1808258355665613034),
+            name: 'convertedAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1683145373839557647),
+            name: 'exchangeRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6305452660223106601),
+            name: 'feeAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7496217132252609396),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 549075805891758449),
+            name: 'initiatedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 1271638984305422991),
+            name: 'settledAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3539,7 +3609,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(83, 2506782492058121084),
+      lastEntityId: const obx_int.IdUid(84, 3905315127030752685),
       lastIndexId: const obx_int.IdUid(82, 2437075669585359133),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -7604,6 +7674,84 @@ obx_int.ModelDefinition getObjectBoxModel() {
               recordedAt: recordedAtParam);
 
           return object;
+        }),
+    BankingGatewayTransactionEntity: obx_int.EntityDefinition<
+            BankingGatewayTransactionEntity>(
+        model: _entities[82],
+        toOneRelations: (BankingGatewayTransactionEntity object) => [],
+        toManyRelations: (BankingGatewayTransactionEntity object) => {},
+        getId: (BankingGatewayTransactionEntity object) => object.id,
+        setId: (BankingGatewayTransactionEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BankingGatewayTransactionEntity object, fb.Builder fbb) {
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          final counterpartyNameOffset =
+              fbb.writeString(object.counterpartyName);
+          final currencyOffset = fbb.writeString(object.currency);
+          fbb.startTable(13);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbProvider);
+          fbb.addOffset(2, merchantNameOffset);
+          fbb.addOffset(3, counterpartyNameOffset);
+          fbb.addFloat64(4, object.amount);
+          fbb.addOffset(5, currencyOffset);
+          fbb.addFloat64(6, object.convertedAmount);
+          fbb.addFloat64(7, object.exchangeRate);
+          fbb.addFloat64(8, object.feeAmount);
+          fbb.addInt64(9, object.dbStatus);
+          fbb.addInt64(10, object.initiatedAt.millisecondsSinceEpoch);
+          fbb.addInt64(11, object.settledAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final settledAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 26);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbProviderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final counterpartyNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final amountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final currencyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final convertedAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final exchangeRateParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final feeAmountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final initiatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
+          final settledAtParam = settledAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(settledAtValue);
+          final object = BankingGatewayTransactionEntity(
+              id: idParam,
+              dbProvider: dbProviderParam,
+              merchantName: merchantNameParam,
+              counterpartyName: counterpartyNameParam,
+              amount: amountParam,
+              currency: currencyParam,
+              convertedAmount: convertedAmountParam,
+              exchangeRate: exchangeRateParam,
+              feeAmount: feeAmountParam,
+              dbStatus: dbStatusParam,
+              initiatedAt: initiatedAtParam,
+              settledAt: settledAtParam);
+
+          return object;
         })
   };
 
@@ -10013,4 +10161,66 @@ class FeeWaiverRecordEntity_ {
   /// see [FeeWaiverRecordEntity.recordedAt]
   static final recordedAt =
       obx.QueryDateProperty<FeeWaiverRecordEntity>(_entities[81].properties[8]);
+}
+
+/// [BankingGatewayTransactionEntity] entity fields to define ObjectBox queries.
+class BankingGatewayTransactionEntity_ {
+  /// see [BankingGatewayTransactionEntity.id]
+  static final id = obx.QueryIntegerProperty<BankingGatewayTransactionEntity>(
+      _entities[82].properties[0]);
+
+  /// see [BankingGatewayTransactionEntity.dbProvider]
+  static final dbProvider =
+      obx.QueryIntegerProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[1]);
+
+  /// see [BankingGatewayTransactionEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[2]);
+
+  /// see [BankingGatewayTransactionEntity.counterpartyName]
+  static final counterpartyName =
+      obx.QueryStringProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[3]);
+
+  /// see [BankingGatewayTransactionEntity.amount]
+  static final amount =
+      obx.QueryDoubleProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[4]);
+
+  /// see [BankingGatewayTransactionEntity.currency]
+  static final currency =
+      obx.QueryStringProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[5]);
+
+  /// see [BankingGatewayTransactionEntity.convertedAmount]
+  static final convertedAmount =
+      obx.QueryDoubleProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[6]);
+
+  /// see [BankingGatewayTransactionEntity.exchangeRate]
+  static final exchangeRate =
+      obx.QueryDoubleProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[7]);
+
+  /// see [BankingGatewayTransactionEntity.feeAmount]
+  static final feeAmount =
+      obx.QueryDoubleProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[8]);
+
+  /// see [BankingGatewayTransactionEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[9]);
+
+  /// see [BankingGatewayTransactionEntity.initiatedAt]
+  static final initiatedAt =
+      obx.QueryDateProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[10]);
+
+  /// see [BankingGatewayTransactionEntity.settledAt]
+  static final settledAt =
+      obx.QueryDateProperty<BankingGatewayTransactionEntity>(
+          _entities[82].properties[11]);
 }
