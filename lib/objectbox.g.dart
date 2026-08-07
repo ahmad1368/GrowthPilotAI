@@ -32,6 +32,7 @@ import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/category_entity.dart';
+import 'core/data/entities/chat_message_entity.dart';
 import 'core/data/entities/commission_tier_record_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
@@ -3914,6 +3915,56 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(95, 8444170058080363097))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(92, 8860505853395559817),
+      name: 'ChatMessageEntity',
+      lastPropertyId: const obx_int.IdUid(8, 7229967371246997788),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8777153649499803934),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1526448430480397599),
+            name: 'senderName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2149615929391027060),
+            name: 'originalText',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3539336696321429366),
+            name: 'originalLanguageCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6183463255964046369),
+            name: 'translatedText',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6657062767033385422),
+            name: 'translatedLanguageCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8560933552736484845),
+            name: 'translationConfidence',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7229967371246997788),
+            name: 'sentAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(96, 5027148752694019641))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3952,8 +4003,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(91, 2763709580763116480),
-      lastIndexId: const obx_int.IdUid(95, 8444170058080363097),
+      lastEntityId: const obx_int.IdUid(92, 8860505853395559817),
+      lastIndexId: const obx_int.IdUid(96, 5027148752694019641),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -8473,6 +8524,69 @@ obx_int.ModelDefinition getObjectBoxModel() {
               loggedAt: loggedAtParam);
 
           return object;
+        }),
+    ChatMessageEntity: obx_int.EntityDefinition<ChatMessageEntity>(
+        model: _entities[90],
+        toOneRelations: (ChatMessageEntity object) => [],
+        toManyRelations: (ChatMessageEntity object) => {},
+        getId: (ChatMessageEntity object) => object.id,
+        setId: (ChatMessageEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChatMessageEntity object, fb.Builder fbb) {
+          final senderNameOffset = fbb.writeString(object.senderName);
+          final originalTextOffset = fbb.writeString(object.originalText);
+          final originalLanguageCodeOffset =
+              fbb.writeString(object.originalLanguageCode);
+          final translatedTextOffset = fbb.writeString(object.translatedText);
+          final translatedLanguageCodeOffset =
+              fbb.writeString(object.translatedLanguageCode);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, senderNameOffset);
+          fbb.addOffset(2, originalTextOffset);
+          fbb.addOffset(3, originalLanguageCodeOffset);
+          fbb.addOffset(4, translatedTextOffset);
+          fbb.addOffset(5, translatedLanguageCodeOffset);
+          fbb.addFloat64(6, object.translationConfidence);
+          fbb.addInt64(7, object.sentAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final senderNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final originalTextParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final originalLanguageCodeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final translatedTextParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final translatedLanguageCodeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final translationConfidenceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final sentAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final object = ChatMessageEntity(
+              id: idParam,
+              senderName: senderNameParam,
+              originalText: originalTextParam,
+              originalLanguageCode: originalLanguageCodeParam,
+              translatedText: translatedTextParam,
+              translatedLanguageCode: translatedLanguageCodeParam,
+              translationConfidence: translationConfidenceParam,
+              sentAt: sentAtParam);
+
+          return object;
         })
   };
 
@@ -11204,4 +11318,39 @@ class CraTransactionLogEntity_ {
   /// see [CraTransactionLogEntity.loggedAt]
   static final loggedAt = obx.QueryDateProperty<CraTransactionLogEntity>(
       _entities[89].properties[10]);
+}
+
+/// [ChatMessageEntity] entity fields to define ObjectBox queries.
+class ChatMessageEntity_ {
+  /// see [ChatMessageEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<ChatMessageEntity>(_entities[90].properties[0]);
+
+  /// see [ChatMessageEntity.senderName]
+  static final senderName =
+      obx.QueryStringProperty<ChatMessageEntity>(_entities[90].properties[1]);
+
+  /// see [ChatMessageEntity.originalText]
+  static final originalText =
+      obx.QueryStringProperty<ChatMessageEntity>(_entities[90].properties[2]);
+
+  /// see [ChatMessageEntity.originalLanguageCode]
+  static final originalLanguageCode =
+      obx.QueryStringProperty<ChatMessageEntity>(_entities[90].properties[3]);
+
+  /// see [ChatMessageEntity.translatedText]
+  static final translatedText =
+      obx.QueryStringProperty<ChatMessageEntity>(_entities[90].properties[4]);
+
+  /// see [ChatMessageEntity.translatedLanguageCode]
+  static final translatedLanguageCode =
+      obx.QueryStringProperty<ChatMessageEntity>(_entities[90].properties[5]);
+
+  /// see [ChatMessageEntity.translationConfidence]
+  static final translationConfidence =
+      obx.QueryDoubleProperty<ChatMessageEntity>(_entities[90].properties[6]);
+
+  /// see [ChatMessageEntity.sentAt]
+  static final sentAt =
+      obx.QueryDateProperty<ChatMessageEntity>(_entities[90].properties[7]);
 }
