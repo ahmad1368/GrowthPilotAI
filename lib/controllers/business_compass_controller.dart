@@ -779,6 +779,11 @@ class BusinessCompassController extends GetxController {
         title: 'Banking Gateway Integration',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'MERCHANT_DEPENDENCY_ENGINE',
+        title: 'Merchant Dependency Detection',
+        data: {},
+      ),
     ];
   }
 
