@@ -3776,10 +3776,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "90:3702461949675558770",
+      "lastPropertyId": "6:3043525797727553487",
+      "name": "DisputeEvidenceEntity",
+      "properties": [
+        {
+          "id": "1:3229891343876878941",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3183597429852239241",
+          "name": "escrowAccountId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "92:1217759833295492049"
+        },
+        {
+          "id": "3:6304601470798057728",
+          "name": "submittedBy",
+          "type": 9
+        },
+        {
+          "id": "4:1554981790861558222",
+          "name": "dbEvidenceType",
+          "type": 6
+        },
+        {
+          "id": "5:2951971603680670771",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:3043525797727553487",
+          "name": "submittedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "93:8577335016689342177"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "89:1722016506439603127",
-  "lastIndexId": "91:4116157710293814297",
+  "lastEntityId": "90:3702461949675558770",
+  "lastIndexId": "93:8577335016689342177",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

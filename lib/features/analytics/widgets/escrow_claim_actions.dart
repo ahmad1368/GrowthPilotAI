@@ -7,7 +7,9 @@ import 'package:growth_pilot_ai/core/enum/escrow_status.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/escrow_repos.dart';
 
 /// Refund-claim filing and admin dispute resolution (Issue #415,
-/// acceptance criteria 3-5) — split out of [EscrowBody].
+/// acceptance criteria 3-5) — split out of [EscrowBody]. Evidence
+/// submission for the dispute dossier lives in [EscrowEvidenceActions]
+/// (Issue #427).
 class EscrowClaimActions {
   final EscrowRepos repos;
 
