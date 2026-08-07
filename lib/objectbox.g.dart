@@ -40,6 +40,7 @@ import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/daily_transaction_cap_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
+import 'core/data/entities/dispute_evidence_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
@@ -3805,6 +3806,47 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(90, 3702461949675558770),
+      name: 'DisputeEvidenceEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3043525797727553487),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3229891343876878941),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3183597429852239241),
+            name: 'escrowAccountId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(92, 1217759833295492049)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6304601470798057728),
+            name: 'submittedBy',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1554981790861558222),
+            name: 'dbEvidenceType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2951971603680670771),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3043525797727553487),
+            name: 'submittedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(93, 8577335016689342177))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3843,8 +3885,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(89, 1722016506439603127),
-      lastIndexId: const obx_int.IdUid(91, 4116157710293814297),
+      lastEntityId: const obx_int.IdUid(90, 3702461949675558770),
+      lastIndexId: const obx_int.IdUid(93, 8577335016689342177),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -8245,7 +8287,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   setAt: setAtParam);
 
               return object;
-            })
+            }),
+    DisputeEvidenceEntity: obx_int.EntityDefinition<DisputeEvidenceEntity>(
+        model: _entities[88],
+        toOneRelations: (DisputeEvidenceEntity object) => [],
+        toManyRelations: (DisputeEvidenceEntity object) => {},
+        getId: (DisputeEvidenceEntity object) => object.id,
+        setId: (DisputeEvidenceEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (DisputeEvidenceEntity object, fb.Builder fbb) {
+          final submittedByOffset = fbb.writeString(object.submittedBy);
+          final descriptionOffset = fbb.writeString(object.description);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.escrowAccountId);
+          fbb.addOffset(2, submittedByOffset);
+          fbb.addInt64(3, object.dbEvidenceType);
+          fbb.addOffset(4, descriptionOffset);
+          fbb.addInt64(5, object.submittedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final escrowAccountIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final submittedByParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final dbEvidenceTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final submittedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = DisputeEvidenceEntity(
+              id: idParam,
+              escrowAccountId: escrowAccountIdParam,
+              submittedBy: submittedByParam,
+              dbEvidenceType: dbEvidenceTypeParam,
+              description: descriptionParam,
+              submittedAt: submittedAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -10896,4 +10986,32 @@ class MerchantTierOverrideEntity_ {
   /// see [MerchantTierOverrideEntity.setAt]
   static final setAt = obx.QueryDateProperty<MerchantTierOverrideEntity>(
       _entities[87].properties[4]);
+}
+
+/// [DisputeEvidenceEntity] entity fields to define ObjectBox queries.
+class DisputeEvidenceEntity_ {
+  /// see [DisputeEvidenceEntity.id]
+  static final id = obx.QueryIntegerProperty<DisputeEvidenceEntity>(
+      _entities[88].properties[0]);
+
+  /// see [DisputeEvidenceEntity.escrowAccountId]
+  static final escrowAccountId =
+      obx.QueryIntegerProperty<DisputeEvidenceEntity>(
+          _entities[88].properties[1]);
+
+  /// see [DisputeEvidenceEntity.submittedBy]
+  static final submittedBy = obx.QueryStringProperty<DisputeEvidenceEntity>(
+      _entities[88].properties[2]);
+
+  /// see [DisputeEvidenceEntity.dbEvidenceType]
+  static final dbEvidenceType = obx.QueryIntegerProperty<DisputeEvidenceEntity>(
+      _entities[88].properties[3]);
+
+  /// see [DisputeEvidenceEntity.description]
+  static final description = obx.QueryStringProperty<DisputeEvidenceEntity>(
+      _entities[88].properties[4]);
+
+  /// see [DisputeEvidenceEntity.submittedAt]
+  static final submittedAt =
+      obx.QueryDateProperty<DisputeEvidenceEntity>(_entities[88].properties[5]);
 }

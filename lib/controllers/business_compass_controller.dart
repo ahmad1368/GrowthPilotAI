@@ -794,6 +794,11 @@ class BusinessCompassController extends GetxController {
         title: 'Settlement Tracking',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'ACCOUNTING_REPORTS_ENGINE',
+        title: 'Detailed Accounting Reports',
+        data: {},
+      ),
     ];
   }
 

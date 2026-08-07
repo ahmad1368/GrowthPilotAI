@@ -92,6 +92,7 @@ class GridLayoutService {
     'MERCHANT_DEPENDENCY_ENGINE',
     'TIERED_COMMISSION_ENGINE',
     'SETTLEMENT_TRACKING_DASHBOARD',
+    'ACCOUNTING_REPORTS_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
