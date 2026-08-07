@@ -59,8 +59,11 @@ import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/marketing_campaign_entity.dart';
+import 'core/data/entities/merchant_activity_event_entity.dart';
 import 'core/data/entities/merchant_branch_entity.dart';
 import 'core/data/entities/merchant_config_entity.dart';
+import 'core/data/entities/merchant_dependency_evaluation_entity.dart';
+import 'core/data/entities/merchant_dependency_input_entity.dart';
 import 'core/data/entities/merchant_partnership_entity.dart';
 import 'core/data/entities/merchant_tag_entity.dart';
 import 'core/data/entities/message_entity.dart';
@@ -3576,6 +3579,133 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(85, 716285234948864559),
+      name: 'MerchantActivityEventEntity',
+      lastPropertyId: const obx_int.IdUid(4, 1767824745302761614),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8477790407466880231),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 497692381780070265),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(83, 4475879894425170782)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7142260119006122715),
+            name: 'dbEventType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1767824745302761614),
+            name: 'occurredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(84, 8458504999350535577))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(86, 5605825351582752682),
+      name: 'MerchantDependencyEvaluationEntity',
+      lastPropertyId: const obx_int.IdUid(10, 7215515827604775105),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1639251426416460450),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1667209902440067720),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(85, 3958412026743193939)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8838408876136034632),
+            name: 'orderVolume',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5817905960943158515),
+            name: 'dailyVisitAverage',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8043914076948456970),
+            name: 'trialCompleted',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6223511890340795340),
+            name: 'inventoryLiquidationPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 9061162394979705472),
+            name: 'dependencyScore',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 794585845091423795),
+            name: 'dbDependencyTier',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7616009626300838176),
+            name: 'triggeredTierUpgrade',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7215515827604775105),
+            name: 'evaluatedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(86, 5832452179776416741))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(87, 5926039941065073942),
+      name: 'MerchantDependencyInputEntity',
+      lastPropertyId: const obx_int.IdUid(5, 6747456429864028397),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3609068889402021352),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5759617964348704643),
+            name: 'merchantName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(87, 7172556803416953805)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3113905861462835838),
+            name: 'trialStartedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6059310337349376806),
+            name: 'inventoryLiquidationPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6747456429864028397),
+            name: 'updatedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -3614,8 +3744,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(84, 3905315127030752685),
-      lastIndexId: const obx_int.IdUid(82, 2437075669585359133),
+      lastEntityId: const obx_int.IdUid(87, 5926039941065073942),
+      lastIndexId: const obx_int.IdUid(87, 7172556803416953805),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -7763,7 +7893,153 @@ obx_int.ModelDefinition getObjectBoxModel() {
               settledAt: settledAtParam);
 
           return object;
-        })
+        }),
+    MerchantActivityEventEntity:
+        obx_int.EntityDefinition<MerchantActivityEventEntity>(
+            model: _entities[83],
+            toOneRelations: (MerchantActivityEventEntity object) => [],
+            toManyRelations: (MerchantActivityEventEntity object) => {},
+            getId: (MerchantActivityEventEntity object) => object.id,
+            setId: (MerchantActivityEventEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (MerchantActivityEventEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              fbb.startTable(5);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addInt64(2, object.dbEventType);
+              fbb.addInt64(3, object.occurredAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final dbEventTypeParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+              final object = MerchantActivityEventEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  dbEventType: dbEventTypeParam,
+                  occurredAt: occurredAtParam);
+
+              return object;
+            }),
+    MerchantDependencyEvaluationEntity: obx_int.EntityDefinition<
+            MerchantDependencyEvaluationEntity>(
+        model: _entities[84],
+        toOneRelations: (MerchantDependencyEvaluationEntity object) => [],
+        toManyRelations: (MerchantDependencyEvaluationEntity object) => {},
+        getId: (MerchantDependencyEvaluationEntity object) => object.id,
+        setId: (MerchantDependencyEvaluationEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB:
+            (MerchantDependencyEvaluationEntity object, fb.Builder fbb) {
+          final merchantNameOffset = fbb.writeString(object.merchantName);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, merchantNameOffset);
+          fbb.addInt64(2, object.orderVolume);
+          fbb.addFloat64(3, object.dailyVisitAverage);
+          fbb.addBool(4, object.trialCompleted);
+          fbb.addFloat64(5, object.inventoryLiquidationPercent);
+          fbb.addInt64(6, object.dependencyScore);
+          fbb.addInt64(7, object.dbDependencyTier);
+          fbb.addBool(8, object.triggeredTierUpgrade);
+          fbb.addInt64(9, object.evaluatedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final merchantNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final orderVolumeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dailyVisitAverageParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final trialCompletedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
+          final inventoryLiquidationPercentParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dependencyScoreParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final dbDependencyTierParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final triggeredTierUpgradeParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final evaluatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+          final object = MerchantDependencyEvaluationEntity(
+              id: idParam,
+              merchantName: merchantNameParam,
+              orderVolume: orderVolumeParam,
+              dailyVisitAverage: dailyVisitAverageParam,
+              trialCompleted: trialCompletedParam,
+              inventoryLiquidationPercent: inventoryLiquidationPercentParam,
+              dependencyScore: dependencyScoreParam,
+              dbDependencyTier: dbDependencyTierParam,
+              triggeredTierUpgrade: triggeredTierUpgradeParam,
+              evaluatedAt: evaluatedAtParam);
+
+          return object;
+        }),
+    MerchantDependencyInputEntity:
+        obx_int.EntityDefinition<MerchantDependencyInputEntity>(
+            model: _entities[85],
+            toOneRelations: (MerchantDependencyInputEntity object) => [],
+            toManyRelations: (MerchantDependencyInputEntity object) => {},
+            getId: (MerchantDependencyInputEntity object) => object.id,
+            setId: (MerchantDependencyInputEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (MerchantDependencyInputEntity object, fb.Builder fbb) {
+              final merchantNameOffset = fbb.writeString(object.merchantName);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, merchantNameOffset);
+              fbb.addInt64(2, object.trialStartedAt.millisecondsSinceEpoch);
+              fbb.addFloat64(3, object.inventoryLiquidationPercent);
+              fbb.addInt64(4, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final merchantNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final trialStartedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+              final inventoryLiquidationPercentParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = MerchantDependencyInputEntity(
+                  id: idParam,
+                  merchantName: merchantNameParam,
+                  trialStartedAt: trialStartedAtParam,
+                  inventoryLiquidationPercent: inventoryLiquidationPercentParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -10239,4 +10515,104 @@ class BankingGatewayTransactionEntity_ {
   static final transactionHash =
       obx.QueryStringProperty<BankingGatewayTransactionEntity>(
           _entities[82].properties[12]);
+}
+
+/// [MerchantActivityEventEntity] entity fields to define ObjectBox queries.
+class MerchantActivityEventEntity_ {
+  /// see [MerchantActivityEventEntity.id]
+  static final id = obx.QueryIntegerProperty<MerchantActivityEventEntity>(
+      _entities[83].properties[0]);
+
+  /// see [MerchantActivityEventEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<MerchantActivityEventEntity>(
+          _entities[83].properties[1]);
+
+  /// see [MerchantActivityEventEntity.dbEventType]
+  static final dbEventType =
+      obx.QueryIntegerProperty<MerchantActivityEventEntity>(
+          _entities[83].properties[2]);
+
+  /// see [MerchantActivityEventEntity.occurredAt]
+  static final occurredAt = obx.QueryDateProperty<MerchantActivityEventEntity>(
+      _entities[83].properties[3]);
+}
+
+/// [MerchantDependencyEvaluationEntity] entity fields to define ObjectBox queries.
+class MerchantDependencyEvaluationEntity_ {
+  /// see [MerchantDependencyEvaluationEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[0]);
+
+  /// see [MerchantDependencyEvaluationEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[1]);
+
+  /// see [MerchantDependencyEvaluationEntity.orderVolume]
+  static final orderVolume =
+      obx.QueryIntegerProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[2]);
+
+  /// see [MerchantDependencyEvaluationEntity.dailyVisitAverage]
+  static final dailyVisitAverage =
+      obx.QueryDoubleProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[3]);
+
+  /// see [MerchantDependencyEvaluationEntity.trialCompleted]
+  static final trialCompleted =
+      obx.QueryBooleanProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[4]);
+
+  /// see [MerchantDependencyEvaluationEntity.inventoryLiquidationPercent]
+  static final inventoryLiquidationPercent =
+      obx.QueryDoubleProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[5]);
+
+  /// see [MerchantDependencyEvaluationEntity.dependencyScore]
+  static final dependencyScore =
+      obx.QueryIntegerProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[6]);
+
+  /// see [MerchantDependencyEvaluationEntity.dbDependencyTier]
+  static final dbDependencyTier =
+      obx.QueryIntegerProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[7]);
+
+  /// see [MerchantDependencyEvaluationEntity.triggeredTierUpgrade]
+  static final triggeredTierUpgrade =
+      obx.QueryBooleanProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[8]);
+
+  /// see [MerchantDependencyEvaluationEntity.evaluatedAt]
+  static final evaluatedAt =
+      obx.QueryDateProperty<MerchantDependencyEvaluationEntity>(
+          _entities[84].properties[9]);
+}
+
+/// [MerchantDependencyInputEntity] entity fields to define ObjectBox queries.
+class MerchantDependencyInputEntity_ {
+  /// see [MerchantDependencyInputEntity.id]
+  static final id = obx.QueryIntegerProperty<MerchantDependencyInputEntity>(
+      _entities[85].properties[0]);
+
+  /// see [MerchantDependencyInputEntity.merchantName]
+  static final merchantName =
+      obx.QueryStringProperty<MerchantDependencyInputEntity>(
+          _entities[85].properties[1]);
+
+  /// see [MerchantDependencyInputEntity.trialStartedAt]
+  static final trialStartedAt =
+      obx.QueryDateProperty<MerchantDependencyInputEntity>(
+          _entities[85].properties[2]);
+
+  /// see [MerchantDependencyInputEntity.inventoryLiquidationPercent]
+  static final inventoryLiquidationPercent =
+      obx.QueryDoubleProperty<MerchantDependencyInputEntity>(
+          _entities[85].properties[3]);
+
+  /// see [MerchantDependencyInputEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<MerchantDependencyInputEntity>(
+      _entities[85].properties[4]);
 }

@@ -57,6 +57,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/mapped_radar_report_w
 import 'package:growth_pilot_ai/features/analytics/widgets/marketing_campaign_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_branch_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/merchant_dependency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_partnership_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_tag_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/metric_legend_report_widget.dart';
@@ -449,6 +450,10 @@ class ReportWidgetsBootstrap {
         'BANKING_GATEWAY_ORCHESTRATION',
         (spec) =>
             BankingGatewayReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MERCHANT_DEPENDENCY_ENGINE',
+        (spec) =>
+            MerchantDependencyReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

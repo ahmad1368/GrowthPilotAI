@@ -3543,10 +3543,142 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "85:716285234948864559",
+      "lastPropertyId": "4:1767824745302761614",
+      "name": "MerchantActivityEventEntity",
+      "properties": [
+        {
+          "id": "1:8477790407466880231",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:497692381780070265",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "83:4475879894425170782"
+        },
+        {
+          "id": "3:7142260119006122715",
+          "name": "dbEventType",
+          "type": 6
+        },
+        {
+          "id": "4:1767824745302761614",
+          "name": "occurredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "84:8458504999350535577"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "86:5605825351582752682",
+      "lastPropertyId": "10:7215515827604775105",
+      "name": "MerchantDependencyEvaluationEntity",
+      "properties": [
+        {
+          "id": "1:1639251426416460450",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1667209902440067720",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "85:3958412026743193939"
+        },
+        {
+          "id": "3:8838408876136034632",
+          "name": "orderVolume",
+          "type": 6
+        },
+        {
+          "id": "4:5817905960943158515",
+          "name": "dailyVisitAverage",
+          "type": 8
+        },
+        {
+          "id": "5:8043914076948456970",
+          "name": "trialCompleted",
+          "type": 1
+        },
+        {
+          "id": "6:6223511890340795340",
+          "name": "inventoryLiquidationPercent",
+          "type": 8
+        },
+        {
+          "id": "7:9061162394979705472",
+          "name": "dependencyScore",
+          "type": 6
+        },
+        {
+          "id": "8:794585845091423795",
+          "name": "dbDependencyTier",
+          "type": 6
+        },
+        {
+          "id": "9:7616009626300838176",
+          "name": "triggeredTierUpgrade",
+          "type": 1
+        },
+        {
+          "id": "10:7215515827604775105",
+          "name": "evaluatedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "86:5832452179776416741"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "87:5926039941065073942",
+      "lastPropertyId": "5:6747456429864028397",
+      "name": "MerchantDependencyInputEntity",
+      "properties": [
+        {
+          "id": "1:3609068889402021352",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5759617964348704643",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "87:7172556803416953805"
+        },
+        {
+          "id": "3:3113905861462835838",
+          "name": "trialStartedAt",
+          "type": 10
+        },
+        {
+          "id": "4:6059310337349376806",
+          "name": "inventoryLiquidationPercent",
+          "type": 8
+        },
+        {
+          "id": "5:6747456429864028397",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "84:3905315127030752685",
-  "lastIndexId": "82:2437075669585359133",
+  "lastEntityId": "87:5926039941065073942",
+  "lastIndexId": "87:7172556803416953805",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
