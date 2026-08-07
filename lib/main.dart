@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/core/services/omni_logger.dart';
@@ -32,6 +33,9 @@ import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_s
 import 'package:growth_pilot_ai/features/transactions/screens/duplicate_matches_screen.dart';
 import 'package:growth_pilot_ai/features/inbox/screens/inbox_screen.dart';
 import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
+import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
+import 'package:growth_pilot_ai/core/enum/app_locale.dart';
+import 'package:growth_pilot_ai/features/onboarding/widgets/app_locale_gate.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -89,7 +93,16 @@ class MyApp extends StatelessWidget {
           initialBinding: AppBindings(),
           theme: theme,
           darkTheme: darkTheme,
-          home: const HomeLayout(),
+          translations: AppTranslations(),
+          locale: const Locale('en'),
+          fallbackLocale: const Locale('en'),
+          supportedLocales: AppLocale.values.map((l) => Locale(l.languageCode)),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          home: const AppLocaleGate(child: HomeLayout()),
           getPages: [
             GetPage(
               name: '/settings',
