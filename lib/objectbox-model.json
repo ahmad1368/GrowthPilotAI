@@ -3675,10 +3675,111 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "88:6355433803735270063",
+      "lastPropertyId": "10:5455359193039601086",
+      "name": "CommissionTierRecordEntity",
+      "properties": [
+        {
+          "id": "1:4784002220129157674",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:973982406190724230",
+          "name": "orderId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "88:4460331561770405268"
+        },
+        {
+          "id": "3:6758929833908319456",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "89:73100205051408397"
+        },
+        {
+          "id": "4:5983030217491734720",
+          "name": "cumulativeTransactionCount",
+          "type": 6
+        },
+        {
+          "id": "5:5887973179952907321",
+          "name": "dbTierBand",
+          "type": 6
+        },
+        {
+          "id": "6:8500315572761013382",
+          "name": "commissionRate",
+          "type": 8
+        },
+        {
+          "id": "7:5791615994250965114",
+          "name": "commissionAmount",
+          "type": 8
+        },
+        {
+          "id": "8:5995379252362181809",
+          "name": "isOverridden",
+          "type": 1
+        },
+        {
+          "id": "9:6618902707946271476",
+          "name": "dependencyVerified",
+          "type": 1
+        },
+        {
+          "id": "10:5455359193039601086",
+          "name": "recordedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "90:7667317443046295561"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "89:1722016506439603127",
+      "lastPropertyId": "5:2120478185320007137",
+      "name": "MerchantTierOverrideEntity",
+      "properties": [
+        {
+          "id": "1:6531409650421538167",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9124975540532621543",
+          "name": "merchantName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "91:4116157710293814297"
+        },
+        {
+          "id": "3:6176570551691484101",
+          "name": "dbTierBand",
+          "type": 6
+        },
+        {
+          "id": "4:2552629150662748684",
+          "name": "reason",
+          "type": 9
+        },
+        {
+          "id": "5:2120478185320007137",
+          "name": "setAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "87:5926039941065073942",
-  "lastIndexId": "87:7172556803416953805",
+  "lastEntityId": "89:1722016506439603127",
+  "lastIndexId": "91:4116157710293814297",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
