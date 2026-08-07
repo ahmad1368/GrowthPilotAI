@@ -774,6 +774,11 @@ class BusinessCompassController extends GetxController {
         title: 'Zero-Commission Incentive',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'BANKING_GATEWAY_ORCHESTRATION',
+        title: 'Banking Gateway Integration',
+        data: {},
+      ),
     ];
   }
 

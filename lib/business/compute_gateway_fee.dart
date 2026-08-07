@@ -1,0 +1,16 @@
+import 'package:growth_pilot_ai/core/enum/banking_gateway_provider.dart';
+
+/// Transparent per-provider transaction fee (Issue #421, acceptance
+/// criterion 2) — these mirror each provider's typical public rate
+/// card, not a live-negotiated merchant rate, since there's no real
+/// account behind any of them.
+class ComputeGatewayFee {
+  static double call(BankingGatewayProvider provider, double convertedAmount) {
+    return switch (provider) {
+      BankingGatewayProvider.stripe => convertedAmount * 0.029 + 0.30,
+      BankingGatewayProvider.paypal => convertedAmount * 0.0349 + 0.49,
+      BankingGatewayProvider.swift => 25.0,
+      BankingGatewayProvider.sepa => 1.0,
+    };
+  }
+}

@@ -3469,9 +3469,78 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "84:3905315127030752685",
+      "lastPropertyId": "12:1271638984305422991",
+      "name": "BankingGatewayTransactionEntity",
+      "properties": [
+        {
+          "id": "1:6595266975925161889",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8827142343038429833",
+          "name": "dbProvider",
+          "type": 6
+        },
+        {
+          "id": "3:5770893804341985928",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "4:1086570095503115595",
+          "name": "counterpartyName",
+          "type": 9
+        },
+        {
+          "id": "5:8026988086895995840",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "6:4110869964723601070",
+          "name": "currency",
+          "type": 9
+        },
+        {
+          "id": "7:1808258355665613034",
+          "name": "convertedAmount",
+          "type": 8
+        },
+        {
+          "id": "8:1683145373839557647",
+          "name": "exchangeRate",
+          "type": 8
+        },
+        {
+          "id": "9:6305452660223106601",
+          "name": "feeAmount",
+          "type": 8
+        },
+        {
+          "id": "10:7496217132252609396",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "11:549075805891758449",
+          "name": "initiatedAt",
+          "type": 10
+        },
+        {
+          "id": "12:1271638984305422991",
+          "name": "settledAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "83:2506782492058121084",
+  "lastEntityId": "84:3905315127030752685",
   "lastIndexId": "82:2437075669585359133",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

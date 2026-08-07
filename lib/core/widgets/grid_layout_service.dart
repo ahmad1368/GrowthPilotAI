@@ -88,6 +88,7 @@ class GridLayoutService {
     'INVENTORY_RECOMMENDATION_ENGINE',
     'MICRO_CREDIT_FACILITY',
     'FEE_WAIVER_INCENTIVE',
+    'BANKING_GATEWAY_ORCHESTRATION',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
