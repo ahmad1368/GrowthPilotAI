@@ -96,6 +96,7 @@ class GridLayoutService {
     'CRA_COMPLIANCE_LOGGING_ENGINE',
     'ON_DEVICE_TRANSLATION_BRIDGE',
     'CONTACT_SYNC_FIND_FRIENDS',
+    'REFERRAL_INVITATION_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

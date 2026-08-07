@@ -4024,10 +4024,125 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "96:1736665576357028023",
+      "lastPropertyId": "8:8514581356095556967",
+      "name": "ReferralInviteEntity",
+      "properties": [
+        {
+          "id": "1:2246745661599659917",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8561095208197829908",
+          "name": "inviterName",
+          "type": 9
+        },
+        {
+          "id": "3:1033085256194565790",
+          "name": "contactIdentifier",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "99:5513444478048226423"
+        },
+        {
+          "id": "4:75719438818144703",
+          "name": "referralCode",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "100:5088843329253807025"
+        },
+        {
+          "id": "5:5583592229255238821",
+          "name": "dbChannel",
+          "type": 6
+        },
+        {
+          "id": "6:7797052989799241189",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "7:6557387619860799407",
+          "name": "issuedAt",
+          "type": 10
+        },
+        {
+          "id": "8:8514581356095556967",
+          "name": "expiresAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "97:1188163525722284782",
+      "lastPropertyId": "5:9141404409752518463",
+      "name": "ReferralRewardEntity",
+      "properties": [
+        {
+          "id": "1:3326641941930087592",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8953061249639267296",
+          "name": "referralInviteId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "101:5992082187480816500"
+        },
+        {
+          "id": "3:2096966226595675208",
+          "name": "dbRecipientRole",
+          "type": 6
+        },
+        {
+          "id": "4:4424339792465860564",
+          "name": "rewardPercent",
+          "type": 8
+        },
+        {
+          "id": "5:9141404409752518463",
+          "name": "grantedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "98:2010970175496136513",
+      "lastPropertyId": "3:8525812270294712942",
+      "name": "UnmatchedContactEntity",
+      "properties": [
+        {
+          "id": "1:7310509338164394404",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1483146599249754100",
+          "name": "rawIdentifier",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "102:174529733436404019"
+        },
+        {
+          "id": "3:8525812270294712942",
+          "name": "firstSeenAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "95:7226247964641915561",
-  "lastIndexId": "98:2230745779183930022",
+  "lastEntityId": "98:2010970175496136513",
+  "lastIndexId": "102:174529733436404019",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
