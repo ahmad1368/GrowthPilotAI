@@ -799,6 +799,11 @@ class BusinessCompassController extends GetxController {
         title: 'Detailed Accounting Reports',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'CRA_COMPLIANCE_LOGGING_ENGINE',
+        title: 'CRA Transaction Compliance Log',
+        data: {},
+      ),
     ];
   }
 

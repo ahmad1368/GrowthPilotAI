@@ -19,6 +19,7 @@ dependencies:
 
   # --- Security & Hashing ---
   crypto: ^3.0.7
+  encrypt: ^5.0.3
 
   # --- UI, Fonts & Themes ---
   cupertino_icons: ^1.0.6

@@ -59,6 +59,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/merchant_branch_repor
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_config_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_dependency_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/accounting_reports_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/cra_compliance_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/settlement_tracking_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/tiered_commission_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_partnership_report_widget.dart';
@@ -469,6 +470,10 @@ class ReportWidgetsBootstrap {
         'ACCOUNTING_REPORTS_ENGINE',
         (spec) =>
             AccountingReportsReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'CRA_COMPLIANCE_LOGGING_ENGINE',
+        (spec) =>
+            CraComplianceReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
