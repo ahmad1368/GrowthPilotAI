@@ -3321,10 +3321,100 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "81:8612487678255723875",
+      "lastPropertyId": "5:2897806221802901510",
+      "name": "MicroCreditAccountEntity",
+      "properties": [
+        {
+          "id": "1:5507836339200780871",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6638350355900589730",
+          "name": "merchantName",
+          "type": 9
+        },
+        {
+          "id": "3:5018834615038691453",
+          "name": "creditLimit",
+          "type": 8
+        },
+        {
+          "id": "4:6894491434089473726",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:2897806221802901510",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "82:1372133852007559773",
+      "lastPropertyId": "9:7304079183731014762",
+      "name": "MicroCreditLoanEntity",
+      "properties": [
+        {
+          "id": "1:2285563250542048751",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5798384132014226877",
+          "name": "creditAccountId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "80:2394617465633827378"
+        },
+        {
+          "id": "3:1175935428792310952",
+          "name": "escrowAccountId",
+          "type": 6
+        },
+        {
+          "id": "4:4656085144836960315",
+          "name": "principal",
+          "type": 8
+        },
+        {
+          "id": "5:5978300367317975662",
+          "name": "feeAmount",
+          "type": 8
+        },
+        {
+          "id": "6:3726329411659952191",
+          "name": "termDays",
+          "type": 6
+        },
+        {
+          "id": "7:6071284407604123393",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "8:5845651576329814041",
+          "name": "disbursedAt",
+          "type": 10
+        },
+        {
+          "id": "9:7304079183731014762",
+          "name": "dueDate",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "80:2524884885367168578",
-  "lastIndexId": "79:4355334581273667631",
+  "lastEntityId": "82:1372133852007559773",
+  "lastIndexId": "80:2394617465633827378",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

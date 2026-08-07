@@ -14,6 +14,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/escrow_report_widget.
 import 'package:growth_pilot_ai/features/analytics/widgets/price_intelligence_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/seasonal_catalog_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/inventory_recommendation_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/micro_credit_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/analytics_pricing_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/annual_profit_forecast_report_widget.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banner_rule_report_widget.dart';
@@ -434,6 +435,10 @@ class ReportWidgetsBootstrap {
         'INVENTORY_RECOMMENDATION_ENGINE',
         (spec) =>
             InventoryRecommendationReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'MICRO_CREDIT_FACILITY',
+        (spec) =>
+            MicroCreditReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
