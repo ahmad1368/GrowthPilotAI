@@ -37,6 +37,8 @@ import 'core/data/entities/commission_tier_record_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
+import 'core/data/entities/contact_sync_match_entity.dart';
+import 'core/data/entities/contact_sync_preference_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/cra_transaction_log_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
@@ -83,6 +85,7 @@ import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_feedback_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
+import 'core/data/entities/registered_user_directory_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
@@ -3965,6 +3968,90 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(96, 5027148752694019641))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(93, 5964185589622932826),
+      name: 'ContactSyncMatchEntity',
+      lastPropertyId: const obx_int.IdUid(3, 950748809094136540),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8386151508726874229),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 460352889028626441),
+            name: 'matchedUserName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 950748809094136540),
+            name: 'matchedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(94, 1122420123589462197),
+      name: 'ContactSyncPreferenceEntity',
+      lastPropertyId: const obx_int.IdUid(3, 3461939428568922943),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3815704381946621066),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2167695770115667568),
+            name: 'isEnabled',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3461939428568922943),
+            name: 'updatedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(95, 7226247964641915561),
+      name: 'RegisteredUserDirectoryEntity',
+      lastPropertyId: const obx_int.IdUid(5, 8245738418381739896),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8085046204469217959),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 378207278483155132),
+            name: 'displayName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1798752376675757364),
+            name: 'hashedPhone',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(97, 1194817800059086495)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4050811798900839496),
+            name: 'hashedEmail',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(98, 2230745779183930022)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8245738418381739896),
+            name: 'addedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4003,8 +4090,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(92, 8860505853395559817),
-      lastIndexId: const obx_int.IdUid(96, 5027148752694019641),
+      lastEntityId: const obx_int.IdUid(95, 7226247964641915561),
+      lastIndexId: const obx_int.IdUid(98, 2230745779183930022),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -8587,7 +8674,121 @@ obx_int.ModelDefinition getObjectBoxModel() {
               sentAt: sentAtParam);
 
           return object;
-        })
+        }),
+    ContactSyncMatchEntity: obx_int.EntityDefinition<ContactSyncMatchEntity>(
+        model: _entities[91],
+        toOneRelations: (ContactSyncMatchEntity object) => [],
+        toManyRelations: (ContactSyncMatchEntity object) => {},
+        getId: (ContactSyncMatchEntity object) => object.id,
+        setId: (ContactSyncMatchEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ContactSyncMatchEntity object, fb.Builder fbb) {
+          final matchedUserNameOffset = fbb.writeString(object.matchedUserName);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, matchedUserNameOffset);
+          fbb.addInt64(2, object.matchedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final matchedUserNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final matchedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final object = ContactSyncMatchEntity(
+              id: idParam,
+              matchedUserName: matchedUserNameParam,
+              matchedAt: matchedAtParam);
+
+          return object;
+        }),
+    ContactSyncPreferenceEntity:
+        obx_int.EntityDefinition<ContactSyncPreferenceEntity>(
+            model: _entities[92],
+            toOneRelations: (ContactSyncPreferenceEntity object) => [],
+            toManyRelations: (ContactSyncPreferenceEntity object) => {},
+            getId: (ContactSyncPreferenceEntity object) => object.id,
+            setId: (ContactSyncPreferenceEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ContactSyncPreferenceEntity object, fb.Builder fbb) {
+              fbb.startTable(4);
+              fbb.addInt64(0, object.id);
+              fbb.addBool(1, object.isEnabled);
+              fbb.addInt64(2, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final isEnabledParam =
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+              final object = ContactSyncPreferenceEntity(
+                  id: idParam,
+                  isEnabled: isEnabledParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            }),
+    RegisteredUserDirectoryEntity:
+        obx_int.EntityDefinition<RegisteredUserDirectoryEntity>(
+            model: _entities[93],
+            toOneRelations: (RegisteredUserDirectoryEntity object) => [],
+            toManyRelations: (RegisteredUserDirectoryEntity object) => {},
+            getId: (RegisteredUserDirectoryEntity object) => object.id,
+            setId: (RegisteredUserDirectoryEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (RegisteredUserDirectoryEntity object, fb.Builder fbb) {
+              final displayNameOffset = fbb.writeString(object.displayName);
+              final hashedPhoneOffset = fbb.writeString(object.hashedPhone);
+              final hashedEmailOffset = fbb.writeString(object.hashedEmail);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, displayNameOffset);
+              fbb.addOffset(2, hashedPhoneOffset);
+              fbb.addOffset(3, hashedEmailOffset);
+              fbb.addInt64(4, object.addedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final displayNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final hashedPhoneParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final hashedEmailParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+              final addedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = RegisteredUserDirectoryEntity(
+                  id: idParam,
+                  displayName: displayNameParam,
+                  hashedPhone: hashedPhoneParam,
+                  hashedEmail: hashedEmailParam,
+                  addedAt: addedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -11353,4 +11554,62 @@ class ChatMessageEntity_ {
   /// see [ChatMessageEntity.sentAt]
   static final sentAt =
       obx.QueryDateProperty<ChatMessageEntity>(_entities[90].properties[7]);
+}
+
+/// [ContactSyncMatchEntity] entity fields to define ObjectBox queries.
+class ContactSyncMatchEntity_ {
+  /// see [ContactSyncMatchEntity.id]
+  static final id = obx.QueryIntegerProperty<ContactSyncMatchEntity>(
+      _entities[91].properties[0]);
+
+  /// see [ContactSyncMatchEntity.matchedUserName]
+  static final matchedUserName =
+      obx.QueryStringProperty<ContactSyncMatchEntity>(
+          _entities[91].properties[1]);
+
+  /// see [ContactSyncMatchEntity.matchedAt]
+  static final matchedAt = obx.QueryDateProperty<ContactSyncMatchEntity>(
+      _entities[91].properties[2]);
+}
+
+/// [ContactSyncPreferenceEntity] entity fields to define ObjectBox queries.
+class ContactSyncPreferenceEntity_ {
+  /// see [ContactSyncPreferenceEntity.id]
+  static final id = obx.QueryIntegerProperty<ContactSyncPreferenceEntity>(
+      _entities[92].properties[0]);
+
+  /// see [ContactSyncPreferenceEntity.isEnabled]
+  static final isEnabled =
+      obx.QueryBooleanProperty<ContactSyncPreferenceEntity>(
+          _entities[92].properties[1]);
+
+  /// see [ContactSyncPreferenceEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<ContactSyncPreferenceEntity>(
+      _entities[92].properties[2]);
+}
+
+/// [RegisteredUserDirectoryEntity] entity fields to define ObjectBox queries.
+class RegisteredUserDirectoryEntity_ {
+  /// see [RegisteredUserDirectoryEntity.id]
+  static final id = obx.QueryIntegerProperty<RegisteredUserDirectoryEntity>(
+      _entities[93].properties[0]);
+
+  /// see [RegisteredUserDirectoryEntity.displayName]
+  static final displayName =
+      obx.QueryStringProperty<RegisteredUserDirectoryEntity>(
+          _entities[93].properties[1]);
+
+  /// see [RegisteredUserDirectoryEntity.hashedPhone]
+  static final hashedPhone =
+      obx.QueryStringProperty<RegisteredUserDirectoryEntity>(
+          _entities[93].properties[2]);
+
+  /// see [RegisteredUserDirectoryEntity.hashedEmail]
+  static final hashedEmail =
+      obx.QueryStringProperty<RegisteredUserDirectoryEntity>(
+          _entities[93].properties[3]);
+
+  /// see [RegisteredUserDirectoryEntity.addedAt]
+  static final addedAt = obx.QueryDateProperty<RegisteredUserDirectoryEntity>(
+      _entities[93].properties[4]);
 }

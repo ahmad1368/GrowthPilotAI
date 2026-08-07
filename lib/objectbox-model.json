@@ -3938,10 +3938,96 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "93:5964185589622932826",
+      "lastPropertyId": "3:950748809094136540",
+      "name": "ContactSyncMatchEntity",
+      "properties": [
+        {
+          "id": "1:8386151508726874229",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:460352889028626441",
+          "name": "matchedUserName",
+          "type": 9
+        },
+        {
+          "id": "3:950748809094136540",
+          "name": "matchedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "94:1122420123589462197",
+      "lastPropertyId": "3:3461939428568922943",
+      "name": "ContactSyncPreferenceEntity",
+      "properties": [
+        {
+          "id": "1:3815704381946621066",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2167695770115667568",
+          "name": "isEnabled",
+          "type": 1
+        },
+        {
+          "id": "3:3461939428568922943",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "95:7226247964641915561",
+      "lastPropertyId": "5:8245738418381739896",
+      "name": "RegisteredUserDirectoryEntity",
+      "properties": [
+        {
+          "id": "1:8085046204469217959",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:378207278483155132",
+          "name": "displayName",
+          "type": 9
+        },
+        {
+          "id": "3:1798752376675757364",
+          "name": "hashedPhone",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "97:1194817800059086495"
+        },
+        {
+          "id": "4:4050811798900839496",
+          "name": "hashedEmail",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "98:2230745779183930022"
+        },
+        {
+          "id": "5:8245738418381739896",
+          "name": "addedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "92:8860505853395559817",
-  "lastIndexId": "96:5027148752694019641",
+  "lastEntityId": "95:7226247964641915561",
+  "lastIndexId": "98:2230745779183930022",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
