@@ -10,6 +10,7 @@ class BankingGatewayRow extends StatelessWidget {
   final VoidCallback onSettle;
   final VoidCallback onFail;
   final VoidCallback onRefund;
+  final VoidCallback onRetryWithFallback;
 
   const BankingGatewayRow({
     super.key,
@@ -18,6 +19,7 @@ class BankingGatewayRow extends StatelessWidget {
     required this.onSettle,
     required this.onFail,
     required this.onRefund,
+    required this.onRetryWithFallback,
   });
 
   @override
@@ -46,6 +48,7 @@ class BankingGatewayRow extends StatelessWidget {
             onSettle: onSettle,
             onFail: onFail,
             onRefund: onRefund,
+            onRetryWithFallback: onRetryWithFallback,
           ),
         ],
       ),

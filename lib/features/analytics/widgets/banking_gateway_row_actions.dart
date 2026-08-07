@@ -3,7 +3,8 @@ import 'package:growth_pilot_ai/core/data/entities/banking_gateway_transaction_e
 import 'package:growth_pilot_ai/core/enum/gateway_transaction_status.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Status-specific action area for one transaction (Issue #421) —
+/// Status-specific action area for one transaction (Issue #421;
+/// fallback retry added for Issue #422, acceptance criterion 3) —
 /// split out of [BankingGatewayRow] to stay under the file line cap.
 class BankingGatewayRowActions extends StatelessWidget {
   final BankingGatewayTransactionEntity transaction;
@@ -11,6 +12,7 @@ class BankingGatewayRowActions extends StatelessWidget {
   final VoidCallback onSettle;
   final VoidCallback onFail;
   final VoidCallback onRefund;
+  final VoidCallback onRetryWithFallback;
 
   const BankingGatewayRowActions({
     super.key,
@@ -19,6 +21,7 @@ class BankingGatewayRowActions extends StatelessWidget {
     required this.onSettle,
     required this.onFail,
     required this.onRefund,
+    required this.onRetryWithFallback,
   });
 
   @override
@@ -33,8 +36,9 @@ class BankingGatewayRowActions extends StatelessWidget {
         ]);
       case GatewayTransactionStatus.settled:
         return ShadButton.ghost(onPressed: onRefund, child: const Text('Refund'));
-      case GatewayTransactionStatus.refunded:
       case GatewayTransactionStatus.failed:
+        return ShadButton.ghost(onPressed: onRetryWithFallback, child: const Text('Retry via Fallback'));
+      case GatewayTransactionStatus.refunded:
         return const SizedBox.shrink();
     }
   }

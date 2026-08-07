@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_fee_preview.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_form_controller.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_provider_selector.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/banking_gateway_regional_hint.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Provider selection, counterparty/amount/currency fields, and a
@@ -23,6 +24,8 @@ class _BankingGatewayFieldsState extends State<BankingGatewayFields> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BankingGatewayProviderSelector(selection: widget.form.provider),
+        BankingGatewayRegionalHint(
+            currency: widget.form.currency.text.trim(), provider: widget.form.provider),
         const SizedBox(height: 8),
         ShadInput(
             placeholder: const Text('Counterparty name/account'),
