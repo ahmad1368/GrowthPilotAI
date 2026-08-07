@@ -46,6 +46,7 @@ class _BankingGatewayBodyState extends State<BankingGatewayBody> {
       onSettle: (t) => _mutate(() => _settlementActions.settle(t)),
       onFail: (t) => _mutate(() => _settlementActions.fail(t)),
       onRefund: (t) => _mutate(() => _settlementActions.refund(t)),
+      onRetryWithFallback: (t) => _mutate(() => _settlementActions.retryWithFallback(t)),
     );
   }
 }

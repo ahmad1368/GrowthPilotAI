@@ -18,4 +18,16 @@ void main() {
   test('sepa charges a flat \$1 regardless of amount', () {
     expect(ComputeGatewayFee.call(BankingGatewayProvider.sepa, 10000), 1.0);
   });
+
+  test('interac charges a flat \$0.75 regardless of amount (Issue #422)', () {
+    expect(ComputeGatewayFee.call(BankingGatewayProvider.interac, 10000), 0.75);
+  });
+
+  test('unionPay charges 1.2% (Issue #422)', () {
+    expect(ComputeGatewayFee.call(BankingGatewayProvider.unionPay, 100), closeTo(1.20, 0.001));
+  });
+
+  test('localNetwork charges 1.5% (Issue #422)', () {
+    expect(ComputeGatewayFee.call(BankingGatewayProvider.localNetwork, 100), closeTo(1.50, 0.001));
+  });
 }

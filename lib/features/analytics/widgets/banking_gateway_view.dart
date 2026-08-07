@@ -15,6 +15,7 @@ class BankingGatewayView extends StatelessWidget {
   final void Function(BankingGatewayTransactionEntity) onSettle;
   final void Function(BankingGatewayTransactionEntity) onFail;
   final void Function(BankingGatewayTransactionEntity) onRefund;
+  final void Function(BankingGatewayTransactionEntity) onRetryWithFallback;
 
   const BankingGatewayView({
     super.key,
@@ -24,6 +25,7 @@ class BankingGatewayView extends StatelessWidget {
     required this.onSettle,
     required this.onFail,
     required this.onRefund,
+    required this.onRetryWithFallback,
   });
 
   @override
@@ -44,6 +46,7 @@ class BankingGatewayView extends StatelessWidget {
             onSettle: () => onSettle(transaction),
             onFail: () => onFail(transaction),
             onRefund: () => onRefund(transaction),
+            onRetryWithFallback: () => onRetryWithFallback(transaction),
           ),
         const SizedBox(height: 8),
         Text(BuildGatewayNarrative.call(transactions)),
