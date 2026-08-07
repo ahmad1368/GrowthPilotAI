@@ -755,6 +755,15 @@ class BusinessCompassController extends GetxController {
         title: 'Seasonal Advance Pre-Ordering',
         data: {'catalogItems': _seasonalCatalog.getAll()},
       ),
+      ReportWidgetSpec(
+        id: 'INVENTORY_RECOMMENDATION_ENGINE',
+        title: 'Missing Inventory Recommendations',
+        data: {
+          'items': _inventoryItems.getAll(),
+          'movements': _stockMovements.getAll(),
+          'budgetLimits': _budgetLimits.getAll(),
+        },
+      ),
     ];
   }
 

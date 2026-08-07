@@ -85,6 +85,7 @@ class GridLayoutService {
     'SMART_ESCROW_ENGINE',
     'PRICE_INTELLIGENCE_ENGINE',
     'SEASONAL_PREORDER_ENGINE',
+    'INVENTORY_RECOMMENDATION_ENGINE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
