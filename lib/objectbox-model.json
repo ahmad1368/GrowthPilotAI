@@ -5050,10 +5050,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "116:2402996005923725345",
+      "lastPropertyId": "8:7713582912280594884",
+      "name": "KycVerificationEntity",
+      "properties": [
+        {
+          "id": "1:152026068094716055",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8312377433630578286",
+          "name": "userId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "122:5917245770982168556"
+        },
+        {
+          "id": "3:3043482927370147388",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "4:9048731891370561357",
+          "name": "idDocumentBytes",
+          "type": 23
+        },
+        {
+          "id": "5:6901447064430516584",
+          "name": "businessDocumentBytes",
+          "type": 23
+        },
+        {
+          "id": "6:2392600105388385312",
+          "name": "rejectionReason",
+          "type": 9
+        },
+        {
+          "id": "7:2709425640545057026",
+          "name": "submittedAt",
+          "type": 10
+        },
+        {
+          "id": "8:7713582912280594884",
+          "name": "reviewedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "115:6145979316519562860",
-  "lastIndexId": "121:3447985546542655693",
+  "lastEntityId": "116:2402996005923725345",
+  "lastIndexId": "122:5917245770982168556",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

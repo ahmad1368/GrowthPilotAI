@@ -70,6 +70,7 @@ import 'core/data/entities/inventory_cost_layer_entity.dart';
 import 'core/data/entities/inventory_item_attribute_entity.dart';
 import 'core/data/entities/inventory_item_entity.dart';
 import 'core/data/entities/inventory_stock_take_entity.dart';
+import 'core/data/entities/kyc_verification_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/marketing_campaign_entity.dart';
@@ -5075,6 +5076,56 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(116, 2402996005923725345),
+      name: 'KycVerificationEntity',
+      lastPropertyId: const obx_int.IdUid(8, 7713582912280594884),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 152026068094716055),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8312377433630578286),
+            name: 'userId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(122, 5917245770982168556)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3043482927370147388),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 9048731891370561357),
+            name: 'idDocumentBytes',
+            type: 23,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6901447064430516584),
+            name: 'businessDocumentBytes',
+            type: 23,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2392600105388385312),
+            name: 'rejectionReason',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2709425640545057026),
+            name: 'submittedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7713582912280594884),
+            name: 'reviewedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5113,8 +5164,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(115, 6145979316519562860),
-      lastIndexId: const obx_int.IdUid(121, 3447985546542655693),
+      lastEntityId: const obx_int.IdUid(116, 2402996005923725345),
+      lastIndexId: const obx_int.IdUid(122, 5917245770982168556),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -10977,6 +11028,77 @@ obx_int.ModelDefinition getObjectBoxModel() {
               lastError: lastErrorParam);
 
           return object;
+        }),
+    KycVerificationEntity: obx_int.EntityDefinition<KycVerificationEntity>(
+        model: _entities[114],
+        toOneRelations: (KycVerificationEntity object) => [],
+        toManyRelations: (KycVerificationEntity object) => {},
+        getId: (KycVerificationEntity object) => object.id,
+        setId: (KycVerificationEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (KycVerificationEntity object, fb.Builder fbb) {
+          final userIdOffset = fbb.writeString(object.userId);
+          final idDocumentBytesOffset = object.idDocumentBytes == null
+              ? null
+              : fbb.writeListInt8(object.idDocumentBytes!);
+          final businessDocumentBytesOffset =
+              object.businessDocumentBytes == null
+                  ? null
+                  : fbb.writeListInt8(object.businessDocumentBytes!);
+          final rejectionReasonOffset = object.rejectionReason == null
+              ? null
+              : fbb.writeString(object.rejectionReason!);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, userIdOffset);
+          fbb.addInt64(2, object.dbStatus);
+          fbb.addOffset(3, idDocumentBytesOffset);
+          fbb.addOffset(4, businessDocumentBytesOffset);
+          fbb.addOffset(5, rejectionReasonOffset);
+          fbb.addInt64(6, object.submittedAt?.millisecondsSinceEpoch);
+          fbb.addInt64(7, object.reviewedAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final submittedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final reviewedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final userIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final idDocumentBytesParam = const fb.Uint8ListReader(lazy: false)
+              .vTableGetNullable(buffer, rootOffset, 10) as Uint8List?;
+          final businessDocumentBytesParam =
+              const fb.Uint8ListReader(lazy: false)
+                  .vTableGetNullable(buffer, rootOffset, 12) as Uint8List?;
+          final rejectionReasonParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 14);
+          final submittedAtParam = submittedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(submittedAtValue);
+          final reviewedAtParam = reviewedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(reviewedAtValue);
+          final object = KycVerificationEntity(
+              id: idParam,
+              userId: userIdParam,
+              dbStatus: dbStatusParam,
+              idDocumentBytes: idDocumentBytesParam,
+              businessDocumentBytes: businessDocumentBytesParam,
+              rejectionReason: rejectionReasonParam,
+              submittedAt: submittedAtParam,
+              reviewedAt: reviewedAtParam);
+
+          return object;
         })
   };
 
@@ -14538,4 +14660,41 @@ class MarketplaceSyncStatusEntity_ {
   /// see [MarketplaceSyncStatusEntity.lastError]
   static final lastError = obx.QueryStringProperty<MarketplaceSyncStatusEntity>(
       _entities[113].properties[8]);
+}
+
+/// [KycVerificationEntity] entity fields to define ObjectBox queries.
+class KycVerificationEntity_ {
+  /// see [KycVerificationEntity.id]
+  static final id = obx.QueryIntegerProperty<KycVerificationEntity>(
+      _entities[114].properties[0]);
+
+  /// see [KycVerificationEntity.userId]
+  static final userId = obx.QueryStringProperty<KycVerificationEntity>(
+      _entities[114].properties[1]);
+
+  /// see [KycVerificationEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<KycVerificationEntity>(
+      _entities[114].properties[2]);
+
+  /// see [KycVerificationEntity.idDocumentBytes]
+  static final idDocumentBytes =
+      obx.QueryByteVectorProperty<KycVerificationEntity>(
+          _entities[114].properties[3]);
+
+  /// see [KycVerificationEntity.businessDocumentBytes]
+  static final businessDocumentBytes =
+      obx.QueryByteVectorProperty<KycVerificationEntity>(
+          _entities[114].properties[4]);
+
+  /// see [KycVerificationEntity.rejectionReason]
+  static final rejectionReason = obx.QueryStringProperty<KycVerificationEntity>(
+      _entities[114].properties[5]);
+
+  /// see [KycVerificationEntity.submittedAt]
+  static final submittedAt = obx.QueryDateProperty<KycVerificationEntity>(
+      _entities[114].properties[6]);
+
+  /// see [KycVerificationEntity.reviewedAt]
+  static final reviewedAt = obx.QueryDateProperty<KycVerificationEntity>(
+      _entities[114].properties[7]);
 }
