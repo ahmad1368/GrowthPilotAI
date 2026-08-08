@@ -5393,10 +5393,155 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "122:7233345508392483902",
+      "lastPropertyId": "11:6970687756774179050",
+      "name": "DeliveryEntity",
+      "properties": [
+        {
+          "id": "1:6327582130256846556",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2741889724053872285",
+          "name": "requestId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "129:9149059047137896145"
+        },
+        {
+          "id": "3:6804908429010729230",
+          "name": "paymentId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "130:945795464671805730"
+        },
+        {
+          "id": "4:8673250716957660810",
+          "name": "courierId",
+          "type": 9
+        },
+        {
+          "id": "5:8266064552407699213",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "6:6366785167703025472",
+          "name": "courierLat",
+          "type": 8
+        },
+        {
+          "id": "7:2043516338091863592",
+          "name": "courierLng",
+          "type": 8
+        },
+        {
+          "id": "8:974198879969895643",
+          "name": "lastLocationAt",
+          "type": 10
+        },
+        {
+          "id": "9:4475902108761757212",
+          "name": "trackingConsentGiven",
+          "type": 1
+        },
+        {
+          "id": "10:3288534906061871203",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "11:6970687756774179050",
+          "name": "completedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "123:1509607185198611780",
+      "lastPropertyId": "6:6767827893231286036",
+      "name": "DeliveryHandshakeEntity",
+      "properties": [
+        {
+          "id": "1:6906822917686382264",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:729842916724889430",
+          "name": "deliveryId",
+          "type": 6,
+          "flags": 40,
+          "indexId": "131:1310908635972052137"
+        },
+        {
+          "id": "3:6530221975666549264",
+          "name": "token",
+          "type": 9
+        },
+        {
+          "id": "4:8517467081855843374",
+          "name": "used",
+          "type": 1
+        },
+        {
+          "id": "5:2887156402600861619",
+          "name": "expiresAt",
+          "type": 10
+        },
+        {
+          "id": "6:6767827893231286036",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "124:5175152332193702219",
+      "lastPropertyId": "5:7760885991287956067",
+      "name": "DeliveryLocationHistoryEntity",
+      "properties": [
+        {
+          "id": "1:5361989989754745098",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8839105058908781902",
+          "name": "deliveryId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "132:4940888446338106926"
+        },
+        {
+          "id": "3:6187301596508342860",
+          "name": "lat",
+          "type": 8
+        },
+        {
+          "id": "4:6651686435221262299",
+          "name": "lng",
+          "type": 8
+        },
+        {
+          "id": "5:7760885991287956067",
+          "name": "recordedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "121:5731534325971851288",
-  "lastIndexId": "128:2653353806863667252",
+  "lastEntityId": "124:5175152332193702219",
+  "lastIndexId": "132:4940888446338106926",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
