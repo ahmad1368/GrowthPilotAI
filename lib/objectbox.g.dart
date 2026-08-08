@@ -89,6 +89,7 @@ import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/micro_credit_account_entity.dart';
 import 'core/data/entities/micro_credit_loan_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
+import 'core/data/entities/payment_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
@@ -5192,6 +5193,82 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(118, 1896093489850076202),
+      name: 'PaymentEntity',
+      lastPropertyId: const obx_int.IdUid(13, 7521467406672961578),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6529557682786261616),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7957308700105775657),
+            name: 'invoiceId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(124, 994663308130326091)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1142741816913901833),
+            name: 'requestId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(125, 3887943527217077868)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6033868046997905418),
+            name: 'buyerId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1293419656118545168),
+            name: 'sellerId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5376227848062541677),
+            name: 'amount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4659901521315568497),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7666510332823441293),
+            name: 'dbMethod',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1566812732724742470),
+            name: 'interacReferenceNumber',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5174034954973191104),
+            name: 'buyerConfirmedDelivery',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4518567325603907290),
+            name: 'sellerConfirmedDelivery',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 264252435300003341),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 7521467406672961578),
+            name: 'completedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5230,8 +5307,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(117, 1688506409400847652),
-      lastIndexId: const obx_int.IdUid(123, 3727341742954393246),
+      lastEntityId: const obx_int.IdUid(118, 1896093489850076202),
+      lastIndexId: const obx_int.IdUid(125, 3887943527217077868),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -11236,6 +11313,88 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
+        }),
+    PaymentEntity: obx_int.EntityDefinition<PaymentEntity>(
+        model: _entities[116],
+        toOneRelations: (PaymentEntity object) => [],
+        toManyRelations: (PaymentEntity object) => {},
+        getId: (PaymentEntity object) => object.id,
+        setId: (PaymentEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PaymentEntity object, fb.Builder fbb) {
+          final buyerIdOffset = fbb.writeString(object.buyerId);
+          final sellerIdOffset = fbb.writeString(object.sellerId);
+          final interacReferenceNumberOffset =
+              object.interacReferenceNumber == null
+                  ? null
+                  : fbb.writeString(object.interacReferenceNumber!);
+          fbb.startTable(14);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.invoiceId);
+          fbb.addInt64(2, object.requestId);
+          fbb.addOffset(3, buyerIdOffset);
+          fbb.addOffset(4, sellerIdOffset);
+          fbb.addFloat64(5, object.amount);
+          fbb.addInt64(6, object.dbStatus);
+          fbb.addInt64(7, object.dbMethod);
+          fbb.addOffset(8, interacReferenceNumberOffset);
+          fbb.addBool(9, object.buyerConfirmedDelivery);
+          fbb.addBool(10, object.sellerConfirmedDelivery);
+          fbb.addInt64(11, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(12, object.completedAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final completedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 28);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final invoiceIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final requestIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final buyerIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final sellerIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final amountParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final dbMethodParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final interacReferenceNumberParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 20);
+          final buyerConfirmedDeliveryParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final sellerConfirmedDeliveryParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0));
+          final completedAtParam = completedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(completedAtValue);
+          final object = PaymentEntity(
+              id: idParam,
+              invoiceId: invoiceIdParam,
+              requestId: requestIdParam,
+              buyerId: buyerIdParam,
+              sellerId: sellerIdParam,
+              amount: amountParam,
+              dbStatus: dbStatusParam,
+              dbMethod: dbMethodParam,
+              interacReferenceNumber: interacReferenceNumberParam,
+              buyerConfirmedDelivery: buyerConfirmedDeliveryParam,
+              sellerConfirmedDelivery: sellerConfirmedDeliveryParam,
+              createdAt: createdAtParam,
+              completedAt: completedAtParam);
+
+          return object;
         })
   };
 
@@ -14881,4 +15040,59 @@ class InvoiceEntity_ {
   /// see [InvoiceEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<InvoiceEntity>(_entities[115].properties[10]);
+}
+
+/// [PaymentEntity] entity fields to define ObjectBox queries.
+class PaymentEntity_ {
+  /// see [PaymentEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<PaymentEntity>(_entities[116].properties[0]);
+
+  /// see [PaymentEntity.invoiceId]
+  static final invoiceId =
+      obx.QueryIntegerProperty<PaymentEntity>(_entities[116].properties[1]);
+
+  /// see [PaymentEntity.requestId]
+  static final requestId =
+      obx.QueryIntegerProperty<PaymentEntity>(_entities[116].properties[2]);
+
+  /// see [PaymentEntity.buyerId]
+  static final buyerId =
+      obx.QueryStringProperty<PaymentEntity>(_entities[116].properties[3]);
+
+  /// see [PaymentEntity.sellerId]
+  static final sellerId =
+      obx.QueryStringProperty<PaymentEntity>(_entities[116].properties[4]);
+
+  /// see [PaymentEntity.amount]
+  static final amount =
+      obx.QueryDoubleProperty<PaymentEntity>(_entities[116].properties[5]);
+
+  /// see [PaymentEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<PaymentEntity>(_entities[116].properties[6]);
+
+  /// see [PaymentEntity.dbMethod]
+  static final dbMethod =
+      obx.QueryIntegerProperty<PaymentEntity>(_entities[116].properties[7]);
+
+  /// see [PaymentEntity.interacReferenceNumber]
+  static final interacReferenceNumber =
+      obx.QueryStringProperty<PaymentEntity>(_entities[116].properties[8]);
+
+  /// see [PaymentEntity.buyerConfirmedDelivery]
+  static final buyerConfirmedDelivery =
+      obx.QueryBooleanProperty<PaymentEntity>(_entities[116].properties[9]);
+
+  /// see [PaymentEntity.sellerConfirmedDelivery]
+  static final sellerConfirmedDelivery =
+      obx.QueryBooleanProperty<PaymentEntity>(_entities[116].properties[10]);
+
+  /// see [PaymentEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<PaymentEntity>(_entities[116].properties[11]);
+
+  /// see [PaymentEntity.completedAt]
+  static final completedAt =
+      obx.QueryDateProperty<PaymentEntity>(_entities[116].properties[12]);
 }
