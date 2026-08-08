@@ -33,6 +33,7 @@ import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/block_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
+import 'core/data/entities/business_rating_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/catalog_listing_entity.dart';
 import 'core/data/entities/category_entity.dart';
@@ -4808,6 +4809,56 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(111, 4346921231683256733),
+      name: 'BusinessRatingEntity',
+      lastPropertyId: const obx_int.IdUid(8, 2174245723661298048),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5373585228083268955),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1830812488196103108),
+            name: 'businessId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(115, 5577080364420908436)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7983912242082993679),
+            name: 'raterId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2505030130231352138),
+            name: 'punctuality',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4058850550288755674),
+            name: 'accuracy',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1131223581034903353),
+            name: 'communication',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7747910920441919381),
+            name: 'isVerified',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 2174245723661298048),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4846,8 +4897,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(110, 2100786611927258786),
-      lastIndexId: const obx_int.IdUid(114, 8560690506728001346),
+      lastEntityId: const obx_int.IdUid(111, 4346921231683256733),
+      lastIndexId: const obx_int.IdUid(115, 5577080364420908436),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -10401,6 +10452,60 @@ obx_int.ModelDefinition getObjectBoxModel() {
               expiresAt: expiresAtParam);
 
           return object;
+        }),
+    BusinessRatingEntity: obx_int.EntityDefinition<BusinessRatingEntity>(
+        model: _entities[109],
+        toOneRelations: (BusinessRatingEntity object) => [],
+        toManyRelations: (BusinessRatingEntity object) => {},
+        getId: (BusinessRatingEntity object) => object.id,
+        setId: (BusinessRatingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BusinessRatingEntity object, fb.Builder fbb) {
+          final businessIdOffset = fbb.writeString(object.businessId);
+          final raterIdOffset = fbb.writeString(object.raterId);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, businessIdOffset);
+          fbb.addOffset(2, raterIdOffset);
+          fbb.addFloat64(3, object.punctuality);
+          fbb.addFloat64(4, object.accuracy);
+          fbb.addFloat64(5, object.communication);
+          fbb.addBool(6, object.isVerified);
+          fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final businessIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final raterIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final punctualityParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final accuracyParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final communicationParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final isVerifiedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final object = BusinessRatingEntity(
+              id: idParam,
+              businessId: businessIdParam,
+              raterId: raterIdParam,
+              punctuality: punctualityParam,
+              accuracy: accuracyParam,
+              communication: communicationParam,
+              isVerified: isVerifiedParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -13771,4 +13876,39 @@ class StrikeEntity_ {
   /// see [StrikeEntity.expiresAt]
   static final expiresAt =
       obx.QueryDateProperty<StrikeEntity>(_entities[108].properties[5]);
+}
+
+/// [BusinessRatingEntity] entity fields to define ObjectBox queries.
+class BusinessRatingEntity_ {
+  /// see [BusinessRatingEntity.id]
+  static final id = obx.QueryIntegerProperty<BusinessRatingEntity>(
+      _entities[109].properties[0]);
+
+  /// see [BusinessRatingEntity.businessId]
+  static final businessId = obx.QueryStringProperty<BusinessRatingEntity>(
+      _entities[109].properties[1]);
+
+  /// see [BusinessRatingEntity.raterId]
+  static final raterId = obx.QueryStringProperty<BusinessRatingEntity>(
+      _entities[109].properties[2]);
+
+  /// see [BusinessRatingEntity.punctuality]
+  static final punctuality = obx.QueryDoubleProperty<BusinessRatingEntity>(
+      _entities[109].properties[3]);
+
+  /// see [BusinessRatingEntity.accuracy]
+  static final accuracy = obx.QueryDoubleProperty<BusinessRatingEntity>(
+      _entities[109].properties[4]);
+
+  /// see [BusinessRatingEntity.communication]
+  static final communication = obx.QueryDoubleProperty<BusinessRatingEntity>(
+      _entities[109].properties[5]);
+
+  /// see [BusinessRatingEntity.isVerified]
+  static final isVerified = obx.QueryBooleanProperty<BusinessRatingEntity>(
+      _entities[109].properties[6]);
+
+  /// see [BusinessRatingEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<BusinessRatingEntity>(_entities[109].properties[7]);
 }

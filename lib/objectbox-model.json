@@ -4781,10 +4781,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "111:4346921231683256733",
+      "lastPropertyId": "8:2174245723661298048",
+      "name": "BusinessRatingEntity",
+      "properties": [
+        {
+          "id": "1:5373585228083268955",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1830812488196103108",
+          "name": "businessId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "115:5577080364420908436"
+        },
+        {
+          "id": "3:7983912242082993679",
+          "name": "raterId",
+          "type": 9
+        },
+        {
+          "id": "4:2505030130231352138",
+          "name": "punctuality",
+          "type": 8
+        },
+        {
+          "id": "5:4058850550288755674",
+          "name": "accuracy",
+          "type": 8
+        },
+        {
+          "id": "6:1131223581034903353",
+          "name": "communication",
+          "type": 8
+        },
+        {
+          "id": "7:7747910920441919381",
+          "name": "isVerified",
+          "type": 1
+        },
+        {
+          "id": "8:2174245723661298048",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "110:2100786611927258786",
-  "lastIndexId": "114:8560690506728001346",
+  "lastEntityId": "111:4346921231683256733",
+  "lastIndexId": "115:5577080364420908436",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
