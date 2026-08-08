@@ -35,6 +35,8 @@ import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/catalog_listing_entity.dart';
 import 'core/data/entities/category_entity.dart';
 import 'core/data/entities/chat_message_entity.dart';
+import 'core/data/entities/chat_room_entity.dart';
+import 'core/data/entities/chat_room_message_entity.dart';
 import 'core/data/entities/commission_tier_record_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
@@ -4566,6 +4568,87 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(106, 8190860710355553987),
+      name: 'ChatRoomEntity',
+      lastPropertyId: const obx_int.IdUid(6, 7267756990634831526),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2756741280032523931),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8825370903117994336),
+            name: 'participantAId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(108, 8375386988145302320)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3341718115912999935),
+            name: 'participantBId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(109, 2949290321813350844)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 9205019291372659888),
+            name: 'isOtherOnline',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8923187352445357107),
+            name: 'isOtherTyping',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7267756990634831526),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(107, 7003417229316413981),
+      name: 'ChatRoomMessageEntity',
+      lastPropertyId: const obx_int.IdUid(6, 7300131198618713501),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5133178570989155654),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6506412926047132965),
+            name: 'roomId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(110, 7692630170049174930)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1006301148847171058),
+            name: 'senderId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8352197005673744073),
+            name: 'body',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3629873454003540464),
+            name: 'sentAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7300131198618713501),
+            name: 'readAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4604,8 +4687,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(105, 8417464621922573376),
-      lastIndexId: const obx_int.IdUid(107, 6957853459665263710),
+      lastEntityId: const obx_int.IdUid(107, 7003417229316413981),
+      lastIndexId: const obx_int.IdUid(110, 7692630170049174930),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -9871,6 +9954,103 @@ obx_int.ModelDefinition getObjectBoxModel() {
               updatedAt: updatedAtParam);
 
           return object;
+        }),
+    ChatRoomEntity: obx_int.EntityDefinition<ChatRoomEntity>(
+        model: _entities[104],
+        toOneRelations: (ChatRoomEntity object) => [],
+        toManyRelations: (ChatRoomEntity object) => {},
+        getId: (ChatRoomEntity object) => object.id,
+        setId: (ChatRoomEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChatRoomEntity object, fb.Builder fbb) {
+          final participantAIdOffset = fbb.writeString(object.participantAId);
+          final participantBIdOffset = fbb.writeString(object.participantBId);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, participantAIdOffset);
+          fbb.addOffset(2, participantBIdOffset);
+          fbb.addBool(3, object.isOtherOnline);
+          fbb.addBool(4, object.isOtherTyping);
+          fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final participantAIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final participantBIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final isOtherOnlineParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final isOtherTypingParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = ChatRoomEntity(
+              id: idParam,
+              participantAId: participantAIdParam,
+              participantBId: participantBIdParam,
+              isOtherOnline: isOtherOnlineParam,
+              isOtherTyping: isOtherTypingParam,
+              createdAt: createdAtParam);
+
+          return object;
+        }),
+    ChatRoomMessageEntity: obx_int.EntityDefinition<ChatRoomMessageEntity>(
+        model: _entities[105],
+        toOneRelations: (ChatRoomMessageEntity object) => [],
+        toManyRelations: (ChatRoomMessageEntity object) => {},
+        getId: (ChatRoomMessageEntity object) => object.id,
+        setId: (ChatRoomMessageEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChatRoomMessageEntity object, fb.Builder fbb) {
+          final senderIdOffset = fbb.writeString(object.senderId);
+          final bodyOffset = fbb.writeString(object.body);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.roomId);
+          fbb.addOffset(2, senderIdOffset);
+          fbb.addOffset(3, bodyOffset);
+          fbb.addInt64(4, object.sentAt.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.readAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final readAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final roomIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final senderIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final bodyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final sentAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final readAtParam = readAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(readAtValue);
+          final object = ChatRoomMessageEntity(
+              id: idParam,
+              roomId: roomIdParam,
+              senderId: senderIdParam,
+              body: bodyParam,
+              sentAt: sentAtParam,
+              readAt: readAtParam);
+
+          return object;
         })
   };
 
@@ -13071,4 +13251,58 @@ class ProductFormDraftEntity_ {
   /// see [ProductFormDraftEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<ProductFormDraftEntity>(
       _entities[103].properties[8]);
+}
+
+/// [ChatRoomEntity] entity fields to define ObjectBox queries.
+class ChatRoomEntity_ {
+  /// see [ChatRoomEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<ChatRoomEntity>(_entities[104].properties[0]);
+
+  /// see [ChatRoomEntity.participantAId]
+  static final participantAId =
+      obx.QueryStringProperty<ChatRoomEntity>(_entities[104].properties[1]);
+
+  /// see [ChatRoomEntity.participantBId]
+  static final participantBId =
+      obx.QueryStringProperty<ChatRoomEntity>(_entities[104].properties[2]);
+
+  /// see [ChatRoomEntity.isOtherOnline]
+  static final isOtherOnline =
+      obx.QueryBooleanProperty<ChatRoomEntity>(_entities[104].properties[3]);
+
+  /// see [ChatRoomEntity.isOtherTyping]
+  static final isOtherTyping =
+      obx.QueryBooleanProperty<ChatRoomEntity>(_entities[104].properties[4]);
+
+  /// see [ChatRoomEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<ChatRoomEntity>(_entities[104].properties[5]);
+}
+
+/// [ChatRoomMessageEntity] entity fields to define ObjectBox queries.
+class ChatRoomMessageEntity_ {
+  /// see [ChatRoomMessageEntity.id]
+  static final id = obx.QueryIntegerProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[0]);
+
+  /// see [ChatRoomMessageEntity.roomId]
+  static final roomId = obx.QueryIntegerProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[1]);
+
+  /// see [ChatRoomMessageEntity.senderId]
+  static final senderId = obx.QueryStringProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[2]);
+
+  /// see [ChatRoomMessageEntity.body]
+  static final body = obx.QueryStringProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[3]);
+
+  /// see [ChatRoomMessageEntity.sentAt]
+  static final sentAt = obx.QueryDateProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[4]);
+
+  /// see [ChatRoomMessageEntity.readAt]
+  static final readAt = obx.QueryDateProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[5]);
 }

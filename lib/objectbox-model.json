@@ -4537,10 +4537,94 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "106:8190860710355553987",
+      "lastPropertyId": "6:7267756990634831526",
+      "name": "ChatRoomEntity",
+      "properties": [
+        {
+          "id": "1:2756741280032523931",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8825370903117994336",
+          "name": "participantAId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "108:8375386988145302320"
+        },
+        {
+          "id": "3:3341718115912999935",
+          "name": "participantBId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "109:2949290321813350844"
+        },
+        {
+          "id": "4:9205019291372659888",
+          "name": "isOtherOnline",
+          "type": 1
+        },
+        {
+          "id": "5:8923187352445357107",
+          "name": "isOtherTyping",
+          "type": 1
+        },
+        {
+          "id": "6:7267756990634831526",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "107:7003417229316413981",
+      "lastPropertyId": "6:7300131198618713501",
+      "name": "ChatRoomMessageEntity",
+      "properties": [
+        {
+          "id": "1:5133178570989155654",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6506412926047132965",
+          "name": "roomId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "110:7692630170049174930"
+        },
+        {
+          "id": "3:1006301148847171058",
+          "name": "senderId",
+          "type": 9
+        },
+        {
+          "id": "4:8352197005673744073",
+          "name": "body",
+          "type": 9
+        },
+        {
+          "id": "5:3629873454003540464",
+          "name": "sentAt",
+          "type": 10
+        },
+        {
+          "id": "6:7300131198618713501",
+          "name": "readAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "105:8417464621922573376",
-  "lastIndexId": "107:6957853459665263710",
+  "lastEntityId": "107:7003417229316413981",
+  "lastIndexId": "110:7692630170049174930",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
