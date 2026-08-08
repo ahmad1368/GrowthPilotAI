@@ -64,6 +64,7 @@ import 'package:growth_pilot_ai/features/auth/widgets/auth_session_report_widget
 import 'package:growth_pilot_ai/features/catalog/widgets/catalog_report_widget.dart';
 import 'package:growth_pilot_ai/features/discovery/widgets/discovery_report_widget.dart';
 import 'package:growth_pilot_ai/features/geo/widgets/geo_location_report_widget.dart';
+import 'package:growth_pilot_ai/features/media/widgets/media_report_widget.dart';
 import 'package:growth_pilot_ai/features/contacts/widgets/contact_sync_report_widget.dart';
 import 'package:growth_pilot_ai/features/referrals/widgets/referral_report_widget.dart';
 import 'package:growth_pilot_ai/features/messaging/widgets/translation_chat_report_widget.dart';
@@ -509,6 +510,10 @@ class ReportWidgetsBootstrap {
         'BUSINESS_DISCOVERY_SEARCH',
         (spec) =>
             DiscoveryReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'IMAGE_OPTIMIZATION_ENGINE',
+        (spec) =>
+            MediaReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

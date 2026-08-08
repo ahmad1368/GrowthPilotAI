@@ -839,6 +839,11 @@ class BusinessCompassController extends GetxController {
         title: 'Business Discovery Search',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'IMAGE_OPTIMIZATION_ENGINE',
+        title: 'Image Optimization Engine',
+        data: {},
+      ),
     ];
   }
 

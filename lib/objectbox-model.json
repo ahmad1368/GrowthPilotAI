@@ -4424,9 +4424,63 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "104:3609257032856816177",
+      "lastPropertyId": "9:3158694896389091193",
+      "name": "ImageVariantEntity",
+      "properties": [
+        {
+          "id": "1:4065081840925040546",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6247025160368946369",
+          "name": "label",
+          "type": 9
+        },
+        {
+          "id": "3:4603849746070601022",
+          "name": "originalSizeBytes",
+          "type": 6
+        },
+        {
+          "id": "4:3227668091253852835",
+          "name": "thumbnailBytes",
+          "type": 23
+        },
+        {
+          "id": "5:6092144411896121220",
+          "name": "thumbnailSizeBytes",
+          "type": 6
+        },
+        {
+          "id": "6:63439739642856293",
+          "name": "standardBytes",
+          "type": 23
+        },
+        {
+          "id": "7:1543457943814032477",
+          "name": "standardSizeBytes",
+          "type": 6
+        },
+        {
+          "id": "8:357396617507593979",
+          "name": "dataReductionPercent",
+          "type": 8
+        },
+        {
+          "id": "9:3158694896389091193",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "103:4937929047162813462",
+  "lastEntityId": "104:3609257032856816177",
   "lastIndexId": "107:6957853459665263710",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

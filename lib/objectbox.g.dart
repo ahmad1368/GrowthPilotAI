@@ -57,6 +57,7 @@ import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/group_purchase_contribution_entity.dart';
 import 'core/data/entities/group_purchase_entity.dart';
 import 'core/data/entities/ignored_merchant_entity.dart';
+import 'core/data/entities/image_variant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
 import 'core/data/entities/inventory_category_entity.dart';
@@ -4451,6 +4452,60 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(104, 3609257032856816177),
+      name: 'ImageVariantEntity',
+      lastPropertyId: const obx_int.IdUid(9, 3158694896389091193),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4065081840925040546),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6247025160368946369),
+            name: 'label',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4603849746070601022),
+            name: 'originalSizeBytes',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3227668091253852835),
+            name: 'thumbnailBytes',
+            type: 23,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6092144411896121220),
+            name: 'thumbnailSizeBytes',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 63439739642856293),
+            name: 'standardBytes',
+            type: 23,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1543457943814032477),
+            name: 'standardSizeBytes',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 357396617507593979),
+            name: 'dataReductionPercent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 3158694896389091193),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4489,7 +4544,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(103, 4937929047162813462),
+      lastEntityId: const obx_int.IdUid(104, 3609257032856816177),
       lastIndexId: const obx_int.IdUid(107, 6957853459665263710),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -9628,7 +9683,66 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   updatedAt: updatedAtParam);
 
               return object;
-            })
+            }),
+    ImageVariantEntity: obx_int.EntityDefinition<ImageVariantEntity>(
+        model: _entities[102],
+        toOneRelations: (ImageVariantEntity object) => [],
+        toManyRelations: (ImageVariantEntity object) => {},
+        getId: (ImageVariantEntity object) => object.id,
+        setId: (ImageVariantEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ImageVariantEntity object, fb.Builder fbb) {
+          final labelOffset = fbb.writeString(object.label);
+          final thumbnailBytesOffset = fbb.writeListInt8(object.thumbnailBytes);
+          final standardBytesOffset = fbb.writeListInt8(object.standardBytes);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, labelOffset);
+          fbb.addInt64(2, object.originalSizeBytes);
+          fbb.addOffset(3, thumbnailBytesOffset);
+          fbb.addInt64(4, object.thumbnailSizeBytes);
+          fbb.addOffset(5, standardBytesOffset);
+          fbb.addInt64(6, object.standardSizeBytes);
+          fbb.addFloat64(7, object.dataReductionPercent);
+          fbb.addInt64(8, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final labelParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final originalSizeBytesParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final thumbnailBytesParam = const fb.Uint8ListReader(lazy: false)
+              .vTableGet(buffer, rootOffset, 10, Uint8List(0)) as Uint8List;
+          final thumbnailSizeBytesParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final standardBytesParam = const fb.Uint8ListReader(lazy: false)
+              .vTableGet(buffer, rootOffset, 14, Uint8List(0)) as Uint8List;
+          final standardSizeBytesParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final dataReductionPercentParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = ImageVariantEntity(
+              id: idParam,
+              label: labelParam,
+              originalSizeBytes: originalSizeBytesParam,
+              thumbnailBytes: thumbnailBytesParam,
+              thumbnailSizeBytes: thumbnailSizeBytesParam,
+              standardBytes: standardBytesParam,
+              standardSizeBytes: standardSizeBytesParam,
+              dataReductionPercent: dataReductionPercentParam,
+              createdAt: createdAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -12742,4 +12856,44 @@ class UserLocationPreferenceEntity_ {
   /// see [UserLocationPreferenceEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<UserLocationPreferenceEntity>(
       _entities[101].properties[4]);
+}
+
+/// [ImageVariantEntity] entity fields to define ObjectBox queries.
+class ImageVariantEntity_ {
+  /// see [ImageVariantEntity.id]
+  static final id = obx.QueryIntegerProperty<ImageVariantEntity>(
+      _entities[102].properties[0]);
+
+  /// see [ImageVariantEntity.label]
+  static final label =
+      obx.QueryStringProperty<ImageVariantEntity>(_entities[102].properties[1]);
+
+  /// see [ImageVariantEntity.originalSizeBytes]
+  static final originalSizeBytes = obx.QueryIntegerProperty<ImageVariantEntity>(
+      _entities[102].properties[2]);
+
+  /// see [ImageVariantEntity.thumbnailBytes]
+  static final thumbnailBytes = obx.QueryByteVectorProperty<ImageVariantEntity>(
+      _entities[102].properties[3]);
+
+  /// see [ImageVariantEntity.thumbnailSizeBytes]
+  static final thumbnailSizeBytes =
+      obx.QueryIntegerProperty<ImageVariantEntity>(
+          _entities[102].properties[4]);
+
+  /// see [ImageVariantEntity.standardBytes]
+  static final standardBytes = obx.QueryByteVectorProperty<ImageVariantEntity>(
+      _entities[102].properties[5]);
+
+  /// see [ImageVariantEntity.standardSizeBytes]
+  static final standardSizeBytes = obx.QueryIntegerProperty<ImageVariantEntity>(
+      _entities[102].properties[6]);
+
+  /// see [ImageVariantEntity.dataReductionPercent]
+  static final dataReductionPercent =
+      obx.QueryDoubleProperty<ImageVariantEntity>(_entities[102].properties[7]);
+
+  /// see [ImageVariantEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<ImageVariantEntity>(_entities[102].properties[8]);
 }
