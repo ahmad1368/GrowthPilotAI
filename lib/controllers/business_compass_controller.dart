@@ -849,6 +849,11 @@ class BusinessCompassController extends GetxController {
         title: 'Add/Edit Product Form',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'BULK_PRODUCT_IMPORT',
+        title: 'Bulk Product Import',
+        data: {},
+      ),
     ];
   }
 

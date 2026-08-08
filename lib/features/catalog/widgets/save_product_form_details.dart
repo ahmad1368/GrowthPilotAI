@@ -13,11 +13,13 @@ void saveProductFormDetails(
   required int listingId,
   required CatalogListingType type,
   required double price,
+  String? sku,
 }) {
   const mode = CatalogPricingMode.fixedPrice;
   if (type == CatalogListingType.product) {
     final details = repos.productDetails.forListing(listingId) ??
         ProductListingDetailsEntity(listingId: listingId, fixedPrice: price);
+    if (sku != null) details.sku = sku;
     repos.productDetails.save(details
       ..fixedPrice = price
       ..pricingMode = mode);
