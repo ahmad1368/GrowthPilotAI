@@ -15,6 +15,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'core/data/entities/abuse_report_entity.dart';
 import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
 import 'core/data/entities/ad_campaign_constraint_entity.dart';
@@ -30,6 +31,7 @@ import 'core/data/entities/banking_gateway_transaction_entity.dart';
 import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
+import 'core/data/entities/block_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/catalog_listing_entity.dart';
@@ -105,6 +107,7 @@ import 'core/data/entities/staff_shift_entity.dart';
 import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
+import 'core/data/entities/strike_entity.dart';
 import 'core/data/entities/task_execution_log_entity.dart';
 import 'core/data/entities/traffic_count_entity.dart';
 import 'core/data/entities/traffic_steering_directive_entity.dart';
@@ -4689,6 +4692,122 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(108, 7626099456350682246),
+      name: 'AbuseReportEntity',
+      lastPropertyId: const obx_int.IdUid(7, 4978159613422722538),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7204005026575826447),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4104390969592305306),
+            name: 'reporterId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5020083269298015115),
+            name: 'targetId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(111, 5979608646727530097)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 509695959033883652),
+            name: 'dbReason',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8147215575636163688),
+            name: 'evidenceSnapshot',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1523496982829076390),
+            name: 'isReviewed',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 4978159613422722538),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(109, 4055572612493699914),
+      name: 'BlockEntity',
+      lastPropertyId: const obx_int.IdUid(4, 905315911914462424),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6636219790901017345),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7451404297987182566),
+            name: 'blockerId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(112, 4227611806962734559)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6953788588141265907),
+            name: 'blockedId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(113, 6243842873047640208)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 905315911914462424),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(110, 2100786611927258786),
+      name: 'StrikeEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3501580645889719888),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4947183730645377000),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1409102674235595989),
+            name: 'targetId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(114, 8560690506728001346)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4443945016855670518),
+            name: 'dbReason',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7802291453538000560),
+            name: 'isCritical',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6349279274586815696),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3501580645889719888),
+            name: 'expiresAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4727,8 +4846,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(107, 7003417229316413981),
-      lastIndexId: const obx_int.IdUid(110, 7692630170049174930),
+      lastEntityId: const obx_int.IdUid(110, 2100786611927258786),
+      lastIndexId: const obx_int.IdUid(114, 8560690506728001346),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -10143,6 +10262,145 @@ obx_int.ModelDefinition getObjectBoxModel() {
               attachmentMimeType: attachmentMimeTypeParam);
 
           return object;
+        }),
+    AbuseReportEntity: obx_int.EntityDefinition<AbuseReportEntity>(
+        model: _entities[106],
+        toOneRelations: (AbuseReportEntity object) => [],
+        toManyRelations: (AbuseReportEntity object) => {},
+        getId: (AbuseReportEntity object) => object.id,
+        setId: (AbuseReportEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AbuseReportEntity object, fb.Builder fbb) {
+          final reporterIdOffset = fbb.writeString(object.reporterId);
+          final targetIdOffset = fbb.writeString(object.targetId);
+          final evidenceSnapshotOffset =
+              fbb.writeString(object.evidenceSnapshot);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, reporterIdOffset);
+          fbb.addOffset(2, targetIdOffset);
+          fbb.addInt64(3, object.dbReason);
+          fbb.addOffset(4, evidenceSnapshotOffset);
+          fbb.addBool(5, object.isReviewed);
+          fbb.addInt64(6, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final reporterIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final targetIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final dbReasonParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final evidenceSnapshotParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final isReviewedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = AbuseReportEntity(
+              id: idParam,
+              reporterId: reporterIdParam,
+              targetId: targetIdParam,
+              dbReason: dbReasonParam,
+              evidenceSnapshot: evidenceSnapshotParam,
+              isReviewed: isReviewedParam,
+              createdAt: createdAtParam);
+
+          return object;
+        }),
+    BlockEntity: obx_int.EntityDefinition<BlockEntity>(
+        model: _entities[107],
+        toOneRelations: (BlockEntity object) => [],
+        toManyRelations: (BlockEntity object) => {},
+        getId: (BlockEntity object) => object.id,
+        setId: (BlockEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BlockEntity object, fb.Builder fbb) {
+          final blockerIdOffset = fbb.writeString(object.blockerId);
+          final blockedIdOffset = fbb.writeString(object.blockedId);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, blockerIdOffset);
+          fbb.addOffset(2, blockedIdOffset);
+          fbb.addInt64(3, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final blockerIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final blockedIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = BlockEntity(
+              id: idParam,
+              blockerId: blockerIdParam,
+              blockedId: blockedIdParam,
+              createdAt: createdAtParam);
+
+          return object;
+        }),
+    StrikeEntity: obx_int.EntityDefinition<StrikeEntity>(
+        model: _entities[108],
+        toOneRelations: (StrikeEntity object) => [],
+        toManyRelations: (StrikeEntity object) => {},
+        getId: (StrikeEntity object) => object.id,
+        setId: (StrikeEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (StrikeEntity object, fb.Builder fbb) {
+          final targetIdOffset = fbb.writeString(object.targetId);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, targetIdOffset);
+          fbb.addInt64(2, object.dbReason);
+          fbb.addBool(3, object.isCritical);
+          fbb.addInt64(4, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.expiresAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final expiresAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final targetIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dbReasonParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final isCriticalParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final expiresAtParam = expiresAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(expiresAtValue);
+          final object = StrikeEntity(
+              id: idParam,
+              targetId: targetIdParam,
+              dbReason: dbReasonParam,
+              isCritical: isCriticalParam,
+              createdAt: createdAtParam,
+              expiresAt: expiresAtParam);
+
+          return object;
         })
   };
 
@@ -13436,4 +13694,81 @@ class ChatRoomMessageEntity_ {
   static final attachmentMimeType =
       obx.QueryStringProperty<ChatRoomMessageEntity>(
           _entities[105].properties[13]);
+}
+
+/// [AbuseReportEntity] entity fields to define ObjectBox queries.
+class AbuseReportEntity_ {
+  /// see [AbuseReportEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AbuseReportEntity>(_entities[106].properties[0]);
+
+  /// see [AbuseReportEntity.reporterId]
+  static final reporterId =
+      obx.QueryStringProperty<AbuseReportEntity>(_entities[106].properties[1]);
+
+  /// see [AbuseReportEntity.targetId]
+  static final targetId =
+      obx.QueryStringProperty<AbuseReportEntity>(_entities[106].properties[2]);
+
+  /// see [AbuseReportEntity.dbReason]
+  static final dbReason =
+      obx.QueryIntegerProperty<AbuseReportEntity>(_entities[106].properties[3]);
+
+  /// see [AbuseReportEntity.evidenceSnapshot]
+  static final evidenceSnapshot =
+      obx.QueryStringProperty<AbuseReportEntity>(_entities[106].properties[4]);
+
+  /// see [AbuseReportEntity.isReviewed]
+  static final isReviewed =
+      obx.QueryBooleanProperty<AbuseReportEntity>(_entities[106].properties[5]);
+
+  /// see [AbuseReportEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<AbuseReportEntity>(_entities[106].properties[6]);
+}
+
+/// [BlockEntity] entity fields to define ObjectBox queries.
+class BlockEntity_ {
+  /// see [BlockEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<BlockEntity>(_entities[107].properties[0]);
+
+  /// see [BlockEntity.blockerId]
+  static final blockerId =
+      obx.QueryStringProperty<BlockEntity>(_entities[107].properties[1]);
+
+  /// see [BlockEntity.blockedId]
+  static final blockedId =
+      obx.QueryStringProperty<BlockEntity>(_entities[107].properties[2]);
+
+  /// see [BlockEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<BlockEntity>(_entities[107].properties[3]);
+}
+
+/// [StrikeEntity] entity fields to define ObjectBox queries.
+class StrikeEntity_ {
+  /// see [StrikeEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<StrikeEntity>(_entities[108].properties[0]);
+
+  /// see [StrikeEntity.targetId]
+  static final targetId =
+      obx.QueryStringProperty<StrikeEntity>(_entities[108].properties[1]);
+
+  /// see [StrikeEntity.dbReason]
+  static final dbReason =
+      obx.QueryIntegerProperty<StrikeEntity>(_entities[108].properties[2]);
+
+  /// see [StrikeEntity.isCritical]
+  static final isCritical =
+      obx.QueryBooleanProperty<StrikeEntity>(_entities[108].properties[3]);
+
+  /// see [StrikeEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<StrikeEntity>(_entities[108].properties[4]);
+
+  /// see [StrikeEntity.expiresAt]
+  static final expiresAt =
+      obx.QueryDateProperty<StrikeEntity>(_entities[108].properties[5]);
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/chat_gateway_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
+import 'package:growth_pilot_ai/features/chat/chat_moderation_actions.dart';
 import 'package:growth_pilot_ai/features/chat/chat_room_actions.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_input_bar.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_message_list.dart';
@@ -28,6 +29,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
   late final String _tag = '${widget.currentUserId}_${widget.otherUserId}';
   late final ChatGatewayController _controller;
   late final ChatRoomActions _actions;
+  late final ChatModerationActions _moderation;
   ChatRoomMessageEntity? _replyingTo;
 
   @override
@@ -35,6 +37,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     super.initState();
     _controller = Get.put(ChatGatewayController(), tag: _tag);
     _actions = ChatRoomActions(_controller, widget.currentUserId);
+    _moderation = ChatModerationActions(_controller, widget.currentUserId, widget.otherUserId);
     _controller.openRoom(widget.currentUserId, widget.otherUserId);
     _controller.markMessagesRead(widget.currentUserId);
   }
@@ -65,6 +68,8 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                   otherUserId: widget.otherUserId,
                   isOnline: _controller.room?.isOtherOnline ?? false,
                   onToggleOnline: _controller.toggleOtherOnline,
+                  onBlock: () => _moderation.block(context),
+                  onReport: () => _moderation.report(context),
                 ),
                 ChatTypingIndicator(isTyping: _controller.room?.isOtherTyping ?? false),
                 Expanded(

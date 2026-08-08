@@ -16,6 +16,8 @@ class ChatMessageRelayHandler {
   final ChatRoomMessageRepository _messages;
   final ChatGatewayService _gateway;
   final RxList<ChatRoomMessageEntity> inbox;
+  /// Set once the room is joined (Issue #124 "Instant Severance").
+  bool Function(String senderId)? isSenderBlocked;
   final Set<ChatRoomMessageEntity> _pending = {};
   late final StreamSubscription<ChatRoomMessageEntity> _subscription;
   int roomId = 0;
@@ -58,8 +60,11 @@ class ChatMessageRelayHandler {
     return result.success;
   }
 
+  /// "Instant Severance" (Issue #124 AC): messages from a blocked peer
+  /// are dropped immediately, never persisted or shown.
   void _onIncoming(ChatRoomMessageEntity message) {
     if (message.roomId != roomId) return;
+    if (isSenderBlocked?.call(message.senderId) ?? false) return;
     _messages.insert(message);
     if (_pending.remove(message)) return;
     inbox.add(message);
