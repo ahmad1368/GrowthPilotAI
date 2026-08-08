@@ -66,6 +66,7 @@ import 'package:growth_pilot_ai/features/catalog/widgets/bulk_import_report_widg
 import 'package:growth_pilot_ai/features/catalog/widgets/admin_table_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/catalog_grid_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/product_form_report_widget.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/b2b_analytics_report_widget.dart';
 import 'package:growth_pilot_ai/features/discovery/widgets/discovery_report_widget.dart';
 import 'package:growth_pilot_ai/features/geo/widgets/geo_location_report_widget.dart';
 import 'package:growth_pilot_ai/features/media/widgets/media_report_widget.dart';
@@ -534,6 +535,10 @@ class ReportWidgetsBootstrap {
         'PRODUCT_ADMIN_DATA_TABLE',
         (spec) =>
             AdminTableReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'B2B_ANALYTICS_DASHBOARD',
+        (spec) =>
+            B2bAnalyticsReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

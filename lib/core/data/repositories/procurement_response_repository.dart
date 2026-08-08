@@ -7,6 +7,8 @@ class ProcurementResponseRepository {
 
   ProcurementResponseRepository(this._box);
 
+  List<ProcurementResponseEntity> getAll() => _box.getAll();
+
   List<ProcurementResponseEntity> getForRequest(int requestId) =>
       _box.getAll().where((r) => r.requestId == requestId).toList();
 
