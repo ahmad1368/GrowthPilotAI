@@ -859,6 +859,11 @@ class BusinessCompassController extends GetxController {
         title: 'Product Catalog Grid',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'PRODUCT_ADMIN_DATA_TABLE',
+        title: 'Product Admin Table',
+        data: {},
+      ),
     ];
   }
 
