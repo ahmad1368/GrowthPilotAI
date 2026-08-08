@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:objectbox/objectbox.dart';
 
 /// One message inside a [ChatRoomEntity] (Issue #122) — the local
@@ -30,6 +31,14 @@ class ChatRoomMessageEntity {
   bool isForwarded;
   String? forwardedFromSenderId;
 
+  // Media & Document Sharing (Issue #133) — bytes are stored directly
+  // (like [ImageVariantEntity]) since no S3/GCS bucket exists locally to
+  // hold the payload behind a signed URL.
+  Uint8List? attachmentBytes;
+  String? attachmentFileName;
+  int? attachmentFileSize;
+  String? attachmentMimeType;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -41,8 +50,13 @@ class ChatRoomMessageEntity {
     this.replyPreviewText,
     this.isForwarded = false,
     this.forwardedFromSenderId,
+    this.attachmentBytes,
+    this.attachmentFileName,
+    this.attachmentFileSize,
+    this.attachmentMimeType,
   });
 
   bool get isRead => readAt != null;
   bool get isReply => replyToMessageId != null;
+  bool get hasAttachment => attachmentBytes != null;
 }

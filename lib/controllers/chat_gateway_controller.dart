@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/list_forwardable_chat_rooms.dart';
 import 'package:growth_pilot_ai/controllers/chat_connection_authorizer.dart';
@@ -56,6 +58,10 @@ class ChatGatewayController extends GetxController {
 
   Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
       _relay.sendReply(senderId, body, parent);
+
+  Future<bool> sendAttachment(
+          String senderId, String fileName, String mimeType, Uint8List bytes) =>
+      _relay.sendAttachment(senderId, fileName, mimeType, bytes);
 
   bool forwardMessage(ChatRoomMessageEntity original, int targetRoomId, String forwarderId) =>
       _forward.forward(original, targetRoomId, forwarderId);

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/controllers/chat_gateway_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
@@ -18,6 +20,9 @@ class ChatRoomActions {
       controller.sendReply(currentUserId, text, replyingTo);
     }
   }
+
+  void sendAttachment(String fileName, String mimeType, Uint8List bytes) =>
+      controller.sendAttachment(currentUserId, fileName, mimeType, bytes);
 
   void forward(BuildContext context, ChatRoomMessageEntity message) {
     showChatForwardRoomPicker(

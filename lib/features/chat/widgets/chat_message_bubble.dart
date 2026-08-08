@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
+import 'package:growth_pilot_ai/features/chat/widgets/chat_attachment_chip.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_reply_preview.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/show_chat_message_actions.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -48,7 +49,15 @@ class ChatMessageBubble extends StatelessWidget {
               Text('Forwarded', style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic, color: fg.withValues(alpha: 0.7))),
             if (message.isReply)
               ChatReplyPreview(text: message.replyPreviewText ?? '', onTap: onTapReplyPreview),
-            Text(message.body, style: TextStyle(color: fg)),
+            if (message.hasAttachment)
+              ChatAttachmentChip(
+                bytes: message.attachmentBytes!,
+                fileName: message.attachmentFileName ?? '',
+                fileSize: message.attachmentFileSize ?? 0,
+                mimeType: message.attachmentMimeType ?? '',
+              )
+            else
+              Text(message.body, style: TextStyle(color: fg)),
             const SizedBox(height: 2),
             Row(mainAxisSize: MainAxisSize.min, children: [
               Text(time, style: TextStyle(fontSize: 10, color: fg.withValues(alpha: 0.7))),

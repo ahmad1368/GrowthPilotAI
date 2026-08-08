@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/build_chat_attachment_message.dart';
 import 'package:growth_pilot_ai/business/build_reply_message.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
@@ -34,6 +36,16 @@ class ChatMessageRelayHandler {
   Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
       _dispatch(BuildReplyMessage.call(
           parent: parent, senderId: senderId, body: body, now: DateTime.now()));
+
+  /// Media/document attachment (Issue #133) — false if [mimeType] fails
+  /// the allow-list, without dispatching anything.
+  Future<bool> sendAttachment(
+      String senderId, String fileName, String mimeType, Uint8List bytes) async {
+    final message = BuildChatAttachmentMessage.call(
+        roomId: roomId, senderId: senderId, fileName: fileName, mimeType: mimeType,
+        bytes: bytes, now: DateTime.now());
+    return message == null ? false : _dispatch(message);
+  }
 
   Future<bool> _dispatch(ChatRoomMessageEntity message) async {
     inbox.add(message);
