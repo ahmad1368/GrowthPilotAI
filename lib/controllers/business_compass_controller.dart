@@ -819,6 +819,11 @@ class BusinessCompassController extends GetxController {
         title: 'Referral & Invitation Engine',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'CATALOG_LISTING_MODEL',
+        title: 'Product & Service Catalog',
+        data: {},
+      ),
     ];
   }
 
