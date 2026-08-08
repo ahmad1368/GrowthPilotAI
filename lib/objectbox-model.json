@@ -4339,10 +4339,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "102:2913706843516710279",
+      "lastPropertyId": "8:5570628700223260942",
+      "name": "AuthSessionEntity",
+      "properties": [
+        {
+          "id": "1:71183071041908156",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3977787280623170073",
+          "name": "deviceLabel",
+          "type": 9
+        },
+        {
+          "id": "3:2350889513939005966",
+          "name": "accessToken",
+          "type": 9
+        },
+        {
+          "id": "4:3134532246116795721",
+          "name": "accessTokenExpiresAt",
+          "type": 10
+        },
+        {
+          "id": "5:4478148019349610074",
+          "name": "refreshTokenHash",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "107:6957853459665263710"
+        },
+        {
+          "id": "6:7213000505439014372",
+          "name": "refreshTokenExpiresAt",
+          "type": 10
+        },
+        {
+          "id": "7:8057925608347362975",
+          "name": "isRevoked",
+          "type": 1
+        },
+        {
+          "id": "8:5570628700223260942",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "101:4051363359371688828",
-  "lastIndexId": "106:4772048302535993675",
+  "lastEntityId": "102:2913706843516710279",
+  "lastIndexId": "107:6957853459665263710",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
