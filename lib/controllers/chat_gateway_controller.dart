@@ -20,7 +20,8 @@ class ChatGatewayController extends GetxController {
   late ChatRoomPresenceHandler _presence;
   late ChatMessageRelayHandler _relay;
   late ChatReadReceiptHandler _readReceipts;
-  ChatRoomEntity? room;
+  final _room = Rx<ChatRoomEntity?>(null);
+  ChatRoomEntity? get room => _room.value;
 
   final messages = <ChatRoomMessageEntity>[].obs;
 
@@ -41,9 +42,8 @@ class ChatGatewayController extends GetxController {
   /// Returns false without joining if there is no valid, unexpired
   /// session (Issue #131 AC: JWT-authenticated connections).
   bool openRoom(String currentUserId, String otherUserId) {
-    final joined = _join.open(currentUserId, otherUserId);
-    room = joined;
-    return joined != null;
+    _room.value = _join.open(currentUserId, otherUserId);
+    return room != null;
   }
 
   Future<bool> sendMessage(String senderId, String body) =>
@@ -51,9 +51,15 @@ class ChatGatewayController extends GetxController {
 
   void markMessagesRead(String readerId) => _readReceipts.markRead(readerId);
 
-  void toggleOtherOnline() => _presence.toggleOnline(room!);
+  void toggleOtherOnline() {
+    _presence.toggleOnline(room!);
+    _room.refresh();
+  }
 
-  void toggleOtherTyping() => _presence.toggleTyping(room!);
+  void toggleOtherTyping() {
+    _presence.toggleTyping(room!);
+    _room.refresh();
+  }
 
   @override
   void onClose() {
