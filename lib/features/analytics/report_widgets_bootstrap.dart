@@ -62,6 +62,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/accounting_reports_re
 import 'package:growth_pilot_ai/features/analytics/widgets/cra_compliance_report_widget.dart';
 import 'package:growth_pilot_ai/features/auth/widgets/auth_session_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/catalog_report_widget.dart';
+import 'package:growth_pilot_ai/features/geo/widgets/geo_location_report_widget.dart';
 import 'package:growth_pilot_ai/features/contacts/widgets/contact_sync_report_widget.dart';
 import 'package:growth_pilot_ai/features/referrals/widgets/referral_report_widget.dart';
 import 'package:growth_pilot_ai/features/messaging/widgets/translation_chat_report_widget.dart';
@@ -499,6 +500,10 @@ class ReportWidgetsBootstrap {
         'AUTH_SESSION_LIFECYCLE',
         (spec) =>
             AuthSessionReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'NEARBY_VENDOR_MAP',
+        (spec) =>
+            GeoLocationReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).

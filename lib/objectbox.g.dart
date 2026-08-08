@@ -108,6 +108,7 @@ import 'core/data/entities/transaction_entity.dart';
 import 'core/data/entities/transaction_mapping_status_entity.dart';
 import 'core/data/entities/unified_transaction_entity.dart';
 import 'core/data/entities/unmatched_contact_entity.dart';
+import 'core/data/entities/user_location_preference_entity.dart';
 import 'core/data/entities/vendor_entity.dart';
 import 'core/data/entities/visitor_count_entity.dart';
 import 'core/data/entities/warranty_claim_entity.dart';
@@ -4416,6 +4417,40 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(103, 4937929047162813462),
+      name: 'UserLocationPreferenceEntity',
+      lastPropertyId: const obx_int.IdUid(5, 493674431829763420),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7835587177448562949),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7217870103931181162),
+            name: 'postalCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3239155121639165982),
+            name: 'lat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7133199558603846923),
+            name: 'lng',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 493674431829763420),
+            name: 'updatedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4454,7 +4489,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(102, 2913706843516710279),
+      lastEntityId: const obx_int.IdUid(103, 4937929047162813462),
       lastIndexId: const obx_int.IdUid(107, 6957853459665263710),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -9550,7 +9585,50 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
-        })
+        }),
+    UserLocationPreferenceEntity:
+        obx_int.EntityDefinition<UserLocationPreferenceEntity>(
+            model: _entities[101],
+            toOneRelations: (UserLocationPreferenceEntity object) => [],
+            toManyRelations: (UserLocationPreferenceEntity object) => {},
+            getId: (UserLocationPreferenceEntity object) => object.id,
+            setId: (UserLocationPreferenceEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (UserLocationPreferenceEntity object, fb.Builder fbb) {
+              final postalCodeOffset = fbb.writeString(object.postalCode);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, postalCodeOffset);
+              fbb.addFloat64(2, object.lat);
+              fbb.addFloat64(3, object.lng);
+              fbb.addInt64(4, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final postalCodeParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final latParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final lngParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = UserLocationPreferenceEntity(
+                  id: idParam,
+                  postalCode: postalCodeParam,
+                  lat: latParam,
+                  lng: lngParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -12640,4 +12718,28 @@ class AuthSessionEntity_ {
   /// see [AuthSessionEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<AuthSessionEntity>(_entities[100].properties[7]);
+}
+
+/// [UserLocationPreferenceEntity] entity fields to define ObjectBox queries.
+class UserLocationPreferenceEntity_ {
+  /// see [UserLocationPreferenceEntity.id]
+  static final id = obx.QueryIntegerProperty<UserLocationPreferenceEntity>(
+      _entities[101].properties[0]);
+
+  /// see [UserLocationPreferenceEntity.postalCode]
+  static final postalCode =
+      obx.QueryStringProperty<UserLocationPreferenceEntity>(
+          _entities[101].properties[1]);
+
+  /// see [UserLocationPreferenceEntity.lat]
+  static final lat = obx.QueryDoubleProperty<UserLocationPreferenceEntity>(
+      _entities[101].properties[2]);
+
+  /// see [UserLocationPreferenceEntity.lng]
+  static final lng = obx.QueryDoubleProperty<UserLocationPreferenceEntity>(
+      _entities[101].properties[3]);
+
+  /// see [UserLocationPreferenceEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<UserLocationPreferenceEntity>(
+      _entities[101].properties[4]);
 }
