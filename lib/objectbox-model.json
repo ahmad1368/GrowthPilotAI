@@ -5296,10 +5296,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "120:3281681616933519557",
+      "lastPropertyId": "7:3314605519456156891",
+      "name": "SubscriptionEntity",
+      "properties": [
+        {
+          "id": "1:7182620383998335743",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6958127613391397101",
+          "name": "businessId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "127:538374341724193646"
+        },
+        {
+          "id": "3:1843865357208531270",
+          "name": "dbTier",
+          "type": 6
+        },
+        {
+          "id": "4:197082765952222441",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:1030461885832346411",
+          "name": "currentPeriodEnd",
+          "type": 10
+        },
+        {
+          "id": "6:176354711680136062",
+          "name": "gracePeriodEndsAt",
+          "type": 10
+        },
+        {
+          "id": "7:3314605519456156891",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "119:2749134088264315385",
-  "lastIndexId": "126:1096206977870419986",
+  "lastEntityId": "120:3281681616933519557",
+  "lastIndexId": "127:538374341724193646",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
