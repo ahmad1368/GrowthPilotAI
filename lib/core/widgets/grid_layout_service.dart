@@ -102,6 +102,7 @@ class GridLayoutService {
     'NEARBY_VENDOR_MAP',
     'BUSINESS_DISCOVERY_SEARCH',
     'IMAGE_OPTIMIZATION_ENGINE',
+    'PRODUCT_FORM_WITH_IMAGES',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

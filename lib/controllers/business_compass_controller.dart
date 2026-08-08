@@ -844,6 +844,11 @@ class BusinessCompassController extends GetxController {
         title: 'Image Optimization Engine',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'PRODUCT_FORM_WITH_IMAGES',
+        title: 'Add/Edit Product Form',
+        data: {},
+      ),
     ];
   }
 

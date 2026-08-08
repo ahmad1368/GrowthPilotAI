@@ -4142,7 +4142,7 @@
     },
     {
       "id": "99:7608025554369849817",
-      "lastPropertyId": "14:6399625391431453035",
+      "lastPropertyId": "15:8311658732797353790",
       "name": "CatalogListingEntity",
       "properties": [
         {
@@ -4219,6 +4219,11 @@
           "id": "14:6399625391431453035",
           "name": "createdAt",
           "type": 10
+        },
+        {
+          "id": "15:8311658732797353790",
+          "name": "imageVariantIdsCsv",
+          "type": 9
         }
       ],
       "relations": []
@@ -4478,9 +4483,63 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "105:8417464621922573376",
+      "lastPropertyId": "9:3769950846467170121",
+      "name": "ProductFormDraftEntity",
+      "properties": [
+        {
+          "id": "1:7439868942699460191",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6835391908908480444",
+          "name": "editingListingId",
+          "type": 6
+        },
+        {
+          "id": "3:1712203780282599830",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:2291096560278302971",
+          "name": "industry",
+          "type": 9
+        },
+        {
+          "id": "5:379458591434861490",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "6:7136979612104675039",
+          "name": "dbListingType",
+          "type": 6
+        },
+        {
+          "id": "7:7660570811355251866",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "8:7245752116559457313",
+          "name": "imageVariantIdsCsv",
+          "type": 9
+        },
+        {
+          "id": "9:3769950846467170121",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "104:3609257032856816177",
+  "lastEntityId": "105:8417464621922573376",
   "lastIndexId": "107:6957853459665263710",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

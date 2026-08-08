@@ -10,4 +10,8 @@ class ImageVariantRepository {
   int save(ImageVariantEntity variant) => _box.put(variant);
 
   List<ImageVariantEntity> getAll() => _box.getAll();
+
+  ImageVariantEntity? getById(int id) => _box.get(id);
+
+  void removeByIds(List<int> ids) => _box.removeMany(ids);
 }
