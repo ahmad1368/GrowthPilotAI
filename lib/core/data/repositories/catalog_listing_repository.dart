@@ -10,4 +10,6 @@ class CatalogListingRepository {
   int save(CatalogListingEntity listing) => _box.put(listing);
 
   List<CatalogListingEntity> getAll() => _box.getAll();
+
+  void removeByIds(List<int> ids) => _box.removeMany(ids);
 }

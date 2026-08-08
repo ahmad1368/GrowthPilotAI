@@ -105,6 +105,7 @@ class GridLayoutService {
     'PRODUCT_FORM_WITH_IMAGES',
     'BULK_PRODUCT_IMPORT',
     'PRODUCT_CATALOG_GRID',
+    'PRODUCT_ADMIN_DATA_TABLE',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without

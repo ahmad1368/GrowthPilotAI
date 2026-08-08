@@ -63,6 +63,7 @@ import 'package:growth_pilot_ai/features/analytics/widgets/cra_compliance_report
 import 'package:growth_pilot_ai/features/auth/widgets/auth_session_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/catalog_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/bulk_import_report_widget.dart';
+import 'package:growth_pilot_ai/features/catalog/widgets/admin_table_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/catalog_grid_report_widget.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/product_form_report_widget.dart';
 import 'package:growth_pilot_ai/features/discovery/widgets/discovery_report_widget.dart';
@@ -529,6 +530,10 @@ class ReportWidgetsBootstrap {
         'PRODUCT_CATALOG_GRID',
         (spec) =>
             CatalogGridReportWidget(data: spec.data, title: spec.title));
+    ReportWidgetRegistry.register(
+        'PRODUCT_ADMIN_DATA_TABLE',
+        (spec) =>
+            AdminTableReportWidget(data: spec.data, title: spec.title));
   }
 
   /// Registers each widget's config side-panel options (Issue #115).
