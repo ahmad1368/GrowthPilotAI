@@ -28,6 +28,8 @@ import 'package:growth_pilot_ai/core/interfaces/marketplace_adapter.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_ebay_adapter.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_amazon_adapter.dart';
 import 'package:growth_pilot_ai/business/sync_listing_to_marketplaces_usecase.dart';
+import 'package:growth_pilot_ai/core/interfaces/invoice_pdf_service.dart';
+import 'package:growth_pilot_ai/core/data/services/local_invoice_pdf_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_layout_store.dart';
@@ -130,6 +132,11 @@ class DependencyInjection {
       );
       _locator.registerLazySingleton<SyncListingToMarketplacesUseCase>(
         () => SyncListingToMarketplacesUseCase(_locator<List<MarketplaceAdapter>>()),
+      );
+
+      // ۸.۶ سرویس تولید فاکتور PDF (GST/PST؛ Issue #146)
+      _locator.registerLazySingleton<InvoicePdfService>(
+        () => LocalInvoicePdfService(),
       );
 
       // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)

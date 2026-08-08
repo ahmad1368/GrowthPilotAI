@@ -5101,10 +5101,76 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "117:1688506409400847652",
+      "lastPropertyId": "11:5903680777411210916",
+      "name": "InvoiceEntity",
+      "properties": [
+        {
+          "id": "1:7253079241729490400",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6101111371693314844",
+          "name": "requestId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "123:3727341742954393246"
+        },
+        {
+          "id": "3:5079438114906627552",
+          "name": "sellerId",
+          "type": 9
+        },
+        {
+          "id": "4:1722476514716829124",
+          "name": "buyerId",
+          "type": 9
+        },
+        {
+          "id": "5:8654401734691631381",
+          "name": "sellerBusinessNumber",
+          "type": 9
+        },
+        {
+          "id": "6:7316810189655368225",
+          "name": "subtotal",
+          "type": 8
+        },
+        {
+          "id": "7:7913978423964146101",
+          "name": "gst",
+          "type": 8
+        },
+        {
+          "id": "8:2379335682832889378",
+          "name": "pst",
+          "type": 8
+        },
+        {
+          "id": "9:8725367411575542019",
+          "name": "total",
+          "type": 8
+        },
+        {
+          "id": "10:2988679207104181100",
+          "name": "pdfBytes",
+          "type": 23
+        },
+        {
+          "id": "11:5903680777411210916",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "116:2402996005923725345",
-  "lastIndexId": "122:5917245770982168556",
+  "lastEntityId": "117:1688506409400847652",
+  "lastIndexId": "123:3727341742954393246",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
