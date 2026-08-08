@@ -22,6 +22,8 @@ import 'package:growth_pilot_ai/core/data/datasources/mock_notification_channel.
 import 'package:growth_pilot_ai/business/dispatch_notification_usecase.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_chat_gateway_service.dart';
+import 'package:growth_pilot_ai/core/interfaces/realtime_connection_registry.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_realtime_connection_registry.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_layout_store.dart';
@@ -108,9 +110,14 @@ class DependencyInjection {
         () => DispatchNotificationUseCase(_locator<NotificationChannel>()),
       );
 
-      // ۸.۳ گیت‌وی چت بازار عمده‌فروشی (Socket.io/NestJS؛ Issue #122؛ فعلاً Mock)
+      // ۸.۳ رجیستری اتصال بلادرنگ مشترک بین چت/بازار/نوتیفیکیشن (Issue #130؛ Mock)
+      _locator.registerLazySingleton<RealtimeConnectionRegistry>(
+        () => MockRealtimeConnectionRegistry(),
+      );
+
+      // ۸.۴ گیت‌وی چت بازار عمده‌فروشی (Socket.io/NestJS؛ Issue #122؛ فعلاً Mock)
       _locator.registerLazySingleton<ChatGatewayService>(
-        () => MockChatGatewayService(),
+        () => MockChatGatewayService(_locator<RealtimeConnectionRegistry>()),
       );
 
       // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)
