@@ -117,6 +117,7 @@ import 'core/data/entities/stock_movement_entity.dart';
 import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/strike_entity.dart';
+import 'core/data/entities/subscription_entity.dart';
 import 'core/data/entities/task_execution_log_entity.dart';
 import 'core/data/entities/traffic_count_entity.dart';
 import 'core/data/entities/traffic_steering_directive_entity.dart';
@@ -5320,6 +5321,51 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(120, 3281681616933519557),
+      name: 'SubscriptionEntity',
+      lastPropertyId: const obx_int.IdUid(7, 3314605519456156891),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7182620383998335743),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6958127613391397101),
+            name: 'businessId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(127, 538374341724193646)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1843865357208531270),
+            name: 'dbTier',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 197082765952222441),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1030461885832346411),
+            name: 'currentPeriodEnd',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 176354711680136062),
+            name: 'gracePeriodEndsAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 3314605519456156891),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5358,8 +5404,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(119, 2749134088264315385),
-      lastIndexId: const obx_int.IdUid(126, 1096206977870419986),
+      lastEntityId: const obx_int.IdUid(120, 3281681616933519557),
+      lastIndexId: const obx_int.IdUid(127, 538374341724193646),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -11511,6 +11557,58 @@ obx_int.ModelDefinition getObjectBoxModel() {
               lastError: lastErrorParam);
 
           return object;
+        }),
+    SubscriptionEntity: obx_int.EntityDefinition<SubscriptionEntity>(
+        model: _entities[118],
+        toOneRelations: (SubscriptionEntity object) => [],
+        toManyRelations: (SubscriptionEntity object) => {},
+        getId: (SubscriptionEntity object) => object.id,
+        setId: (SubscriptionEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SubscriptionEntity object, fb.Builder fbb) {
+          final businessIdOffset = fbb.writeString(object.businessId);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, businessIdOffset);
+          fbb.addInt64(2, object.dbTier);
+          fbb.addInt64(3, object.dbStatus);
+          fbb.addInt64(4, object.currentPeriodEnd.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.gracePeriodEndsAt?.millisecondsSinceEpoch);
+          fbb.addInt64(6, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final gracePeriodEndsAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final businessIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dbTierParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final currentPeriodEndParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final gracePeriodEndsAtParam = gracePeriodEndsAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(gracePeriodEndsAtValue);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = SubscriptionEntity(
+              id: idParam,
+              businessId: businessIdParam,
+              dbTier: dbTierParam,
+              dbStatus: dbStatusParam,
+              currentPeriodEnd: currentPeriodEndParam,
+              gracePeriodEndsAt: gracePeriodEndsAtParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -15247,4 +15345,35 @@ class InvoiceSyncStatusEntity_ {
   /// see [InvoiceSyncStatusEntity.lastError]
   static final lastError = obx.QueryStringProperty<InvoiceSyncStatusEntity>(
       _entities[117].properties[7]);
+}
+
+/// [SubscriptionEntity] entity fields to define ObjectBox queries.
+class SubscriptionEntity_ {
+  /// see [SubscriptionEntity.id]
+  static final id = obx.QueryIntegerProperty<SubscriptionEntity>(
+      _entities[118].properties[0]);
+
+  /// see [SubscriptionEntity.businessId]
+  static final businessId =
+      obx.QueryStringProperty<SubscriptionEntity>(_entities[118].properties[1]);
+
+  /// see [SubscriptionEntity.dbTier]
+  static final dbTier = obx.QueryIntegerProperty<SubscriptionEntity>(
+      _entities[118].properties[2]);
+
+  /// see [SubscriptionEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<SubscriptionEntity>(
+      _entities[118].properties[3]);
+
+  /// see [SubscriptionEntity.currentPeriodEnd]
+  static final currentPeriodEnd =
+      obx.QueryDateProperty<SubscriptionEntity>(_entities[118].properties[4]);
+
+  /// see [SubscriptionEntity.gracePeriodEndsAt]
+  static final gracePeriodEndsAt =
+      obx.QueryDateProperty<SubscriptionEntity>(_entities[118].properties[5]);
+
+  /// see [SubscriptionEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<SubscriptionEntity>(_entities[118].properties[6]);
 }
