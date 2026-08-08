@@ -4583,7 +4583,7 @@
     },
     {
       "id": "107:7003417229316413981",
-      "lastPropertyId": "6:7300131198618713501",
+      "lastPropertyId": "10:9020412905380816541",
       "name": "ChatRoomMessageEntity",
       "properties": [
         {
@@ -4618,6 +4618,26 @@
           "id": "6:7300131198618713501",
           "name": "readAt",
           "type": 10
+        },
+        {
+          "id": "7:2348938812815163188",
+          "name": "replyToMessageId",
+          "type": 6
+        },
+        {
+          "id": "8:1635069220051868447",
+          "name": "replyPreviewText",
+          "type": 9
+        },
+        {
+          "id": "9:8639537468052774754",
+          "name": "isForwarded",
+          "type": 1
+        },
+        {
+          "id": "10:9020412905380816541",
+          "name": "forwardedFromSenderId",
+          "type": 9
         }
       ],
       "relations": []

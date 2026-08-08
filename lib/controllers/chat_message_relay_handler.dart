@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/build_reply_message.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
@@ -26,9 +27,15 @@ class ChatMessageRelayHandler {
     inbox.assignAll(_messages.getForRoom(id));
   }
 
-  Future<bool> send(String senderId, String body) async {
-    final message = ChatRoomMessageEntity(
-        roomId: roomId, senderId: senderId, body: body, sentAt: DateTime.now());
+  Future<bool> send(String senderId, String body) => _dispatch(ChatRoomMessageEntity(
+      roomId: roomId, senderId: senderId, body: body, sentAt: DateTime.now()));
+
+  /// Threaded reply (Issue #132) — [parent] must belong to this room.
+  Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
+      _dispatch(BuildReplyMessage.call(
+          parent: parent, senderId: senderId, body: body, now: DateTime.now()));
+
+  Future<bool> _dispatch(ChatRoomMessageEntity message) async {
     inbox.add(message);
     _pending.add(message);
     final result = await _gateway.emitMessage(message);

@@ -4613,7 +4613,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(107, 7003417229316413981),
       name: 'ChatRoomMessageEntity',
-      lastPropertyId: const obx_int.IdUid(6, 7300131198618713501),
+      lastPropertyId: const obx_int.IdUid(10, 9020412905380816541),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4646,6 +4646,26 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(6, 7300131198618713501),
             name: 'readAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2348938812815163188),
+            name: 'replyToMessageId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1635069220051868447),
+            name: 'replyPreviewText',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 8639537468052774754),
+            name: 'isForwarded',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 9020412905380816541),
+            name: 'forwardedFromSenderId',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -10014,13 +10034,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectToFB: (ChatRoomMessageEntity object, fb.Builder fbb) {
           final senderIdOffset = fbb.writeString(object.senderId);
           final bodyOffset = fbb.writeString(object.body);
-          fbb.startTable(7);
+          final replyPreviewTextOffset = object.replyPreviewText == null
+              ? null
+              : fbb.writeString(object.replyPreviewText!);
+          final forwardedFromSenderIdOffset =
+              object.forwardedFromSenderId == null
+                  ? null
+                  : fbb.writeString(object.forwardedFromSenderId!);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.roomId);
           fbb.addOffset(2, senderIdOffset);
           fbb.addOffset(3, bodyOffset);
           fbb.addInt64(4, object.sentAt.millisecondsSinceEpoch);
           fbb.addInt64(5, object.readAt?.millisecondsSinceEpoch);
+          fbb.addInt64(6, object.replyToMessageId);
+          fbb.addOffset(7, replyPreviewTextOffset);
+          fbb.addBool(8, object.isForwarded);
+          fbb.addOffset(9, forwardedFromSenderIdOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -10042,13 +10073,27 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final readAtParam = readAtValue == null
               ? null
               : DateTime.fromMillisecondsSinceEpoch(readAtValue);
+          final replyToMessageIdParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final replyPreviewTextParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18);
+          final isForwardedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final forwardedFromSenderIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 22);
           final object = ChatRoomMessageEntity(
               id: idParam,
               roomId: roomIdParam,
               senderId: senderIdParam,
               body: bodyParam,
               sentAt: sentAtParam,
-              readAt: readAtParam);
+              readAt: readAtParam,
+              replyToMessageId: replyToMessageIdParam,
+              replyPreviewText: replyPreviewTextParam,
+              isForwarded: isForwardedParam,
+              forwardedFromSenderId: forwardedFromSenderIdParam);
 
           return object;
         })
@@ -13305,4 +13350,23 @@ class ChatRoomMessageEntity_ {
   /// see [ChatRoomMessageEntity.readAt]
   static final readAt = obx.QueryDateProperty<ChatRoomMessageEntity>(
       _entities[105].properties[5]);
+
+  /// see [ChatRoomMessageEntity.replyToMessageId]
+  static final replyToMessageId =
+      obx.QueryIntegerProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[6]);
+
+  /// see [ChatRoomMessageEntity.replyPreviewText]
+  static final replyPreviewText =
+      obx.QueryStringProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[7]);
+
+  /// see [ChatRoomMessageEntity.isForwarded]
+  static final isForwarded = obx.QueryBooleanProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[8]);
+
+  /// see [ChatRoomMessageEntity.forwardedFromSenderId]
+  static final forwardedFromSenderId =
+      obx.QueryStringProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[9]);
 }

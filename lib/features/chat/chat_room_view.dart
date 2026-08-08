@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/chat_gateway_controller.dart';
+import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
+import 'package:growth_pilot_ai/features/chat/chat_room_actions.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_input_bar.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_message_list.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_room_header.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_typing_indicator.dart';
 
-/// Marketplace chat screen (Issue #123, near-duplicate #136) — flat
+/// Marketplace chat screen (Issue #123/#132, near-duplicate #136) — flat
 /// shadcn_ui, not the issues' literal Glassmorphism ask (architecture
 /// forbids Glassmorphism/BackdropFilter; see [CatalogGridCard]
 /// precedent). Not yet wired into app navigation — pushed directly with
@@ -25,11 +27,14 @@ class ChatRoomView extends StatefulWidget {
 class _ChatRoomViewState extends State<ChatRoomView> {
   late final String _tag = '${widget.currentUserId}_${widget.otherUserId}';
   late final ChatGatewayController _controller;
+  late final ChatRoomActions _actions;
+  ChatRoomMessageEntity? _replyingTo;
 
   @override
   void initState() {
     super.initState();
     _controller = Get.put(ChatGatewayController(), tag: _tag);
+    _actions = ChatRoomActions(_controller, widget.currentUserId);
     _controller.openRoom(widget.currentUserId, widget.otherUserId);
     _controller.markMessagesRead(widget.currentUserId);
   }
@@ -38,6 +43,11 @@ class _ChatRoomViewState extends State<ChatRoomView> {
   void dispose() {
     Get.delete<ChatGatewayController>(tag: _tag);
     super.dispose();
+  }
+
+  void _send(String text) {
+    _actions.send(text, _replyingTo);
+    if (_replyingTo != null) setState(() => _replyingTo = null);
   }
 
   @override
@@ -61,10 +71,14 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                   child: ChatMessageList(
                     messages: _controller.messages,
                     currentUserId: widget.currentUserId,
+                    onReply: (m) => setState(() => _replyingTo = m),
+                    onForward: (m) => _actions.forward(context, m),
                   ),
                 ),
                 ChatInputBar(
-                  onSend: (text) => _controller.sendMessage(widget.currentUserId, text),
+                  onSend: _send,
+                  replyPreview: _replyingTo?.body,
+                  onCancelReply: () => setState(() => _replyingTo = null),
                 ),
               ])),
         ),
