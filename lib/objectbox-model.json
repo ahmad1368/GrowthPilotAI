@@ -4390,9 +4390,43 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "103:4937929047162813462",
+      "lastPropertyId": "5:493674431829763420",
+      "name": "UserLocationPreferenceEntity",
+      "properties": [
+        {
+          "id": "1:7835587177448562949",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7217870103931181162",
+          "name": "postalCode",
+          "type": 9
+        },
+        {
+          "id": "3:3239155121639165982",
+          "name": "lat",
+          "type": 8
+        },
+        {
+          "id": "4:7133199558603846923",
+          "name": "lng",
+          "type": 8
+        },
+        {
+          "id": "5:493674431829763420",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "102:2913706843516710279",
+  "lastEntityId": "103:4937929047162813462",
   "lastIndexId": "107:6957853459665263710",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

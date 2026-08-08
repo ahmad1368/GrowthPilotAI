@@ -829,6 +829,11 @@ class BusinessCompassController extends GetxController {
         title: 'Auth Session Lifecycle',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'NEARBY_VENDOR_MAP',
+        title: 'Nearby Vendor Map',
+        data: {},
+      ),
     ];
   }
 
