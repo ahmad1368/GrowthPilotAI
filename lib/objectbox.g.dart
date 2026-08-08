@@ -54,6 +54,7 @@ import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/dispute_evidence_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
+import 'core/data/entities/exchange_rate_cache_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/fee_waiver_record_entity.dart';
@@ -5134,7 +5135,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(117, 1688506409400847652),
       name: 'InvoiceEntity',
-      lastPropertyId: const obx_int.IdUid(11, 5903680777411210916),
+      lastPropertyId: const obx_int.IdUid(15, 6186180255174208021),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -5192,6 +5193,26 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(11, 5903680777411210916),
             name: 'createdAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 3903503736489596501),
+            name: 'currencyCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 6467723399048659126),
+            name: 'agreedExchangeRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 9207299142312975296),
+            name: 'isExport',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 6186180255174208021),
+            name: 'dutyEstimate',
+            type: 8,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -5366,6 +5387,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(121, 5731534325971851288),
+      name: 'ExchangeRateCacheEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5400840691884014300),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7992294011696475508),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6685536908594998058),
+            name: 'pairKey',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(128, 2653353806863667252)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6162032540443004596),
+            name: 'rate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5400840691884014300),
+            name: 'fetchedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5404,8 +5455,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(120, 3281681616933519557),
-      lastIndexId: const obx_int.IdUid(127, 538374341724193646),
+      lastEntityId: const obx_int.IdUid(121, 5731534325971851288),
+      lastIndexId: const obx_int.IdUid(128, 2653353806863667252),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -11355,7 +11406,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeString(object.sellerBusinessNumber!);
           final pdfBytesOffset = fbb.writeListInt8(object.pdfBytes);
-          fbb.startTable(12);
+          final currencyCodeOffset = fbb.writeString(object.currencyCode);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.requestId);
           fbb.addOffset(2, sellerIdOffset);
@@ -11367,6 +11419,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(8, object.total);
           fbb.addOffset(9, pdfBytesOffset);
           fbb.addInt64(10, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(11, currencyCodeOffset);
+          fbb.addFloat64(12, object.agreedExchangeRate);
+          fbb.addBool(13, object.isExport);
+          fbb.addFloat64(14, object.dutyEstimate);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -11392,6 +11448,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
           final totalParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          final currencyCodeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 26, '');
+          final agreedExchangeRateParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 28);
+          final isExportParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 30, false);
+          final dutyEstimateParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 32);
           final pdfBytesParam = const fb.Uint8ListReader(lazy: false)
               .vTableGet(buffer, rootOffset, 22, Uint8List(0)) as Uint8List;
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
@@ -11406,6 +11471,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
               gst: gstParam,
               pst: pstParam,
               total: totalParam,
+              currencyCode: currencyCodeParam,
+              agreedExchangeRate: agreedExchangeRateParam,
+              isExport: isExportParam,
+              dutyEstimate: dutyEstimateParam,
               pdfBytes: pdfBytesParam,
               createdAt: createdAtParam);
 
@@ -11607,6 +11676,43 @@ obx_int.ModelDefinition getObjectBoxModel() {
               currentPeriodEnd: currentPeriodEndParam,
               gracePeriodEndsAt: gracePeriodEndsAtParam,
               createdAt: createdAtParam);
+
+          return object;
+        }),
+    ExchangeRateCacheEntity: obx_int.EntityDefinition<ExchangeRateCacheEntity>(
+        model: _entities[119],
+        toOneRelations: (ExchangeRateCacheEntity object) => [],
+        toManyRelations: (ExchangeRateCacheEntity object) => {},
+        getId: (ExchangeRateCacheEntity object) => object.id,
+        setId: (ExchangeRateCacheEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ExchangeRateCacheEntity object, fb.Builder fbb) {
+          final pairKeyOffset = fbb.writeString(object.pairKey);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, pairKeyOffset);
+          fbb.addFloat64(2, object.rate);
+          fbb.addInt64(3, object.fetchedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final pairKeyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final rateParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final fetchedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = ExchangeRateCacheEntity(
+              id: idParam,
+              pairKey: pairKeyParam,
+              rate: rateParam,
+              fetchedAt: fetchedAtParam);
 
           return object;
         })
@@ -15254,6 +15360,22 @@ class InvoiceEntity_ {
   /// see [InvoiceEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<InvoiceEntity>(_entities[115].properties[10]);
+
+  /// see [InvoiceEntity.currencyCode]
+  static final currencyCode =
+      obx.QueryStringProperty<InvoiceEntity>(_entities[115].properties[11]);
+
+  /// see [InvoiceEntity.agreedExchangeRate]
+  static final agreedExchangeRate =
+      obx.QueryDoubleProperty<InvoiceEntity>(_entities[115].properties[12]);
+
+  /// see [InvoiceEntity.isExport]
+  static final isExport =
+      obx.QueryBooleanProperty<InvoiceEntity>(_entities[115].properties[13]);
+
+  /// see [InvoiceEntity.dutyEstimate]
+  static final dutyEstimate =
+      obx.QueryDoubleProperty<InvoiceEntity>(_entities[115].properties[14]);
 }
 
 /// [PaymentEntity] entity fields to define ObjectBox queries.
@@ -15376,4 +15498,23 @@ class SubscriptionEntity_ {
   /// see [SubscriptionEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<SubscriptionEntity>(_entities[118].properties[6]);
+}
+
+/// [ExchangeRateCacheEntity] entity fields to define ObjectBox queries.
+class ExchangeRateCacheEntity_ {
+  /// see [ExchangeRateCacheEntity.id]
+  static final id = obx.QueryIntegerProperty<ExchangeRateCacheEntity>(
+      _entities[119].properties[0]);
+
+  /// see [ExchangeRateCacheEntity.pairKey]
+  static final pairKey = obx.QueryStringProperty<ExchangeRateCacheEntity>(
+      _entities[119].properties[1]);
+
+  /// see [ExchangeRateCacheEntity.rate]
+  static final rate = obx.QueryDoubleProperty<ExchangeRateCacheEntity>(
+      _entities[119].properties[2]);
+
+  /// see [ExchangeRateCacheEntity.fetchedAt]
+  static final fetchedAt = obx.QueryDateProperty<ExchangeRateCacheEntity>(
+      _entities[119].properties[3]);
 }

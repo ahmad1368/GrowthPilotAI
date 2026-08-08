@@ -33,6 +33,8 @@ import 'package:growth_pilot_ai/core/interfaces/invoice_pdf_service.dart';
 import 'package:growth_pilot_ai/core/data/services/local_invoice_pdf_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/payment_gateway.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_payment_gateway.dart';
+import 'package:growth_pilot_ai/core/interfaces/exchange_rate_provider.dart';
+import 'package:growth_pilot_ai/core/data/datasources/mock_exchange_rate_provider.dart';
 import 'package:growth_pilot_ai/core/interfaces/social_auth_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_social_auth_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/widget_layout_store.dart';
@@ -150,6 +152,11 @@ class DependencyInjection {
       // ۸.۷ درگاه پرداخت (Stripe/Interac؛ Issue #147؛ فعلاً Mock — بدون داده کارت واقعی)
       _locator.registerLazySingleton<PaymentGateway>(
         () => MockPaymentGateway(),
+      );
+
+      // ۸.۸ سرویس نرخ ارز (Fixer.io/Stripe Rates؛ Issue #153؛ فعلاً Mock — نرخ ثابت)
+      _locator.registerLazySingleton<ExchangeRateProvider>(
+        () => MockExchangeRateProvider(),
       );
 
       // ۹. استراتژی خروجی داده (فعلاً CSV؛ Excel/PDF بعداً اضافه می‌شوند)

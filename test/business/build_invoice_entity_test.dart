@@ -32,4 +32,41 @@ void main() {
 
     expect(invoice.invoiceNumber, 'INV-2026-00007');
   });
+
+  test('defaults to a domestic CAD invoice with no exchange rate', () {
+    final invoice = BuildInvoiceEntity.call(
+      requestId: 1,
+      sellerId: 'vendor',
+      buyerId: 'buyer',
+      sellerBusinessNumber: null,
+      subtotal: 100,
+      tax: const TaxBreakdown(gst: 5, pst: 7),
+      now: DateTime(2026, 1, 1),
+    );
+
+    expect(invoice.currencyCode, 'CAD');
+    expect(invoice.agreedExchangeRate, isNull);
+    expect(invoice.isExport, isFalse);
+  });
+
+  test('freezes the agreed exchange rate for a cross-border export invoice', () {
+    final invoice = BuildInvoiceEntity.call(
+      requestId: 1,
+      sellerId: 'vendor',
+      buyerId: 'buyer',
+      sellerBusinessNumber: null,
+      subtotal: 100,
+      tax: const TaxBreakdown(gst: 0, pst: 0),
+      now: DateTime(2026, 1, 1),
+      currencyCode: 'USD',
+      agreedExchangeRate: 1.37,
+      isExport: true,
+      dutyEstimate: 5.0,
+    );
+
+    expect(invoice.currencyCode, 'USD');
+    expect(invoice.agreedExchangeRate, 1.37);
+    expect(invoice.isExport, isTrue);
+    expect(invoice.dutyEstimate, 5.0);
+  });
 }

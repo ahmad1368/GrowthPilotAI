@@ -15,6 +15,10 @@ class BuildInvoiceEntity {
     required double subtotal,
     required TaxBreakdown tax,
     required DateTime now,
+    String currencyCode = 'CAD',
+    double? agreedExchangeRate,
+    bool isExport = false,
+    double? dutyEstimate,
   }) {
     return InvoiceEntity(
       requestId: requestId,
@@ -25,6 +29,10 @@ class BuildInvoiceEntity {
       gst: tax.gst,
       pst: tax.pst,
       total: subtotal + tax.total,
+      currencyCode: currencyCode,
+      agreedExchangeRate: agreedExchangeRate,
+      isExport: isExport,
+      dutyEstimate: dutyEstimate,
       pdfBytes: Uint8List(0),
       createdAt: now,
     );

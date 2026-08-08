@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'package:objectbox/objectbox.dart';
 
-/// One generated GST/PST invoice (Issue #146) — the PDF is stored
-/// directly (like #139's `ImageVariantEntity`), not behind an S3/GCS
-/// "Strict Access" bucket, since no cloud storage exists locally.
+/// One generated GST/PST invoice (Issue #146; PDF stored directly, no
+/// cloud storage locally). [agreedExchangeRate] freezes the rate at
+/// generation time (#153 AC) so the invoice stays historically accurate.
 @Entity()
 class InvoiceEntity {
   @Id()
@@ -21,6 +21,11 @@ class InvoiceEntity {
   double pst;
   double total;
 
+  String currencyCode; // Currency.code, e.g. "CAD"
+  double? agreedExchangeRate;
+  bool isExport;
+  double? dutyEstimate;
+
   Uint8List pdfBytes;
 
   @Property(type: PropertyType.date)
@@ -36,6 +41,10 @@ class InvoiceEntity {
     required this.gst,
     required this.pst,
     required this.total,
+    this.currencyCode = 'CAD',
+    this.agreedExchangeRate,
+    this.isExport = false,
+    this.dutyEstimate,
     required this.pdfBytes,
     required this.createdAt,
   });
