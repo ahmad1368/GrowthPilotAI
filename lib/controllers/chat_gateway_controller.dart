@@ -10,6 +10,7 @@ import 'package:growth_pilot_ai/controllers/chat_notification_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_read_receipt_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_room_join_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_room_presence_handler.dart';
+import 'package:growth_pilot_ai/controllers/moderation_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
@@ -18,6 +19,7 @@ import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_reposit
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
+import 'package:growth_pilot_ai/core/enum/moderation_reason.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
 
 /// Drives a single marketplace chat room (Issue #122/#131); delegates to
@@ -29,6 +31,7 @@ class ChatGatewayController extends GetxController {
   late ChatReadReceiptHandler _readReceipts;
   late ChatForwardHandler _forward;
   late ChatNotificationHandler _notifications;
+  late ModerationController _moderation;
   late ChatRoomRepository _rooms;
   final _room = Rx<ChatRoomEntity?>(null);
   ChatRoomEntity? get room => _room.value;
@@ -48,6 +51,9 @@ class ChatGatewayController extends GetxController {
     _forward = ChatForwardHandler(_rooms, messageRepo);
     _notifications = ChatNotificationHandler(gateway,
         DependencyInjection.get<DispatchNotificationUseCase>(), InboxNotificationRepository(store.box()));
+    _moderation = Get.isRegistered<ModerationController>()
+        ? Get.find<ModerationController>()
+        : Get.put(ModerationController());
     _join = ChatRoomJoinHandler(_rooms,
         ChatConnectionAuthorizer(AuthSessionRepository(store.box())), _relay, gateway);
   }
@@ -59,9 +65,19 @@ class ChatGatewayController extends GetxController {
     if (room != null) {
       _notifications.currentUserId = currentUserId;
       _notifications.roomId = room!.id;
+      _relay.isSenderBlocked = (senderId) => _moderation.isBlocked(currentUserId, senderId);
     }
     return room != null;
   }
+
+  bool isPeerBlocked(String currentUserId, String otherUserId) =>
+      _moderation.isBlocked(currentUserId, otherUserId);
+
+  void blockPeer(String currentUserId, String otherUserId) =>
+      _moderation.blockUser(currentUserId, otherUserId);
+
+  void reportPeer(String reporterId, String targetId, ModerationReason reason) =>
+      _moderation.submitReport(reporterId, targetId, reason, messages);
 
   Future<bool> sendMessage(String senderId, String body) =>
       _relay.send(senderId, body);
