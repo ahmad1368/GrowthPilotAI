@@ -22,6 +22,14 @@ class ChatRoomMessageEntity {
   @Property(type: PropertyType.date)
   DateTime? readAt;
 
+  // Reply/Forward threading (Issue #132). [replyPreviewText] denormalizes
+  // the first 50 chars of the parent so the UI never needs a lookup to
+  // render the "Mini-Preview", and survives the parent being deleted.
+  int? replyToMessageId;
+  String? replyPreviewText;
+  bool isForwarded;
+  String? forwardedFromSenderId;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -29,7 +37,12 @@ class ChatRoomMessageEntity {
     required this.body,
     required this.sentAt,
     this.readAt,
+    this.replyToMessageId,
+    this.replyPreviewText,
+    this.isForwarded = false,
+    this.forwardedFromSenderId,
   });
 
   bool get isRead => readAt != null;
+  bool get isReply => replyToMessageId != null;
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/list_forwardable_chat_rooms.dart';
 import 'package:growth_pilot_ai/controllers/chat_connection_authorizer.dart';
+import 'package:growth_pilot_ai/controllers/chat_forward_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_message_relay_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_read_receipt_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_room_join_handler.dart';
@@ -20,6 +22,8 @@ class ChatGatewayController extends GetxController {
   late ChatRoomPresenceHandler _presence;
   late ChatMessageRelayHandler _relay;
   late ChatReadReceiptHandler _readReceipts;
+  late ChatForwardHandler _forward;
+  late ChatRoomRepository _rooms;
   final _room = Rx<ChatRoomEntity?>(null);
   ChatRoomEntity? get room => _room.value;
 
@@ -29,13 +33,14 @@ class ChatGatewayController extends GetxController {
   void onInit() {
     super.onInit();
     final store = Get.find<ObjectBox>().store;
-    final rooms = ChatRoomRepository(store.box());
+    _rooms = ChatRoomRepository(store.box());
     final gateway = DependencyInjection.get<ChatGatewayService>();
     final messageRepo = ChatRoomMessageRepository(store.box());
     _relay = ChatMessageRelayHandler(messageRepo, gateway, messages);
     _readReceipts = ChatReadReceiptHandler(messageRepo, messages);
-    _presence = ChatRoomPresenceHandler(rooms);
-    _join = ChatRoomJoinHandler(rooms,
+    _presence = ChatRoomPresenceHandler(_rooms);
+    _forward = ChatForwardHandler(_rooms, messageRepo);
+    _join = ChatRoomJoinHandler(_rooms,
         ChatConnectionAuthorizer(AuthSessionRepository(store.box())), _relay, gateway);
   }
 
@@ -48,6 +53,15 @@ class ChatGatewayController extends GetxController {
 
   Future<bool> sendMessage(String senderId, String body) =>
       _relay.send(senderId, body);
+
+  Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
+      _relay.sendReply(senderId, body, parent);
+
+  bool forwardMessage(ChatRoomMessageEntity original, int targetRoomId, String forwarderId) =>
+      _forward.forward(original, targetRoomId, forwarderId);
+
+  List<ChatRoomEntity> forwardableRooms(String userId) =>
+      ListForwardableChatRooms.call(_rooms.getAll(), userId, room?.id ?? 0);
 
   void markMessagesRead(String readerId) => _readReceipts.markRead(readerId);
 
