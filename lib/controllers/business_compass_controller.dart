@@ -824,6 +824,11 @@ class BusinessCompassController extends GetxController {
         title: 'Product & Service Catalog',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'AUTH_SESSION_LIFECYCLE',
+        title: 'Auth Session Lifecycle',
+        data: {},
+      ),
     ];
   }
 

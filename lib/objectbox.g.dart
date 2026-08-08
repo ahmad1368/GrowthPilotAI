@@ -25,6 +25,7 @@ import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/asset_bid_entity.dart';
 import 'core/data/entities/asset_listing_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
+import 'core/data/entities/auth_session_entity.dart';
 import 'core/data/entities/banking_gateway_transaction_entity.dart';
 import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/barter_listing_entity.dart';
@@ -4365,6 +4366,56 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(102, 2913706843516710279),
+      name: 'AuthSessionEntity',
+      lastPropertyId: const obx_int.IdUid(8, 5570628700223260942),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 71183071041908156),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3977787280623170073),
+            name: 'deviceLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2350889513939005966),
+            name: 'accessToken',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3134532246116795721),
+            name: 'accessTokenExpiresAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4478148019349610074),
+            name: 'refreshTokenHash',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(107, 6957853459665263710)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7213000505439014372),
+            name: 'refreshTokenExpiresAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8057925608347362975),
+            name: 'isRevoked',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 5570628700223260942),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4403,8 +4454,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(101, 4051363359371688828),
-      lastIndexId: const obx_int.IdUid(106, 4772048302535993675),
+      lastEntityId: const obx_int.IdUid(102, 2913706843516710279),
+      lastIndexId: const obx_int.IdUid(107, 6957853459665263710),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -9439,7 +9490,67 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   priceRangeMax: priceRangeMaxParam);
 
               return object;
-            })
+            }),
+    AuthSessionEntity: obx_int.EntityDefinition<AuthSessionEntity>(
+        model: _entities[100],
+        toOneRelations: (AuthSessionEntity object) => [],
+        toManyRelations: (AuthSessionEntity object) => {},
+        getId: (AuthSessionEntity object) => object.id,
+        setId: (AuthSessionEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AuthSessionEntity object, fb.Builder fbb) {
+          final deviceLabelOffset = fbb.writeString(object.deviceLabel);
+          final accessTokenOffset = fbb.writeString(object.accessToken);
+          final refreshTokenHashOffset =
+              fbb.writeString(object.refreshTokenHash);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, deviceLabelOffset);
+          fbb.addOffset(2, accessTokenOffset);
+          fbb.addInt64(3, object.accessTokenExpiresAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, refreshTokenHashOffset);
+          fbb.addInt64(5, object.refreshTokenExpiresAt.millisecondsSinceEpoch);
+          fbb.addBool(6, object.isRevoked);
+          fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final deviceLabelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final accessTokenParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final accessTokenExpiresAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final refreshTokenHashParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final refreshTokenExpiresAtParam =
+              DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final isRevokedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+          final object = AuthSessionEntity(
+              id: idParam,
+              deviceLabel: deviceLabelParam,
+              accessToken: accessTokenParam,
+              accessTokenExpiresAt: accessTokenExpiresAtParam,
+              refreshTokenHash: refreshTokenHashParam,
+              refreshTokenExpiresAt: refreshTokenExpiresAtParam,
+              isRevoked: isRevokedParam,
+              createdAt: createdAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -12494,4 +12605,39 @@ class ServiceListingDetailsEntity_ {
   static final priceRangeMax =
       obx.QueryDoubleProperty<ServiceListingDetailsEntity>(
           _entities[99].properties[9]);
+}
+
+/// [AuthSessionEntity] entity fields to define ObjectBox queries.
+class AuthSessionEntity_ {
+  /// see [AuthSessionEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<AuthSessionEntity>(_entities[100].properties[0]);
+
+  /// see [AuthSessionEntity.deviceLabel]
+  static final deviceLabel =
+      obx.QueryStringProperty<AuthSessionEntity>(_entities[100].properties[1]);
+
+  /// see [AuthSessionEntity.accessToken]
+  static final accessToken =
+      obx.QueryStringProperty<AuthSessionEntity>(_entities[100].properties[2]);
+
+  /// see [AuthSessionEntity.accessTokenExpiresAt]
+  static final accessTokenExpiresAt =
+      obx.QueryDateProperty<AuthSessionEntity>(_entities[100].properties[3]);
+
+  /// see [AuthSessionEntity.refreshTokenHash]
+  static final refreshTokenHash =
+      obx.QueryStringProperty<AuthSessionEntity>(_entities[100].properties[4]);
+
+  /// see [AuthSessionEntity.refreshTokenExpiresAt]
+  static final refreshTokenExpiresAt =
+      obx.QueryDateProperty<AuthSessionEntity>(_entities[100].properties[5]);
+
+  /// see [AuthSessionEntity.isRevoked]
+  static final isRevoked =
+      obx.QueryBooleanProperty<AuthSessionEntity>(_entities[100].properties[6]);
+
+  /// see [AuthSessionEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<AuthSessionEntity>(_entities[100].properties[7]);
 }
