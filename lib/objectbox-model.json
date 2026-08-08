@@ -4951,10 +4951,104 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "114:2298701784982705445",
+      "lastPropertyId": "5:8896590461395317318",
+      "name": "MarketplaceConnectionEntity",
+      "properties": [
+        {
+          "id": "1:295499146844536012",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8772735296200776956",
+          "name": "providerName",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "119:1787602374013954887"
+        },
+        {
+          "id": "3:2579864652818503534",
+          "name": "credentialToken",
+          "type": 9
+        },
+        {
+          "id": "4:1736824647218925443",
+          "name": "isActive",
+          "type": 1
+        },
+        {
+          "id": "5:8896590461395317318",
+          "name": "connectedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "115:6145979316519562860",
+      "lastPropertyId": "9:6478625247144867114",
+      "name": "MarketplaceSyncStatusEntity",
+      "properties": [
+        {
+          "id": "1:4336586992590728821",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:313683282647320019",
+          "name": "listingId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "120:5421575359572932114"
+        },
+        {
+          "id": "3:1804135438284084544",
+          "name": "providerName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "121:3447985546542655693"
+        },
+        {
+          "id": "4:8964776858817125807",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:914237148125396706",
+          "name": "externalListingId",
+          "type": 9
+        },
+        {
+          "id": "6:3715038412205730235",
+          "name": "retryCount",
+          "type": 6
+        },
+        {
+          "id": "7:1982522396129202390",
+          "name": "lastAttemptAt",
+          "type": 10
+        },
+        {
+          "id": "8:7779904330903058637",
+          "name": "nextRetryAt",
+          "type": 10
+        },
+        {
+          "id": "9:6478625247144867114",
+          "name": "lastError",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "113:6163326306428889150",
-  "lastIndexId": "118:3978877787594137566",
+  "lastEntityId": "115:6145979316519562860",
+  "lastIndexId": "121:3447985546542655693",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
