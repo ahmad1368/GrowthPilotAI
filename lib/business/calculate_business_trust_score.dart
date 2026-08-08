@@ -15,8 +15,9 @@ typedef BusinessTrustResult = ({double score, TrustBadge badge});
 
 /// The full "Reputation Microservice" pipeline (Issue #135), pulling
 /// from the repositories #124/#125/#144 already built. [completionScore]
-/// stays a caller-supplied neutral default until Procurement Matches
-/// (#126) exist to compute a real completion rate from.
+/// defaults to a neutral placeholder, but callers should now pass
+/// [ComputeCompletionRate]'s (#147) real value once payment data exists
+/// for the business.
 class CalculateBusinessTrustScore {
   static BusinessTrustResult call({
     required String businessId,
