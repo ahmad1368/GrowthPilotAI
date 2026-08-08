@@ -73,6 +73,8 @@ import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/marketing_campaign_entity.dart';
+import 'core/data/entities/marketplace_connection_entity.dart';
+import 'core/data/entities/marketplace_sync_status_entity.dart';
 import 'core/data/entities/merchant_activity_event_entity.dart';
 import 'core/data/entities/merchant_branch_entity.dart';
 import 'core/data/entities/merchant_config_entity.dart';
@@ -4977,6 +4979,97 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(114, 2298701784982705445),
+      name: 'MarketplaceConnectionEntity',
+      lastPropertyId: const obx_int.IdUid(5, 8896590461395317318),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 295499146844536012),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8772735296200776956),
+            name: 'providerName',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(119, 1787602374013954887)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2579864652818503534),
+            name: 'credentialToken',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1736824647218925443),
+            name: 'isActive',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8896590461395317318),
+            name: 'connectedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(115, 6145979316519562860),
+      name: 'MarketplaceSyncStatusEntity',
+      lastPropertyId: const obx_int.IdUid(9, 6478625247144867114),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4336586992590728821),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 313683282647320019),
+            name: 'listingId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(120, 5421575359572932114)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1804135438284084544),
+            name: 'providerName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(121, 3447985546542655693)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8964776858817125807),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 914237148125396706),
+            name: 'externalListingId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3715038412205730235),
+            name: 'retryCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 1982522396129202390),
+            name: 'lastAttemptAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7779904330903058637),
+            name: 'nextRetryAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6478625247144867114),
+            name: 'lastError',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5015,8 +5108,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(113, 6163326306428889150),
-      lastIndexId: const obx_int.IdUid(118, 3978877787594137566),
+      lastEntityId: const obx_int.IdUid(115, 6145979316519562860),
+      lastIndexId: const obx_int.IdUid(121, 3447985546542655693),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -10753,7 +10846,125 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   createdAt: createdAtParam);
 
               return object;
-            })
+            }),
+    MarketplaceConnectionEntity:
+        obx_int.EntityDefinition<MarketplaceConnectionEntity>(
+            model: _entities[112],
+            toOneRelations: (MarketplaceConnectionEntity object) => [],
+            toManyRelations: (MarketplaceConnectionEntity object) => {},
+            getId: (MarketplaceConnectionEntity object) => object.id,
+            setId: (MarketplaceConnectionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (MarketplaceConnectionEntity object, fb.Builder fbb) {
+              final providerNameOffset = fbb.writeString(object.providerName);
+              final credentialTokenOffset =
+                  fbb.writeString(object.credentialToken);
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, providerNameOffset);
+              fbb.addOffset(2, credentialTokenOffset);
+              fbb.addBool(3, object.isActive);
+              fbb.addInt64(4, object.connectedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final providerNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final credentialTokenParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final isActiveParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false);
+              final connectedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = MarketplaceConnectionEntity(
+                  id: idParam,
+                  providerName: providerNameParam,
+                  credentialToken: credentialTokenParam,
+                  isActive: isActiveParam,
+                  connectedAt: connectedAtParam);
+
+              return object;
+            }),
+    MarketplaceSyncStatusEntity: obx_int.EntityDefinition<
+            MarketplaceSyncStatusEntity>(
+        model: _entities[113],
+        toOneRelations: (MarketplaceSyncStatusEntity object) => [],
+        toManyRelations: (MarketplaceSyncStatusEntity object) => {},
+        getId: (MarketplaceSyncStatusEntity object) => object.id,
+        setId: (MarketplaceSyncStatusEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MarketplaceSyncStatusEntity object, fb.Builder fbb) {
+          final providerNameOffset = fbb.writeString(object.providerName);
+          final externalListingIdOffset = object.externalListingId == null
+              ? null
+              : fbb.writeString(object.externalListingId!);
+          final lastErrorOffset = object.lastError == null
+              ? null
+              : fbb.writeString(object.lastError!);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.listingId);
+          fbb.addOffset(2, providerNameOffset);
+          fbb.addInt64(3, object.dbStatus);
+          fbb.addOffset(4, externalListingIdOffset);
+          fbb.addInt64(5, object.retryCount);
+          fbb.addInt64(6, object.lastAttemptAt?.millisecondsSinceEpoch);
+          fbb.addInt64(7, object.nextRetryAt?.millisecondsSinceEpoch);
+          fbb.addOffset(8, lastErrorOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final lastAttemptAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final nextRetryAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final listingIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final providerNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final externalListingIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12);
+          final retryCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final lastAttemptAtParam = lastAttemptAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(lastAttemptAtValue);
+          final nextRetryAtParam = nextRetryAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(nextRetryAtValue);
+          final lastErrorParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 20);
+          final object = MarketplaceSyncStatusEntity(
+              id: idParam,
+              listingId: listingIdParam,
+              providerName: providerNameParam,
+              dbStatus: dbStatusParam,
+              externalListingId: externalListingIdParam,
+              retryCount: retryCountParam,
+              lastAttemptAt: lastAttemptAtParam,
+              nextRetryAt: nextRetryAtParam,
+              lastError: lastErrorParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -14240,4 +14451,73 @@ class ProcurementResponseEntity_ {
   /// see [ProcurementResponseEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<ProcurementResponseEntity>(
       _entities[111].properties[5]);
+}
+
+/// [MarketplaceConnectionEntity] entity fields to define ObjectBox queries.
+class MarketplaceConnectionEntity_ {
+  /// see [MarketplaceConnectionEntity.id]
+  static final id = obx.QueryIntegerProperty<MarketplaceConnectionEntity>(
+      _entities[112].properties[0]);
+
+  /// see [MarketplaceConnectionEntity.providerName]
+  static final providerName =
+      obx.QueryStringProperty<MarketplaceConnectionEntity>(
+          _entities[112].properties[1]);
+
+  /// see [MarketplaceConnectionEntity.credentialToken]
+  static final credentialToken =
+      obx.QueryStringProperty<MarketplaceConnectionEntity>(
+          _entities[112].properties[2]);
+
+  /// see [MarketplaceConnectionEntity.isActive]
+  static final isActive = obx.QueryBooleanProperty<MarketplaceConnectionEntity>(
+      _entities[112].properties[3]);
+
+  /// see [MarketplaceConnectionEntity.connectedAt]
+  static final connectedAt = obx.QueryDateProperty<MarketplaceConnectionEntity>(
+      _entities[112].properties[4]);
+}
+
+/// [MarketplaceSyncStatusEntity] entity fields to define ObjectBox queries.
+class MarketplaceSyncStatusEntity_ {
+  /// see [MarketplaceSyncStatusEntity.id]
+  static final id = obx.QueryIntegerProperty<MarketplaceSyncStatusEntity>(
+      _entities[113].properties[0]);
+
+  /// see [MarketplaceSyncStatusEntity.listingId]
+  static final listingId =
+      obx.QueryIntegerProperty<MarketplaceSyncStatusEntity>(
+          _entities[113].properties[1]);
+
+  /// see [MarketplaceSyncStatusEntity.providerName]
+  static final providerName =
+      obx.QueryStringProperty<MarketplaceSyncStatusEntity>(
+          _entities[113].properties[2]);
+
+  /// see [MarketplaceSyncStatusEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<MarketplaceSyncStatusEntity>(
+      _entities[113].properties[3]);
+
+  /// see [MarketplaceSyncStatusEntity.externalListingId]
+  static final externalListingId =
+      obx.QueryStringProperty<MarketplaceSyncStatusEntity>(
+          _entities[113].properties[4]);
+
+  /// see [MarketplaceSyncStatusEntity.retryCount]
+  static final retryCount =
+      obx.QueryIntegerProperty<MarketplaceSyncStatusEntity>(
+          _entities[113].properties[5]);
+
+  /// see [MarketplaceSyncStatusEntity.lastAttemptAt]
+  static final lastAttemptAt =
+      obx.QueryDateProperty<MarketplaceSyncStatusEntity>(
+          _entities[113].properties[6]);
+
+  /// see [MarketplaceSyncStatusEntity.nextRetryAt]
+  static final nextRetryAt = obx.QueryDateProperty<MarketplaceSyncStatusEntity>(
+      _entities[113].properties[7]);
+
+  /// see [MarketplaceSyncStatusEntity.lastError]
+  static final lastError = obx.QueryStringProperty<MarketplaceSyncStatusEntity>(
+      _entities[113].properties[8]);
 }
