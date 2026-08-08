@@ -1,24 +1,26 @@
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/business/find_or_create_chat_room.dart';
+import 'package:growth_pilot_ai/controllers/chat_connection_authorizer.dart';
 import 'package:growth_pilot_ai/controllers/chat_message_relay_handler.dart';
+import 'package:growth_pilot_ai/controllers/chat_read_receipt_handler.dart';
+import 'package:growth_pilot_ai/controllers/chat_room_join_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_room_presence_handler.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/data/repositories/auth_session_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_repository.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
 
-/// Drives a single marketplace chat room (Issue #122); delegates to
-/// [ChatMessageRelayHandler]/[ChatRoomPresenceHandler] for SRP.
+/// Drives a single marketplace chat room (Issue #122/#131); delegates to
+/// the Chat* handler classes for SRP.
 class ChatGatewayController extends GetxController {
-  late ChatRoomRepository _rooms;
-  late ChatGatewayService _gateway;
+  late ChatRoomJoinHandler _join;
   late ChatRoomPresenceHandler _presence;
   late ChatMessageRelayHandler _relay;
-  late ChatRoomEntity room;
-  String? _currentUserId;
+  late ChatReadReceiptHandler _readReceipts;
+  ChatRoomEntity? room;
 
   final messages = <ChatRoomMessageEntity>[].obs;
 
@@ -26,32 +28,36 @@ class ChatGatewayController extends GetxController {
   void onInit() {
     super.onInit();
     final store = Get.find<ObjectBox>().store;
-    _rooms = ChatRoomRepository(store.box());
-    _gateway = DependencyInjection.get<ChatGatewayService>();
-    _presence = ChatRoomPresenceHandler(_rooms);
-    _relay = ChatMessageRelayHandler(
-        ChatRoomMessageRepository(store.box()), _gateway, messages);
+    final rooms = ChatRoomRepository(store.box());
+    final gateway = DependencyInjection.get<ChatGatewayService>();
+    final messageRepo = ChatRoomMessageRepository(store.box());
+    _relay = ChatMessageRelayHandler(messageRepo, gateway, messages);
+    _readReceipts = ChatReadReceiptHandler(messageRepo, messages);
+    _presence = ChatRoomPresenceHandler(rooms);
+    _join = ChatRoomJoinHandler(rooms,
+        ChatConnectionAuthorizer(AuthSessionRepository(store.box())), _relay, gateway);
   }
 
-  void openRoom(String currentUserId, String otherUserId) {
-    room = FindOrCreateChatRoom.call(
-        _rooms.getAll(), currentUserId, otherUserId, DateTime.now());
-    room.id = _rooms.upsert(room);
-    _relay.openRoom(room.id);
-    _currentUserId = currentUserId;
-    _gateway.connect(currentUserId);
+  /// Returns false without joining if there is no valid, unexpired
+  /// session (Issue #131 AC: JWT-authenticated connections).
+  bool openRoom(String currentUserId, String otherUserId) {
+    final joined = _join.open(currentUserId, otherUserId);
+    room = joined;
+    return joined != null;
   }
 
   Future<bool> sendMessage(String senderId, String body) =>
       _relay.send(senderId, body);
 
-  void toggleOtherOnline() => _presence.toggleOnline(room);
+  void markMessagesRead(String readerId) => _readReceipts.markRead(readerId);
 
-  void toggleOtherTyping() => _presence.toggleTyping(room);
+  void toggleOtherOnline() => _presence.toggleOnline(room!);
+
+  void toggleOtherTyping() => _presence.toggleTyping(room!);
 
   @override
   void onClose() {
-    if (_currentUserId != null) _gateway.disconnect(_currentUserId!);
+    _join.close();
     _relay.dispose();
     super.onClose();
   }
