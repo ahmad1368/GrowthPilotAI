@@ -50,6 +50,9 @@ import 'core/data/entities/conversation_entity.dart';
 import 'core/data/entities/cra_transaction_log_entity.dart';
 import 'core/data/entities/csat_rating_entity.dart';
 import 'core/data/entities/daily_transaction_cap_entity.dart';
+import 'core/data/entities/delivery_entity.dart';
+import 'core/data/entities/delivery_handshake_entity.dart';
+import 'core/data/entities/delivery_location_history_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/dispute_evidence_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
@@ -5417,6 +5420,147 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(122, 7233345508392483902),
+      name: 'DeliveryEntity',
+      lastPropertyId: const obx_int.IdUid(11, 6970687756774179050),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6327582130256846556),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2741889724053872285),
+            name: 'requestId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(129, 9149059047137896145)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6804908429010729230),
+            name: 'paymentId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(130, 945795464671805730)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8673250716957660810),
+            name: 'courierId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8266064552407699213),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6366785167703025472),
+            name: 'courierLat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2043516338091863592),
+            name: 'courierLng',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 974198879969895643),
+            name: 'lastLocationAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 4475902108761757212),
+            name: 'trackingConsentGiven',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 3288534906061871203),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 6970687756774179050),
+            name: 'completedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(123, 1509607185198611780),
+      name: 'DeliveryHandshakeEntity',
+      lastPropertyId: const obx_int.IdUid(6, 6767827893231286036),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6906822917686382264),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 729842916724889430),
+            name: 'deliveryId',
+            type: 6,
+            flags: 40,
+            indexId: const obx_int.IdUid(131, 1310908635972052137)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6530221975666549264),
+            name: 'token',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8517467081855843374),
+            name: 'used',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2887156402600861619),
+            name: 'expiresAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6767827893231286036),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(124, 5175152332193702219),
+      name: 'DeliveryLocationHistoryEntity',
+      lastPropertyId: const obx_int.IdUid(5, 7760885991287956067),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5361989989754745098),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8839105058908781902),
+            name: 'deliveryId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(132, 4940888446338106926)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6187301596508342860),
+            name: 'lat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6651686435221262299),
+            name: 'lng',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7760885991287956067),
+            name: 'recordedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5455,8 +5599,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(121, 5731534325971851288),
-      lastIndexId: const obx_int.IdUid(128, 2653353806863667252),
+      lastEntityId: const obx_int.IdUid(124, 5175152332193702219),
+      lastIndexId: const obx_int.IdUid(132, 4940888446338106926),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -11715,7 +11859,164 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fetchedAt: fetchedAtParam);
 
           return object;
-        })
+        }),
+    DeliveryEntity: obx_int.EntityDefinition<DeliveryEntity>(
+        model: _entities[120],
+        toOneRelations: (DeliveryEntity object) => [],
+        toManyRelations: (DeliveryEntity object) => {},
+        getId: (DeliveryEntity object) => object.id,
+        setId: (DeliveryEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (DeliveryEntity object, fb.Builder fbb) {
+          final courierIdOffset = fbb.writeString(object.courierId);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.requestId);
+          fbb.addInt64(2, object.paymentId);
+          fbb.addOffset(3, courierIdOffset);
+          fbb.addInt64(4, object.dbStatus);
+          fbb.addFloat64(5, object.courierLat);
+          fbb.addFloat64(6, object.courierLng);
+          fbb.addInt64(7, object.lastLocationAt?.millisecondsSinceEpoch);
+          fbb.addBool(8, object.trackingConsentGiven);
+          fbb.addInt64(9, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(10, object.completedAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final lastLocationAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final completedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 24);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final requestIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final paymentIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final courierIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final courierLatParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 14);
+          final courierLngParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final lastLocationAtParam = lastLocationAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(lastLocationAtValue);
+          final trackingConsentGivenParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+          final completedAtParam = completedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(completedAtValue);
+          final object = DeliveryEntity(
+              id: idParam,
+              requestId: requestIdParam,
+              paymentId: paymentIdParam,
+              courierId: courierIdParam,
+              dbStatus: dbStatusParam,
+              courierLat: courierLatParam,
+              courierLng: courierLngParam,
+              lastLocationAt: lastLocationAtParam,
+              trackingConsentGiven: trackingConsentGivenParam,
+              createdAt: createdAtParam,
+              completedAt: completedAtParam);
+
+          return object;
+        }),
+    DeliveryHandshakeEntity: obx_int.EntityDefinition<DeliveryHandshakeEntity>(
+        model: _entities[121],
+        toOneRelations: (DeliveryHandshakeEntity object) => [],
+        toManyRelations: (DeliveryHandshakeEntity object) => {},
+        getId: (DeliveryHandshakeEntity object) => object.id,
+        setId: (DeliveryHandshakeEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (DeliveryHandshakeEntity object, fb.Builder fbb) {
+          final tokenOffset = fbb.writeString(object.token);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.deliveryId);
+          fbb.addOffset(2, tokenOffset);
+          fbb.addBool(3, object.used);
+          fbb.addInt64(4, object.expiresAt.millisecondsSinceEpoch);
+          fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final deliveryIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final tokenParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final usedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final expiresAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = DeliveryHandshakeEntity(
+              id: idParam,
+              deliveryId: deliveryIdParam,
+              token: tokenParam,
+              used: usedParam,
+              expiresAt: expiresAtParam,
+              createdAt: createdAtParam);
+
+          return object;
+        }),
+    DeliveryLocationHistoryEntity:
+        obx_int.EntityDefinition<DeliveryLocationHistoryEntity>(
+            model: _entities[122],
+            toOneRelations: (DeliveryLocationHistoryEntity object) => [],
+            toManyRelations: (DeliveryLocationHistoryEntity object) => {},
+            getId: (DeliveryLocationHistoryEntity object) => object.id,
+            setId: (DeliveryLocationHistoryEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (DeliveryLocationHistoryEntity object, fb.Builder fbb) {
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.deliveryId);
+              fbb.addFloat64(2, object.lat);
+              fbb.addFloat64(3, object.lng);
+              fbb.addInt64(4, object.recordedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final deliveryIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final latParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final lngParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final recordedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final object = DeliveryLocationHistoryEntity(
+                  id: idParam,
+                  deliveryId: deliveryIdParam,
+                  lat: latParam,
+                  lng: lngParam,
+                  recordedAt: recordedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -15517,4 +15818,103 @@ class ExchangeRateCacheEntity_ {
   /// see [ExchangeRateCacheEntity.fetchedAt]
   static final fetchedAt = obx.QueryDateProperty<ExchangeRateCacheEntity>(
       _entities[119].properties[3]);
+}
+
+/// [DeliveryEntity] entity fields to define ObjectBox queries.
+class DeliveryEntity_ {
+  /// see [DeliveryEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<DeliveryEntity>(_entities[120].properties[0]);
+
+  /// see [DeliveryEntity.requestId]
+  static final requestId =
+      obx.QueryIntegerProperty<DeliveryEntity>(_entities[120].properties[1]);
+
+  /// see [DeliveryEntity.paymentId]
+  static final paymentId =
+      obx.QueryIntegerProperty<DeliveryEntity>(_entities[120].properties[2]);
+
+  /// see [DeliveryEntity.courierId]
+  static final courierId =
+      obx.QueryStringProperty<DeliveryEntity>(_entities[120].properties[3]);
+
+  /// see [DeliveryEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<DeliveryEntity>(_entities[120].properties[4]);
+
+  /// see [DeliveryEntity.courierLat]
+  static final courierLat =
+      obx.QueryDoubleProperty<DeliveryEntity>(_entities[120].properties[5]);
+
+  /// see [DeliveryEntity.courierLng]
+  static final courierLng =
+      obx.QueryDoubleProperty<DeliveryEntity>(_entities[120].properties[6]);
+
+  /// see [DeliveryEntity.lastLocationAt]
+  static final lastLocationAt =
+      obx.QueryDateProperty<DeliveryEntity>(_entities[120].properties[7]);
+
+  /// see [DeliveryEntity.trackingConsentGiven]
+  static final trackingConsentGiven =
+      obx.QueryBooleanProperty<DeliveryEntity>(_entities[120].properties[8]);
+
+  /// see [DeliveryEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<DeliveryEntity>(_entities[120].properties[9]);
+
+  /// see [DeliveryEntity.completedAt]
+  static final completedAt =
+      obx.QueryDateProperty<DeliveryEntity>(_entities[120].properties[10]);
+}
+
+/// [DeliveryHandshakeEntity] entity fields to define ObjectBox queries.
+class DeliveryHandshakeEntity_ {
+  /// see [DeliveryHandshakeEntity.id]
+  static final id = obx.QueryIntegerProperty<DeliveryHandshakeEntity>(
+      _entities[121].properties[0]);
+
+  /// see [DeliveryHandshakeEntity.deliveryId]
+  static final deliveryId = obx.QueryIntegerProperty<DeliveryHandshakeEntity>(
+      _entities[121].properties[1]);
+
+  /// see [DeliveryHandshakeEntity.token]
+  static final token = obx.QueryStringProperty<DeliveryHandshakeEntity>(
+      _entities[121].properties[2]);
+
+  /// see [DeliveryHandshakeEntity.used]
+  static final used = obx.QueryBooleanProperty<DeliveryHandshakeEntity>(
+      _entities[121].properties[3]);
+
+  /// see [DeliveryHandshakeEntity.expiresAt]
+  static final expiresAt = obx.QueryDateProperty<DeliveryHandshakeEntity>(
+      _entities[121].properties[4]);
+
+  /// see [DeliveryHandshakeEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<DeliveryHandshakeEntity>(
+      _entities[121].properties[5]);
+}
+
+/// [DeliveryLocationHistoryEntity] entity fields to define ObjectBox queries.
+class DeliveryLocationHistoryEntity_ {
+  /// see [DeliveryLocationHistoryEntity.id]
+  static final id = obx.QueryIntegerProperty<DeliveryLocationHistoryEntity>(
+      _entities[122].properties[0]);
+
+  /// see [DeliveryLocationHistoryEntity.deliveryId]
+  static final deliveryId =
+      obx.QueryIntegerProperty<DeliveryLocationHistoryEntity>(
+          _entities[122].properties[1]);
+
+  /// see [DeliveryLocationHistoryEntity.lat]
+  static final lat = obx.QueryDoubleProperty<DeliveryLocationHistoryEntity>(
+      _entities[122].properties[2]);
+
+  /// see [DeliveryLocationHistoryEntity.lng]
+  static final lng = obx.QueryDoubleProperty<DeliveryLocationHistoryEntity>(
+      _entities[122].properties[3]);
+
+  /// see [DeliveryLocationHistoryEntity.recordedAt]
+  static final recordedAt =
+      obx.QueryDateProperty<DeliveryLocationHistoryEntity>(
+          _entities[122].properties[4]);
 }
