@@ -4621,7 +4621,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(107, 7003417229316413981),
       name: 'ChatRoomMessageEntity',
-      lastPropertyId: const obx_int.IdUid(14, 5770482248776222086),
+      lastPropertyId: const obx_int.IdUid(15, 1613434332761408984),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4694,6 +4694,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(14, 5770482248776222086),
             name: 'attachmentMimeType',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 1613434332761408984),
+            name: 'metadataTags',
+            type: 30,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -10451,7 +10456,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final attachmentMimeTypeOffset = object.attachmentMimeType == null
               ? null
               : fbb.writeString(object.attachmentMimeType!);
-          fbb.startTable(15);
+          final metadataTagsOffset = fbb.writeList(
+              object.metadataTags.map(fbb.writeString).toList(growable: false));
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.roomId);
           fbb.addOffset(2, senderIdOffset);
@@ -10466,6 +10473,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(11, attachmentFileNameOffset);
           fbb.addInt64(12, object.attachmentFileSize);
           fbb.addOffset(13, attachmentMimeTypeOffset);
+          fbb.addOffset(14, metadataTagsOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -10507,6 +10515,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final attachmentMimeTypeParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 30);
+          final metadataTagsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 32, []);
           final object = ChatRoomMessageEntity(
               id: idParam,
               roomId: roomIdParam,
@@ -10521,7 +10533,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               attachmentBytes: attachmentBytesParam,
               attachmentFileName: attachmentFileNameParam,
               attachmentFileSize: attachmentFileSizeParam,
-              attachmentMimeType: attachmentMimeTypeParam);
+              attachmentMimeType: attachmentMimeTypeParam,
+              metadataTags: metadataTagsParam);
 
           return object;
         }),
@@ -14257,6 +14270,11 @@ class ChatRoomMessageEntity_ {
   static final attachmentMimeType =
       obx.QueryStringProperty<ChatRoomMessageEntity>(
           _entities[105].properties[13]);
+
+  /// see [ChatRoomMessageEntity.metadataTags]
+  static final metadataTags =
+      obx.QueryStringVectorProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[14]);
 }
 
 /// [AbuseReportEntity] entity fields to define ObjectBox queries.

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_attachment_chip.dart';
+import 'package:growth_pilot_ai/features/chat/widgets/chat_message_tag_chips.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_reply_preview.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/show_chat_message_actions.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -58,6 +59,10 @@ class ChatMessageBubble extends StatelessWidget {
               )
             else
               Text(message.body, style: TextStyle(color: fg)),
+            if (message.metadataTags.isNotEmpty) ...[
+              const SizedBox(height: 2),
+              ChatMessageTagChips(tags: message.metadataTags),
+            ],
             const SizedBox(height: 2),
             Row(mainAxisSize: MainAxisSize.min, children: [
               Text(time, style: TextStyle(fontSize: 10, color: fg.withValues(alpha: 0.7))),

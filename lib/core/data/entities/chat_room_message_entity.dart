@@ -39,6 +39,12 @@ class ChatRoomMessageEntity {
   int? attachmentFileSize;
   String? attachmentMimeType;
 
+  // Transactional Metadata Tagging (Issue #128) — "Smart Chip" labels
+  // only (e.g. "#PriceNegotiation"); category/confidence stay in-memory
+  // ([ExtractMessageTags]'s output), never persisted, since the chips
+  // only need the label to render.
+  List<String> metadataTags;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -54,6 +60,7 @@ class ChatRoomMessageEntity {
     this.attachmentFileName,
     this.attachmentFileSize,
     this.attachmentMimeType,
+    this.metadataTags = const [],
   });
 
   bool get isRead => readAt != null;
