@@ -9,4 +9,18 @@ abstract class AccountingExportService {
     required int transactionId,
     required String accountId,
   });
+
+  /// Pushes a finalized Tax Invoice (#146) to the accounting provider,
+  /// mapped to a Chart-of-Accounts [accountId] (Issue #149).
+  OmniResult<String> pushInvoice({
+    required int invoiceId,
+    required String accountId,
+  });
+
+  /// Records the invoice's Payment Status (#147) against the
+  /// provider's own invoice record.
+  OmniResult<void> pushPayment({
+    required int paymentId,
+    required String externalInvoiceId,
+  });
 }

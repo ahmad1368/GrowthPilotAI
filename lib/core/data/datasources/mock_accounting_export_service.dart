@@ -17,4 +17,26 @@ class MockAccountingExportService implements AccountingExportService {
     OmniLogger.info('Exported tx $transactionId -> $externalId');
     return OmniResponse.success(externalId, message: 'Pushed to accounting');
   }
+
+  @override
+  OmniResult<String> pushInvoice({
+    required int invoiceId,
+    required String accountId,
+  }) async {
+    if (accountId.isEmpty) {
+      return OmniResponse.error('Missing Chart-of-Accounts id', statusCode: 400);
+    }
+    final externalId = 'mock-inv-$invoiceId';
+    OmniLogger.info('Exported invoice $invoiceId -> $externalId');
+    return OmniResponse.success(externalId, message: 'Invoice pushed to accounting');
+  }
+
+  @override
+  OmniResult<void> pushPayment({
+    required int paymentId,
+    required String externalInvoiceId,
+  }) async {
+    OmniLogger.info('Recorded payment $paymentId against $externalInvoiceId');
+    return OmniResponse.success(null);
+  }
 }
