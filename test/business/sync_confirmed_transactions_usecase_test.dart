@@ -14,6 +14,15 @@ class _FailingExportService implements AccountingExportService {
     callCount++;
     return OmniResponse.error('provider down', statusCode: 503);
   }
+
+  @override
+  OmniResult<String> pushInvoice({required int invoiceId, required String accountId}) async =>
+      OmniResponse.error('provider down', statusCode: 503);
+
+  @override
+  OmniResult<void> pushPayment(
+          {required int paymentId, required String externalInvoiceId}) async =>
+      OmniResponse.error('provider down', statusCode: 503);
 }
 
 /// Fake that always accepts the push, returning a deterministic external id.
@@ -25,6 +34,15 @@ class _SucceedingExportService implements AccountingExportService {
     callCount++;
     return OmniResponse.success('ext-$transactionId');
   }
+
+  @override
+  OmniResult<String> pushInvoice({required int invoiceId, required String accountId}) async =>
+      OmniResponse.success('ext-inv-$invoiceId');
+
+  @override
+  OmniResult<void> pushPayment(
+          {required int paymentId, required String externalInvoiceId}) async =>
+      OmniResponse.success(null);
 }
 
 void main() {

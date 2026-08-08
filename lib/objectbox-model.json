@@ -5245,10 +5245,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "119:2749134088264315385",
+      "lastPropertyId": "8:5606593466845671930",
+      "name": "InvoiceSyncStatusEntity",
+      "properties": [
+        {
+          "id": "1:8949988948400080949",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8007732032062262312",
+          "name": "invoiceId",
+          "type": 6,
+          "flags": 40,
+          "indexId": "126:1096206977870419986"
+        },
+        {
+          "id": "3:2995969843656114148",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "4:5723686306881163395",
+          "name": "externalInvoiceId",
+          "type": 9
+        },
+        {
+          "id": "5:2741421030665629421",
+          "name": "retryCount",
+          "type": 6
+        },
+        {
+          "id": "6:8745594612144022022",
+          "name": "lastAttemptAt",
+          "type": 10
+        },
+        {
+          "id": "7:2836682166138688696",
+          "name": "nextRetryAt",
+          "type": 10
+        },
+        {
+          "id": "8:5606593466845671930",
+          "name": "lastError",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "118:1896093489850076202",
-  "lastIndexId": "125:3887943527217077868",
+  "lastEntityId": "119:2749134088264315385",
+  "lastIndexId": "126:1096206977870419986",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

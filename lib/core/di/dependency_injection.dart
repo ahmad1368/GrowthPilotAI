@@ -17,6 +17,7 @@ import 'package:growth_pilot_ai/core/data/datasources/mock_bank_link_service.dar
 import 'package:growth_pilot_ai/core/interfaces/accounting_export_service.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_accounting_export_service.dart';
 import 'package:growth_pilot_ai/business/sync_confirmed_transactions_usecase.dart';
+import 'package:growth_pilot_ai/business/sync_finalized_invoices_usecase.dart';
 import 'package:growth_pilot_ai/core/interfaces/notification_channel.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_notification_channel.dart';
 import 'package:growth_pilot_ai/business/dispatch_notification_usecase.dart';
@@ -108,6 +109,11 @@ class DependencyInjection {
       _locator.registerLazySingleton<SyncConfirmedTransactionsUseCase>(
         () => SyncConfirmedTransactionsUseCase(
             _locator<AccountingExportService>()),
+      );
+
+      // ۸.۱.۱ اکسپورت فاکتورهای نهایی‌شده و وضعیت پرداخت به QuickBooks/Xero (Issue #149)
+      _locator.registerLazySingleton<SyncFinalizedInvoicesUseCase>(
+        () => SyncFinalizedInvoicesUseCase(_locator<AccountingExportService>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
