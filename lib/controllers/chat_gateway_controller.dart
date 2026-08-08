@@ -3,8 +3,10 @@ import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/list_forwardable_chat_rooms.dart';
 import 'package:growth_pilot_ai/controllers/chat_connection_authorizer.dart';
+import 'package:growth_pilot_ai/business/dispatch_notification_usecase.dart';
 import 'package:growth_pilot_ai/controllers/chat_forward_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_message_relay_handler.dart';
+import 'package:growth_pilot_ai/controllers/chat_notification_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_read_receipt_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_room_join_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_room_presence_handler.dart';
@@ -14,6 +16,7 @@ import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/auth_session_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
 
@@ -25,6 +28,7 @@ class ChatGatewayController extends GetxController {
   late ChatMessageRelayHandler _relay;
   late ChatReadReceiptHandler _readReceipts;
   late ChatForwardHandler _forward;
+  late ChatNotificationHandler _notifications;
   late ChatRoomRepository _rooms;
   final _room = Rx<ChatRoomEntity?>(null);
   ChatRoomEntity? get room => _room.value;
@@ -42,6 +46,8 @@ class ChatGatewayController extends GetxController {
     _readReceipts = ChatReadReceiptHandler(messageRepo, messages);
     _presence = ChatRoomPresenceHandler(_rooms);
     _forward = ChatForwardHandler(_rooms, messageRepo);
+    _notifications = ChatNotificationHandler(gateway,
+        DependencyInjection.get<DispatchNotificationUseCase>(), InboxNotificationRepository(store.box()));
     _join = ChatRoomJoinHandler(_rooms,
         ChatConnectionAuthorizer(AuthSessionRepository(store.box())), _relay, gateway);
   }
@@ -50,6 +56,10 @@ class ChatGatewayController extends GetxController {
   /// session (Issue #131 AC: JWT-authenticated connections).
   bool openRoom(String currentUserId, String otherUserId) {
     _room.value = _join.open(currentUserId, otherUserId);
+    if (room != null) {
+      _notifications.currentUserId = currentUserId;
+      _notifications.roomId = room!.id;
+    }
     return room != null;
   }
 
@@ -85,6 +95,7 @@ class ChatGatewayController extends GetxController {
   void onClose() {
     _join.close();
     _relay.dispose();
+    _notifications.dispose();
     super.onClose();
   }
 }
