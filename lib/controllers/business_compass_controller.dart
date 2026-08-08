@@ -834,6 +834,11 @@ class BusinessCompassController extends GetxController {
         title: 'Nearby Vendor Map',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'BUSINESS_DISCOVERY_SEARCH',
+        title: 'Business Discovery Search',
+        data: {},
+      ),
     ];
   }
 
