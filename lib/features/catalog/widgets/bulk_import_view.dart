@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/features/catalog/widgets/bulk_import_callbacks.dart';
+import 'package:growth_pilot_ai/features/catalog/widgets/bulk_import_column_mapper.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/bulk_import_preview.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/bulk_import_summary.dart';
 import 'package:growth_pilot_ai/features/catalog/widgets/import_summary.dart';
+import 'package:growth_pilot_ai/features/catalog/widgets/run_bulk_import_preview.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Renders the paste-CSV import flow (Issue #141). This app has no
-/// server/OS file picker wired up, so "upload" here is pasting CSV
-/// text — genuinely parsed, validated, and saved, just without a
-/// native file-open dialog. Purely presentational.
+/// Renders the paste-CSV import flow with column mapping + dry-run
+/// preview (Issue #141/#213). Purely presentational.
 class BulkImportView extends StatelessWidget {
   final TextEditingController csvText;
-  final List<List<String>> previewRows;
+  final BulkImportPreviewState? previewState;
   final ImportSummary? summary;
-  final VoidCallback onCopyTemplate;
-  final VoidCallback onPreview;
-  final VoidCallback onImport;
+  final BulkImportCallbacks callbacks;
 
   const BulkImportView({
     super.key,
     required this.csvText,
-    required this.previewRows,
+    required this.previewState,
     required this.summary,
-    required this.onCopyTemplate,
-    required this.onPreview,
-    required this.onImport,
+    required this.callbacks,
   });
 
   @override
   Widget build(BuildContext context) {
+    final state = previewState;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        ShadButton.ghost(onPressed: onCopyTemplate, child: const Text('Copy CSV Template')),
-        ShadButton.ghost(onPressed: onPreview, child: const Text('Preview')),
-        ShadButton.ghost(onPressed: onImport, child: const Text('Import')),
+        ShadButton.ghost(onPressed: callbacks.onCopyTemplate, child: const Text('Copy CSV Template')),
+        ShadButton.ghost(onPressed: callbacks.onPreview, child: const Text('Preview')),
+        ShadButton.ghost(onPressed: callbacks.onImport, child: const Text('Import Valid Rows')),
       ]),
       TextField(
         controller: csvText,
@@ -40,8 +38,10 @@ class BulkImportView extends StatelessWidget {
         style: const TextStyle(fontSize: 12),
         decoration: const InputDecoration(hintText: 'Paste CSV content here...'),
       ),
-      BulkImportPreview(rows: previewRows),
-      BulkImportSummaryView(summary: summary),
+      BulkImportColumnMapper(
+          header: state?.header ?? [], columnMap: state?.columnMap ?? {}, onChanged: callbacks.onMapChanged),
+      BulkImportPreview(results: state?.results ?? []),
+      BulkImportSummaryView(summary: summary, onCopyErrorLog: callbacks.onCopyErrorLog),
     ]);
   }
 }
