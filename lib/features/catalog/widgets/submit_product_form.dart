@@ -19,6 +19,7 @@ List<String> submitProductForm(
   required List<int> imageVariantIds,
   required double lat,
   required double lng,
+  String? sku,
 }) {
   final errors = ValidateCatalogListing.call(
       type: type, category: category, pricingMode: CatalogPricingMode.fixedPrice, fixedPrice: price);
@@ -39,6 +40,6 @@ List<String> submitProductForm(
     ..imageVariantIdsCsv = imageVariantIds.join(',');
   listing.id = repos.listings.save(listing);
 
-  saveProductFormDetails(repos, listingId: listing.id, type: type, price: price);
+  saveProductFormDetails(repos, listingId: listing.id, type: type, price: price, sku: sku);
   return [];
 }

@@ -10,6 +10,8 @@ class ProductListingDetailsRepository {
 
   int save(ProductListingDetailsEntity details) => _box.put(details);
 
+  List<ProductListingDetailsEntity> getAll() => _box.getAll();
+
   ProductListingDetailsEntity? forListing(int listingId) =>
       _box.getAll().where((d) => d.listingId == listingId).firstOrNull;
 }
