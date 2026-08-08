@@ -5104,7 +5104,7 @@
     },
     {
       "id": "117:1688506409400847652",
-      "lastPropertyId": "11:5903680777411210916",
+      "lastPropertyId": "15:6186180255174208021",
       "name": "InvoiceEntity",
       "properties": [
         {
@@ -5164,6 +5164,26 @@
           "id": "11:5903680777411210916",
           "name": "createdAt",
           "type": 10
+        },
+        {
+          "id": "12:3903503736489596501",
+          "name": "currencyCode",
+          "type": 9
+        },
+        {
+          "id": "13:6467723399048659126",
+          "name": "agreedExchangeRate",
+          "type": 8
+        },
+        {
+          "id": "14:9207299142312975296",
+          "name": "isExport",
+          "type": 1
+        },
+        {
+          "id": "15:6186180255174208021",
+          "name": "dutyEstimate",
+          "type": 8
         }
       ],
       "relations": []
@@ -5342,10 +5362,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "121:5731534325971851288",
+      "lastPropertyId": "4:5400840691884014300",
+      "name": "ExchangeRateCacheEntity",
+      "properties": [
+        {
+          "id": "1:7992294011696475508",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6685536908594998058",
+          "name": "pairKey",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "128:2653353806863667252"
+        },
+        {
+          "id": "3:6162032540443004596",
+          "name": "rate",
+          "type": 8
+        },
+        {
+          "id": "4:5400840691884014300",
+          "name": "fetchedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "120:3281681616933519557",
-  "lastIndexId": "127:538374341724193646",
+  "lastEntityId": "121:5731534325971851288",
+  "lastIndexId": "128:2653353806863667252",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
