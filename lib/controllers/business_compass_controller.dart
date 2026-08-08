@@ -854,6 +854,11 @@ class BusinessCompassController extends GetxController {
         title: 'Bulk Product Import',
         data: {},
       ),
+      const ReportWidgetSpec(
+        id: 'PRODUCT_CATALOG_GRID',
+        title: 'Product Catalog Grid',
+        data: {},
+      ),
     ];
   }
 
