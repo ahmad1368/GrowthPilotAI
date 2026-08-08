@@ -18,6 +18,7 @@ class ChatGatewayController extends GetxController {
   late ChatRoomPresenceHandler _presence;
   late ChatMessageRelayHandler _relay;
   late ChatRoomEntity room;
+  String? _currentUserId;
 
   final messages = <ChatRoomMessageEntity>[].obs;
 
@@ -37,6 +38,7 @@ class ChatGatewayController extends GetxController {
         _rooms.getAll(), currentUserId, otherUserId, DateTime.now());
     room.id = _rooms.upsert(room);
     _relay.openRoom(room.id);
+    _currentUserId = currentUserId;
     _gateway.connect(currentUserId);
   }
 
@@ -49,6 +51,7 @@ class ChatGatewayController extends GetxController {
 
   @override
   void onClose() {
+    if (_currentUserId != null) _gateway.disconnect(_currentUserId!);
     _relay.dispose();
     super.onClose();
   }
