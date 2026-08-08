@@ -20,7 +20,7 @@ class CatalogListingEntity {
   String sector, category, tagsCsv;
   int dbListingType, dbAvailability;
   double locationLat, locationLng;
-  String attributesJson;
+  String attributesJson, imageVariantIdsCsv;
 
   @Property(type: PropertyType.date)
   DateTime createdAt;
@@ -39,6 +39,7 @@ class CatalogListingEntity {
     this.locationLat = 0,
     this.locationLng = 0,
     this.attributesJson = '{}',
+    this.imageVariantIdsCsv = '',
     required this.createdAt,
   });
 

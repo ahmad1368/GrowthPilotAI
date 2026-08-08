@@ -83,6 +83,7 @@ import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
+import 'core/data/entities/product_form_draft_entity.dart';
 import 'core/data/entities/product_listing_details_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
@@ -4176,7 +4177,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(99, 7608025554369849817),
       name: 'CatalogListingEntity',
-      lastPropertyId: const obx_int.IdUid(14, 6399625391431453035),
+      lastPropertyId: const obx_int.IdUid(15, 8311658732797353790),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4250,6 +4251,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(14, 6399625391431453035),
             name: 'createdAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 8311658732797353790),
+            name: 'imageVariantIdsCsv',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -4506,6 +4512,60 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(105, 8417464621922573376),
+      name: 'ProductFormDraftEntity',
+      lastPropertyId: const obx_int.IdUid(9, 3769950846467170121),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7439868942699460191),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6835391908908480444),
+            name: 'editingListingId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1712203780282599830),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2291096560278302971),
+            name: 'industry',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 379458591434861490),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7136979612104675039),
+            name: 'dbListingType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7660570811355251866),
+            name: 'price',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7245752116559457313),
+            name: 'imageVariantIdsCsv',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 3769950846467170121),
+            name: 'updatedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4544,7 +4604,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(104, 3609257032856816177),
+      lastEntityId: const obx_int.IdUid(105, 8417464621922573376),
       lastIndexId: const obx_int.IdUid(107, 6957853459665263710),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -9393,7 +9453,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final categoryOffset = fbb.writeString(object.category);
           final tagsCsvOffset = fbb.writeString(object.tagsCsv);
           final attributesJsonOffset = fbb.writeString(object.attributesJson);
-          fbb.startTable(15);
+          final imageVariantIdsCsvOffset =
+              fbb.writeString(object.imageVariantIdsCsv);
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, ownerIdOffset);
           fbb.addOffset(2, titleOffset);
@@ -9408,6 +9470,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(11, object.locationLng);
           fbb.addOffset(12, attributesJsonOffset);
           fbb.addInt64(13, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(14, imageVariantIdsCsvOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -9442,6 +9505,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final attributesJsonParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 28, '');
+          final imageVariantIdsCsvParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 32, '');
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0));
           final object = CatalogListingEntity(
@@ -9458,6 +9524,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               locationLat: locationLatParam,
               locationLng: locationLngParam,
               attributesJson: attributesJsonParam,
+              imageVariantIdsCsv: imageVariantIdsCsvParam,
               createdAt: createdAtParam);
 
           return object;
@@ -9740,6 +9807,68 @@ obx_int.ModelDefinition getObjectBoxModel() {
               standardSizeBytes: standardSizeBytesParam,
               dataReductionPercent: dataReductionPercentParam,
               createdAt: createdAtParam);
+
+          return object;
+        }),
+    ProductFormDraftEntity: obx_int.EntityDefinition<ProductFormDraftEntity>(
+        model: _entities[103],
+        toOneRelations: (ProductFormDraftEntity object) => [],
+        toManyRelations: (ProductFormDraftEntity object) => {},
+        getId: (ProductFormDraftEntity object) => object.id,
+        setId: (ProductFormDraftEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ProductFormDraftEntity object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          final industryOffset = fbb.writeString(object.industry);
+          final categoryOffset = fbb.writeString(object.category);
+          final imageVariantIdsCsvOffset =
+              fbb.writeString(object.imageVariantIdsCsv);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.editingListingId);
+          fbb.addOffset(2, titleOffset);
+          fbb.addOffset(3, industryOffset);
+          fbb.addOffset(4, categoryOffset);
+          fbb.addInt64(5, object.dbListingType);
+          fbb.addFloat64(6, object.price);
+          fbb.addOffset(7, imageVariantIdsCsvOffset);
+          fbb.addInt64(8, object.updatedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final editingListingIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final industryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final dbListingTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final priceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final imageVariantIdsCsvParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = ProductFormDraftEntity(
+              id: idParam,
+              editingListingId: editingListingIdParam,
+              title: titleParam,
+              industry: industryParam,
+              category: categoryParam,
+              dbListingType: dbListingTypeParam,
+              price: priceParam,
+              imageVariantIdsCsv: imageVariantIdsCsvParam,
+              updatedAt: updatedAtParam);
 
           return object;
         })
@@ -12700,6 +12829,11 @@ class CatalogListingEntity_ {
   /// see [CatalogListingEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<CatalogListingEntity>(_entities[97].properties[13]);
+
+  /// see [CatalogListingEntity.imageVariantIdsCsv]
+  static final imageVariantIdsCsv =
+      obx.QueryStringProperty<CatalogListingEntity>(
+          _entities[97].properties[14]);
 }
 
 /// [ProductListingDetailsEntity] entity fields to define ObjectBox queries.
@@ -12896,4 +13030,45 @@ class ImageVariantEntity_ {
   /// see [ImageVariantEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<ImageVariantEntity>(_entities[102].properties[8]);
+}
+
+/// [ProductFormDraftEntity] entity fields to define ObjectBox queries.
+class ProductFormDraftEntity_ {
+  /// see [ProductFormDraftEntity.id]
+  static final id = obx.QueryIntegerProperty<ProductFormDraftEntity>(
+      _entities[103].properties[0]);
+
+  /// see [ProductFormDraftEntity.editingListingId]
+  static final editingListingId =
+      obx.QueryIntegerProperty<ProductFormDraftEntity>(
+          _entities[103].properties[1]);
+
+  /// see [ProductFormDraftEntity.title]
+  static final title = obx.QueryStringProperty<ProductFormDraftEntity>(
+      _entities[103].properties[2]);
+
+  /// see [ProductFormDraftEntity.industry]
+  static final industry = obx.QueryStringProperty<ProductFormDraftEntity>(
+      _entities[103].properties[3]);
+
+  /// see [ProductFormDraftEntity.category]
+  static final category = obx.QueryStringProperty<ProductFormDraftEntity>(
+      _entities[103].properties[4]);
+
+  /// see [ProductFormDraftEntity.dbListingType]
+  static final dbListingType = obx.QueryIntegerProperty<ProductFormDraftEntity>(
+      _entities[103].properties[5]);
+
+  /// see [ProductFormDraftEntity.price]
+  static final price = obx.QueryDoubleProperty<ProductFormDraftEntity>(
+      _entities[103].properties[6]);
+
+  /// see [ProductFormDraftEntity.imageVariantIdsCsv]
+  static final imageVariantIdsCsv =
+      obx.QueryStringProperty<ProductFormDraftEntity>(
+          _entities[103].properties[7]);
+
+  /// see [ProductFormDraftEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<ProductFormDraftEntity>(
+      _entities[103].properties[8]);
 }
