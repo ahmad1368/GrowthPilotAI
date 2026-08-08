@@ -88,6 +88,8 @@ import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
+import 'core/data/entities/procurement_request_entity.dart';
+import 'core/data/entities/procurement_response_entity.dart';
 import 'core/data/entities/product_form_draft_entity.dart';
 import 'core/data/entities/product_listing_details_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
@@ -4859,6 +4861,122 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(112, 2402319284360734908),
+      name: 'ProcurementRequestEntity',
+      lastPropertyId: const obx_int.IdUid(13, 9123902921847373248),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 512940486941484853),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4118705242253668558),
+            name: 'requesterId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(116, 4424193141277570027)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4082660320449662103),
+            name: 'sector',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(117, 494152923499685241)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6613476426020965408),
+            name: 'summary',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6182890704482702604),
+            name: 'budgetMin',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4144822428016398051),
+            name: 'budgetMax',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8405766514699336154),
+            name: 'centerLat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1715173207569623452),
+            name: 'centerLng',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 8256497640860476237),
+            name: 'radiusKm',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 6111716485119215665),
+            name: 'neighborhood',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 2585637326441868804),
+            name: 'deadline',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 7674141563261324243),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 9123902921847373248),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(113, 6163326306428889150),
+      name: 'ProcurementResponseEntity',
+      lastPropertyId: const obx_int.IdUid(6, 8881456727847402559),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8368196052988286244),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3110886400805173830),
+            name: 'requestId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(118, 3978877787594137566)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3992704196259163171),
+            name: 'providerId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1939088371291663409),
+            name: 'quoteAmount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1387658949942736948),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8881456727847402559),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -4897,8 +5015,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(111, 4346921231683256733),
-      lastIndexId: const obx_int.IdUid(115, 5577080364420908436),
+      lastEntityId: const obx_int.IdUid(113, 6163326306428889150),
+      lastIndexId: const obx_int.IdUid(118, 3978877787594137566),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -10506,7 +10624,136 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
-        })
+        }),
+    ProcurementRequestEntity:
+        obx_int.EntityDefinition<ProcurementRequestEntity>(
+            model: _entities[110],
+            toOneRelations: (ProcurementRequestEntity object) => [],
+            toManyRelations: (ProcurementRequestEntity object) => {},
+            getId: (ProcurementRequestEntity object) => object.id,
+            setId: (ProcurementRequestEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ProcurementRequestEntity object, fb.Builder fbb) {
+              final requesterIdOffset = fbb.writeString(object.requesterId);
+              final sectorOffset = fbb.writeString(object.sector);
+              final summaryOffset = fbb.writeString(object.summary);
+              final neighborhoodOffset = fbb.writeString(object.neighborhood);
+              fbb.startTable(14);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, requesterIdOffset);
+              fbb.addOffset(2, sectorOffset);
+              fbb.addOffset(3, summaryOffset);
+              fbb.addFloat64(4, object.budgetMin);
+              fbb.addFloat64(5, object.budgetMax);
+              fbb.addFloat64(6, object.centerLat);
+              fbb.addFloat64(7, object.centerLng);
+              fbb.addFloat64(8, object.radiusKm);
+              fbb.addOffset(9, neighborhoodOffset);
+              fbb.addInt64(10, object.deadline.millisecondsSinceEpoch);
+              fbb.addInt64(11, object.dbStatus);
+              fbb.addInt64(12, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final requesterIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final sectorParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+              final summaryParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+              final budgetMinParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final budgetMaxParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final centerLatParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final centerLngParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+              final radiusKmParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              final neighborhoodParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 22, '');
+              final deadlineParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0));
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0));
+              final object = ProcurementRequestEntity(
+                  id: idParam,
+                  requesterId: requesterIdParam,
+                  sector: sectorParam,
+                  summary: summaryParam,
+                  budgetMin: budgetMinParam,
+                  budgetMax: budgetMaxParam,
+                  centerLat: centerLatParam,
+                  centerLng: centerLngParam,
+                  radiusKm: radiusKmParam,
+                  neighborhood: neighborhoodParam,
+                  deadline: deadlineParam,
+                  dbStatus: dbStatusParam,
+                  createdAt: createdAtParam);
+
+              return object;
+            }),
+    ProcurementResponseEntity:
+        obx_int.EntityDefinition<ProcurementResponseEntity>(
+            model: _entities[111],
+            toOneRelations: (ProcurementResponseEntity object) => [],
+            toManyRelations: (ProcurementResponseEntity object) => {},
+            getId: (ProcurementResponseEntity object) => object.id,
+            setId: (ProcurementResponseEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ProcurementResponseEntity object, fb.Builder fbb) {
+              final providerIdOffset = fbb.writeString(object.providerId);
+              final messageOffset = fbb.writeString(object.message);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.requestId);
+              fbb.addOffset(2, providerIdOffset);
+              fbb.addFloat64(3, object.quoteAmount);
+              fbb.addOffset(4, messageOffset);
+              fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final requestIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final providerIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final quoteAmountParam = const fb.Float64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 10);
+              final messageParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = ProcurementResponseEntity(
+                  id: idParam,
+                  requestId: requestIdParam,
+                  providerId: providerIdParam,
+                  quoteAmount: quoteAmountParam,
+                  message: messageParam,
+                  createdAt: createdAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -13911,4 +14158,86 @@ class BusinessRatingEntity_ {
   /// see [BusinessRatingEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<BusinessRatingEntity>(_entities[109].properties[7]);
+}
+
+/// [ProcurementRequestEntity] entity fields to define ObjectBox queries.
+class ProcurementRequestEntity_ {
+  /// see [ProcurementRequestEntity.id]
+  static final id = obx.QueryIntegerProperty<ProcurementRequestEntity>(
+      _entities[110].properties[0]);
+
+  /// see [ProcurementRequestEntity.requesterId]
+  static final requesterId = obx.QueryStringProperty<ProcurementRequestEntity>(
+      _entities[110].properties[1]);
+
+  /// see [ProcurementRequestEntity.sector]
+  static final sector = obx.QueryStringProperty<ProcurementRequestEntity>(
+      _entities[110].properties[2]);
+
+  /// see [ProcurementRequestEntity.summary]
+  static final summary = obx.QueryStringProperty<ProcurementRequestEntity>(
+      _entities[110].properties[3]);
+
+  /// see [ProcurementRequestEntity.budgetMin]
+  static final budgetMin = obx.QueryDoubleProperty<ProcurementRequestEntity>(
+      _entities[110].properties[4]);
+
+  /// see [ProcurementRequestEntity.budgetMax]
+  static final budgetMax = obx.QueryDoubleProperty<ProcurementRequestEntity>(
+      _entities[110].properties[5]);
+
+  /// see [ProcurementRequestEntity.centerLat]
+  static final centerLat = obx.QueryDoubleProperty<ProcurementRequestEntity>(
+      _entities[110].properties[6]);
+
+  /// see [ProcurementRequestEntity.centerLng]
+  static final centerLng = obx.QueryDoubleProperty<ProcurementRequestEntity>(
+      _entities[110].properties[7]);
+
+  /// see [ProcurementRequestEntity.radiusKm]
+  static final radiusKm = obx.QueryDoubleProperty<ProcurementRequestEntity>(
+      _entities[110].properties[8]);
+
+  /// see [ProcurementRequestEntity.neighborhood]
+  static final neighborhood = obx.QueryStringProperty<ProcurementRequestEntity>(
+      _entities[110].properties[9]);
+
+  /// see [ProcurementRequestEntity.deadline]
+  static final deadline = obx.QueryDateProperty<ProcurementRequestEntity>(
+      _entities[110].properties[10]);
+
+  /// see [ProcurementRequestEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<ProcurementRequestEntity>(
+      _entities[110].properties[11]);
+
+  /// see [ProcurementRequestEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<ProcurementRequestEntity>(
+      _entities[110].properties[12]);
+}
+
+/// [ProcurementResponseEntity] entity fields to define ObjectBox queries.
+class ProcurementResponseEntity_ {
+  /// see [ProcurementResponseEntity.id]
+  static final id = obx.QueryIntegerProperty<ProcurementResponseEntity>(
+      _entities[111].properties[0]);
+
+  /// see [ProcurementResponseEntity.requestId]
+  static final requestId = obx.QueryIntegerProperty<ProcurementResponseEntity>(
+      _entities[111].properties[1]);
+
+  /// see [ProcurementResponseEntity.providerId]
+  static final providerId = obx.QueryStringProperty<ProcurementResponseEntity>(
+      _entities[111].properties[2]);
+
+  /// see [ProcurementResponseEntity.quoteAmount]
+  static final quoteAmount = obx.QueryDoubleProperty<ProcurementResponseEntity>(
+      _entities[111].properties[3]);
+
+  /// see [ProcurementResponseEntity.message]
+  static final message = obx.QueryStringProperty<ProcurementResponseEntity>(
+      _entities[111].properties[4]);
+
+  /// see [ProcurementResponseEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<ProcurementResponseEntity>(
+      _entities[111].properties[5]);
 }

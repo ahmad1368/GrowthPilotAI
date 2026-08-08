@@ -4832,10 +4832,129 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "112:2402319284360734908",
+      "lastPropertyId": "13:9123902921847373248",
+      "name": "ProcurementRequestEntity",
+      "properties": [
+        {
+          "id": "1:512940486941484853",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4118705242253668558",
+          "name": "requesterId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "116:4424193141277570027"
+        },
+        {
+          "id": "3:4082660320449662103",
+          "name": "sector",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "117:494152923499685241"
+        },
+        {
+          "id": "4:6613476426020965408",
+          "name": "summary",
+          "type": 9
+        },
+        {
+          "id": "5:6182890704482702604",
+          "name": "budgetMin",
+          "type": 8
+        },
+        {
+          "id": "6:4144822428016398051",
+          "name": "budgetMax",
+          "type": 8
+        },
+        {
+          "id": "7:8405766514699336154",
+          "name": "centerLat",
+          "type": 8
+        },
+        {
+          "id": "8:1715173207569623452",
+          "name": "centerLng",
+          "type": 8
+        },
+        {
+          "id": "9:8256497640860476237",
+          "name": "radiusKm",
+          "type": 8
+        },
+        {
+          "id": "10:6111716485119215665",
+          "name": "neighborhood",
+          "type": 9
+        },
+        {
+          "id": "11:2585637326441868804",
+          "name": "deadline",
+          "type": 10
+        },
+        {
+          "id": "12:7674141563261324243",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "13:9123902921847373248",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "113:6163326306428889150",
+      "lastPropertyId": "6:8881456727847402559",
+      "name": "ProcurementResponseEntity",
+      "properties": [
+        {
+          "id": "1:8368196052988286244",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3110886400805173830",
+          "name": "requestId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "118:3978877787594137566"
+        },
+        {
+          "id": "3:3992704196259163171",
+          "name": "providerId",
+          "type": 9
+        },
+        {
+          "id": "4:1939088371291663409",
+          "name": "quoteAmount",
+          "type": 8
+        },
+        {
+          "id": "5:1387658949942736948",
+          "name": "message",
+          "type": 9
+        },
+        {
+          "id": "6:8881456727847402559",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "111:4346921231683256733",
-  "lastIndexId": "115:5577080364420908436",
+  "lastEntityId": "113:6163326306428889150",
+  "lastIndexId": "118:3978877787594137566",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
