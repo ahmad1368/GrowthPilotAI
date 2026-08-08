@@ -100,6 +100,7 @@ class GridLayoutService {
     'CATALOG_LISTING_MODEL',
     'AUTH_SESSION_LIFECYCLE',
     'NEARBY_VENDOR_MAP',
+    'BUSINESS_DISCOVERY_SEARCH',
   };
 
   /// [totalColumns] must be even so half-width tiles always pair up without
