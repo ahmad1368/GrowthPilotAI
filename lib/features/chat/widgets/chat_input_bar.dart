@@ -1,16 +1,27 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/features/chat/widgets/chat_reply_banner.dart';
+import 'package:growth_pilot_ai/features/chat/widgets/pick_chat_attachment.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Contextual Action Bar (Issue #123/#136 AC) — a flat text field + send
-/// button; media/location shortcuts (#133/#121) are a future issue.
-/// [replyPreview] shows a cancellable "Replying to…" banner (Issue #132).
+/// Contextual Action Bar (Issue #123/#136 AC) — a flat text field, send
+/// button, and image attach button (Issue #133; location shortcut #121
+/// is a future issue). [replyPreview] shows a cancellable "Replying
+/// to…" banner (Issue #132).
 class ChatInputBar extends StatefulWidget {
   final void Function(String) onSend;
+  final void Function(String fileName, String mimeType, Uint8List bytes) onSendAttachment;
   final String? replyPreview;
   final VoidCallback? onCancelReply;
 
-  const ChatInputBar(
-      {super.key, required this.onSend, this.replyPreview, this.onCancelReply});
+  const ChatInputBar({
+    super.key,
+    required this.onSend,
+    required this.onSendAttachment,
+    this.replyPreview,
+    this.onCancelReply,
+  });
 
   @override
   State<ChatInputBar> createState() => _ChatInputBarState();
@@ -26,23 +37,21 @@ class _ChatInputBarState extends State<ChatInputBar> {
     _controller.clear();
   }
 
+  Future<void> _attach() async {
+    final picked = await pickChatAttachment();
+    if (picked == null) return;
+    widget.onSendAttachment(picked.fileName, picked.mimeType, picked.bytes);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
         if (widget.replyPreview != null)
-          Row(children: [
-            Expanded(
-                child: Text('Replying to: ${widget.replyPreview}',
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11))),
-            IconButton(
-                icon: const Icon(Icons.close, size: 14),
-                onPressed: widget.onCancelReply,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints()),
-          ]),
+          ChatReplyBanner(preview: widget.replyPreview!, onCancel: widget.onCancelReply),
         Row(children: [
+          ShadButton.ghost(onPressed: _attach, child: const Icon(Icons.attach_file, size: 16)),
           Expanded(
             child: ShadInput(
               controller: _controller,

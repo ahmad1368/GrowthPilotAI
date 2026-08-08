@@ -6,7 +6,7 @@ import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart
 void main() {
   final now = DateTime(2026, 1, 1);
   final original = ChatRoomMessageEntity(
-      roomId: 1, senderId: 'vendor', body: 'Price is $50/unit', sentAt: now);
+      roomId: 1, senderId: 'vendor', body: r'Price is $50/unit', sentAt: now);
 
   test('forwards into a room the forwarder participates in', () {
     final targetRoom = ChatRoomEntity(

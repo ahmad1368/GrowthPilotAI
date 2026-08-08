@@ -4583,7 +4583,7 @@
     },
     {
       "id": "107:7003417229316413981",
-      "lastPropertyId": "10:9020412905380816541",
+      "lastPropertyId": "14:5770482248776222086",
       "name": "ChatRoomMessageEntity",
       "properties": [
         {
@@ -4637,6 +4637,26 @@
         {
           "id": "10:9020412905380816541",
           "name": "forwardedFromSenderId",
+          "type": 9
+        },
+        {
+          "id": "11:4421885791081735278",
+          "name": "attachmentBytes",
+          "type": 23
+        },
+        {
+          "id": "12:7467262898531941833",
+          "name": "attachmentFileName",
+          "type": 9
+        },
+        {
+          "id": "13:3097234236105118280",
+          "name": "attachmentFileSize",
+          "type": 6
+        },
+        {
+          "id": "14:5770482248776222086",
+          "name": "attachmentMimeType",
           "type": 9
         }
       ],

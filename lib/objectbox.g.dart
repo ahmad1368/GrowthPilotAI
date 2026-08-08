@@ -4613,7 +4613,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(107, 7003417229316413981),
       name: 'ChatRoomMessageEntity',
-      lastPropertyId: const obx_int.IdUid(10, 9020412905380816541),
+      lastPropertyId: const obx_int.IdUid(14, 5770482248776222086),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4665,6 +4665,26 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(10, 9020412905380816541),
             name: 'forwardedFromSenderId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4421885791081735278),
+            name: 'attachmentBytes',
+            type: 23,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 7467262898531941833),
+            name: 'attachmentFileName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 3097234236105118280),
+            name: 'attachmentFileSize',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 5770482248776222086),
+            name: 'attachmentMimeType',
             type: 9,
             flags: 0)
       ],
@@ -10041,7 +10061,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.forwardedFromSenderId == null
                   ? null
                   : fbb.writeString(object.forwardedFromSenderId!);
-          fbb.startTable(11);
+          final attachmentBytesOffset = object.attachmentBytes == null
+              ? null
+              : fbb.writeListInt8(object.attachmentBytes!);
+          final attachmentFileNameOffset = object.attachmentFileName == null
+              ? null
+              : fbb.writeString(object.attachmentFileName!);
+          final attachmentMimeTypeOffset = object.attachmentMimeType == null
+              ? null
+              : fbb.writeString(object.attachmentMimeType!);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.roomId);
           fbb.addOffset(2, senderIdOffset);
@@ -10052,6 +10081,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(7, replyPreviewTextOffset);
           fbb.addBool(8, object.isForwarded);
           fbb.addOffset(9, forwardedFromSenderIdOffset);
+          fbb.addOffset(10, attachmentBytesOffset);
+          fbb.addOffset(11, attachmentFileNameOffset);
+          fbb.addInt64(12, object.attachmentFileSize);
+          fbb.addOffset(13, attachmentMimeTypeOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -10083,6 +10116,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final forwardedFromSenderIdParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22);
+          final attachmentBytesParam = const fb.Uint8ListReader(lazy: false)
+              .vTableGetNullable(buffer, rootOffset, 24) as Uint8List?;
+          final attachmentFileNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 26);
+          final attachmentFileSizeParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 28);
+          final attachmentMimeTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 30);
           final object = ChatRoomMessageEntity(
               id: idParam,
               roomId: roomIdParam,
@@ -10093,7 +10136,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
               replyToMessageId: replyToMessageIdParam,
               replyPreviewText: replyPreviewTextParam,
               isForwarded: isForwardedParam,
-              forwardedFromSenderId: forwardedFromSenderIdParam);
+              forwardedFromSenderId: forwardedFromSenderIdParam,
+              attachmentBytes: attachmentBytesParam,
+              attachmentFileName: attachmentFileNameParam,
+              attachmentFileSize: attachmentFileSizeParam,
+              attachmentMimeType: attachmentMimeTypeParam);
 
           return object;
         })
@@ -13369,4 +13416,24 @@ class ChatRoomMessageEntity_ {
   static final forwardedFromSenderId =
       obx.QueryStringProperty<ChatRoomMessageEntity>(
           _entities[105].properties[9]);
+
+  /// see [ChatRoomMessageEntity.attachmentBytes]
+  static final attachmentBytes =
+      obx.QueryByteVectorProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[10]);
+
+  /// see [ChatRoomMessageEntity.attachmentFileName]
+  static final attachmentFileName =
+      obx.QueryStringProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[11]);
+
+  /// see [ChatRoomMessageEntity.attachmentFileSize]
+  static final attachmentFileSize =
+      obx.QueryIntegerProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[12]);
+
+  /// see [ChatRoomMessageEntity.attachmentMimeType]
+  static final attachmentMimeType =
+      obx.QueryStringProperty<ChatRoomMessageEntity>(
+          _entities[105].properties[13]);
 }
