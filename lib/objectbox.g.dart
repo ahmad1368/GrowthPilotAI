@@ -24,6 +24,7 @@ import 'core/data/entities/ad_payment_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/asset_bid_entity.dart';
+import 'core/data/entities/asset_custody_record_entity.dart';
 import 'core/data/entities/asset_listing_entity.dart';
 import 'core/data/entities/audit_log_entity.dart';
 import 'core/data/entities/auth_session_entity.dart';
@@ -5561,6 +5562,47 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(125, 5671343904617510125),
+      name: 'AssetCustodyRecordEntity',
+      lastPropertyId: const obx_int.IdUid(6, 1747855728844546593),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5178487754178254450),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8784449568760716774),
+            name: 'itemName',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(133, 3362888641187655539)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2333953592070111875),
+            name: 'fromCustodianId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5729249216413215661),
+            name: 'toCustodianId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 253900037439887124),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1747855728844546593),
+            name: 'transferredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(134, 2366678182426882131))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5599,8 +5641,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(124, 5175152332193702219),
-      lastIndexId: const obx_int.IdUid(132, 4940888446338106926),
+      lastEntityId: const obx_int.IdUid(125, 5671343904617510125),
+      lastIndexId: const obx_int.IdUid(134, 2366678182426882131),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12016,6 +12058,58 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   recordedAt: recordedAtParam);
 
               return object;
+            }),
+    AssetCustodyRecordEntity:
+        obx_int.EntityDefinition<AssetCustodyRecordEntity>(
+            model: _entities[123],
+            toOneRelations: (AssetCustodyRecordEntity object) => [],
+            toManyRelations: (AssetCustodyRecordEntity object) => {},
+            getId: (AssetCustodyRecordEntity object) => object.id,
+            setId: (AssetCustodyRecordEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (AssetCustodyRecordEntity object, fb.Builder fbb) {
+              final itemNameOffset = fbb.writeString(object.itemName);
+              final fromCustodianIdOffset =
+                  fbb.writeString(object.fromCustodianId);
+              final toCustodianIdOffset = fbb.writeString(object.toCustodianId);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, itemNameOffset);
+              fbb.addOffset(2, fromCustodianIdOffset);
+              fbb.addOffset(3, toCustodianIdOffset);
+              fbb.addInt64(4, object.dbStatus);
+              fbb.addInt64(5, object.transferredAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final itemNameParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final fromCustodianIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final toCustodianIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+              final transferredAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final dbStatusParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final object = AssetCustodyRecordEntity(
+                  id: idParam,
+                  itemName: itemNameParam,
+                  fromCustodianId: fromCustodianIdParam,
+                  toCustodianId: toCustodianIdParam,
+                  transferredAt: transferredAtParam,
+                  dbStatus: dbStatusParam);
+
+              return object;
             })
   };
 
@@ -15917,4 +16011,33 @@ class DeliveryLocationHistoryEntity_ {
   static final recordedAt =
       obx.QueryDateProperty<DeliveryLocationHistoryEntity>(
           _entities[122].properties[4]);
+}
+
+/// [AssetCustodyRecordEntity] entity fields to define ObjectBox queries.
+class AssetCustodyRecordEntity_ {
+  /// see [AssetCustodyRecordEntity.id]
+  static final id = obx.QueryIntegerProperty<AssetCustodyRecordEntity>(
+      _entities[123].properties[0]);
+
+  /// see [AssetCustodyRecordEntity.itemName]
+  static final itemName = obx.QueryStringProperty<AssetCustodyRecordEntity>(
+      _entities[123].properties[1]);
+
+  /// see [AssetCustodyRecordEntity.fromCustodianId]
+  static final fromCustodianId =
+      obx.QueryStringProperty<AssetCustodyRecordEntity>(
+          _entities[123].properties[2]);
+
+  /// see [AssetCustodyRecordEntity.toCustodianId]
+  static final toCustodianId =
+      obx.QueryStringProperty<AssetCustodyRecordEntity>(
+          _entities[123].properties[3]);
+
+  /// see [AssetCustodyRecordEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<AssetCustodyRecordEntity>(
+      _entities[123].properties[4]);
+
+  /// see [AssetCustodyRecordEntity.transferredAt]
+  static final transferredAt = obx.QueryDateProperty<AssetCustodyRecordEntity>(
+      _entities[123].properties[5]);
 }

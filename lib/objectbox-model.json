@@ -5538,10 +5538,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "125:5671343904617510125",
+      "lastPropertyId": "6:1747855728844546593",
+      "name": "AssetCustodyRecordEntity",
+      "properties": [
+        {
+          "id": "1:5178487754178254450",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8784449568760716774",
+          "name": "itemName",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "133:3362888641187655539"
+        },
+        {
+          "id": "3:2333953592070111875",
+          "name": "fromCustodianId",
+          "type": 9
+        },
+        {
+          "id": "4:5729249216413215661",
+          "name": "toCustodianId",
+          "type": 9
+        },
+        {
+          "id": "5:253900037439887124",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "6:1747855728844546593",
+          "name": "transferredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "134:2366678182426882131"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "124:5175152332193702219",
-  "lastIndexId": "132:4940888446338106926",
+  "lastEntityId": "125:5671343904617510125",
+  "lastIndexId": "134:2366678182426882131",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
