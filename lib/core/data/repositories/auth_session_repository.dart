@@ -20,4 +20,14 @@ class AuthSessionRepository {
       _box.put(session);
     }
   }
+
+  /// "Log Out All Other Devices" (Issue #173 AC: must not log out the
+  /// device performing the action).
+  void revokeAllExcept(int keepSessionId) {
+    for (final session in getAll()) {
+      if (session.id == keepSessionId) continue;
+      session.isRevoked = true;
+      _box.put(session);
+    }
+  }
 }

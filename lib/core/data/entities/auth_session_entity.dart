@@ -29,6 +29,11 @@ class AuthSessionEntity {
   @Property(type: PropertyType.date)
   DateTime createdAt;
 
+  /// Last time this session was used (Issue #173) — drives both the
+  /// "Last Active" display and 30-day auto-cleanup eligibility.
+  @Property(type: PropertyType.date)
+  DateTime lastActiveAt;
+
   AuthSessionEntity({
     this.id = 0,
     required this.deviceLabel,
@@ -38,5 +43,6 @@ class AuthSessionEntity {
     required this.refreshTokenExpiresAt,
     this.isRevoked = false,
     required this.createdAt,
-  });
+    DateTime? lastActiveAt,
+  }) : lastActiveAt = lastActiveAt ?? createdAt;
 }

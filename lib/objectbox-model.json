@@ -4347,7 +4347,7 @@
     },
     {
       "id": "102:2913706843516710279",
-      "lastPropertyId": "8:5570628700223260942",
+      "lastPropertyId": "9:1072062584995319218",
       "name": "AuthSessionEntity",
       "properties": [
         {
@@ -4391,6 +4391,11 @@
         {
           "id": "8:5570628700223260942",
           "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "9:1072062584995319218",
+          "name": "lastActiveAt",
           "type": 10
         }
       ],
