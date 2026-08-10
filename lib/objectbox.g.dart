@@ -72,6 +72,7 @@ import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/image_variant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
+import 'core/data/entities/intelligence_pack_entity.dart';
 import 'core/data/entities/inventory_category_entity.dart';
 import 'core/data/entities/inventory_cost_layer_entity.dart';
 import 'core/data/entities/inventory_item_attribute_entity.dart';
@@ -5728,6 +5729,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(129, 2908657865448146230),
+      name: 'IntelligencePackEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3375696679238790824),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6310905784329439130),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3294778080977343157),
+            name: 'sectorId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(140, 74089358063764863)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4881784719647714382),
+            name: 'version',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4540390944109749306),
+            name: 'lastSyncedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 9042622906001351228),
+            name: 'checksumHex',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3375696679238790824),
+            name: 'benchmarksJson',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5766,8 +5807,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(128, 7764982347858979769),
-      lastIndexId: const obx_int.IdUid(139, 6040267142502270564),
+      lastEntityId: const obx_int.IdUid(129, 2908657865448146230),
+      lastIndexId: const obx_int.IdUid(140, 74089358063764863),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12373,6 +12414,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbEngagement: dbEngagementParam);
 
           return object;
+        }),
+    IntelligencePackEntity: obx_int.EntityDefinition<IntelligencePackEntity>(
+        model: _entities[127],
+        toOneRelations: (IntelligencePackEntity object) => [],
+        toManyRelations: (IntelligencePackEntity object) => {},
+        getId: (IntelligencePackEntity object) => object.id,
+        setId: (IntelligencePackEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (IntelligencePackEntity object, fb.Builder fbb) {
+          final sectorIdOffset = fbb.writeString(object.sectorId);
+          final checksumHexOffset = fbb.writeString(object.checksumHex);
+          final benchmarksJsonOffset = fbb.writeString(object.benchmarksJson);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, sectorIdOffset);
+          fbb.addInt64(2, object.version);
+          fbb.addInt64(3, object.lastSyncedAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, checksumHexOffset);
+          fbb.addOffset(5, benchmarksJsonOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final sectorIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final versionParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final lastSyncedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final checksumHexParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final benchmarksJsonParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+          final object = IntelligencePackEntity(
+              id: idParam,
+              sectorId: sectorIdParam,
+              version: versionParam,
+              lastSyncedAt: lastSyncedAtParam,
+              checksumHex: checksumHexParam,
+              benchmarksJson: benchmarksJsonParam);
+
+          return object;
         })
   };
 
@@ -16387,4 +16477,31 @@ class ProCardEventEntity_ {
   /// see [ProCardEventEntity.dbEngagement]
   static final dbEngagement = obx.QueryIntegerProperty<ProCardEventEntity>(
       _entities[126].properties[3]);
+}
+
+/// [IntelligencePackEntity] entity fields to define ObjectBox queries.
+class IntelligencePackEntity_ {
+  /// see [IntelligencePackEntity.id]
+  static final id = obx.QueryIntegerProperty<IntelligencePackEntity>(
+      _entities[127].properties[0]);
+
+  /// see [IntelligencePackEntity.sectorId]
+  static final sectorId = obx.QueryStringProperty<IntelligencePackEntity>(
+      _entities[127].properties[1]);
+
+  /// see [IntelligencePackEntity.version]
+  static final version = obx.QueryIntegerProperty<IntelligencePackEntity>(
+      _entities[127].properties[2]);
+
+  /// see [IntelligencePackEntity.lastSyncedAt]
+  static final lastSyncedAt = obx.QueryDateProperty<IntelligencePackEntity>(
+      _entities[127].properties[3]);
+
+  /// see [IntelligencePackEntity.checksumHex]
+  static final checksumHex = obx.QueryStringProperty<IntelligencePackEntity>(
+      _entities[127].properties[4]);
+
+  /// see [IntelligencePackEntity.benchmarksJson]
+  static final benchmarksJson = obx.QueryStringProperty<IntelligencePackEntity>(
+      _entities[127].properties[5]);
 }
