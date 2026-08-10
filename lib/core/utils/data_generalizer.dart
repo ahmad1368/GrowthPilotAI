@@ -13,4 +13,7 @@ class DataGeneralizer {
     final cleaned = postalCode.replaceAll(' ', '').toUpperCase();
     return cleaned.length >= 3 ? cleaned.substring(0, 3) : cleaned;
   }
+
+  /// A specific year → its decade (Issue #90), e.g. 1989 → "1980s".
+  static String decade(int year) => '${(year ~/ 10) * 10}s';
 }
