@@ -5586,10 +5586,56 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "126:7091248896382260923",
+      "lastPropertyId": "7:8621821886410942955",
+      "name": "AnonymizedListingEntity",
+      "properties": [
+        {
+          "id": "1:8246679422946195200",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2026046085964801161",
+          "name": "hashedId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "135:8567290332978545054"
+        },
+        {
+          "id": "3:1124693169169539837",
+          "name": "generalizedLat",
+          "type": 8
+        },
+        {
+          "id": "4:129950372660685870",
+          "name": "generalizedLng",
+          "type": 8
+        },
+        {
+          "id": "5:7455320038199929369",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "6:8255723240376473455",
+          "name": "generalAge",
+          "type": 9
+        },
+        {
+          "id": "7:8621821886410942955",
+          "name": "recordedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "125:5671343904617510125",
-  "lastIndexId": "134:2366678182426882131",
+  "lastEntityId": "126:7091248896382260923",
+  "lastIndexId": "135:8567290332978545054",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
