@@ -27,4 +27,15 @@ class AuthSessionActions {
   }
 
   void revokeAll() => repos.sessions.revokeAll();
+
+  /// Single-device "Kill Switch" (Issue #173 scope item: React "Kill
+  /// Switch" button, mapped onto this app's per-row action).
+  void revoke(AuthSessionEntity session) {
+    session.isRevoked = true;
+    repos.sessions.save(session);
+  }
+
+  /// "Log Out All Other Devices" (Issue #173 AC: must not log out the
+  /// device performing the action).
+  void revokeOthers(AuthSessionEntity current) => repos.sessions.revokeAllExcept(current.id);
 }

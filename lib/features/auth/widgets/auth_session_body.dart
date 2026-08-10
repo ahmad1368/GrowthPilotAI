@@ -18,18 +18,8 @@ class _AuthSessionBodyState extends State<AuthSessionBody> {
   late final _actions = AuthSessionActions(_repos);
   late List<AuthSessionEntity> _sessions = _repos.sessions.getAll();
 
-  void _login(String deviceLabel) {
-    _actions.login(deviceLabel);
-    setState(() => _sessions = _repos.sessions.getAll());
-  }
-
-  void _refresh(AuthSessionEntity session) {
-    _actions.refresh(session);
-    setState(() => _sessions = _repos.sessions.getAll());
-  }
-
-  void _revokeAll() {
-    _actions.revokeAll();
+  void _mutate(void Function() action) {
+    action();
     setState(() => _sessions = _repos.sessions.getAll());
   }
 
@@ -37,9 +27,10 @@ class _AuthSessionBodyState extends State<AuthSessionBody> {
   Widget build(BuildContext context) {
     return AuthSessionView(
       sessions: _sessions,
-      onLogin: _login,
-      onRefresh: _refresh,
-      onRevokeAll: _revokeAll,
+      onLogin: (label) => _mutate(() => _actions.login(label)),
+      onRefresh: (s) => _mutate(() => _actions.refresh(s)),
+      onRevoke: (s) => _mutate(() => _actions.revoke(s)),
+      onRevokeOthers: (s) => _mutate(() => _actions.revokeOthers(s)),
     );
   }
 }

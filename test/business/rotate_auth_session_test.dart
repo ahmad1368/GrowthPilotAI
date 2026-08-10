@@ -22,4 +22,11 @@ void main() {
     final farFuture = now.add(const Duration(days: 31));
     expect(RotateAuthSession.call(original, farFuture), isNull);
   });
+
+  test('touches the old session\'s lastActiveAt on a successful rotation', () {
+    final original = CreateAuthSession.call('This Device', now).session;
+    final rotatedAt = now.add(const Duration(hours: 1));
+    RotateAuthSession.call(original, rotatedAt);
+    expect(original.lastActiveAt, rotatedAt);
+  });
 }
