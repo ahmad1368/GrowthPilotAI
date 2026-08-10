@@ -101,6 +101,7 @@ import 'core/data/entities/payment_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
 import 'core/data/entities/price_alert_threshold_entity.dart';
+import 'core/data/entities/pro_card_event_entity.dart';
 import 'core/data/entities/procurement_request_entity.dart';
 import 'core/data/entities/procurement_response_entity.dart';
 import 'core/data/entities/product_form_draft_entity.dart';
@@ -5697,6 +5698,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(128, 7764982347858979769),
+      name: 'ProCardEventEntity',
+      lastPropertyId: const obx_int.IdUid(4, 1935689212380612380),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3612280366097224727),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7613494464489427494),
+            name: 'dimension',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1765409815889500173),
+            name: 'shownAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(139, 6040267142502270564)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1935689212380612380),
+            name: 'dbEngagement',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5735,8 +5766,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(127, 4119428452567236414),
-      lastIndexId: const obx_int.IdUid(138, 857994319273020095),
+      lastEntityId: const obx_int.IdUid(128, 7764982347858979769),
+      lastIndexId: const obx_int.IdUid(139, 6040267142502270564),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12305,7 +12336,44 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   updatedAt: updatedAtParam);
 
               return object;
-            })
+            }),
+    ProCardEventEntity: obx_int.EntityDefinition<ProCardEventEntity>(
+        model: _entities[126],
+        toOneRelations: (ProCardEventEntity object) => [],
+        toManyRelations: (ProCardEventEntity object) => {},
+        getId: (ProCardEventEntity object) => object.id,
+        setId: (ProCardEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ProCardEventEntity object, fb.Builder fbb) {
+          final dimensionOffset = fbb.writeString(object.dimension);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, dimensionOffset);
+          fbb.addInt64(2, object.shownAt.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.dbEngagement);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dimensionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final shownAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final dbEngagementParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final object = ProCardEventEntity(
+              id: idParam,
+              dimension: dimensionParam,
+              shownAt: shownAtParam,
+              dbEngagement: dbEngagementParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -16300,4 +16368,23 @@ class EpsilonConsumptionEntity_ {
   /// see [EpsilonConsumptionEntity.updatedAt]
   static final updatedAt = obx.QueryDateProperty<EpsilonConsumptionEntity>(
       _entities[125].properties[3]);
+}
+
+/// [ProCardEventEntity] entity fields to define ObjectBox queries.
+class ProCardEventEntity_ {
+  /// see [ProCardEventEntity.id]
+  static final id = obx.QueryIntegerProperty<ProCardEventEntity>(
+      _entities[126].properties[0]);
+
+  /// see [ProCardEventEntity.dimension]
+  static final dimension =
+      obx.QueryStringProperty<ProCardEventEntity>(_entities[126].properties[1]);
+
+  /// see [ProCardEventEntity.shownAt]
+  static final shownAt =
+      obx.QueryDateProperty<ProCardEventEntity>(_entities[126].properties[2]);
+
+  /// see [ProCardEventEntity.dbEngagement]
+  static final dbEngagement = obx.QueryIntegerProperty<ProCardEventEntity>(
+      _entities[126].properties[3]);
 }
