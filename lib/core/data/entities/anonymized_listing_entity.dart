@@ -29,6 +29,12 @@ class AnonymizedListingEntity {
   @Property(type: PropertyType.date)
   DateTime expireAt;
 
+  /// "Quarantine Flagging" (Issue #98 scope item 4) — anomalous records
+  /// are marked, never deleted, so they can be reviewed without
+  /// affecting the public matching pool.
+  @Index()
+  bool isAnomaly;
+
   AnonymizedListingEntity({
     this.id = 0,
     required this.hashedId,
@@ -38,5 +44,6 @@ class AnonymizedListingEntity {
     required this.generalAge,
     required this.recordedAt,
     required this.expireAt,
+    this.isAnomaly = false,
   });
 }
