@@ -5589,7 +5589,7 @@
     },
     {
       "id": "126:7091248896382260923",
-      "lastPropertyId": "8:4922363630575020274",
+      "lastPropertyId": "9:1100368060138607217",
       "name": "AnonymizedListingEntity",
       "properties": [
         {
@@ -5636,6 +5636,13 @@
           "type": 10,
           "flags": 8,
           "indexId": "136:3313125932050634057"
+        },
+        {
+          "id": "9:1100368060138607217",
+          "name": "isAnomaly",
+          "type": 1,
+          "flags": 8,
+          "indexId": "138:857994319273020095"
         }
       ],
       "relations": []
@@ -5673,7 +5680,7 @@
     }
   ],
   "lastEntityId": "127:4119428452567236414",
-  "lastIndexId": "137:2007618120765738606",
+  "lastIndexId": "138:857994319273020095",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

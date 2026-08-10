@@ -25,6 +25,22 @@ void main() {
     expect(listing.recordedAt, DateTime.utc(2027, 3, 14, 15));
     // Issue #94: shadow records carry a 1-year TTL from their recorded time.
     expect(listing.expireAt, DateTime.utc(2028, 3, 13, 15));
+    // Issue #98: a Surrey-area coordinate is within the service bounding box.
+    expect(listing.isAnomaly, isFalse);
+  });
+
+  test('flags a record outside the BC Lower Mainland as an anomaly', () {
+    final listing = SyncToAnalyticsStore.call(
+      rawId: 'raw-id-2',
+      lat: 0,
+      lng: 0,
+      category: 'furniture',
+      approximateAgeYear: 1989,
+      createdAt: DateTime.utc(2027, 3, 14),
+      pepper: pepper,
+    );
+
+    expect(listing.isAnomaly, isTrue);
   });
 
   test('the same raw id always produces the same hash (deterministic)', () {
