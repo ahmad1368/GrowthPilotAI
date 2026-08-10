@@ -5802,10 +5802,55 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "131:5258605296924379028",
+      "lastPropertyId": "6:4849726999886551157",
+      "name": "MarketSnapshotEntity",
+      "properties": [
+        {
+          "id": "1:8460059086311559562",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7557983974307053396",
+          "name": "category",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "143:4497236241771129713"
+        },
+        {
+          "id": "3:8282650469892651936",
+          "name": "region",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "144:9117229002977508419"
+        },
+        {
+          "id": "4:4109693301414099825",
+          "name": "avgPrice",
+          "type": 8
+        },
+        {
+          "id": "5:7693054734677424177",
+          "name": "itemCount",
+          "type": 6
+        },
+        {
+          "id": "6:4849726999886551157",
+          "name": "snapshotDate",
+          "type": 10,
+          "flags": 8,
+          "indexId": "145:1035016122579114674"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "130:8622262501434401041",
-  "lastIndexId": "142:2166129230328909223",
+  "lastEntityId": "131:5258605296924379028",
+  "lastIndexId": "145:1035016122579114674",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

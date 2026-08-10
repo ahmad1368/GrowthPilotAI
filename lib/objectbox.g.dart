@@ -83,6 +83,7 @@ import 'core/data/entities/invoice_sync_status_entity.dart';
 import 'core/data/entities/kyc_verification_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
+import 'core/data/entities/market_snapshot_entity.dart';
 import 'core/data/entities/marketing_campaign_entity.dart';
 import 'core/data/entities/marketplace_connection_entity.dart';
 import 'core/data/entities/marketplace_sync_status_entity.dart';
@@ -5821,6 +5822,48 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(142, 2166129230328909223))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(131, 5258605296924379028),
+      name: 'MarketSnapshotEntity',
+      lastPropertyId: const obx_int.IdUid(6, 4849726999886551157),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8460059086311559562),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7557983974307053396),
+            name: 'category',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(143, 4497236241771129713)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8282650469892651936),
+            name: 'region',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(144, 9117229002977508419)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4109693301414099825),
+            name: 'avgPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7693054734677424177),
+            name: 'itemCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4849726999886551157),
+            name: 'snapshotDate',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(145, 1035016122579114674))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5859,8 +5902,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(130, 8622262501434401041),
-      lastIndexId: const obx_int.IdUid(142, 2166129230328909223),
+      lastEntityId: const obx_int.IdUid(131, 5258605296924379028),
+      lastIndexId: const obx_int.IdUid(145, 1035016122579114674),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12572,6 +12615,52 @@ obx_int.ModelDefinition getObjectBoxModel() {
               uploaded: uploadedParam);
 
           return object;
+        }),
+    MarketSnapshotEntity: obx_int.EntityDefinition<MarketSnapshotEntity>(
+        model: _entities[129],
+        toOneRelations: (MarketSnapshotEntity object) => [],
+        toManyRelations: (MarketSnapshotEntity object) => {},
+        getId: (MarketSnapshotEntity object) => object.id,
+        setId: (MarketSnapshotEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MarketSnapshotEntity object, fb.Builder fbb) {
+          final categoryOffset = fbb.writeString(object.category);
+          final regionOffset = fbb.writeString(object.region);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, categoryOffset);
+          fbb.addOffset(2, regionOffset);
+          fbb.addFloat64(3, object.avgPrice);
+          fbb.addInt64(4, object.itemCount);
+          fbb.addInt64(5, object.snapshotDate.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final regionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final avgPriceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final itemCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final snapshotDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = MarketSnapshotEntity(
+              id: idParam,
+              category: categoryParam,
+              region: regionParam,
+              avgPrice: avgPriceParam,
+              itemCount: itemCountParam,
+              snapshotDate: snapshotDateParam);
+
+          return object;
         })
   };
 
@@ -16648,4 +16737,31 @@ class TelemetryEventEntity_ {
   /// see [TelemetryEventEntity.uploaded]
   static final uploaded = obx.QueryBooleanProperty<TelemetryEventEntity>(
       _entities[128].properties[7]);
+}
+
+/// [MarketSnapshotEntity] entity fields to define ObjectBox queries.
+class MarketSnapshotEntity_ {
+  /// see [MarketSnapshotEntity.id]
+  static final id = obx.QueryIntegerProperty<MarketSnapshotEntity>(
+      _entities[129].properties[0]);
+
+  /// see [MarketSnapshotEntity.category]
+  static final category = obx.QueryStringProperty<MarketSnapshotEntity>(
+      _entities[129].properties[1]);
+
+  /// see [MarketSnapshotEntity.region]
+  static final region = obx.QueryStringProperty<MarketSnapshotEntity>(
+      _entities[129].properties[2]);
+
+  /// see [MarketSnapshotEntity.avgPrice]
+  static final avgPrice = obx.QueryDoubleProperty<MarketSnapshotEntity>(
+      _entities[129].properties[3]);
+
+  /// see [MarketSnapshotEntity.itemCount]
+  static final itemCount = obx.QueryIntegerProperty<MarketSnapshotEntity>(
+      _entities[129].properties[4]);
+
+  /// see [MarketSnapshotEntity.snapshotDate]
+  static final snapshotDate =
+      obx.QueryDateProperty<MarketSnapshotEntity>(_entities[129].properties[5]);
 }
