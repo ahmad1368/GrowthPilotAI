@@ -58,6 +58,7 @@ import 'core/data/entities/delivery_location_history_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/dispute_evidence_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
+import 'core/data/entities/epsilon_consumption_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
 import 'core/data/entities/exchange_rate_cache_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
@@ -5660,6 +5661,36 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(136, 3313125932050634057))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(127, 4119428452567236414),
+      name: 'EpsilonConsumptionEntity',
+      lastPropertyId: const obx_int.IdUid(4, 4609906933333891148),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8403461566077114882),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7951841476372590731),
+            name: 'userId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(137, 2007618120765738606)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5814060005333458508),
+            name: 'totalEpsilonSpent',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4609906933333891148),
+            name: 'updatedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5698,8 +5729,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(126, 7091248896382260923),
-      lastIndexId: const obx_int.IdUid(136, 3313125932050634057),
+      lastEntityId: const obx_int.IdUid(127, 4119428452567236414),
+      lastIndexId: const obx_int.IdUid(137, 2007618120765738606),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12226,7 +12257,45 @@ obx_int.ModelDefinition getObjectBoxModel() {
               expireAt: expireAtParam);
 
           return object;
-        })
+        }),
+    EpsilonConsumptionEntity:
+        obx_int.EntityDefinition<EpsilonConsumptionEntity>(
+            model: _entities[125],
+            toOneRelations: (EpsilonConsumptionEntity object) => [],
+            toManyRelations: (EpsilonConsumptionEntity object) => {},
+            getId: (EpsilonConsumptionEntity object) => object.id,
+            setId: (EpsilonConsumptionEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (EpsilonConsumptionEntity object, fb.Builder fbb) {
+              final userIdOffset = fbb.writeString(object.userId);
+              fbb.startTable(5);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, userIdOffset);
+              fbb.addFloat64(2, object.totalEpsilonSpent);
+              fbb.addInt64(3, object.updatedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final userIdParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+              final totalEpsilonSpentParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+              final object = EpsilonConsumptionEntity(
+                  id: idParam,
+                  userId: userIdParam,
+                  totalEpsilonSpent: totalEpsilonSpentParam,
+                  updatedAt: updatedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -16197,4 +16266,24 @@ class AnonymizedListingEntity_ {
   /// see [AnonymizedListingEntity.expireAt]
   static final expireAt = obx.QueryDateProperty<AnonymizedListingEntity>(
       _entities[124].properties[7]);
+}
+
+/// [EpsilonConsumptionEntity] entity fields to define ObjectBox queries.
+class EpsilonConsumptionEntity_ {
+  /// see [EpsilonConsumptionEntity.id]
+  static final id = obx.QueryIntegerProperty<EpsilonConsumptionEntity>(
+      _entities[125].properties[0]);
+
+  /// see [EpsilonConsumptionEntity.userId]
+  static final userId = obx.QueryStringProperty<EpsilonConsumptionEntity>(
+      _entities[125].properties[1]);
+
+  /// see [EpsilonConsumptionEntity.totalEpsilonSpent]
+  static final totalEpsilonSpent =
+      obx.QueryDoubleProperty<EpsilonConsumptionEntity>(
+          _entities[125].properties[2]);
+
+  /// see [EpsilonConsumptionEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<EpsilonConsumptionEntity>(
+      _entities[125].properties[3]);
 }

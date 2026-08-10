@@ -5639,10 +5639,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "127:4119428452567236414",
+      "lastPropertyId": "4:4609906933333891148",
+      "name": "EpsilonConsumptionEntity",
+      "properties": [
+        {
+          "id": "1:8403461566077114882",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7951841476372590731",
+          "name": "userId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "137:2007618120765738606"
+        },
+        {
+          "id": "3:5814060005333458508",
+          "name": "totalEpsilonSpent",
+          "type": 8
+        },
+        {
+          "id": "4:4609906933333891148",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "126:7091248896382260923",
-  "lastIndexId": "136:3313125932050634057",
+  "lastEntityId": "127:4119428452567236414",
+  "lastIndexId": "137:2007618120765738606",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
