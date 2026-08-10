@@ -38,6 +38,32 @@ void main() {
       expect(DataGeneralizer.decade(1989), '1980s');
       expect(DataGeneralizer.decade(2001), '2000s');
     });
+
+    // Issue #92 AC: two different addresses in the same block generalize
+    // to the same grid coordinates.
+    test('snaps two nearby coordinates in the same block to the same grid point', () {
+      final a = DataGeneralizer.generalizeCoordinates(49.1913, -122.8490);
+      final b = DataGeneralizer.generalizeCoordinates(49.1917, -122.8487);
+      expect(a, b);
+    });
+
+    test('snaps coordinates deterministically and caps at 3 decimal places', () {
+      final result = DataGeneralizer.generalizeCoordinates(49.1913, -122.8490);
+      expect(result, (lat: 49.19, lng: -122.85));
+      expect(DataGeneralizer.generalizeCoordinates(49.1913, -122.8490), result);
+    });
+
+    test('a coordinate far enough away snaps to a different grid point', () {
+      final a = DataGeneralizer.generalizeCoordinates(49.1913, -122.8490);
+      final b = DataGeneralizer.generalizeCoordinates(49.5000, -122.8490);
+      expect(a, isNot(b));
+    });
+
+    test('rounds a timestamp down to the start of its UTC hour', () {
+      final generalized =
+          DataGeneralizer.generalizeTimestamp(DateTime.utc(2027, 3, 14, 15, 37, 22));
+      expect(generalized, DateTime.utc(2027, 3, 14, 15));
+    });
   });
 
   group('AnonymizerService.transformForStorage', () {
