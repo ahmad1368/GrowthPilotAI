@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/business/anonymizer_service.dart';
 import 'package:growth_pilot_ai/core/utils/data_generalizer.dart';
@@ -57,6 +59,19 @@ void main() {
       final b = service.transformForStorage(
           orgId: 'x', date: DateTime.utc(2027, 2, 1), amount: 2);
       expect(a.orgHash, b.orgHash);
+    });
+
+    // Issue #80 "Data Perturbation": opt-in noise stays within ±1% and
+    // is off by default, so callers above keep exact amounts.
+    test('perturbs the amount by up to 1% when noiseRandom is given', () {
+      final record = AnonymizerService().transformForStorage(
+        orgId: 'acme-inc',
+        date: DateTime.utc(2027, 3, 14),
+        amount: 1000.0,
+        noiseRandom: Random(42),
+      );
+      expect(record.amount, greaterThanOrEqualTo(990.0));
+      expect(record.amount, lessThanOrEqualTo(1010.0));
     });
   });
 }
