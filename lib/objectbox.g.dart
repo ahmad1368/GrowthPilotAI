@@ -23,6 +23,7 @@ import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/ad_payment_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
+import 'core/data/entities/anonymized_listing_entity.dart';
 import 'core/data/entities/asset_bid_entity.dart';
 import 'core/data/entities/asset_custody_record_entity.dart';
 import 'core/data/entities/asset_listing_entity.dart';
@@ -5608,6 +5609,51 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(134, 2366678182426882131))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(126, 7091248896382260923),
+      name: 'AnonymizedListingEntity',
+      lastPropertyId: const obx_int.IdUid(7, 8621821886410942955),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8246679422946195200),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2026046085964801161),
+            name: 'hashedId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(135, 8567290332978545054)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1124693169169539837),
+            name: 'generalizedLat',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 129950372660685870),
+            name: 'generalizedLng',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7455320038199929369),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8255723240376473455),
+            name: 'generalAge',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8621821886410942955),
+            name: 'recordedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5646,8 +5692,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(125, 5671343904617510125),
-      lastIndexId: const obx_int.IdUid(134, 2366678182426882131),
+      lastEntityId: const obx_int.IdUid(126, 7091248896382260923),
+      lastIndexId: const obx_int.IdUid(135, 8567290332978545054),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12119,7 +12165,58 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   dbStatus: dbStatusParam);
 
               return object;
-            })
+            }),
+    AnonymizedListingEntity: obx_int.EntityDefinition<AnonymizedListingEntity>(
+        model: _entities[124],
+        toOneRelations: (AnonymizedListingEntity object) => [],
+        toManyRelations: (AnonymizedListingEntity object) => {},
+        getId: (AnonymizedListingEntity object) => object.id,
+        setId: (AnonymizedListingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AnonymizedListingEntity object, fb.Builder fbb) {
+          final hashedIdOffset = fbb.writeString(object.hashedId);
+          final categoryOffset = fbb.writeString(object.category);
+          final generalAgeOffset = fbb.writeString(object.generalAge);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, hashedIdOffset);
+          fbb.addFloat64(2, object.generalizedLat);
+          fbb.addFloat64(3, object.generalizedLng);
+          fbb.addOffset(4, categoryOffset);
+          fbb.addOffset(5, generalAgeOffset);
+          fbb.addInt64(6, object.recordedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final hashedIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final generalizedLatParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final generalizedLngParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final generalAgeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final recordedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = AnonymizedListingEntity(
+              id: idParam,
+              hashedId: hashedIdParam,
+              generalizedLat: generalizedLatParam,
+              generalizedLng: generalizedLngParam,
+              category: categoryParam,
+              generalAge: generalAgeParam,
+              recordedAt: recordedAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -16053,4 +16150,37 @@ class AssetCustodyRecordEntity_ {
   /// see [AssetCustodyRecordEntity.transferredAt]
   static final transferredAt = obx.QueryDateProperty<AssetCustodyRecordEntity>(
       _entities[123].properties[5]);
+}
+
+/// [AnonymizedListingEntity] entity fields to define ObjectBox queries.
+class AnonymizedListingEntity_ {
+  /// see [AnonymizedListingEntity.id]
+  static final id = obx.QueryIntegerProperty<AnonymizedListingEntity>(
+      _entities[124].properties[0]);
+
+  /// see [AnonymizedListingEntity.hashedId]
+  static final hashedId = obx.QueryStringProperty<AnonymizedListingEntity>(
+      _entities[124].properties[1]);
+
+  /// see [AnonymizedListingEntity.generalizedLat]
+  static final generalizedLat =
+      obx.QueryDoubleProperty<AnonymizedListingEntity>(
+          _entities[124].properties[2]);
+
+  /// see [AnonymizedListingEntity.generalizedLng]
+  static final generalizedLng =
+      obx.QueryDoubleProperty<AnonymizedListingEntity>(
+          _entities[124].properties[3]);
+
+  /// see [AnonymizedListingEntity.category]
+  static final category = obx.QueryStringProperty<AnonymizedListingEntity>(
+      _entities[124].properties[4]);
+
+  /// see [AnonymizedListingEntity.generalAge]
+  static final generalAge = obx.QueryStringProperty<AnonymizedListingEntity>(
+      _entities[124].properties[5]);
+
+  /// see [AnonymizedListingEntity.recordedAt]
+  static final recordedAt = obx.QueryDateProperty<AnonymizedListingEntity>(
+      _entities[124].properties[6]);
 }
