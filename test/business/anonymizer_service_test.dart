@@ -32,6 +32,12 @@ void main() {
       expect(DataGeneralizer.forwardSortationArea('V3J 1A2'), 'V3J');
       expect(DataGeneralizer.forwardSortationArea(null), '');
     });
+
+    // Issue #90: generalized age bucket for k-anonymity grouping.
+    test('reduces a year to its decade', () {
+      expect(DataGeneralizer.decade(1989), '1980s');
+      expect(DataGeneralizer.decade(2001), '2000s');
+    });
   });
 
   group('AnonymizerService.transformForStorage', () {
