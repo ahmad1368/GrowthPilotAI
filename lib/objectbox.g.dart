@@ -5613,7 +5613,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(126, 7091248896382260923),
       name: 'AnonymizedListingEntity',
-      lastPropertyId: const obx_int.IdUid(7, 8621821886410942955),
+      lastPropertyId: const obx_int.IdUid(8, 4922363630575020274),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -5651,7 +5651,13 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(7, 8621821886410942955),
             name: 'recordedAt',
             type: 10,
-            flags: 0)
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 4922363630575020274),
+            name: 'expireAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(136, 3313125932050634057))
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -5693,7 +5699,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(126, 7091248896382260923),
-      lastIndexId: const obx_int.IdUid(135, 8567290332978545054),
+      lastIndexId: const obx_int.IdUid(136, 3313125932050634057),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12178,7 +12184,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final hashedIdOffset = fbb.writeString(object.hashedId);
           final categoryOffset = fbb.writeString(object.category);
           final generalAgeOffset = fbb.writeString(object.generalAge);
-          fbb.startTable(8);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, hashedIdOffset);
           fbb.addFloat64(2, object.generalizedLat);
@@ -12186,6 +12192,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, categoryOffset);
           fbb.addOffset(5, generalAgeOffset);
           fbb.addInt64(6, object.recordedAt.millisecondsSinceEpoch);
+          fbb.addInt64(7, object.expireAt.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -12206,6 +12213,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 14, '');
           final recordedAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final expireAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
           final object = AnonymizedListingEntity(
               id: idParam,
               hashedId: hashedIdParam,
@@ -12213,7 +12222,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               generalizedLng: generalizedLngParam,
               category: categoryParam,
               generalAge: generalAgeParam,
-              recordedAt: recordedAtParam);
+              recordedAt: recordedAtParam,
+              expireAt: expireAtParam);
 
           return object;
         })
@@ -16183,4 +16193,8 @@ class AnonymizedListingEntity_ {
   /// see [AnonymizedListingEntity.recordedAt]
   static final recordedAt = obx.QueryDateProperty<AnonymizedListingEntity>(
       _entities[124].properties[6]);
+
+  /// see [AnonymizedListingEntity.expireAt]
+  static final expireAt = obx.QueryDateProperty<AnonymizedListingEntity>(
+      _entities[124].properties[7]);
 }

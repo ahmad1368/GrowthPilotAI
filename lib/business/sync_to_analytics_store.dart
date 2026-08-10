@@ -1,3 +1,4 @@
+import 'package:growth_pilot_ai/business/compute_analytics_retention_expiry.dart';
 import 'package:growth_pilot_ai/business/generate_deterministic_hash.dart';
 import 'package:growth_pilot_ai/core/data/entities/anonymized_listing_entity.dart';
 import 'package:growth_pilot_ai/core/models/hash_pepper.dart';
@@ -21,13 +22,15 @@ class SyncToAnalyticsStore {
     required HashPepper pepper,
   }) {
     final location = DataGeneralizer.generalizeCoordinates(lat, lng);
+    final recordedAt = DataGeneralizer.generalizeTimestamp(createdAt);
     return AnonymizedListingEntity(
       hashedId: GenerateDeterministicHash.call(rawId, pepper),
       generalizedLat: location.lat,
       generalizedLng: location.lng,
       category: category,
       generalAge: DataGeneralizer.decade(approximateAgeYear),
-      recordedAt: DataGeneralizer.generalizeTimestamp(createdAt),
+      recordedAt: recordedAt,
+      expireAt: ComputeAnalyticsRetentionExpiry.call(recordedAt),
     );
   }
 }

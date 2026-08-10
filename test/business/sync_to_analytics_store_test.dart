@@ -23,6 +23,8 @@ void main() {
     expect(listing.category, 'furniture');
     expect(listing.generalAge, '1980s');
     expect(listing.recordedAt, DateTime.utc(2027, 3, 14, 15));
+    // Issue #94: shadow records carry a 1-year TTL from their recorded time.
+    expect(listing.expireAt, DateTime.utc(2028, 3, 13, 15));
   });
 
   test('the same raw id always produces the same hash (deterministic)', () {

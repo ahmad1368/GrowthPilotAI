@@ -22,6 +22,13 @@ class AnonymizedListingEntity {
   @Property(type: PropertyType.date)
   DateTime recordedAt;
 
+  /// TTL for this shadow record (Issue #94 AC: "verifiable expireAt
+  /// timestamp") — this app has no MongoDB TTL index, so expiry is
+  /// enforced by [PurgeExpiredAnalyticsRecords] instead of the database.
+  @Index()
+  @Property(type: PropertyType.date)
+  DateTime expireAt;
+
   AnonymizedListingEntity({
     this.id = 0,
     required this.hashedId,
@@ -30,5 +37,6 @@ class AnonymizedListingEntity {
     required this.category,
     required this.generalAge,
     required this.recordedAt,
+    required this.expireAt,
   });
 }
