@@ -5677,10 +5677,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "128:7764982347858979769",
+      "lastPropertyId": "4:1935689212380612380",
+      "name": "ProCardEventEntity",
+      "properties": [
+        {
+          "id": "1:3612280366097224727",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7613494464489427494",
+          "name": "dimension",
+          "type": 9
+        },
+        {
+          "id": "3:1765409815889500173",
+          "name": "shownAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "139:6040267142502270564"
+        },
+        {
+          "id": "4:1935689212380612380",
+          "name": "dbEngagement",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "127:4119428452567236414",
-  "lastIndexId": "138:857994319273020095",
+  "lastEntityId": "128:7764982347858979769",
+  "lastIndexId": "139:6040267142502270564",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
