@@ -128,6 +128,7 @@ import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/strike_entity.dart';
 import 'core/data/entities/subscription_entity.dart';
 import 'core/data/entities/task_execution_log_entity.dart';
+import 'core/data/entities/telemetry_event_entity.dart';
 import 'core/data/entities/traffic_count_entity.dart';
 import 'core/data/entities/traffic_steering_directive_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
@@ -5769,6 +5770,57 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(130, 8622262501434401041),
+      name: 'TelemetryEventEntity',
+      lastPropertyId: const obx_int.IdUid(8, 185153541278494723),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 465918690823845539),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5159313940552173427),
+            name: 'sectorId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8146414991055932967),
+            name: 'dbEventType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2254358056003178981),
+            name: 'deltaChangeLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7119306493195315870),
+            name: 'appVersion',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1022437891676778056),
+            name: 'packVersion',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 3597661506315652374),
+            name: 'capturedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(141, 7339839247327023067)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 185153541278494723),
+            name: 'uploaded',
+            type: 1,
+            flags: 8,
+            indexId: const obx_int.IdUid(142, 2166129230328909223))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5807,8 +5859,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(129, 2908657865448146230),
-      lastIndexId: const obx_int.IdUid(140, 74089358063764863),
+      lastEntityId: const obx_int.IdUid(130, 8622262501434401041),
+      lastIndexId: const obx_int.IdUid(142, 2166129230328909223),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12463,6 +12515,63 @@ obx_int.ModelDefinition getObjectBoxModel() {
               benchmarksJson: benchmarksJsonParam);
 
           return object;
+        }),
+    TelemetryEventEntity: obx_int.EntityDefinition<TelemetryEventEntity>(
+        model: _entities[128],
+        toOneRelations: (TelemetryEventEntity object) => [],
+        toManyRelations: (TelemetryEventEntity object) => {},
+        getId: (TelemetryEventEntity object) => object.id,
+        setId: (TelemetryEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TelemetryEventEntity object, fb.Builder fbb) {
+          final sectorIdOffset = fbb.writeString(object.sectorId);
+          final deltaChangeLabelOffset =
+              fbb.writeString(object.deltaChangeLabel);
+          final appVersionOffset = fbb.writeString(object.appVersion);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, sectorIdOffset);
+          fbb.addInt64(2, object.dbEventType);
+          fbb.addOffset(3, deltaChangeLabelOffset);
+          fbb.addOffset(4, appVersionOffset);
+          fbb.addInt64(5, object.packVersion);
+          fbb.addInt64(6, object.capturedAt.millisecondsSinceEpoch);
+          fbb.addBool(7, object.uploaded);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final sectorIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dbEventTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final deltaChangeLabelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+          final appVersionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final packVersionParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final capturedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final uploadedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
+          final object = TelemetryEventEntity(
+              id: idParam,
+              sectorId: sectorIdParam,
+              dbEventType: dbEventTypeParam,
+              deltaChangeLabel: deltaChangeLabelParam,
+              appVersion: appVersionParam,
+              packVersion: packVersionParam,
+              capturedAt: capturedAtParam,
+              uploaded: uploadedParam);
+
+          return object;
         })
   };
 
@@ -16504,4 +16613,39 @@ class IntelligencePackEntity_ {
   /// see [IntelligencePackEntity.benchmarksJson]
   static final benchmarksJson = obx.QueryStringProperty<IntelligencePackEntity>(
       _entities[127].properties[5]);
+}
+
+/// [TelemetryEventEntity] entity fields to define ObjectBox queries.
+class TelemetryEventEntity_ {
+  /// see [TelemetryEventEntity.id]
+  static final id = obx.QueryIntegerProperty<TelemetryEventEntity>(
+      _entities[128].properties[0]);
+
+  /// see [TelemetryEventEntity.sectorId]
+  static final sectorId = obx.QueryStringProperty<TelemetryEventEntity>(
+      _entities[128].properties[1]);
+
+  /// see [TelemetryEventEntity.dbEventType]
+  static final dbEventType = obx.QueryIntegerProperty<TelemetryEventEntity>(
+      _entities[128].properties[2]);
+
+  /// see [TelemetryEventEntity.deltaChangeLabel]
+  static final deltaChangeLabel = obx.QueryStringProperty<TelemetryEventEntity>(
+      _entities[128].properties[3]);
+
+  /// see [TelemetryEventEntity.appVersion]
+  static final appVersion = obx.QueryStringProperty<TelemetryEventEntity>(
+      _entities[128].properties[4]);
+
+  /// see [TelemetryEventEntity.packVersion]
+  static final packVersion = obx.QueryIntegerProperty<TelemetryEventEntity>(
+      _entities[128].properties[5]);
+
+  /// see [TelemetryEventEntity.capturedAt]
+  static final capturedAt =
+      obx.QueryDateProperty<TelemetryEventEntity>(_entities[128].properties[6]);
+
+  /// see [TelemetryEventEntity.uploaded]
+  static final uploaded = obx.QueryBooleanProperty<TelemetryEventEntity>(
+      _entities[128].properties[7]);
 }

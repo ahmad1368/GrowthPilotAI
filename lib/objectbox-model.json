@@ -5749,10 +5749,63 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "130:8622262501434401041",
+      "lastPropertyId": "8:185153541278494723",
+      "name": "TelemetryEventEntity",
+      "properties": [
+        {
+          "id": "1:465918690823845539",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5159313940552173427",
+          "name": "sectorId",
+          "type": 9
+        },
+        {
+          "id": "3:8146414991055932967",
+          "name": "dbEventType",
+          "type": 6
+        },
+        {
+          "id": "4:2254358056003178981",
+          "name": "deltaChangeLabel",
+          "type": 9
+        },
+        {
+          "id": "5:7119306493195315870",
+          "name": "appVersion",
+          "type": 9
+        },
+        {
+          "id": "6:1022437891676778056",
+          "name": "packVersion",
+          "type": 6
+        },
+        {
+          "id": "7:3597661506315652374",
+          "name": "capturedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "141:7339839247327023067"
+        },
+        {
+          "id": "8:185153541278494723",
+          "name": "uploaded",
+          "type": 1,
+          "flags": 8,
+          "indexId": "142:2166129230328909223"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "129:2908657865448146230",
-  "lastIndexId": "140:74089358063764863",
+  "lastEntityId": "130:8622262501434401041",
+  "lastIndexId": "142:2166129230328909223",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
