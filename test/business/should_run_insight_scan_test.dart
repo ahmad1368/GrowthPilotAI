@@ -16,5 +16,13 @@ void main() {
     test('runs once the 3-hour interval has elapsed', () {
       expect(ShouldRunInsightScan.call(now.subtract(const Duration(hours: 3)), now), isTrue);
     });
+
+    test('honors an overridden interval (Issue #110 throttling) over the 3-hour default', () {
+      final lastScanAt = now.subtract(const Duration(hours: 4));
+      expect(
+        ShouldRunInsightScan.call(lastScanAt, now, interval: const Duration(hours: 6)),
+        isFalse,
+      );
+    });
   });
 }

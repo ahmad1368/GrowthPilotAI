@@ -23,9 +23,10 @@ class InsightTriggerService {
 
   InsightTriggerService(this._cacheRepo, this._notificationRepo, this._cipher, this._dispatcher);
 
-  Future<void> scanIfDue({DateTime? now}) async {
+  /// [interval] (Issue #110) throttles the scan on low-end hardware.
+  Future<void> scanIfDue({DateTime? now, Duration? interval}) async {
     final at = now ?? DateTime.now();
-    if (!ShouldRunInsightScan.call(_lastScanAt, at)) return;
+    if (!ShouldRunInsightScan.call(_lastScanAt, at, interval: interval)) return;
     _lastScanAt = at;
 
     final history = _notificationRepo.getAll();

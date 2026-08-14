@@ -18,5 +18,13 @@ void main() {
       final lastSyncedAt = now.subtract(const Duration(hours: 6));
       expect(ShouldRefreshIntelligenceCache.call(lastSyncedAt, now), isTrue);
     });
+
+    test('honors an overridden interval (Issue #110 throttling) over the 6-hour default', () {
+      final lastSyncedAt = now.subtract(const Duration(hours: 8));
+      expect(
+        ShouldRefreshIntelligenceCache.call(lastSyncedAt, now, interval: const Duration(hours: 12)),
+        isFalse,
+      );
+    });
   });
 }

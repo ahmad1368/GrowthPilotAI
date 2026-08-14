@@ -18,23 +18,28 @@ class PriceTrendLineChart extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return SizedBox(
       height: 120,
-      child: LineChart(LineChartData(
-        gridData: const FlGridData(show: false),
-        borderData: FlBorderData(show: false),
-        titlesData: const FlTitlesData(show: false),
-        lineBarsData: [
-          LineChartBarData(
-            isCurved: true,
-            color: scheme.primary,
-            barWidth: 2,
-            dotData: const FlDotData(show: false),
-            spots: [
-              for (var i = 0; i < points.length; i++)
-                FlSpot(i.toDouble(), points[i].avgBudget),
-            ],
-          ),
-        ],
-      )),
+      // Issue #110 "Raster Cache Optimization": this line only changes
+      // when [points] does, so isolate it in its own raster layer to skip
+      // GPU redraw on ancestor rebuilds.
+      child: RepaintBoundary(
+        child: LineChart(LineChartData(
+          gridData: const FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          titlesData: const FlTitlesData(show: false),
+          lineBarsData: [
+            LineChartBarData(
+              isCurved: true,
+              color: scheme.primary,
+              barWidth: 2,
+              dotData: const FlDotData(show: false),
+              spots: [
+                for (var i = 0; i < points.length; i++)
+                  FlSpot(i.toDouble(), points[i].avgBudget),
+              ],
+            ),
+          ],
+        )),
+      ),
     );
   }
 }
