@@ -13,4 +13,9 @@ class InboxNotificationRepository {
       _box.getAll().where((n) => n.createdAt.isAfter(cutoff)).toList();
 
   void upsert(InboxNotificationEntity notification) => _box.put(notification);
+
+  /// Prunes cleanup-selected rows (Issue #108 scope item 4) — e.g. stale
+  /// read Market Insight entries, so notification history doesn't bloat.
+  void removeAll(List<InboxNotificationEntity> entries) =>
+      _box.removeMany(entries.map((e) => e.id).toList());
 }
