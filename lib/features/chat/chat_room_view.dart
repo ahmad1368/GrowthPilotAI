@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/features/chat/widgets/chat_input_bar.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_message_list.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_room_header.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_typing_indicator.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Marketplace chat screen (Issue #123/#132, near-duplicate #136) — flat
 /// shadcn_ui, not the issues' literal Glassmorphism ask (architecture

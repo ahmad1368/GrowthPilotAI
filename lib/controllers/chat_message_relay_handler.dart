@@ -48,7 +48,8 @@ class ChatMessageRelayHandler {
     final message = BuildChatAttachmentMessage.call(
         roomId: roomId, senderId: senderId, fileName: fileName, mimeType: mimeType,
         bytes: bytes, now: DateTime.now());
-    return message == null ? false : _dispatch(message);
+    if (message == null) return false;
+    return _dispatch(message);
   }
 
   /// Tags the message before it's ever broadcast (Issue #128), matching

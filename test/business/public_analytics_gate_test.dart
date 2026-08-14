@@ -10,6 +10,7 @@ AnonymizedListingEntity _listing(double lat, double lng, String age) =>
       category: 'x',
       generalAge: age,
       recordedAt: DateTime.utc(2027, 1, 1),
+      expireAt: DateTime.utc(2027, 2, 1),
     );
 
 void main() {
