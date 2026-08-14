@@ -9,6 +9,7 @@ import '../features/settings/widgets/settings_nav_tile.dart';
 import '../features/settings/widgets/language_settings_section.dart';
 import '../features/settings/widgets/performance_settings_section.dart';
 import '../features/settings/widgets/notification_preference_section.dart';
+import '../features/settings/widgets/quiet_hours_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -112,6 +113,20 @@ class SettingsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const NotificationPreferenceSection(),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Quiet Hours & daily alert frequency cap (Issue #159)
+              _buildSectionHeader("Quiet Hours"),
+              const SizedBox(height: 12),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const QuietHoursSection(),
               ),
 
               const SizedBox(height: 32),
