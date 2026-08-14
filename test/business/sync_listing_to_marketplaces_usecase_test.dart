@@ -46,7 +46,7 @@ void main() {
 
   test('skips a provider that is already synced', () async {
     final alreadySynced = MarketplaceSyncStatusEntity(listingId: 1, providerName: 'eBay')
-      ..status = MarketplaceSyncStatus.synced;
+      ..dbStatus = MarketplaceSyncStatus.synced.index;
     final usecase = SyncListingToMarketplacesUseCase([_SpyAdapter()]);
     final touched = await usecase.syncListing(listing, [alreadySynced]);
 
