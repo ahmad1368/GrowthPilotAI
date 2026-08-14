@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:growth_pilot_ai/business/anonymizer_service.dart';
 import 'package:growth_pilot_ai/business/intelligence_cache_sync_service.dart';
+import 'package:growth_pilot_ai/business/local_benchmark_comparator_service.dart';
 import 'package:growth_pilot_ai/core/data/entities/intelligence_cache_entry_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/intelligence_cache_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -207,6 +208,14 @@ class DependencyInjection {
       );
       _locator.registerLazySingleton<IntelligenceCacheSyncService>(
         () => IntelligenceCacheSyncService(
+          _locator<IntelligenceCacheRepository>(),
+          FieldCipher(keyStorageKey: 'intelligence_cache_encryption_key'),
+        ),
+      );
+
+      // ۱۰.۶ مقایسه‌گر آفلاین معیار بازار در برابر همتایان محلی رمزگشایی‌شده (Issue #107)
+      _locator.registerLazySingleton<LocalBenchmarkComparatorService>(
+        () => LocalBenchmarkComparatorService(
           _locator<IntelligenceCacheRepository>(),
           FieldCipher(keyStorageKey: 'intelligence_cache_encryption_key'),
         ),
