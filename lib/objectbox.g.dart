@@ -5869,7 +5869,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(132, 4702564247122036762),
       name: 'IntelligenceCacheEntryEntity',
-      lastPropertyId: const obx_int.IdUid(8, 3567167577418561344),
+      lastPropertyId: const obx_int.IdUid(11, 4348382500135088330),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -5889,29 +5889,24 @@ final _entities = <obx_int.ModelEntity>[
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 2771905326495739240),
-            name: 'marketTemperatureIndex',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 2947228478500148535),
-            name: 'pricePosition',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 5477509078976653478),
-            name: 'scarcityIndex',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 7514966757150406488),
-            name: 'isHiddenGem',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
             id: const obx_int.IdUid(8, 3567167577418561344),
             name: 'syncedAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 8524466272633846385),
+            name: 'contentHash',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 8012182407947798754),
+            name: 'encryptedSnapshot',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4348382500135088330),
+            name: 'checksum',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -5963,7 +5958,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
         3822539053991719425,
         4314188896221551808,
         1570878085546655654,
-        3274884444133419373
+        3274884444133419373,
+        2771905326495739240,
+        2947228478500148535,
+        5477509078976653478,
+        7514966757150406488
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -12725,15 +12724,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
             objectToFB: (IntelligenceCacheEntryEntity object, fb.Builder fbb) {
               final itemIdOffset = fbb.writeString(object.itemId);
               final sectorIdOffset = fbb.writeString(object.sectorId);
-              fbb.startTable(9);
+              final contentHashOffset = fbb.writeString(object.contentHash);
+              final encryptedSnapshotOffset =
+                  fbb.writeString(object.encryptedSnapshot);
+              final checksumOffset = fbb.writeString(object.checksum);
+              fbb.startTable(12);
               fbb.addInt64(0, object.id);
               fbb.addOffset(1, itemIdOffset);
               fbb.addOffset(2, sectorIdOffset);
-              fbb.addInt64(3, object.marketTemperatureIndex);
-              fbb.addFloat64(4, object.pricePosition);
-              fbb.addFloat64(5, object.scarcityIndex);
-              fbb.addBool(6, object.isHiddenGem);
               fbb.addInt64(7, object.syncedAt.millisecondsSinceEpoch);
+              fbb.addOffset(8, contentHashOffset);
+              fbb.addOffset(9, encryptedSnapshotOffset);
+              fbb.addOffset(10, checksumOffset);
               fbb.finish(fbb.endTable());
               return object.id;
             },
@@ -12747,24 +12749,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
               final sectorIdParam =
                   const fb.StringReader(asciiOptimization: true)
                       .vTableGet(buffer, rootOffset, 8, '');
-              final marketTemperatureIndexParam =
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
-              final pricePositionParam = const fb.Float64Reader()
-                  .vTableGetNullable(buffer, rootOffset, 12);
-              final scarcityIndexParam =
-                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
-              final isHiddenGemParam = const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 16, false);
+              final contentHashParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 20, '');
+              final encryptedSnapshotParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 22, '');
+              final checksumParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 24, '');
               final syncedAtParam = DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
               final object = IntelligenceCacheEntryEntity(
                   id: idParam,
                   itemId: itemIdParam,
                   sectorId: sectorIdParam,
-                  marketTemperatureIndex: marketTemperatureIndexParam,
-                  pricePosition: pricePositionParam,
-                  scarcityIndex: scarcityIndexParam,
-                  isHiddenGem: isHiddenGemParam,
+                  contentHash: contentHashParam,
+                  encryptedSnapshot: encryptedSnapshotParam,
+                  checksum: checksumParam,
                   syncedAt: syncedAtParam);
 
               return object;
@@ -16887,27 +16889,21 @@ class IntelligenceCacheEntryEntity_ {
   static final sectorId = obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
       _entities[130].properties[2]);
 
-  /// see [IntelligenceCacheEntryEntity.marketTemperatureIndex]
-  static final marketTemperatureIndex =
-      obx.QueryIntegerProperty<IntelligenceCacheEntryEntity>(
-          _entities[130].properties[3]);
-
-  /// see [IntelligenceCacheEntryEntity.pricePosition]
-  static final pricePosition =
-      obx.QueryDoubleProperty<IntelligenceCacheEntryEntity>(
-          _entities[130].properties[4]);
-
-  /// see [IntelligenceCacheEntryEntity.scarcityIndex]
-  static final scarcityIndex =
-      obx.QueryDoubleProperty<IntelligenceCacheEntryEntity>(
-          _entities[130].properties[5]);
-
-  /// see [IntelligenceCacheEntryEntity.isHiddenGem]
-  static final isHiddenGem =
-      obx.QueryBooleanProperty<IntelligenceCacheEntryEntity>(
-          _entities[130].properties[6]);
-
   /// see [IntelligenceCacheEntryEntity.syncedAt]
   static final syncedAt = obx.QueryDateProperty<IntelligenceCacheEntryEntity>(
-      _entities[130].properties[7]);
+      _entities[130].properties[3]);
+
+  /// see [IntelligenceCacheEntryEntity.contentHash]
+  static final contentHash =
+      obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
+          _entities[130].properties[4]);
+
+  /// see [IntelligenceCacheEntryEntity.encryptedSnapshot]
+  static final encryptedSnapshot =
+      obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
+          _entities[130].properties[5]);
+
+  /// see [IntelligenceCacheEntryEntity.checksum]
+  static final checksum = obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
+      _entities[130].properties[6]);
 }

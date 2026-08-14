@@ -7,10 +7,9 @@ IntelligenceCacheEntryEntity _entryAt(int id, DateTime syncedAt) {
     id: id,
     itemId: 'item-$id',
     sectorId: 'DEFAULT',
-    marketTemperatureIndex: 0,
-    pricePosition: 0.5,
-    scarcityIndex: 0.1,
-    isHiddenGem: false,
+    contentHash: 'hash-$id',
+    encryptedSnapshot: 'iv:cipher-$id',
+    checksum: 'checksum-$id',
     syncedAt: syncedAt,
   );
 }

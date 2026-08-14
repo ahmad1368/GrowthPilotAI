@@ -50,6 +50,7 @@ import 'package:growth_pilot_ai/core/interfaces/dashboard_export_service.dart';
 import 'package:growth_pilot_ai/core/data/services/pdf_dashboard_export_service.dart';
 import 'package:growth_pilot_ai/core/interfaces/dashboard_template_store.dart';
 import 'package:growth_pilot_ai/core/data/datasources/secure_dashboard_template_store.dart';
+import 'package:growth_pilot_ai/core/utils/field_cipher.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_remote_sync_data_source.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/remote_sync_data_source.dart';
@@ -199,13 +200,16 @@ class DependencyInjection {
         () => SecureDashboardTemplateStore(),
       );
 
-      // ۱۰.۵ کش آفلاین بسته‌های هوش بخش‌بندی‌شده روی دستگاه (Issue #105)
+      // ۱۰.۵ کش آفلاین بسته‌های هوش بخش‌بندی‌شده روی دستگاه، رمزنگاری‌شده در حالت سکون (Issue #105/#106)
       _locator.registerLazySingleton<IntelligenceCacheRepository>(
         () => IntelligenceCacheRepository(
             Get.find<ObjectBox>().store.box<IntelligenceCacheEntryEntity>()),
       );
       _locator.registerLazySingleton<IntelligenceCacheSyncService>(
-        () => IntelligenceCacheSyncService(_locator<IntelligenceCacheRepository>()),
+        () => IntelligenceCacheSyncService(
+          _locator<IntelligenceCacheRepository>(),
+          FieldCipher(keyStorageKey: 'intelligence_cache_encryption_key'),
+        ),
       );
 
       // ۹. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه
