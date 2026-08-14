@@ -72,6 +72,7 @@ import 'core/data/entities/ignored_merchant_entity.dart';
 import 'core/data/entities/image_variant_entity.dart';
 import 'core/data/entities/inbox_notification_entity.dart';
 import 'core/data/entities/integration_connection_entity.dart';
+import 'core/data/entities/intelligence_cache_entry_entity.dart';
 import 'core/data/entities/intelligence_pack_entity.dart';
 import 'core/data/entities/inventory_category_entity.dart';
 import 'core/data/entities/inventory_cost_layer_entity.dart';
@@ -5864,6 +5865,56 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(145, 1035016122579114674))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(132, 4702564247122036762),
+      name: 'IntelligenceCacheEntryEntity',
+      lastPropertyId: const obx_int.IdUid(8, 3567167577418561344),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1749585440646335275),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6653412227695281153),
+            name: 'itemId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(146, 6820761643855610097)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7454150150324893873),
+            name: 'sectorId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2771905326495739240),
+            name: 'marketTemperatureIndex',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2947228478500148535),
+            name: 'pricePosition',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 5477509078976653478),
+            name: 'scarcityIndex',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7514966757150406488),
+            name: 'isHiddenGem',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 3567167577418561344),
+            name: 'syncedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5902,8 +5953,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(131, 5258605296924379028),
-      lastIndexId: const obx_int.IdUid(145, 1035016122579114674),
+      lastEntityId: const obx_int.IdUid(132, 4702564247122036762),
+      lastIndexId: const obx_int.IdUid(146, 6820761643855610097),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12661,7 +12712,63 @@ obx_int.ModelDefinition getObjectBoxModel() {
               snapshotDate: snapshotDateParam);
 
           return object;
-        })
+        }),
+    IntelligenceCacheEntryEntity:
+        obx_int.EntityDefinition<IntelligenceCacheEntryEntity>(
+            model: _entities[130],
+            toOneRelations: (IntelligenceCacheEntryEntity object) => [],
+            toManyRelations: (IntelligenceCacheEntryEntity object) => {},
+            getId: (IntelligenceCacheEntryEntity object) => object.id,
+            setId: (IntelligenceCacheEntryEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (IntelligenceCacheEntryEntity object, fb.Builder fbb) {
+              final itemIdOffset = fbb.writeString(object.itemId);
+              final sectorIdOffset = fbb.writeString(object.sectorId);
+              fbb.startTable(9);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, itemIdOffset);
+              fbb.addOffset(2, sectorIdOffset);
+              fbb.addInt64(3, object.marketTemperatureIndex);
+              fbb.addFloat64(4, object.pricePosition);
+              fbb.addFloat64(5, object.scarcityIndex);
+              fbb.addBool(6, object.isHiddenGem);
+              fbb.addInt64(7, object.syncedAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final itemIdParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+              final sectorIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final marketTemperatureIndexParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final pricePositionParam = const fb.Float64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 12);
+              final scarcityIndexParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final isHiddenGemParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 16, false);
+              final syncedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+              final object = IntelligenceCacheEntryEntity(
+                  id: idParam,
+                  itemId: itemIdParam,
+                  sectorId: sectorIdParam,
+                  marketTemperatureIndex: marketTemperatureIndexParam,
+                  pricePosition: pricePositionParam,
+                  scarcityIndex: scarcityIndexParam,
+                  isHiddenGem: isHiddenGemParam,
+                  syncedAt: syncedAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -16764,4 +16871,43 @@ class MarketSnapshotEntity_ {
   /// see [MarketSnapshotEntity.snapshotDate]
   static final snapshotDate =
       obx.QueryDateProperty<MarketSnapshotEntity>(_entities[129].properties[5]);
+}
+
+/// [IntelligenceCacheEntryEntity] entity fields to define ObjectBox queries.
+class IntelligenceCacheEntryEntity_ {
+  /// see [IntelligenceCacheEntryEntity.id]
+  static final id = obx.QueryIntegerProperty<IntelligenceCacheEntryEntity>(
+      _entities[130].properties[0]);
+
+  /// see [IntelligenceCacheEntryEntity.itemId]
+  static final itemId = obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
+      _entities[130].properties[1]);
+
+  /// see [IntelligenceCacheEntryEntity.sectorId]
+  static final sectorId = obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
+      _entities[130].properties[2]);
+
+  /// see [IntelligenceCacheEntryEntity.marketTemperatureIndex]
+  static final marketTemperatureIndex =
+      obx.QueryIntegerProperty<IntelligenceCacheEntryEntity>(
+          _entities[130].properties[3]);
+
+  /// see [IntelligenceCacheEntryEntity.pricePosition]
+  static final pricePosition =
+      obx.QueryDoubleProperty<IntelligenceCacheEntryEntity>(
+          _entities[130].properties[4]);
+
+  /// see [IntelligenceCacheEntryEntity.scarcityIndex]
+  static final scarcityIndex =
+      obx.QueryDoubleProperty<IntelligenceCacheEntryEntity>(
+          _entities[130].properties[5]);
+
+  /// see [IntelligenceCacheEntryEntity.isHiddenGem]
+  static final isHiddenGem =
+      obx.QueryBooleanProperty<IntelligenceCacheEntryEntity>(
+          _entities[130].properties[6]);
+
+  /// see [IntelligenceCacheEntryEntity.syncedAt]
+  static final syncedAt = obx.QueryDateProperty<IntelligenceCacheEntryEntity>(
+      _entities[130].properties[7]);
 }
