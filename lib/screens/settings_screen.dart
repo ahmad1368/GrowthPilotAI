@@ -8,6 +8,7 @@ import '../widgets/omni_glass_panel.dart';
 import '../features/settings/widgets/settings_nav_tile.dart';
 import '../features/settings/widgets/language_settings_section.dart';
 import '../features/settings/widgets/performance_settings_section.dart';
+import '../features/settings/widgets/notification_preference_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -97,6 +98,20 @@ class SettingsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const PerformanceSettingsSection(),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Unified Notification Preference Center (Issue #158)
+              _buildSectionHeader("Notifications"),
+              const SizedBox(height: 12),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const NotificationPreferenceSection(),
               ),
 
               const SizedBox(height: 32),
