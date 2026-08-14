@@ -29,11 +29,13 @@ class IntelligenceCacheSyncService {
 
   /// Runs the Kill Switch first (a wipe resets [lastSyncedAt]); writes
   /// only changed entries, then evicts down to the 500-item cap.
-  Future<void> syncIfDue(Map<String, IntelligenceBundle> bundles, {DateTime? now}) async {
+  /// [interval] (Issue #110) throttles the sync on low-end hardware.
+  Future<void> syncIfDue(Map<String, IntelligenceBundle> bundles,
+      {DateTime? now, Duration? interval}) async {
     final at = now ?? DateTime.now();
     if (await _killSwitch.call(_repo, _cipher)) _lastSyncedAt = null;
 
-    if (!ShouldRefreshIntelligenceCache.call(_lastSyncedAt, at)) return;
+    if (!ShouldRefreshIntelligenceCache.call(_lastSyncedAt, at, interval: interval)) return;
 
     for (final entry in bundles.entries) {
       final cached = _repo.getByItemId(entry.key);

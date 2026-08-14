@@ -31,12 +31,18 @@ class RadarComparisonChart extends StatelessWidget {
             label: 'Radar chart comparing ${axes.map((a) => '${a.label} ${a.value.round()} of 100').join(', ')}',
             child: SizedBox(
               height: 220,
-              child: CustomPaint(
-                painter: RadarChartPainter(
-                  axes: axes,
-                  gridColor: colors.border,
-                  fillColor: colors.primary,
-                  strokeColor: colors.primary,
+              // Issue #110 "Raster Cache Optimization": the polygon only
+              // changes when [axes] does (see RadarChartPainter.shouldRepaint),
+              // so isolate it in its own raster layer to skip GPU redraw on
+              // ancestor rebuilds (e.g. scrolling the surrounding screen).
+              child: RepaintBoundary(
+                child: CustomPaint(
+                  painter: RadarChartPainter(
+                    axes: axes,
+                    gridColor: colors.border,
+                    fillColor: colors.primary,
+                    strokeColor: colors.primary,
+                  ),
                 ),
               ),
             ),

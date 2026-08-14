@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/performance_controller.dart';
 import '../models/process_step.dart';
 import 'step_indicator_point.dart';
 
@@ -19,29 +21,41 @@ class OmniStepProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentStep = allSteps.firstWhere((s) => s.id == currentStepId);
     double totalPercent = _calculateTotalProgress(currentStep);
+    // Issue #110: skip the BackdropFilter blur on low-end hardware / Power
+    // Saver Mode — a plain, more-opaque surface stands in instead.
+    final useBlur = Get.find<PerformanceController>().useBlur;
+
+    final content = Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: useBlur ? 0.08 : 0.16),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildHeader(currentStep, totalPercent),
+          const SizedBox(height: 20),
+          _buildProgressBar(context, totalPercent),
+          const SizedBox(height: 20),
+          _buildStepsRow(context, currentStep),
+        ],
+      ),
+    );
+
+    if (!useBlur) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: content,
+      );
+    }
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildHeader(currentStep, totalPercent),
-              const SizedBox(height: 20),
-              _buildProgressBar(context, totalPercent),
-              const SizedBox(height: 20),
-              _buildStepsRow(context, currentStep),
-            ],
-          ),
-        ),
+        child: content,
       ),
     );
   }

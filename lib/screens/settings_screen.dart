@@ -7,6 +7,7 @@ import '../widgets/theme_toggle.dart';
 import '../widgets/omni_glass_panel.dart';
 import '../features/settings/widgets/settings_nav_tile.dart';
 import '../features/settings/widgets/language_settings_section.dart';
+import '../features/settings/widgets/performance_settings_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -82,6 +83,20 @@ class SettingsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const LanguageSettingsSection(),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Power Saver Mode / hardware tier throttling (Issue #110)
+              _buildSectionHeader("Performance"),
+              const SizedBox(height: 12),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const PerformanceSettingsSection(),
               ),
 
               const SizedBox(height: 32),

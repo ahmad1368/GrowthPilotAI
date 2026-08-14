@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/performance_controller.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import '../../services/connectivity_service.dart';
 import '../../services/environment_service.dart';
@@ -10,6 +11,8 @@ class AppBindings extends Bindings {
     // سرویس‌های زیرساختی
     Get.lazyPut(() => EnvironmentService(), fenix: true);
     Get.lazyPut(() => ConnectivityService(), fenix: true);
+    // Issue #110: تشخیص سطح سخت‌افزار + حالت صرفه‌جویی باتری
+    Get.lazyPut(() => PerformanceController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);
