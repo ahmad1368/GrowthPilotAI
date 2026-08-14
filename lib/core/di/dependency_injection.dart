@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:growth_pilot_ai/business/anonymizer_service.dart';
+import 'package:growth_pilot_ai/business/intelligence_cache_sync_service.dart';
+import 'package:growth_pilot_ai/core/data/entities/intelligence_cache_entry_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/intelligence_cache_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/business/csv_export_strategy.dart';
@@ -194,6 +197,15 @@ class DependencyInjection {
       // ۱۰.۴ ذخیره‌سازی نسخه پشتیبان چیدمان پیش از اعمال قالب (Issue #118)
       _locator.registerLazySingleton<DashboardTemplateStore>(
         () => SecureDashboardTemplateStore(),
+      );
+
+      // ۱۰.۵ کش آفلاین بسته‌های هوش بخش‌بندی‌شده روی دستگاه (Issue #105)
+      _locator.registerLazySingleton<IntelligenceCacheRepository>(
+        () => IntelligenceCacheRepository(
+            Get.find<ObjectBox>().store.box<IntelligenceCacheEntryEntity>()),
+      );
+      _locator.registerLazySingleton<IntelligenceCacheSyncService>(
+        () => IntelligenceCacheSyncService(_locator<IntelligenceCacheRepository>()),
       );
 
       // ۹. لود کردن مدل هوش مصنوعی پس از اطمینان از ثبت نمونه

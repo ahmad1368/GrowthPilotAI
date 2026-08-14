@@ -5847,10 +5847,61 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "132:4702564247122036762",
+      "lastPropertyId": "8:3567167577418561344",
+      "name": "IntelligenceCacheEntryEntity",
+      "properties": [
+        {
+          "id": "1:1749585440646335275",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6653412227695281153",
+          "name": "itemId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "146:6820761643855610097"
+        },
+        {
+          "id": "3:7454150150324893873",
+          "name": "sectorId",
+          "type": 9
+        },
+        {
+          "id": "4:2771905326495739240",
+          "name": "marketTemperatureIndex",
+          "type": 6
+        },
+        {
+          "id": "5:2947228478500148535",
+          "name": "pricePosition",
+          "type": 8
+        },
+        {
+          "id": "6:5477509078976653478",
+          "name": "scarcityIndex",
+          "type": 8
+        },
+        {
+          "id": "7:7514966757150406488",
+          "name": "isHiddenGem",
+          "type": 1
+        },
+        {
+          "id": "8:3567167577418561344",
+          "name": "syncedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "131:5258605296924379028",
-  "lastIndexId": "145:1035016122579114674",
+  "lastEntityId": "132:4702564247122036762",
+  "lastIndexId": "146:6820761643855610097",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
