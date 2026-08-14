@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
 import '../controllers/transaction_controller.dart';
 import '../utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
@@ -27,7 +26,6 @@ class InsightPage extends StatefulWidget {
 }
 
 class _InsightPageState extends State<InsightPage> {
-  final ScannerService _scanner = ScannerService();
   final controller = Get.find<TransactionController>();
   int? selectedIndex;
 

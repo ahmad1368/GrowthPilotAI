@@ -1,7 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:growth_pilot_ai/widgets/adaptive_text.dart';
 
+/// Reusable card panel (Issue #3). Flat per the current design system — no
+/// BackdropFilter/blur despite the original issue's literal "Glassmorphism"
+/// ask; [opacity]/[blurSigma] are kept as constructor params so existing
+/// call sites still compile, but are no longer used for rendering.
 class OmniGlassPanel extends StatelessWidget {
   final String? title;
   final String? description;
@@ -59,34 +61,31 @@ class OmniGlassPanel extends StatelessWidget {
 
         Widget panelBody = ClipRRect(
           borderRadius: borderStyle,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
-            child: Container(
-              width: finalWidth,
-              height: height,
-              decoration: _buildDecoration(isDark, borderStyle, theme),
-              child: Column(
-                mainAxisSize:
-                    height == null ? MainAxisSize.min : MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeader(iconColor, context),
+          child: Container(
+            width: finalWidth,
+            height: height,
+            decoration: _buildDecoration(isDark, borderStyle, theme),
+            child: Column(
+              mainAxisSize:
+                  height == null ? MainAxisSize.min : MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(iconColor, context),
 
-                  // محتوای اصلی پویا با اسکرول ایمن
-                  Flexible(
-                    fit: height != null ? FlexFit.tight : FlexFit.loose,
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      child: _buildContent(onSurfaceColor),
-                    ),
+                // محتوای اصلی پویا با اسکرول ایمن
+                Flexible(
+                  fit: height != null ? FlexFit.tight : FlexFit.loose,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    child: _buildContent(onSurfaceColor),
                   ),
+                ),
 
-                  if (actionButtons != null || footer != null)
-                    _buildFooter(onSurfaceColor),
-                ],
-              ),
+                if (actionButtons != null || footer != null)
+                  _buildFooter(onSurfaceColor),
+              ],
             ),
           ),
         );
@@ -112,7 +111,7 @@ class OmniGlassPanel extends StatelessWidget {
           ],
           if (title != null)
             Expanded(
-              child: AdaptiveText(
+              child: Text(
                 title!,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w800,
@@ -136,7 +135,7 @@ class OmniGlassPanel extends StatelessWidget {
     if (child != null) return child!;
 
     if (description != null) {
-      return AdaptiveText(
+      return Text(
         description!,
         style: TextStyle(
           color: onSurfaceColor.withValues(alpha: 0.7),
@@ -186,10 +185,9 @@ class OmniGlassPanel extends StatelessWidget {
 
   BoxDecoration _buildDecoration(
       bool isDark, BorderRadius radius, ThemeData theme) {
-    final baseColor = isDark ? Colors.black : const Color(0xFFF7F8FA);
+    final cardColor = isDark ? const Color(0xFF18181B) : Colors.white;
     return BoxDecoration(
-      color:
-          backgroundColor ?? baseColor.withValues(alpha: isDark ? 0.2 : 0.85),
+      color: backgroundColor ?? cardColor,
       borderRadius: radius,
       border: Border.all(
         color: isDark
@@ -197,6 +195,15 @@ class OmniGlassPanel extends StatelessWidget {
             : Colors.black.withValues(alpha: 0.1),
         width: 0.8,
       ),
+      boxShadow: isDark
+          ? null
+          : [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.06),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
     );
   }
 }

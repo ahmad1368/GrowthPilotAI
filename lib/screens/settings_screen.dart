@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:get/get.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
 import '../widgets/omni_glass_panel.dart';
+import '../features/settings/widgets/settings_nav_tile.dart';
+import '../features/settings/widgets/language_settings_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -65,6 +68,65 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   trailing: const ThemeToggle(),
                 ),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Language settings (Issue #429)
+              _buildSectionHeader("Language"),
+              const SizedBox(height: 12),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const LanguageSettingsSection(),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Accounting & Banking integrations dashboard (Issue #61)
+              _buildSectionHeader("Integrations"),
+              const SizedBox(height: 12),
+
+              OmniGlassPanel(
+                opacity: 0.1,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  leading: Icon(Icons.account_balance_rounded,
+                      color: theme.colorScheme.onSurface),
+                  title: const AdaptiveText("Accounting & Banking"),
+                  subtitle: AdaptiveText(
+                    "Plaid, QuickBooks, Xero connections",
+                    fontSize: 12,
+                    style: TextStyle(
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.6)),
+                  ),
+                  trailing: Icon(Icons.chevron_right_rounded,
+                      color:
+                          theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+                  onTap: () => Get.toNamed('/settings/integrations'),
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.account_balance_wallet_rounded,
+                title: 'Connected Accounts',
+                subtitle: 'Manage linked bank sub-accounts',
+                onTap: () => Get.toNamed('/settings/connected-accounts'),
+              ),
+
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.compare_arrows_rounded,
+                title: 'Duplicate Matches',
+                subtitle: 'Review auto-merged Plaid/accounting transactions',
+                onTap: () => Get.toNamed('/transactions/duplicates'),
               ),
 
               const SizedBox(height: 32),

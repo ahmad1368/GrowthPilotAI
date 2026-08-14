@@ -29,8 +29,8 @@ class HomeBottomNav extends StatelessWidget {
           },
           backgroundColor: Colors.transparent,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.cyanAccent,
-          unselectedItemColor: Colors.white30,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          unselectedItemColor: Theme.of(context).unselectedWidgetColor,
           items: [
             BottomNavigationBarItem(
                 icon: Icon(

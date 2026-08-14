@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/notification_model.dart';
-import 'adaptive_text.dart';
 
 class NotificationCard extends StatelessWidget {
   final AppNotification item;
@@ -45,9 +44,10 @@ class NotificationCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       decoration: BoxDecoration(
-        color: theme.cardColor.withOpacity(0.4),
+        color: theme.cardColor.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: theme.dividerColor.withOpacity(0.05)),
+        border:
+            Border.all(color: theme.dividerColor.withValues(alpha: 0.05)),
       ),
       child: ListTile(
         onTap: onTap,
@@ -56,7 +56,8 @@ class NotificationCard extends StatelessWidget {
           alignment: Alignment.topRight,
           children: [
             CircleAvatar(
-              backgroundColor: (style['color'] as Color).withOpacity(0.1),
+              backgroundColor:
+                  (style['color'] as Color).withValues(alpha: 0.1),
               child: Icon(style['icon'], color: style['color']),
             ),
             if (!item.isRead)
@@ -72,15 +73,17 @@ class NotificationCard extends StatelessWidget {
               ),
           ],
         ),
-        title:
-            AdaptiveText(item.title, fontWeight: FontWeight.bold, fontSize: 14),
-        subtitle: AdaptiveText(
+        title: Text(item.title,
+            style:
+                const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        subtitle: Text(
           item.body,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          fontSize: 12,
           style: TextStyle(
-              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.6)),
+              fontSize: 12,
+              color: theme.textTheme.bodyMedium?.color
+                  ?.withValues(alpha: 0.6)),
         ),
         // بخش دکمه‌ها در سمت راست
         trailing: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/models/ocr_form_data.dart';
 import 'package:growth_pilot_ai/core/services/omni_logger.dart';
@@ -31,14 +32,22 @@ class OcrConfirmationController {
 
       final parsedAmount = double.tryParse(amountController.text) ?? 0.0;
 
+      // [Issue #27] ثبت واقعی در ObjectBox — قبلاً ریپازیتوری Mock بود و این
+      // متد فقط تظاهر به موفقیت می‌کرد بدون ذخیره‌سازی واقعی.
+      _repository.insert(TransactionEntity(
+        amount: parsedAmount,
+        date: selectedDate,
+        description: descController.text.isNotEmpty
+            ? descController.text
+            : vendorController.text,
+      ));
+
       OmniLogger.info(
         title: "ثبت تراکنش OCR",
         message: "فروشنده: ${vendorController.text} | مبلغ: $parsedAmount",
         widgetName: "OcrConfirmationController",
       );
 
-      // در اینجا متد ذخیره ریپازیتوری شما صدا زده می‌شود.
-      // با توجه به Mock بودن ریپازیتوری در این مرحله، عملیات با موفقیت تظاهر می‌شود.
       return true;
     } catch (e, stack) {
       OmniLogger.error(
