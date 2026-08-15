@@ -36,6 +36,7 @@ import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
 import 'package:growth_pilot_ai/features/onboarding/widgets/app_locale_gate.dart';
+import 'package:growth_pilot_ai/features/onboarding/widgets/onboarding_tour_gate.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -102,7 +103,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: const AppLocaleGate(child: HomeLayout()),
+          home: const AppLocaleGate(child: OnboardingTourGate(child: HomeLayout())),
           getPages: [
             GetPage(
               name: '/settings',
