@@ -3,10 +3,10 @@ import 'package:growth_pilot_ai/core/enum/inbox_notification_type.dart';
 import 'package:growth_pilot_ai/core/enum/notification_priority.dart';
 
 /// One dispatched alert (Issue #71) — e.g. a large-transaction warning or a
-/// new Inbox message (Issue #70). [metadataRefId] links back to a
-/// Transaction/Conversation for the "Notification History" the issue calls
-/// for; the raw [body] may contain sensitive amounts and must be masked
-/// before ever reaching a push preview (see SanitizePushPreview).
+/// new Inbox message (Issue #70); raw [body] must be masked before ever
+/// reaching a push preview (see SanitizePushPreview). [imageUrl]/
+/// [actionLabel]/[deepLinkRoute] (Issue #160) are optional "Rich
+/// Notification" fields; older rows/builders that skip them render plain.
 @Entity()
 class InboxNotificationEntity {
   @Id()
@@ -22,6 +22,9 @@ class InboxNotificationEntity {
   DateTime createdAt;
   bool isRead;
   bool deliveredViaPush;
+  String? imageUrl;
+  String? actionLabel;
+  String? deepLinkRoute;
 
   InboxNotificationEntity({
     this.id = 0,
@@ -34,6 +37,9 @@ class InboxNotificationEntity {
     required this.createdAt,
     this.isRead = false,
     this.deliveredViaPush = false,
+    this.imageUrl,
+    this.actionLabel,
+    this.deepLinkRoute,
   });
 
   InboxNotificationType get type => InboxNotificationType.values[dbType];

@@ -2,6 +2,7 @@ import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dar
 import 'package:growth_pilot_ai/core/interfaces/notification_channel.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/utils/logger.dart';
+import 'package:growth_pilot_ai/features/notifications/rich_notification_banner.dart';
 
 /// Local stand-in for Socket.io presence + Firebase push (Issue #71).
 /// Always reports the user online so in-app delivery is exercised by
@@ -13,6 +14,9 @@ class MockNotificationChannel implements NotificationChannel {
   @override
   OmniResult<void> emitInApp(InboxNotificationEntity notification) async {
     OmniLogger.info('In-app notification: ${notification.title}');
+    // Issue #160: surface Rich Notification content (image/action/deep
+    // link) as a foreground banner instead of just logging.
+    RichNotificationBanner.show(notification);
     return OmniResponse.success(null);
   }
 
