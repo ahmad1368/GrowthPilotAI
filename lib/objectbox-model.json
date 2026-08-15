@@ -692,7 +692,7 @@
     },
     {
       "id": "16:8408153993645793235",
-      "lastPropertyId": "10:2929912602770700824",
+      "lastPropertyId": "13:2607100459208268609",
       "name": "InboxNotificationEntity",
       "properties": [
         {
@@ -747,6 +747,21 @@
           "id": "10:2929912602770700824",
           "name": "deliveredViaPush",
           "type": 1
+        },
+        {
+          "id": "11:7890469583962287076",
+          "name": "imageUrl",
+          "type": 9
+        },
+        {
+          "id": "12:4085362641400256771",
+          "name": "actionLabel",
+          "type": 9
+        },
+        {
+          "id": "13:2607100459208268609",
+          "name": "deepLinkRoute",
+          "type": 9
         }
       ],
       "relations": []

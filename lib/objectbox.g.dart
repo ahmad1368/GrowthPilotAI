@@ -833,7 +833,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(16, 8408153993645793235),
       name: 'InboxNotificationEntity',
-      lastPropertyId: const obx_int.IdUid(10, 2929912602770700824),
+      lastPropertyId: const obx_int.IdUid(13, 2607100459208268609),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -886,6 +886,21 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(10, 2929912602770700824),
             name: 'deliveredViaPush',
             type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 7890469583962287076),
+            name: 'imageUrl',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4085362641400256771),
+            name: 'actionLabel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 2607100459208268609),
+            name: 'deepLinkRoute',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -6810,7 +6825,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final metadataRefIdOffset = object.metadataRefId == null
               ? null
               : fbb.writeString(object.metadataRefId!);
-          fbb.startTable(11);
+          final imageUrlOffset = object.imageUrl == null
+              ? null
+              : fbb.writeString(object.imageUrl!);
+          final actionLabelOffset = object.actionLabel == null
+              ? null
+              : fbb.writeString(object.actionLabel!);
+          final deepLinkRouteOffset = object.deepLinkRoute == null
+              ? null
+              : fbb.writeString(object.deepLinkRoute!);
+          fbb.startTable(14);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addOffset(2, bodyOffset);
@@ -6821,6 +6845,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
           fbb.addBool(8, object.isRead);
           fbb.addBool(9, object.deliveredViaPush);
+          fbb.addOffset(10, imageUrlOffset);
+          fbb.addOffset(11, actionLabelOffset);
+          fbb.addOffset(12, deepLinkRouteOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -6849,6 +6876,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
           final deliveredViaPushParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 22, false);
+          final imageUrlParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 24);
+          final actionLabelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 26);
+          final deepLinkRouteParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 28);
           final object = InboxNotificationEntity(
               id: idParam,
               title: titleParam,
@@ -6859,7 +6894,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
               metadataRefId: metadataRefIdParam,
               createdAt: createdAtParam,
               isRead: isReadParam,
-              deliveredViaPush: deliveredViaPushParam);
+              deliveredViaPush: deliveredViaPushParam,
+              imageUrl: imageUrlParam,
+              actionLabel: actionLabelParam,
+              deepLinkRoute: deepLinkRouteParam);
 
           return object;
         }),
@@ -13305,6 +13343,18 @@ class InboxNotificationEntity_ {
   static final deliveredViaPush =
       obx.QueryBooleanProperty<InboxNotificationEntity>(
           _entities[14].properties[9]);
+
+  /// see [InboxNotificationEntity.imageUrl]
+  static final imageUrl = obx.QueryStringProperty<InboxNotificationEntity>(
+      _entities[14].properties[10]);
+
+  /// see [InboxNotificationEntity.actionLabel]
+  static final actionLabel = obx.QueryStringProperty<InboxNotificationEntity>(
+      _entities[14].properties[11]);
+
+  /// see [InboxNotificationEntity.deepLinkRoute]
+  static final deepLinkRoute = obx.QueryStringProperty<InboxNotificationEntity>(
+      _entities[14].properties[12]);
 }
 
 /// [IgnoredMerchantEntity] entity fields to define ObjectBox queries.
