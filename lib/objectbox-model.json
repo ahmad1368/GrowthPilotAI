@@ -5908,10 +5908,48 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "133:5321257094098687941",
+      "lastPropertyId": "5:1792263662325012377",
+      "name": "NotificationConversionEventEntity",
+      "properties": [
+        {
+          "id": "1:2832818009630369690",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:399166068713994413",
+          "name": "alertId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "147:7944288283609933936"
+        },
+        {
+          "id": "3:6488562508816223999",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "4:996122807071267165",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:1792263662325012377",
+          "name": "occurredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "148:8706228721589986401"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "132:4702564247122036762",
-  "lastIndexId": "146:6820761643855610097",
+  "lastEntityId": "133:5321257094098687941",
+  "lastIndexId": "148:8706228721589986401",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

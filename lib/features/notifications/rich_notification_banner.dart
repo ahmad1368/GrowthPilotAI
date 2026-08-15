@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/notification_attribution_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dart';
 
 /// Foreground "Rich Notification" banner (Issue #160) — this offline-first
 /// client has no FCM/service-worker background delivery, so this is the
 /// in-app stand-in for the issue's "Foreground Logic: show as a Toast
 /// inside the UI, not a system-level pop-up" AC. Flat surface per this
-/// app's design system, not the issue's literal Glassmorphism ask.
+/// app's design system, not the issue's literal Glassmorphism ask. Taps
+/// also start a Last-Click attribution session (Issue #161).
 class RichNotificationBanner {
   static void show(InboxNotificationEntity notification) {
     final isDark = Get.isDarkMode;
@@ -34,6 +36,8 @@ class RichNotificationBanner {
   }
 
   static void _handleTap(InboxNotificationEntity notification) {
+    Get.find<NotificationAttributionController>()
+        .recordOpen(notification.id, notification.metadataRefType ?? 'general');
     final route = notification.deepLinkRoute;
     if (route != null) Get.toNamed(route);
   }

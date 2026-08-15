@@ -7,6 +7,8 @@ import 'package:growth_pilot_ai/business/local_benchmark_comparator_service.dart
 import 'package:growth_pilot_ai/business/insight_trigger_service.dart';
 import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/notification_conversion_event_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/notification_conversion_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/intelligence_cache_entry_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/intelligence_cache_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -227,6 +229,12 @@ class DependencyInjection {
       // ۱۰.۷ محرک دوره‌ای بینش‌های محلی («خریدار شخصی» آفلاین، Issue #108)
       _locator.registerLazySingleton<InboxNotificationRepository>(
         () => InboxNotificationRepository(Get.find<ObjectBox>().store.box<InboxNotificationEntity>()),
+      );
+
+      // ۱۰.۸ ردیابی تبدیل اعلان‌ها (Issue #161)
+      _locator.registerLazySingleton<NotificationConversionRepository>(
+        () => NotificationConversionRepository(
+            Get.find<ObjectBox>().store.box<NotificationConversionEventEntity>()),
       );
       _locator.registerLazySingleton<InsightTriggerService>(
         () => InsightTriggerService(

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/notification_attribution_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_preference_controller.dart';
 import 'package:growth_pilot_ai/controllers/performance_controller.dart';
 import 'package:growth_pilot_ai/controllers/quiet_hours_controller.dart';
@@ -19,6 +20,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => NotificationPreferenceController(), fenix: true);
     // Issue #159: ساعات سکوت + سقف روزانه اعلان‌ها
     Get.lazyPut(() => QuietHoursController(), fenix: true);
+    // Issue #161: نشست اسناد تبدیل اعلان (Last-Click, ۲۴ ساعته)
+    Get.lazyPut(() => NotificationAttributionController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);

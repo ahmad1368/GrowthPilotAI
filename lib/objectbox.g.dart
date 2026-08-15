@@ -100,6 +100,7 @@ import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/micro_credit_account_entity.dart';
 import 'core/data/entities/micro_credit_loan_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
+import 'core/data/entities/notification_conversion_event_entity.dart';
 import 'core/data/entities/payment_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
@@ -5925,6 +5926,42 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(133, 5321257094098687941),
+      name: 'NotificationConversionEventEntity',
+      lastPropertyId: const obx_int.IdUid(5, 1792263662325012377),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2832818009630369690),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 399166068713994413),
+            name: 'alertId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(147, 7944288283609933936)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6488562508816223999),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 996122807071267165),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1792263662325012377),
+            name: 'occurredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(148, 8706228721589986401))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -5963,8 +6000,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(132, 4702564247122036762),
-      lastIndexId: const obx_int.IdUid(146, 6820761643855610097),
+      lastEntityId: const obx_int.IdUid(133, 5321257094098687941),
+      lastIndexId: const obx_int.IdUid(148, 8706228721589986401),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12808,7 +12845,49 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   syncedAt: syncedAtParam);
 
               return object;
-            })
+            }),
+    NotificationConversionEventEntity: obx_int.EntityDefinition<
+            NotificationConversionEventEntity>(
+        model: _entities[131],
+        toOneRelations: (NotificationConversionEventEntity object) => [],
+        toManyRelations: (NotificationConversionEventEntity object) => {},
+        getId: (NotificationConversionEventEntity object) => object.id,
+        setId: (NotificationConversionEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (NotificationConversionEventEntity object, fb.Builder fbb) {
+          final categoryOffset = fbb.writeString(object.category);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.alertId);
+          fbb.addOffset(2, categoryOffset);
+          fbb.addInt64(3, object.dbStatus);
+          fbb.addInt64(4, object.occurredAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final alertIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = NotificationConversionEventEntity(
+              id: idParam,
+              alertId: alertIdParam,
+              category: categoryParam,
+              dbStatus: dbStatusParam,
+              occurredAt: occurredAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -16956,4 +17035,31 @@ class IntelligenceCacheEntryEntity_ {
   /// see [IntelligenceCacheEntryEntity.checksum]
   static final checksum = obx.QueryStringProperty<IntelligenceCacheEntryEntity>(
       _entities[130].properties[6]);
+}
+
+/// [NotificationConversionEventEntity] entity fields to define ObjectBox queries.
+class NotificationConversionEventEntity_ {
+  /// see [NotificationConversionEventEntity.id]
+  static final id = obx.QueryIntegerProperty<NotificationConversionEventEntity>(
+      _entities[131].properties[0]);
+
+  /// see [NotificationConversionEventEntity.alertId]
+  static final alertId =
+      obx.QueryIntegerProperty<NotificationConversionEventEntity>(
+          _entities[131].properties[1]);
+
+  /// see [NotificationConversionEventEntity.category]
+  static final category =
+      obx.QueryStringProperty<NotificationConversionEventEntity>(
+          _entities[131].properties[2]);
+
+  /// see [NotificationConversionEventEntity.dbStatus]
+  static final dbStatus =
+      obx.QueryIntegerProperty<NotificationConversionEventEntity>(
+          _entities[131].properties[3]);
+
+  /// see [NotificationConversionEventEntity.occurredAt]
+  static final occurredAt =
+      obx.QueryDateProperty<NotificationConversionEventEntity>(
+          _entities[131].properties[4]);
 }
