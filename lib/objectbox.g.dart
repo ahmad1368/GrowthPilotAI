@@ -22,6 +22,7 @@ import 'core/data/entities/ad_campaign_constraint_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/ad_payment_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
+import 'core/data/entities/ai_response_feedback_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/anonymized_listing_entity.dart';
 import 'core/data/entities/asset_bid_entity.dart';
@@ -6028,6 +6029,60 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(136, 4633797107663785061),
+      name: 'AiResponseFeedbackEntity',
+      lastPropertyId: const obx_int.IdUid(9, 8013481296292909799),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1529079481171644155),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5986840522003311411),
+            name: 'messageId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 116705546607851102),
+            name: 'isHelpful',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5363474384436278897),
+            name: 'dbReason',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6934585059578896359),
+            name: 'queryType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1090886280366222537),
+            name: 'responseLength',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 288034135025892905),
+            name: 'inferenceTimeMs',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 627087209822808259),
+            name: 'isOffline',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 8013481296292909799),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6066,7 +6121,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(135, 309508216665606451),
+      lastEntityId: const obx_int.IdUid(136, 4633797107663785061),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13037,6 +13092,65 @@ obx_int.ModelDefinition getObjectBoxModel() {
               lastClickedAt: lastClickedAtParam);
 
           return object;
+        }),
+    AiResponseFeedbackEntity: obx_int.EntityDefinition<
+            AiResponseFeedbackEntity>(
+        model: _entities[134],
+        toOneRelations: (AiResponseFeedbackEntity object) => [],
+        toManyRelations: (AiResponseFeedbackEntity object) => {},
+        getId: (AiResponseFeedbackEntity object) => object.id,
+        setId: (AiResponseFeedbackEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AiResponseFeedbackEntity object, fb.Builder fbb) {
+          final messageIdOffset = fbb.writeString(object.messageId);
+          final queryTypeOffset = fbb.writeString(object.queryType);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, messageIdOffset);
+          fbb.addBool(2, object.isHelpful);
+          fbb.addInt64(3, object.dbReason);
+          fbb.addOffset(4, queryTypeOffset);
+          fbb.addInt64(5, object.responseLength);
+          fbb.addInt64(6, object.inferenceTimeMs);
+          fbb.addBool(7, object.isOffline);
+          fbb.addInt64(8, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final messageIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final isHelpfulParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false);
+          final dbReasonParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final queryTypeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final responseLengthParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final inferenceTimeMsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final isOfflineParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 18, false);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = AiResponseFeedbackEntity(
+              id: idParam,
+              messageId: messageIdParam,
+              isHelpful: isHelpfulParam,
+              dbReason: dbReasonParam,
+              queryType: queryTypeParam,
+              responseLength: responseLengthParam,
+              inferenceTimeMs: inferenceTimeMsParam,
+              isOffline: isOfflineParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -17254,4 +17368,45 @@ class PromptClickEntity_ {
   /// see [PromptClickEntity.lastClickedAt]
   static final lastClickedAt =
       obx.QueryDateProperty<PromptClickEntity>(_entities[133].properties[3]);
+}
+
+/// [AiResponseFeedbackEntity] entity fields to define ObjectBox queries.
+class AiResponseFeedbackEntity_ {
+  /// see [AiResponseFeedbackEntity.id]
+  static final id = obx.QueryIntegerProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[0]);
+
+  /// see [AiResponseFeedbackEntity.messageId]
+  static final messageId = obx.QueryStringProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[1]);
+
+  /// see [AiResponseFeedbackEntity.isHelpful]
+  static final isHelpful = obx.QueryBooleanProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[2]);
+
+  /// see [AiResponseFeedbackEntity.dbReason]
+  static final dbReason = obx.QueryIntegerProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[3]);
+
+  /// see [AiResponseFeedbackEntity.queryType]
+  static final queryType = obx.QueryStringProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[4]);
+
+  /// see [AiResponseFeedbackEntity.responseLength]
+  static final responseLength =
+      obx.QueryIntegerProperty<AiResponseFeedbackEntity>(
+          _entities[134].properties[5]);
+
+  /// see [AiResponseFeedbackEntity.inferenceTimeMs]
+  static final inferenceTimeMs =
+      obx.QueryIntegerProperty<AiResponseFeedbackEntity>(
+          _entities[134].properties[6]);
+
+  /// see [AiResponseFeedbackEntity.isOffline]
+  static final isOffline = obx.QueryBooleanProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[7]);
+
+  /// see [AiResponseFeedbackEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<AiResponseFeedbackEntity>(
+      _entities[134].properties[8]);
 }

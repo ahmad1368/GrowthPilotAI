@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_stub_assistant_reply.dart';
 import 'package:growth_pilot_ai/business/should_clear_chat_session.dart';
+import 'package:growth_pilot_ai/controllers/chat_feedback_recorder.dart';
 import 'package:growth_pilot_ai/controllers/chat_reply_streamer.dart';
 import 'package:growth_pilot_ai/controllers/quick_prompts_provider.dart';
+import 'package:growth_pilot_ai/core/enum/feedback_reason.dart';
 import 'package:growth_pilot_ai/core/models/chat_message.dart';
 
-/// Floating Financial Assistant chat state (Issue #200/#201) — streams
-/// a stub reply word-by-word since no real inference exists yet.
+/// Floating Financial Assistant chat state (Issues #200/#201/#209).
 class AiChatController extends GetxController {
   final isOpen = false.obs;
   final isMinimized = false.obs;
@@ -24,18 +25,18 @@ class AiChatController extends GetxController {
   }
 
   void minimize() => isMinimized.value = true;
-
   void close() => isOpen.value = false;
 
   void checkSessionExpiry() {
     if (ShouldClearChatSession.call(_lastActivityAt, DateTime.now())) messages.clear();
   }
 
+  void submitFeedback(String messageId, bool isHelpful, {FeedbackReason? reason}) =>
+      ChatFeedbackRecorder.call(messages, messageId, isHelpful, reason: reason);
   Future<void> tapQuickPrompt(String prompt) async {
     prompts.recordClick(prompt);
     await sendMessage(prompt);
   }
-
   Future<void> sendMessage(String text) async {
     if (text.trim().isEmpty) return;
     _lastActivityAt = DateTime.now();
