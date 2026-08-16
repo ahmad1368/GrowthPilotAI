@@ -14,6 +14,12 @@ class ObjectBox {
 
   static Future<ObjectBox> create() async {
     try {
+      // Audit note (Issue #202): this is Documents, not Application
+      // Support — same OS-encrypted sandbox on Android, but included in
+      // iOS device backups by default. Not changed here: this is the one
+      // store for every entity in the app, and switching paths would
+      // orphan existing users' data with no migration. See
+      // docs/compliance/zero-cloud-ai-audit.md, Finding 2.
       final docsDir = await getApplicationDocumentsDirectory();
       final storePath = p.join(docsDir.path, "obx-growth-pilot-db");
 
