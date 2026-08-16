@@ -142,6 +142,15 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () => Get.toNamed('/academy'),
               ),
 
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.psychology_outlined,
+                title: 'AI Engine',
+                subtitle: 'On-device AI model — download, pause, resume',
+                onTap: () => Get.toNamed('/ai-engine'),
+              ),
+
               const SizedBox(height: 32),
 
               // Accounting & Banking integrations dashboard (Issue #61)
