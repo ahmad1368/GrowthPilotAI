@@ -18,6 +18,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'core/data/entities/abuse_report_entity.dart';
 import 'core/data/entities/account_suspension_entity.dart';
 import 'core/data/entities/accounting_sync_status_entity.dart';
+import 'core/data/entities/action_impact_item_entity.dart';
 import 'core/data/entities/ad_campaign_constraint_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/ad_payment_entity.dart';
@@ -6243,6 +6244,50 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(140, 286111908199508998),
+      name: 'ActionImpactItemEntity',
+      lastPropertyId: const obx_int.IdUid(7, 5718862255793014066),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4408805699996719138),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 335134642065315610),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7953031225623475677),
+            name: 'estimatedProfit',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3264328173705945662),
+            name: 'dailyOpportunityCost',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8957907846174314577),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3799328714958265732),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5718862255793014066),
+            name: 'completedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6281,7 +6326,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(139, 2245146364518833960),
+      lastEntityId: const obx_int.IdUid(140, 286111908199508998),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13491,7 +13536,59 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   createdAt: createdAtParam);
 
               return object;
-            })
+            }),
+    ActionImpactItemEntity: obx_int.EntityDefinition<ActionImpactItemEntity>(
+        model: _entities[138],
+        toOneRelations: (ActionImpactItemEntity object) => [],
+        toManyRelations: (ActionImpactItemEntity object) => {},
+        getId: (ActionImpactItemEntity object) => object.id,
+        setId: (ActionImpactItemEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ActionImpactItemEntity object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, titleOffset);
+          fbb.addFloat64(2, object.estimatedProfit);
+          fbb.addFloat64(3, object.dailyOpportunityCost);
+          fbb.addInt64(4, object.dbStatus);
+          fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(6, object.completedAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final completedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final estimatedProfitParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final dailyOpportunityCostParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final completedAtParam = completedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(completedAtValue);
+          final object = ActionImpactItemEntity(
+              id: idParam,
+              title: titleParam,
+              estimatedProfit: estimatedProfitParam,
+              dailyOpportunityCost: dailyOpportunityCostParam,
+              dbStatus: dbStatusParam,
+              createdAt: createdAtParam,
+              completedAt: completedAtParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -17872,4 +17969,37 @@ class FeatureImportanceReportEntity_ {
   /// see [FeatureImportanceReportEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<FeatureImportanceReportEntity>(
       _entities[137].properties[7]);
+}
+
+/// [ActionImpactItemEntity] entity fields to define ObjectBox queries.
+class ActionImpactItemEntity_ {
+  /// see [ActionImpactItemEntity.id]
+  static final id = obx.QueryIntegerProperty<ActionImpactItemEntity>(
+      _entities[138].properties[0]);
+
+  /// see [ActionImpactItemEntity.title]
+  static final title = obx.QueryStringProperty<ActionImpactItemEntity>(
+      _entities[138].properties[1]);
+
+  /// see [ActionImpactItemEntity.estimatedProfit]
+  static final estimatedProfit =
+      obx.QueryDoubleProperty<ActionImpactItemEntity>(
+          _entities[138].properties[2]);
+
+  /// see [ActionImpactItemEntity.dailyOpportunityCost]
+  static final dailyOpportunityCost =
+      obx.QueryDoubleProperty<ActionImpactItemEntity>(
+          _entities[138].properties[3]);
+
+  /// see [ActionImpactItemEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<ActionImpactItemEntity>(
+      _entities[138].properties[4]);
+
+  /// see [ActionImpactItemEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<ActionImpactItemEntity>(
+      _entities[138].properties[5]);
+
+  /// see [ActionImpactItemEntity.completedAt]
+  static final completedAt = obx.QueryDateProperty<ActionImpactItemEntity>(
+      _entities[138].properties[6]);
 }

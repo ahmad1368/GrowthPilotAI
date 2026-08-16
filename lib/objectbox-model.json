@@ -6222,9 +6222,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "140:286111908199508998",
+      "lastPropertyId": "7:5718862255793014066",
+      "name": "ActionImpactItemEntity",
+      "properties": [
+        {
+          "id": "1:4408805699996719138",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:335134642065315610",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:7953031225623475677",
+          "name": "estimatedProfit",
+          "type": 8
+        },
+        {
+          "id": "4:3264328173705945662",
+          "name": "dailyOpportunityCost",
+          "type": 8
+        },
+        {
+          "id": "5:8957907846174314577",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "6:3799328714958265732",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "7:5718862255793014066",
+          "name": "completedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "139:2245146364518833960",
+  "lastEntityId": "140:286111908199508998",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
