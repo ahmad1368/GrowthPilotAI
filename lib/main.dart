@@ -32,6 +32,7 @@ import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard
 import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_screen.dart';
 import 'package:growth_pilot_ai/features/transactions/screens/duplicate_matches_screen.dart';
 import 'package:growth_pilot_ai/features/inbox/screens/inbox_screen.dart';
+import 'package:growth_pilot_ai/features/academy/screens/academy_screen.dart';
 import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
@@ -108,6 +109,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/settings',
               page: () => const SettingsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/academy',
+              page: () => const AcademyScreen(),
               middlewares: [ModuleAccessMiddleware()],
             ),
             GetPage(

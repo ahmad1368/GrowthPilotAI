@@ -131,6 +131,19 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
+              // Business Academy video hub (Issue #163)
+              _buildSectionHeader("Learning"),
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.play_circle_outline_rounded,
+                title: 'Business Academy',
+                subtitle: 'Tutorials, marketplace guides, and legal videos',
+                onTap: () => Get.toNamed('/academy'),
+              ),
+
+              const SizedBox(height: 32),
+
               // Accounting & Banking integrations dashboard (Issue #61)
               _buildSectionHeader("Integrations"),
               const SizedBox(height: 12),
