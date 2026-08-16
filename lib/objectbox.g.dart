@@ -67,6 +67,7 @@ import 'core/data/entities/exchange_rate_cache_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/fee_waiver_record_entity.dart';
+import 'core/data/entities/forecast_accuracy_report_entity.dart';
 import 'core/data/entities/geofence_zone_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/group_purchase_contribution_entity.dart';
@@ -6143,6 +6144,55 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(138, 876230261709515758),
+      name: 'ForecastAccuracyReportEntity',
+      lastPropertyId: const obx_int.IdUid(8, 1124190010493841320),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5255681982664547791),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 64137932925084820),
+            name: 'mape',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8276783782666145836),
+            name: 'isCriticalError',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8237576707727622154),
+            name: 'isOutlier',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4715485374564497553),
+            name: 'industryType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6935663374458449538),
+            name: 'region',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2617397822545816870),
+            name: 'dataVolume',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1124190010493841320),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6181,7 +6231,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(137, 6218313666183837056),
+      lastEntityId: const obx_int.IdUid(138, 876230261709515758),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13278,7 +13328,63 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
-        })
+        }),
+    ForecastAccuracyReportEntity:
+        obx_int.EntityDefinition<ForecastAccuracyReportEntity>(
+            model: _entities[136],
+            toOneRelations: (ForecastAccuracyReportEntity object) => [],
+            toManyRelations: (ForecastAccuracyReportEntity object) => {},
+            getId: (ForecastAccuracyReportEntity object) => object.id,
+            setId: (ForecastAccuracyReportEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ForecastAccuracyReportEntity object, fb.Builder fbb) {
+              final industryTypeOffset = fbb.writeString(object.industryType);
+              final regionOffset = fbb.writeString(object.region);
+              fbb.startTable(9);
+              fbb.addInt64(0, object.id);
+              fbb.addFloat64(1, object.mape);
+              fbb.addBool(2, object.isCriticalError);
+              fbb.addBool(3, object.isOutlier);
+              fbb.addOffset(4, industryTypeOffset);
+              fbb.addOffset(5, regionOffset);
+              fbb.addInt64(6, object.dataVolume);
+              fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final mapeParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final isCriticalErrorParam =
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false);
+              final isOutlierParam = const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false);
+              final industryTypeParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+              final regionParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, '');
+              final dataVolumeParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+              final object = ForecastAccuracyReportEntity(
+                  id: idParam,
+                  mape: mapeParam,
+                  isCriticalError: isCriticalErrorParam,
+                  isOutlier: isOutlierParam,
+                  industryType: industryTypeParam,
+                  region: regionParam,
+                  dataVolume: dataVolumeParam,
+                  createdAt: createdAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -17579,4 +17685,43 @@ class AiMonitorEventEntity_ {
   /// see [AiMonitorEventEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<AiMonitorEventEntity>(_entities[135].properties[9]);
+}
+
+/// [ForecastAccuracyReportEntity] entity fields to define ObjectBox queries.
+class ForecastAccuracyReportEntity_ {
+  /// see [ForecastAccuracyReportEntity.id]
+  static final id = obx.QueryIntegerProperty<ForecastAccuracyReportEntity>(
+      _entities[136].properties[0]);
+
+  /// see [ForecastAccuracyReportEntity.mape]
+  static final mape = obx.QueryDoubleProperty<ForecastAccuracyReportEntity>(
+      _entities[136].properties[1]);
+
+  /// see [ForecastAccuracyReportEntity.isCriticalError]
+  static final isCriticalError =
+      obx.QueryBooleanProperty<ForecastAccuracyReportEntity>(
+          _entities[136].properties[2]);
+
+  /// see [ForecastAccuracyReportEntity.isOutlier]
+  static final isOutlier =
+      obx.QueryBooleanProperty<ForecastAccuracyReportEntity>(
+          _entities[136].properties[3]);
+
+  /// see [ForecastAccuracyReportEntity.industryType]
+  static final industryType =
+      obx.QueryStringProperty<ForecastAccuracyReportEntity>(
+          _entities[136].properties[4]);
+
+  /// see [ForecastAccuracyReportEntity.region]
+  static final region = obx.QueryStringProperty<ForecastAccuracyReportEntity>(
+      _entities[136].properties[5]);
+
+  /// see [ForecastAccuracyReportEntity.dataVolume]
+  static final dataVolume =
+      obx.QueryIntegerProperty<ForecastAccuracyReportEntity>(
+          _entities[136].properties[6]);
+
+  /// see [ForecastAccuracyReportEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<ForecastAccuracyReportEntity>(
+      _entities[136].properties[7]);
 }
