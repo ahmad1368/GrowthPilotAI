@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/models/chart_data_point.dart';
 import 'package:growth_pilot_ai/features/insights/widgets/radar_chart_painter.dart';
+import 'package:growth_pilot_ai/widgets/info_tooltip.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// "Market Comparison" radar chart (Issue #99) — a flat card, not the
@@ -20,8 +21,12 @@ class RadarComparisonChart extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(color: colors.card, borderRadius: BorderRadius.circular(12)),
       child: Column(children: [
-        Text('Market Comparison',
-            style: TextStyle(color: colors.foreground, fontWeight: FontWeight.w600)),
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          Text('Market Comparison',
+              style: TextStyle(color: colors.foreground, fontWeight: FontWeight.w600)),
+          const SizedBox(width: 4),
+          const InfoTooltip(termKey: 'market_comparison'),
+        ]),
         const SizedBox(height: 12),
         if (axes.isEmpty)
           Text('Not enough data to compare this listing yet.',
