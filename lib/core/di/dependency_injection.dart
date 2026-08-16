@@ -14,6 +14,8 @@ import 'package:growth_pilot_ai/core/data/entities/prompt_click_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/prompt_click_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/ai_response_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/ai_response_feedback_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/ai_monitor_event_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/ai_monitor_event_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -155,6 +157,11 @@ class DependencyInjection {
       _locator.registerLazySingleton<AiResponseFeedbackRepository>(
         () => AiResponseFeedbackRepository(
             Get.find<ObjectBox>().store.box<AiResponseFeedbackEntity>()),
+      );
+
+      // ۸.۱.۵ رصد کارایی و توهم مدل هوش مصنوعی محلی (Issue #210)
+      _locator.registerLazySingleton<AiMonitorEventRepository>(
+        () => AiMonitorEventRepository(Get.find<ObjectBox>().store.box<AiMonitorEventEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
