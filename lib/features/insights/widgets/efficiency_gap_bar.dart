@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/enum/efficiency_gap_status.dart';
 import 'package:growth_pilot_ai/features/insights/widgets/efficiency_status_pill.dart';
+import 'package:growth_pilot_ai/widgets/info_tooltip.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// "Efficiency Gap" visualizer (Issue #100) — a flat progress bar, not
@@ -21,7 +22,11 @@ class EfficiencyGapBar extends StatelessWidget {
       decoration: BoxDecoration(color: colors.card, borderRadius: BorderRadius.circular(12)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('Efficiency Score', style: TextStyle(color: colors.foreground, fontSize: 13)),
+          Row(mainAxisSize: MainAxisSize.min, children: [
+            Text('Efficiency Score', style: TextStyle(color: colors.foreground, fontSize: 13)),
+            const SizedBox(width: 4),
+            const InfoTooltip(termKey: 'efficiency_score'),
+          ]),
           EfficiencyStatusPill(status: status),
         ]),
         const SizedBox(height: 8),
