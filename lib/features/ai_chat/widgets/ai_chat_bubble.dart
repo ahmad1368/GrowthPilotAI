@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/models/chat_message.dart';
 import 'package:growth_pilot_ai/features/ai_chat/widgets/chat_message_text.dart';
+import 'package:growth_pilot_ai/features/ai_chat/widgets/verification_badge.dart';
 
 /// One chat bubble (Issue #200) — flat surface, not the issue's literal
 /// Glassmorphism ask (this app's architecture forbids BackdropFilter).
@@ -22,7 +23,10 @@ class AiChatBubble extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         constraints: const BoxConstraints(maxWidth: 280),
         decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(12)),
-        child: ChatMessageText(text: message.text, color: fg),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+          ChatMessageText(text: message.text, color: fg),
+          if (!isUser) VerificationBadge(verification: message.verification),
+        ]),
       ),
     );
   }
