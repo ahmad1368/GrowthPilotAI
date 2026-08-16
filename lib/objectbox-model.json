@@ -6173,9 +6173,58 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "139:2245146364518833960",
+      "lastPropertyId": "8:9186727188233720891",
+      "name": "FeatureImportanceReportEntity",
+      "properties": [
+        {
+          "id": "1:1036568781282765873",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6306538303692246816",
+          "name": "fixedCostsWeight",
+          "type": 8
+        },
+        {
+          "id": "3:4755512529589651161",
+          "name": "variableCostsWeight",
+          "type": 8
+        },
+        {
+          "id": "4:3417637868257321687",
+          "name": "laborCostsWeight",
+          "type": 8
+        },
+        {
+          "id": "5:504983663226509470",
+          "name": "externalFactorsWeight",
+          "type": 8
+        },
+        {
+          "id": "6:1625953127989690994",
+          "name": "topFeature",
+          "type": 9
+        },
+        {
+          "id": "7:5106546703764467578",
+          "name": "industryType",
+          "type": 9
+        },
+        {
+          "id": "8:9186727188233720891",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "138:876230261709515758",
+  "lastEntityId": "139:2245146364518833960",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

@@ -18,6 +18,8 @@ import 'package:growth_pilot_ai/core/data/entities/ai_monitor_event_entity.dart'
 import 'package:growth_pilot_ai/core/data/repositories/ai_monitor_event_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/forecast_accuracy_report_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/forecast_accuracy_report_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/feature_importance_report_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/feature_importance_report_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -170,6 +172,12 @@ class DependencyInjection {
       _locator.registerLazySingleton<ForecastAccuracyReportRepository>(
         () => ForecastAccuracyReportRepository(
             Get.find<ObjectBox>().store.box<ForecastAccuracyReportEntity>()),
+      );
+
+      // ۸.۱.۷ تحلیل اهمیت ویژگی‌ها (وزن دسته‌های هزینه) در مدل پیش‌بینی (Issue #208)
+      _locator.registerLazySingleton<FeatureImportanceReportRepository>(
+        () => FeatureImportanceReportRepository(
+            Get.find<ObjectBox>().store.box<FeatureImportanceReportEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)

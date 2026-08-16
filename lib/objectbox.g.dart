@@ -65,6 +65,7 @@ import 'core/data/entities/epsilon_consumption_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
 import 'core/data/entities/exchange_rate_cache_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
+import 'core/data/entities/feature_importance_report_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/fee_waiver_record_entity.dart';
 import 'core/data/entities/forecast_accuracy_report_entity.dart';
@@ -6193,6 +6194,55 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(139, 2245146364518833960),
+      name: 'FeatureImportanceReportEntity',
+      lastPropertyId: const obx_int.IdUid(8, 9186727188233720891),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1036568781282765873),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6306538303692246816),
+            name: 'fixedCostsWeight',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4755512529589651161),
+            name: 'variableCostsWeight',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3417637868257321687),
+            name: 'laborCostsWeight',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 504983663226509470),
+            name: 'externalFactorsWeight',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 1625953127989690994),
+            name: 'topFeature',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5106546703764467578),
+            name: 'industryType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 9186727188233720891),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6231,7 +6281,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(138, 876230261709515758),
+      lastEntityId: const obx_int.IdUid(139, 2245146364518833960),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13384,6 +13434,63 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   createdAt: createdAtParam);
 
               return object;
+            }),
+    FeatureImportanceReportEntity:
+        obx_int.EntityDefinition<FeatureImportanceReportEntity>(
+            model: _entities[137],
+            toOneRelations: (FeatureImportanceReportEntity object) => [],
+            toManyRelations: (FeatureImportanceReportEntity object) => {},
+            getId: (FeatureImportanceReportEntity object) => object.id,
+            setId: (FeatureImportanceReportEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (FeatureImportanceReportEntity object, fb.Builder fbb) {
+              final topFeatureOffset = fbb.writeString(object.topFeature);
+              final industryTypeOffset = fbb.writeString(object.industryType);
+              fbb.startTable(9);
+              fbb.addInt64(0, object.id);
+              fbb.addFloat64(1, object.fixedCostsWeight);
+              fbb.addFloat64(2, object.variableCostsWeight);
+              fbb.addFloat64(3, object.laborCostsWeight);
+              fbb.addFloat64(4, object.externalFactorsWeight);
+              fbb.addOffset(5, topFeatureOffset);
+              fbb.addOffset(6, industryTypeOffset);
+              fbb.addInt64(7, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final fixedCostsWeightParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final variableCostsWeightParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final laborCostsWeightParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final externalFactorsWeightParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final topFeatureParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 14, '');
+              final industryTypeParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 16, '');
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0));
+              final object = FeatureImportanceReportEntity(
+                  id: idParam,
+                  fixedCostsWeight: fixedCostsWeightParam,
+                  variableCostsWeight: variableCostsWeightParam,
+                  laborCostsWeight: laborCostsWeightParam,
+                  externalFactorsWeight: externalFactorsWeightParam,
+                  topFeature: topFeatureParam,
+                  industryType: industryTypeParam,
+                  createdAt: createdAtParam);
+
+              return object;
             })
   };
 
@@ -17724,4 +17831,45 @@ class ForecastAccuracyReportEntity_ {
   /// see [ForecastAccuracyReportEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<ForecastAccuracyReportEntity>(
       _entities[136].properties[7]);
+}
+
+/// [FeatureImportanceReportEntity] entity fields to define ObjectBox queries.
+class FeatureImportanceReportEntity_ {
+  /// see [FeatureImportanceReportEntity.id]
+  static final id = obx.QueryIntegerProperty<FeatureImportanceReportEntity>(
+      _entities[137].properties[0]);
+
+  /// see [FeatureImportanceReportEntity.fixedCostsWeight]
+  static final fixedCostsWeight =
+      obx.QueryDoubleProperty<FeatureImportanceReportEntity>(
+          _entities[137].properties[1]);
+
+  /// see [FeatureImportanceReportEntity.variableCostsWeight]
+  static final variableCostsWeight =
+      obx.QueryDoubleProperty<FeatureImportanceReportEntity>(
+          _entities[137].properties[2]);
+
+  /// see [FeatureImportanceReportEntity.laborCostsWeight]
+  static final laborCostsWeight =
+      obx.QueryDoubleProperty<FeatureImportanceReportEntity>(
+          _entities[137].properties[3]);
+
+  /// see [FeatureImportanceReportEntity.externalFactorsWeight]
+  static final externalFactorsWeight =
+      obx.QueryDoubleProperty<FeatureImportanceReportEntity>(
+          _entities[137].properties[4]);
+
+  /// see [FeatureImportanceReportEntity.topFeature]
+  static final topFeature =
+      obx.QueryStringProperty<FeatureImportanceReportEntity>(
+          _entities[137].properties[5]);
+
+  /// see [FeatureImportanceReportEntity.industryType]
+  static final industryType =
+      obx.QueryStringProperty<FeatureImportanceReportEntity>(
+          _entities[137].properties[6]);
+
+  /// see [FeatureImportanceReportEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<FeatureImportanceReportEntity>(
+      _entities[137].properties[7]);
 }
