@@ -5946,9 +5946,43 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "134:4226878167845298926",
+      "lastPropertyId": "5:6592910560444280791",
+      "name": "EmbeddingEntity",
+      "properties": [
+        {
+          "id": "1:9110132675095210717",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8221532684238557934",
+          "name": "sourceRefType",
+          "type": 9
+        },
+        {
+          "id": "3:4862552408848648488",
+          "name": "sourceRefId",
+          "type": 9
+        },
+        {
+          "id": "4:6103587437663116542",
+          "name": "sourceText",
+          "type": 9
+        },
+        {
+          "id": "5:6592910560444280791",
+          "name": "embedding",
+          "type": 28
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "133:5321257094098687941",
+  "lastEntityId": "134:4226878167845298926",
   "lastIndexId": "148:8706228721589986401",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

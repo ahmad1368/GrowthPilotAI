@@ -9,6 +9,10 @@ import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dar
 import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/notification_conversion_event_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/notification_conversion_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/embedding_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
+import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
+import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
 import 'package:growth_pilot_ai/core/data/entities/intelligence_cache_entry_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/intelligence_cache_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
@@ -128,6 +132,14 @@ class DependencyInjection {
       // ۸.۱.۱ اکسپورت فاکتورهای نهایی‌شده و وضعیت پرداخت به QuickBooks/Xero (Issue #149)
       _locator.registerLazySingleton<SyncFinalizedInvoicesUseCase>(
         () => SyncFinalizedInvoicesUseCase(_locator<AccountingExportService>()),
+      );
+
+      // ۸.۱.۲ دیتابیس محلی بردار برای RAG (Issue #198؛ سرویس امبدینگ فعلاً Mock)
+      _locator.registerLazySingleton<EmbeddingRepository>(
+        () => EmbeddingRepository(Get.find<ObjectBox>().store.box<EmbeddingEntity>()),
+      );
+      _locator.registerLazySingleton<EmbeddingService>(
+        () => MockEmbeddingService(),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)

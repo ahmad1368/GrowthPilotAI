@@ -57,6 +57,7 @@ import 'core/data/entities/delivery_handshake_entity.dart';
 import 'core/data/entities/delivery_location_history_entity.dart';
 import 'core/data/entities/discount_campaign_entity.dart';
 import 'core/data/entities/dispute_evidence_entity.dart';
+import 'core/data/entities/embedding_entity.dart';
 import 'core/data/entities/emergency_broadcast_entity.dart';
 import 'core/data/entities/epsilon_consumption_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
@@ -5962,6 +5963,40 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(148, 8706228721589986401))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(134, 4226878167845298926),
+      name: 'EmbeddingEntity',
+      lastPropertyId: const obx_int.IdUid(5, 6592910560444280791),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 9110132675095210717),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8221532684238557934),
+            name: 'sourceRefType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4862552408848648488),
+            name: 'sourceRefId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6103587437663116542),
+            name: 'sourceText',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6592910560444280791),
+            name: 'embedding',
+            type: 28,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6000,7 +6035,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(133, 5321257094098687941),
+      lastEntityId: const obx_int.IdUid(134, 4226878167845298926),
       lastIndexId: const obx_int.IdUid(148, 8706228721589986401),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -12887,6 +12922,53 @@ obx_int.ModelDefinition getObjectBoxModel() {
               occurredAt: occurredAtParam);
 
           return object;
+        }),
+    EmbeddingEntity: obx_int.EntityDefinition<EmbeddingEntity>(
+        model: _entities[132],
+        toOneRelations: (EmbeddingEntity object) => [],
+        toManyRelations: (EmbeddingEntity object) => {},
+        getId: (EmbeddingEntity object) => object.id,
+        setId: (EmbeddingEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (EmbeddingEntity object, fb.Builder fbb) {
+          final sourceRefTypeOffset = fbb.writeString(object.sourceRefType);
+          final sourceRefIdOffset = fbb.writeString(object.sourceRefId);
+          final sourceTextOffset = fbb.writeString(object.sourceText);
+          final embeddingOffset = fbb.writeListFloat32(object.embedding);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, sourceRefTypeOffset);
+          fbb.addOffset(2, sourceRefIdOffset);
+          fbb.addOffset(3, sourceTextOffset);
+          fbb.addOffset(4, embeddingOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final sourceRefTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final sourceRefIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final sourceTextParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final embeddingParam =
+              const fb.ListReader<double>(fb.Float32Reader(), lazy: false)
+                  .vTableGet(buffer, rootOffset, 12, []);
+          final object = EmbeddingEntity(
+              id: idParam,
+              sourceRefType: sourceRefTypeParam,
+              sourceRefId: sourceRefIdParam,
+              sourceText: sourceTextParam,
+              embedding: embeddingParam);
+
+          return object;
         })
   };
 
@@ -17062,4 +17144,27 @@ class NotificationConversionEventEntity_ {
   static final occurredAt =
       obx.QueryDateProperty<NotificationConversionEventEntity>(
           _entities[131].properties[4]);
+}
+
+/// [EmbeddingEntity] entity fields to define ObjectBox queries.
+class EmbeddingEntity_ {
+  /// see [EmbeddingEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<EmbeddingEntity>(_entities[132].properties[0]);
+
+  /// see [EmbeddingEntity.sourceRefType]
+  static final sourceRefType =
+      obx.QueryStringProperty<EmbeddingEntity>(_entities[132].properties[1]);
+
+  /// see [EmbeddingEntity.sourceRefId]
+  static final sourceRefId =
+      obx.QueryStringProperty<EmbeddingEntity>(_entities[132].properties[2]);
+
+  /// see [EmbeddingEntity.sourceText]
+  static final sourceText =
+      obx.QueryStringProperty<EmbeddingEntity>(_entities[132].properties[3]);
+
+  /// see [EmbeddingEntity.embedding]
+  static final embedding = obx.QueryDoubleVectorProperty<EmbeddingEntity>(
+      _entities[132].properties[4]);
 }
