@@ -6124,9 +6124,58 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "138:876230261709515758",
+      "lastPropertyId": "8:1124190010493841320",
+      "name": "ForecastAccuracyReportEntity",
+      "properties": [
+        {
+          "id": "1:5255681982664547791",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:64137932925084820",
+          "name": "mape",
+          "type": 8
+        },
+        {
+          "id": "3:8276783782666145836",
+          "name": "isCriticalError",
+          "type": 1
+        },
+        {
+          "id": "4:8237576707727622154",
+          "name": "isOutlier",
+          "type": 1
+        },
+        {
+          "id": "5:4715485374564497553",
+          "name": "industryType",
+          "type": 9
+        },
+        {
+          "id": "6:6935663374458449538",
+          "name": "region",
+          "type": 9
+        },
+        {
+          "id": "7:2617397822545816870",
+          "name": "dataVolume",
+          "type": 6
+        },
+        {
+          "id": "8:1124190010493841320",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "137:6218313666183837056",
+  "lastEntityId": "138:876230261709515758",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
