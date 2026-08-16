@@ -113,6 +113,7 @@ import 'core/data/entities/product_form_draft_entity.dart';
 import 'core/data/entities/product_listing_details_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
+import 'core/data/entities/prompt_click_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_feedback_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
@@ -5997,6 +5998,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(135, 309508216665606451),
+      name: 'PromptClickEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5785477847294955036),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5108988503791890279),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8933890159616070149),
+            name: 'promptText',
+            type: 9,
+            flags: 8,
+            indexId: const obx_int.IdUid(149, 2224088579099178225)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 189163294923690873),
+            name: 'clickCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5785477847294955036),
+            name: 'lastClickedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6035,8 +6066,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(134, 4226878167845298926),
-      lastIndexId: const obx_int.IdUid(148, 8706228721589986401),
+      lastEntityId: const obx_int.IdUid(135, 309508216665606451),
+      lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -12969,6 +13000,43 @@ obx_int.ModelDefinition getObjectBoxModel() {
               embedding: embeddingParam);
 
           return object;
+        }),
+    PromptClickEntity: obx_int.EntityDefinition<PromptClickEntity>(
+        model: _entities[133],
+        toOneRelations: (PromptClickEntity object) => [],
+        toManyRelations: (PromptClickEntity object) => {},
+        getId: (PromptClickEntity object) => object.id,
+        setId: (PromptClickEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PromptClickEntity object, fb.Builder fbb) {
+          final promptTextOffset = fbb.writeString(object.promptText);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, promptTextOffset);
+          fbb.addInt64(2, object.clickCount);
+          fbb.addInt64(3, object.lastClickedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final promptTextParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final clickCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final lastClickedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = PromptClickEntity(
+              id: idParam,
+              promptText: promptTextParam,
+              clickCount: clickCountParam,
+              lastClickedAt: lastClickedAtParam);
+
+          return object;
         })
   };
 
@@ -17167,4 +17235,23 @@ class EmbeddingEntity_ {
   /// see [EmbeddingEntity.embedding]
   static final embedding = obx.QueryDoubleVectorProperty<EmbeddingEntity>(
       _entities[132].properties[4]);
+}
+
+/// [PromptClickEntity] entity fields to define ObjectBox queries.
+class PromptClickEntity_ {
+  /// see [PromptClickEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<PromptClickEntity>(_entities[133].properties[0]);
+
+  /// see [PromptClickEntity.promptText]
+  static final promptText =
+      obx.QueryStringProperty<PromptClickEntity>(_entities[133].properties[1]);
+
+  /// see [PromptClickEntity.clickCount]
+  static final clickCount =
+      obx.QueryIntegerProperty<PromptClickEntity>(_entities[133].properties[2]);
+
+  /// see [PromptClickEntity.lastClickedAt]
+  static final lastClickedAt =
+      obx.QueryDateProperty<PromptClickEntity>(_entities[133].properties[3]);
 }

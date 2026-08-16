@@ -5980,10 +5980,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "135:309508216665606451",
+      "lastPropertyId": "4:5785477847294955036",
+      "name": "PromptClickEntity",
+      "properties": [
+        {
+          "id": "1:5108988503791890279",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8933890159616070149",
+          "name": "promptText",
+          "type": 9,
+          "flags": 8,
+          "indexId": "149:2224088579099178225"
+        },
+        {
+          "id": "3:189163294923690873",
+          "name": "clickCount",
+          "type": 6
+        },
+        {
+          "id": "4:5785477847294955036",
+          "name": "lastClickedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "134:4226878167845298926",
-  "lastIndexId": "148:8706228721589986401",
+  "lastEntityId": "135:309508216665606451",
+  "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

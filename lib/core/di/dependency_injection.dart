@@ -10,6 +10,8 @@ import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_reposi
 import 'package:growth_pilot_ai/core/data/entities/notification_conversion_event_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/notification_conversion_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/embedding_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/prompt_click_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/prompt_click_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -140,6 +142,11 @@ class DependencyInjection {
       );
       _locator.registerLazySingleton<EmbeddingService>(
         () => MockEmbeddingService(),
+      );
+
+      // ۸.۱.۳ ردیابی فراوانی کلیک روی پرامپت‌های پیشنهادی چت هوش مصنوعی (Issue #201)
+      _locator.registerLazySingleton<PromptClickRepository>(
+        () => PromptClickRepository(Get.find<ObjectBox>().store.box<PromptClickEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
