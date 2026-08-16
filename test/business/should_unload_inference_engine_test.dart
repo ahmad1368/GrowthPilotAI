@@ -22,5 +22,9 @@ void main() {
     test('false when the engine was never marked active', () {
       expect(ShouldUnloadInferenceEngine.call(null, DateTime.now()), isFalse);
     });
+
+    test('threshold stays at 2 minutes (Issue #197), not 5 (Issue #211\'s duplicate ask)', () {
+      expect(ShouldUnloadInferenceEngine.inactivityThreshold, const Duration(minutes: 2));
+    });
   });
 }
