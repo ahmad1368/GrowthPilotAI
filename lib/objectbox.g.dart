@@ -22,6 +22,7 @@ import 'core/data/entities/ad_campaign_constraint_entity.dart';
 import 'core/data/entities/ad_campaign_entity.dart';
 import 'core/data/entities/ad_payment_entity.dart';
 import 'core/data/entities/advertising_request_entity.dart';
+import 'core/data/entities/ai_monitor_event_entity.dart';
 import 'core/data/entities/ai_response_feedback_entity.dart';
 import 'core/data/entities/analytics_pricing_tier_entity.dart';
 import 'core/data/entities/anonymized_listing_entity.dart';
@@ -6083,6 +6084,65 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(137, 6218313666183837056),
+      name: 'AiMonitorEventEntity',
+      lastPropertyId: const obx_int.IdUid(10, 551502434345348560),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3288152375076585786),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4667125955050889012),
+            name: 'dbEventType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1748646371313739889),
+            name: 'latencyMs',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1406879150938384965),
+            name: 'isTimeout',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8116431138976364718),
+            name: 'deviceModel',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7487615267554508431),
+            name: 'errorType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 487338998277331777),
+            name: 'confidenceScore',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 2127373778575356723),
+            name: 'contextSize',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7489728268306033434),
+            name: 'availableRamMb',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 551502434345348560),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6121,7 +6181,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(136, 4633797107663785061),
+      lastEntityId: const obx_int.IdUid(137, 6218313666183837056),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13151,6 +13211,73 @@ obx_int.ModelDefinition getObjectBoxModel() {
               createdAt: createdAtParam);
 
           return object;
+        }),
+    AiMonitorEventEntity: obx_int.EntityDefinition<AiMonitorEventEntity>(
+        model: _entities[135],
+        toOneRelations: (AiMonitorEventEntity object) => [],
+        toManyRelations: (AiMonitorEventEntity object) => {},
+        getId: (AiMonitorEventEntity object) => object.id,
+        setId: (AiMonitorEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (AiMonitorEventEntity object, fb.Builder fbb) {
+          final deviceModelOffset = object.deviceModel == null
+              ? null
+              : fbb.writeString(object.deviceModel!);
+          final errorTypeOffset = object.errorType == null
+              ? null
+              : fbb.writeString(object.errorType!);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbEventType);
+          fbb.addInt64(2, object.latencyMs);
+          fbb.addBool(3, object.isTimeout);
+          fbb.addOffset(4, deviceModelOffset);
+          fbb.addOffset(5, errorTypeOffset);
+          fbb.addFloat64(6, object.confidenceScore);
+          fbb.addInt64(7, object.contextSize);
+          fbb.addInt64(8, object.availableRamMb);
+          fbb.addInt64(9, object.createdAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbEventTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final latencyMsParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final isTimeoutParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 10);
+          final deviceModelParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12);
+          final errorTypeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 14);
+          final confidenceScoreParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final contextSizeParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final availableRamMbParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 20);
+          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+          final object = AiMonitorEventEntity(
+              id: idParam,
+              dbEventType: dbEventTypeParam,
+              latencyMs: latencyMsParam,
+              isTimeout: isTimeoutParam,
+              deviceModel: deviceModelParam,
+              errorType: errorTypeParam,
+              confidenceScore: confidenceScoreParam,
+              contextSize: contextSizeParam,
+              availableRamMb: availableRamMbParam,
+              createdAt: createdAtParam);
+
+          return object;
         })
   };
 
@@ -17409,4 +17536,47 @@ class AiResponseFeedbackEntity_ {
   /// see [AiResponseFeedbackEntity.createdAt]
   static final createdAt = obx.QueryDateProperty<AiResponseFeedbackEntity>(
       _entities[134].properties[8]);
+}
+
+/// [AiMonitorEventEntity] entity fields to define ObjectBox queries.
+class AiMonitorEventEntity_ {
+  /// see [AiMonitorEventEntity.id]
+  static final id = obx.QueryIntegerProperty<AiMonitorEventEntity>(
+      _entities[135].properties[0]);
+
+  /// see [AiMonitorEventEntity.dbEventType]
+  static final dbEventType = obx.QueryIntegerProperty<AiMonitorEventEntity>(
+      _entities[135].properties[1]);
+
+  /// see [AiMonitorEventEntity.latencyMs]
+  static final latencyMs = obx.QueryIntegerProperty<AiMonitorEventEntity>(
+      _entities[135].properties[2]);
+
+  /// see [AiMonitorEventEntity.isTimeout]
+  static final isTimeout = obx.QueryBooleanProperty<AiMonitorEventEntity>(
+      _entities[135].properties[3]);
+
+  /// see [AiMonitorEventEntity.deviceModel]
+  static final deviceModel = obx.QueryStringProperty<AiMonitorEventEntity>(
+      _entities[135].properties[4]);
+
+  /// see [AiMonitorEventEntity.errorType]
+  static final errorType = obx.QueryStringProperty<AiMonitorEventEntity>(
+      _entities[135].properties[5]);
+
+  /// see [AiMonitorEventEntity.confidenceScore]
+  static final confidenceScore = obx.QueryDoubleProperty<AiMonitorEventEntity>(
+      _entities[135].properties[6]);
+
+  /// see [AiMonitorEventEntity.contextSize]
+  static final contextSize = obx.QueryIntegerProperty<AiMonitorEventEntity>(
+      _entities[135].properties[7]);
+
+  /// see [AiMonitorEventEntity.availableRamMb]
+  static final availableRamMb = obx.QueryIntegerProperty<AiMonitorEventEntity>(
+      _entities[135].properties[8]);
+
+  /// see [AiMonitorEventEntity.createdAt]
+  static final createdAt =
+      obx.QueryDateProperty<AiMonitorEventEntity>(_entities[135].properties[9]);
 }

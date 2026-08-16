@@ -6065,9 +6065,68 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "137:6218313666183837056",
+      "lastPropertyId": "10:551502434345348560",
+      "name": "AiMonitorEventEntity",
+      "properties": [
+        {
+          "id": "1:3288152375076585786",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4667125955050889012",
+          "name": "dbEventType",
+          "type": 6
+        },
+        {
+          "id": "3:1748646371313739889",
+          "name": "latencyMs",
+          "type": 6
+        },
+        {
+          "id": "4:1406879150938384965",
+          "name": "isTimeout",
+          "type": 1
+        },
+        {
+          "id": "5:8116431138976364718",
+          "name": "deviceModel",
+          "type": 9
+        },
+        {
+          "id": "6:7487615267554508431",
+          "name": "errorType",
+          "type": 9
+        },
+        {
+          "id": "7:487338998277331777",
+          "name": "confidenceScore",
+          "type": 8
+        },
+        {
+          "id": "8:2127373778575356723",
+          "name": "contextSize",
+          "type": 6
+        },
+        {
+          "id": "9:7489728268306033434",
+          "name": "availableRamMb",
+          "type": 6
+        },
+        {
+          "id": "10:551502434345348560",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "136:4633797107663785061",
+  "lastEntityId": "137:6218313666183837056",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
