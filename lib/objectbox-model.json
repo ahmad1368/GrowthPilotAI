@@ -6011,9 +6011,63 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "136:4633797107663785061",
+      "lastPropertyId": "9:8013481296292909799",
+      "name": "AiResponseFeedbackEntity",
+      "properties": [
+        {
+          "id": "1:1529079481171644155",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5986840522003311411",
+          "name": "messageId",
+          "type": 9
+        },
+        {
+          "id": "3:116705546607851102",
+          "name": "isHelpful",
+          "type": 1
+        },
+        {
+          "id": "4:5363474384436278897",
+          "name": "dbReason",
+          "type": 6
+        },
+        {
+          "id": "5:6934585059578896359",
+          "name": "queryType",
+          "type": 9
+        },
+        {
+          "id": "6:1090886280366222537",
+          "name": "responseLength",
+          "type": 6
+        },
+        {
+          "id": "7:288034135025892905",
+          "name": "inferenceTimeMs",
+          "type": 6
+        },
+        {
+          "id": "8:627087209822808259",
+          "name": "isOffline",
+          "type": 1
+        },
+        {
+          "id": "9:8013481296292909799",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "135:309508216665606451",
+  "lastEntityId": "136:4633797107663785061",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

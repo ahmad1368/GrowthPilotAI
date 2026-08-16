@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/models/chat_message.dart';
 import 'package:growth_pilot_ai/features/ai_chat/widgets/chat_message_text.dart';
+import 'package:growth_pilot_ai/features/ai_chat/widgets/feedback_buttons.dart';
 import 'package:growth_pilot_ai/features/ai_chat/widgets/verification_badge.dart';
 
 /// One chat bubble (Issue #200) — flat surface, not the issue's literal
@@ -25,7 +26,11 @@ class AiChatBubble extends StatelessWidget {
         decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(12)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
           ChatMessageText(text: message.text, color: fg),
-          if (!isUser) VerificationBadge(verification: message.verification),
+          if (!isUser)
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              VerificationBadge(verification: message.verification),
+              FeedbackButtons(message: message),
+            ]),
         ]),
       ),
     );
