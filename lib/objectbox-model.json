@@ -6416,10 +6416,51 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "146:2938026420744963229",
+      "lastPropertyId": "6:3389947845398243688",
+      "name": "SecurityAuditLogEntity",
+      "properties": [
+        {
+          "id": "1:8195942354418319147",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7972876021710297848",
+          "name": "dbActionType",
+          "type": 6
+        },
+        {
+          "id": "3:5212438929535124401",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "4:8314894987518240916",
+          "name": "occurredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "150:7397153665969592866"
+        },
+        {
+          "id": "5:4920870027283004431",
+          "name": "metadata",
+          "type": 9
+        },
+        {
+          "id": "6:3389947845398243688",
+          "name": "platform",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "145:1753778118128975474",
-  "lastIndexId": "149:2224088579099178225",
+  "lastEntityId": "146:2938026420744963229",
+  "lastIndexId": "150:7397153665969592866",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

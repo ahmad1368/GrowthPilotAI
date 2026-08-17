@@ -134,6 +134,7 @@ import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
 import 'core/data/entities/seasonal_catalog_item_entity.dart';
+import 'core/data/entities/security_audit_log_entity.dart';
 import 'core/data/entities/service_listing_details_entity.dart';
 import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
@@ -6443,6 +6444,46 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(146, 2938026420744963229),
+      name: 'SecurityAuditLogEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3389947845398243688),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8195942354418319147),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7972876021710297848),
+            name: 'dbActionType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5212438929535124401),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8314894987518240916),
+            name: 'occurredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(150, 7397153665969592866)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4920870027283004431),
+            name: 'metadata',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3389947845398243688),
+            name: 'platform',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6481,8 +6522,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(145, 1753778118128975474),
-      lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
+      lastEntityId: const obx_int.IdUid(146, 2938026420744963229),
+      lastIndexId: const obx_int.IdUid(150, 7397153665969592866),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -13940,6 +13981,54 @@ obx_int.ModelDefinition getObjectBoxModel() {
               occurredAt: occurredAtParam);
 
           return object;
+        }),
+    SecurityAuditLogEntity: obx_int.EntityDefinition<SecurityAuditLogEntity>(
+        model: _entities[144],
+        toOneRelations: (SecurityAuditLogEntity object) => [],
+        toManyRelations: (SecurityAuditLogEntity object) => {},
+        getId: (SecurityAuditLogEntity object) => object.id,
+        setId: (SecurityAuditLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SecurityAuditLogEntity object, fb.Builder fbb) {
+          final metadataOffset = object.metadata == null
+              ? null
+              : fbb.writeString(object.metadata!);
+          final platformOffset = fbb.writeString(object.platform);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbActionType);
+          fbb.addInt64(2, object.dbStatus);
+          fbb.addInt64(3, object.occurredAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, metadataOffset);
+          fbb.addOffset(5, platformOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbActionTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final metadataParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 12);
+          final platformParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final object = SecurityAuditLogEntity(
+              id: idParam,
+              dbActionType: dbActionTypeParam,
+              dbStatus: dbStatusParam,
+              occurredAt: occurredAtParam,
+              metadata: metadataParam,
+              platform: platformParam);
+
+          return object;
         })
   };
 
@@ -18457,4 +18546,31 @@ class LocalUsageEventEntity_ {
   /// see [LocalUsageEventEntity.occurredAt]
   static final occurredAt = obx.QueryDateProperty<LocalUsageEventEntity>(
       _entities[143].properties[3]);
+}
+
+/// [SecurityAuditLogEntity] entity fields to define ObjectBox queries.
+class SecurityAuditLogEntity_ {
+  /// see [SecurityAuditLogEntity.id]
+  static final id = obx.QueryIntegerProperty<SecurityAuditLogEntity>(
+      _entities[144].properties[0]);
+
+  /// see [SecurityAuditLogEntity.dbActionType]
+  static final dbActionType = obx.QueryIntegerProperty<SecurityAuditLogEntity>(
+      _entities[144].properties[1]);
+
+  /// see [SecurityAuditLogEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<SecurityAuditLogEntity>(
+      _entities[144].properties[2]);
+
+  /// see [SecurityAuditLogEntity.occurredAt]
+  static final occurredAt = obx.QueryDateProperty<SecurityAuditLogEntity>(
+      _entities[144].properties[3]);
+
+  /// see [SecurityAuditLogEntity.metadata]
+  static final metadata = obx.QueryStringProperty<SecurityAuditLogEntity>(
+      _entities[144].properties[4]);
+
+  /// see [SecurityAuditLogEntity.platform]
+  static final platform = obx.QueryStringProperty<SecurityAuditLogEntity>(
+      _entities[144].properties[5]);
 }
