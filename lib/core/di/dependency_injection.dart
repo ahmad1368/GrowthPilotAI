@@ -22,6 +22,8 @@ import 'package:growth_pilot_ai/core/data/entities/feature_importance_report_ent
 import 'package:growth_pilot_ai/core/data/repositories/feature_importance_report_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/action_impact_item_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/action_impact_item_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/business_contact_visibility_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/business_contact_visibility_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -186,6 +188,12 @@ class DependencyInjection {
       _locator.registerLazySingleton<ActionImpactItemRepository>(
         () => ActionImpactItemRepository(
             Get.find<ObjectBox>().store.box<ActionImpactItemEntity>()),
+      );
+
+      // ۸.۱.۹ تنظیمات نمایش‌پذیری فیلدهای تماس کسب‌وکار (Issue #218)
+      _locator.registerLazySingleton<BusinessContactVisibilityRepository>(
+        () => BusinessContactVisibilityRepository(
+            Get.find<ObjectBox>().store.box<BusinessContactVisibilityEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
