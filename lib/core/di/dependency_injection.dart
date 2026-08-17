@@ -30,6 +30,8 @@ import 'package:growth_pilot_ai/core/data/entities/consent_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/consent_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/microphone_consent_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/microphone_consent_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/local_usage_event_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/local_usage_event_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -214,6 +216,12 @@ class DependencyInjection {
       _locator.registerLazySingleton<MicrophoneConsentRepository>(
         () => MicrophoneConsentRepository(
             Get.find<ObjectBox>().store.box<MicrophoneConsentEntity>()),
+      );
+
+      // ۸.۱.۱۲ لاگ محلی رویدادهای استفاده درون‌برنامه‌ای (Issue #539)
+      _locator.registerLazySingleton<LocalUsageEventRepository>(
+        () => LocalUsageEventRepository(
+            Get.find<ObjectBox>().store.box<LocalUsageEventEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)

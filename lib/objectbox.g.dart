@@ -92,6 +92,7 @@ import 'core/data/entities/invoice_sync_status_entity.dart';
 import 'core/data/entities/kyc_verification_entity.dart';
 import 'core/data/entities/legal_consent_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
+import 'core/data/entities/local_usage_event_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/market_snapshot_entity.dart';
 import 'core/data/entities/marketing_campaign_entity.dart';
@@ -6413,6 +6414,35 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(145, 1753778118128975474),
+      name: 'LocalUsageEventEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5546409095385134517),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6583339956412026308),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8168593118139938898),
+            name: 'dbType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 975197192046775830),
+            name: 'label',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5546409095385134517),
+            name: 'occurredAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6451,7 +6481,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(144, 5308844151409449080),
+      lastEntityId: const obx_int.IdUid(145, 1753778118128975474),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13873,6 +13903,43 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam, optedIn: optedInParam, decidedAt: decidedAtParam);
 
           return object;
+        }),
+    LocalUsageEventEntity: obx_int.EntityDefinition<LocalUsageEventEntity>(
+        model: _entities[143],
+        toOneRelations: (LocalUsageEventEntity object) => [],
+        toManyRelations: (LocalUsageEventEntity object) => {},
+        getId: (LocalUsageEventEntity object) => object.id,
+        setId: (LocalUsageEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (LocalUsageEventEntity object, fb.Builder fbb) {
+          final labelOffset = fbb.writeString(object.label);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbType);
+          fbb.addOffset(2, labelOffset);
+          fbb.addInt64(3, object.occurredAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final labelParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = LocalUsageEventEntity(
+              id: idParam,
+              dbType: dbTypeParam,
+              label: labelParam,
+              occurredAt: occurredAtParam);
+
+          return object;
         })
   };
 
@@ -18371,4 +18438,23 @@ class MicrophoneConsentEntity_ {
   /// see [MicrophoneConsentEntity.decidedAt]
   static final decidedAt = obx.QueryDateProperty<MicrophoneConsentEntity>(
       _entities[142].properties[2]);
+}
+
+/// [LocalUsageEventEntity] entity fields to define ObjectBox queries.
+class LocalUsageEventEntity_ {
+  /// see [LocalUsageEventEntity.id]
+  static final id = obx.QueryIntegerProperty<LocalUsageEventEntity>(
+      _entities[143].properties[0]);
+
+  /// see [LocalUsageEventEntity.dbType]
+  static final dbType = obx.QueryIntegerProperty<LocalUsageEventEntity>(
+      _entities[143].properties[1]);
+
+  /// see [LocalUsageEventEntity.label]
+  static final label = obx.QueryStringProperty<LocalUsageEventEntity>(
+      _entities[143].properties[2]);
+
+  /// see [LocalUsageEventEntity.occurredAt]
+  static final occurredAt = obx.QueryDateProperty<LocalUsageEventEntity>(
+      _entities[143].properties[3]);
 }

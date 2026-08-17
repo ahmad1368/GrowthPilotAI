@@ -6387,9 +6387,38 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "145:1753778118128975474",
+      "lastPropertyId": "4:5546409095385134517",
+      "name": "LocalUsageEventEntity",
+      "properties": [
+        {
+          "id": "1:6583339956412026308",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8168593118139938898",
+          "name": "dbType",
+          "type": 6
+        },
+        {
+          "id": "3:975197192046775830",
+          "name": "label",
+          "type": 9
+        },
+        {
+          "id": "4:5546409095385134517",
+          "name": "occurredAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "144:5308844151409449080",
+  "lastEntityId": "145:1753778118128975474",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
