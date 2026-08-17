@@ -50,6 +50,7 @@ import 'core/data/entities/commission_tier_record_entity.dart';
 import 'core/data/entities/competitor_price_observation_entity.dart';
 import 'core/data/entities/competitor_sighting_entity.dart';
 import 'core/data/entities/compliance_item_entity.dart';
+import 'core/data/entities/consent_log_entity.dart';
 import 'core/data/entities/contact_sync_match_entity.dart';
 import 'core/data/entities/contact_sync_preference_entity.dart';
 import 'core/data/entities/conversation_entity.dart';
@@ -89,6 +90,7 @@ import 'core/data/entities/inventory_stock_take_entity.dart';
 import 'core/data/entities/invoice_entity.dart';
 import 'core/data/entities/invoice_sync_status_entity.dart';
 import 'core/data/entities/kyc_verification_entity.dart';
+import 'core/data/entities/legal_consent_entity.dart';
 import 'core/data/entities/linked_account_entity.dart';
 import 'core/data/entities/mapping_rule_entity.dart';
 import 'core/data/entities/market_snapshot_entity.dart';
@@ -6323,6 +6325,69 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(142, 4118494869474502859),
+      name: 'ConsentLogEntity',
+      lastPropertyId: const obx_int.IdUid(5, 4959631583146342659),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6659771734164373607),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 361391075482064746),
+            name: 'dbAction',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8224427393107573093),
+            name: 'version',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 339179753382809526),
+            name: 'occurredAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4959631583146342659),
+            name: 'platform',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(143, 3041621734914494176),
+      name: 'LegalConsentEntity',
+      lastPropertyId: const obx_int.IdUid(4, 8164323687329646542),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5720210474405470651),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8800095795227850163),
+            name: 'acceptedVersion',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6399005544631748900),
+            name: 'acceptedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8164323687329646542),
+            name: 'dataUsageConsent',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6361,7 +6426,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(141, 638893243698038040),
+      lastEntityId: const obx_int.IdUid(143, 3041621734914494176),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13665,7 +13730,92 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   dbMapLocationVisibility: dbMapLocationVisibilityParam);
 
               return object;
-            })
+            }),
+    ConsentLogEntity: obx_int.EntityDefinition<ConsentLogEntity>(
+        model: _entities[140],
+        toOneRelations: (ConsentLogEntity object) => [],
+        toManyRelations: (ConsentLogEntity object) => {},
+        getId: (ConsentLogEntity object) => object.id,
+        setId: (ConsentLogEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ConsentLogEntity object, fb.Builder fbb) {
+          final versionOffset = fbb.writeString(object.version);
+          final platformOffset = fbb.writeString(object.platform);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbAction);
+          fbb.addOffset(2, versionOffset);
+          fbb.addInt64(3, object.occurredAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, platformOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbActionParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final versionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final platformParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final object = ConsentLogEntity(
+              id: idParam,
+              dbAction: dbActionParam,
+              version: versionParam,
+              occurredAt: occurredAtParam,
+              platform: platformParam);
+
+          return object;
+        }),
+    LegalConsentEntity: obx_int.EntityDefinition<LegalConsentEntity>(
+        model: _entities[141],
+        toOneRelations: (LegalConsentEntity object) => [],
+        toManyRelations: (LegalConsentEntity object) => {},
+        getId: (LegalConsentEntity object) => object.id,
+        setId: (LegalConsentEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (LegalConsentEntity object, fb.Builder fbb) {
+          final acceptedVersionOffset = object.acceptedVersion == null
+              ? null
+              : fbb.writeString(object.acceptedVersion!);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, acceptedVersionOffset);
+          fbb.addInt64(2, object.acceptedAt?.millisecondsSinceEpoch);
+          fbb.addBool(3, object.dataUsageConsent);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final acceptedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final acceptedVersionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 6);
+          final acceptedAtParam = acceptedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(acceptedAtValue);
+          final dataUsageConsentParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final object = LegalConsentEntity(
+              id: idParam,
+              acceptedVersion: acceptedVersionParam,
+              acceptedAt: acceptedAtParam,
+              dataUsageConsent: dataUsageConsentParam);
+
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -18106,4 +18256,46 @@ class BusinessContactVisibilityEntity_ {
   static final dbMapLocationVisibility =
       obx.QueryIntegerProperty<BusinessContactVisibilityEntity>(
           _entities[139].properties[4]);
+}
+
+/// [ConsentLogEntity] entity fields to define ObjectBox queries.
+class ConsentLogEntity_ {
+  /// see [ConsentLogEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<ConsentLogEntity>(_entities[140].properties[0]);
+
+  /// see [ConsentLogEntity.dbAction]
+  static final dbAction =
+      obx.QueryIntegerProperty<ConsentLogEntity>(_entities[140].properties[1]);
+
+  /// see [ConsentLogEntity.version]
+  static final version =
+      obx.QueryStringProperty<ConsentLogEntity>(_entities[140].properties[2]);
+
+  /// see [ConsentLogEntity.occurredAt]
+  static final occurredAt =
+      obx.QueryDateProperty<ConsentLogEntity>(_entities[140].properties[3]);
+
+  /// see [ConsentLogEntity.platform]
+  static final platform =
+      obx.QueryStringProperty<ConsentLogEntity>(_entities[140].properties[4]);
+}
+
+/// [LegalConsentEntity] entity fields to define ObjectBox queries.
+class LegalConsentEntity_ {
+  /// see [LegalConsentEntity.id]
+  static final id = obx.QueryIntegerProperty<LegalConsentEntity>(
+      _entities[141].properties[0]);
+
+  /// see [LegalConsentEntity.acceptedVersion]
+  static final acceptedVersion =
+      obx.QueryStringProperty<LegalConsentEntity>(_entities[141].properties[1]);
+
+  /// see [LegalConsentEntity.acceptedAt]
+  static final acceptedAt =
+      obx.QueryDateProperty<LegalConsentEntity>(_entities[141].properties[2]);
+
+  /// see [LegalConsentEntity.dataUsageConsent]
+  static final dataUsageConsent = obx.QueryBooleanProperty<LegalConsentEntity>(
+      _entities[141].properties[3]);
 }

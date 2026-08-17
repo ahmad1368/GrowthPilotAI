@@ -24,6 +24,10 @@ import 'package:growth_pilot_ai/core/data/entities/action_impact_item_entity.dar
 import 'package:growth_pilot_ai/core/data/repositories/action_impact_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/business_contact_visibility_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/business_contact_visibility_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/legal_consent_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/legal_consent_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/consent_log_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/consent_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -194,6 +198,14 @@ class DependencyInjection {
       _locator.registerLazySingleton<BusinessContactVisibilityRepository>(
         () => BusinessContactVisibilityRepository(
             Get.find<ObjectBox>().store.box<BusinessContactVisibilityEntity>()),
+      );
+
+      // ۸.۱.۱۰ وضعیت پذیرش قوانین و سیاست حریم خصوصی (Issue #215)
+      _locator.registerLazySingleton<LegalConsentRepository>(
+        () => LegalConsentRepository(Get.find<ObjectBox>().store.box<LegalConsentEntity>()),
+      );
+      _locator.registerLazySingleton<ConsentLogRepository>(
+        () => ConsentLogRepository(Get.find<ObjectBox>().store.box<ConsentLogEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)

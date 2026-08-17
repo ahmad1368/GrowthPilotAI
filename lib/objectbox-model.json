@@ -6300,9 +6300,72 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "142:4118494869474502859",
+      "lastPropertyId": "5:4959631583146342659",
+      "name": "ConsentLogEntity",
+      "properties": [
+        {
+          "id": "1:6659771734164373607",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:361391075482064746",
+          "name": "dbAction",
+          "type": 6
+        },
+        {
+          "id": "3:8224427393107573093",
+          "name": "version",
+          "type": 9
+        },
+        {
+          "id": "4:339179753382809526",
+          "name": "occurredAt",
+          "type": 10
+        },
+        {
+          "id": "5:4959631583146342659",
+          "name": "platform",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "143:3041621734914494176",
+      "lastPropertyId": "4:8164323687329646542",
+      "name": "LegalConsentEntity",
+      "properties": [
+        {
+          "id": "1:5720210474405470651",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8800095795227850163",
+          "name": "acceptedVersion",
+          "type": 9
+        },
+        {
+          "id": "3:6399005544631748900",
+          "name": "acceptedAt",
+          "type": 10
+        },
+        {
+          "id": "4:8164323687329646542",
+          "name": "dataUsageConsent",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "141:638893243698038040",
+  "lastEntityId": "143:3041621734914494176",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
