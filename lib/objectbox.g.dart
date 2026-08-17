@@ -37,6 +37,7 @@ import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/block_entity.dart';
+import 'core/data/entities/breach_notification_log_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/business_contact_visibility_entity.dart';
 import 'core/data/entities/business_rating_entity.dart';
@@ -135,6 +136,7 @@ import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
 import 'core/data/entities/seasonal_catalog_item_entity.dart';
 import 'core/data/entities/security_audit_log_entity.dart';
+import 'core/data/entities/security_incident_entity.dart';
 import 'core/data/entities/service_listing_details_entity.dart';
 import 'core/data/entities/service_restriction_entity.dart';
 import 'core/data/entities/staff_shift_entity.dart';
@@ -6484,6 +6486,69 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(147, 7108596930254255665),
+      name: 'BreachNotificationLogEntity',
+      lastPropertyId: const obx_int.IdUid(4, 2746007777643530486),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6100650060590688043),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1130936040547910073),
+            name: 'incidentId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8839135459028461222),
+            name: 'notifiedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2746007777643530486),
+            name: 'platform',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(148, 7171199628447014332),
+      name: 'SecurityIncidentEntity',
+      lastPropertyId: const obx_int.IdUid(5, 542821798146611292),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7436175789439448812),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 308901496290296259),
+            name: 'summary',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 677959303315537297),
+            name: 'dataInvolved',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 947701359633522066),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 542821798146611292),
+            name: 'detectedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6522,7 +6587,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(146, 2938026420744963229),
+      lastEntityId: const obx_int.IdUid(148, 7171199628447014332),
       lastIndexId: const obx_int.IdUid(150, 7397153665969592866),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -14029,6 +14094,88 @@ obx_int.ModelDefinition getObjectBoxModel() {
               platform: platformParam);
 
           return object;
+        }),
+    BreachNotificationLogEntity:
+        obx_int.EntityDefinition<BreachNotificationLogEntity>(
+            model: _entities[145],
+            toOneRelations: (BreachNotificationLogEntity object) => [],
+            toManyRelations: (BreachNotificationLogEntity object) => {},
+            getId: (BreachNotificationLogEntity object) => object.id,
+            setId: (BreachNotificationLogEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (BreachNotificationLogEntity object, fb.Builder fbb) {
+              final platformOffset = fbb.writeString(object.platform);
+              fbb.startTable(5);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.incidentId);
+              fbb.addInt64(2, object.notifiedAt.millisecondsSinceEpoch);
+              fbb.addOffset(3, platformOffset);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final incidentIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final notifiedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+              final platformParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+              final object = BreachNotificationLogEntity(
+                  id: idParam,
+                  incidentId: incidentIdParam,
+                  notifiedAt: notifiedAtParam,
+                  platform: platformParam);
+
+              return object;
+            }),
+    SecurityIncidentEntity: obx_int.EntityDefinition<SecurityIncidentEntity>(
+        model: _entities[146],
+        toOneRelations: (SecurityIncidentEntity object) => [],
+        toManyRelations: (SecurityIncidentEntity object) => {},
+        getId: (SecurityIncidentEntity object) => object.id,
+        setId: (SecurityIncidentEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SecurityIncidentEntity object, fb.Builder fbb) {
+          final summaryOffset = fbb.writeString(object.summary);
+          final dataInvolvedOffset = fbb.writeString(object.dataInvolved);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, summaryOffset);
+          fbb.addOffset(2, dataInvolvedOffset);
+          fbb.addInt64(3, object.dbStatus);
+          fbb.addInt64(4, object.detectedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final summaryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dataInvolvedParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final detectedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = SecurityIncidentEntity(
+              id: idParam,
+              summary: summaryParam,
+              dataInvolved: dataInvolvedParam,
+              dbStatus: dbStatusParam,
+              detectedAt: detectedAtParam);
+
+          return object;
         })
   };
 
@@ -18573,4 +18720,47 @@ class SecurityAuditLogEntity_ {
   /// see [SecurityAuditLogEntity.platform]
   static final platform = obx.QueryStringProperty<SecurityAuditLogEntity>(
       _entities[144].properties[5]);
+}
+
+/// [BreachNotificationLogEntity] entity fields to define ObjectBox queries.
+class BreachNotificationLogEntity_ {
+  /// see [BreachNotificationLogEntity.id]
+  static final id = obx.QueryIntegerProperty<BreachNotificationLogEntity>(
+      _entities[145].properties[0]);
+
+  /// see [BreachNotificationLogEntity.incidentId]
+  static final incidentId =
+      obx.QueryIntegerProperty<BreachNotificationLogEntity>(
+          _entities[145].properties[1]);
+
+  /// see [BreachNotificationLogEntity.notifiedAt]
+  static final notifiedAt = obx.QueryDateProperty<BreachNotificationLogEntity>(
+      _entities[145].properties[2]);
+
+  /// see [BreachNotificationLogEntity.platform]
+  static final platform = obx.QueryStringProperty<BreachNotificationLogEntity>(
+      _entities[145].properties[3]);
+}
+
+/// [SecurityIncidentEntity] entity fields to define ObjectBox queries.
+class SecurityIncidentEntity_ {
+  /// see [SecurityIncidentEntity.id]
+  static final id = obx.QueryIntegerProperty<SecurityIncidentEntity>(
+      _entities[146].properties[0]);
+
+  /// see [SecurityIncidentEntity.summary]
+  static final summary = obx.QueryStringProperty<SecurityIncidentEntity>(
+      _entities[146].properties[1]);
+
+  /// see [SecurityIncidentEntity.dataInvolved]
+  static final dataInvolved = obx.QueryStringProperty<SecurityIncidentEntity>(
+      _entities[146].properties[2]);
+
+  /// see [SecurityIncidentEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<SecurityIncidentEntity>(
+      _entities[146].properties[3]);
+
+  /// see [SecurityIncidentEntity.detectedAt]
+  static final detectedAt = obx.QueryDateProperty<SecurityIncidentEntity>(
+      _entities[146].properties[4]);
 }

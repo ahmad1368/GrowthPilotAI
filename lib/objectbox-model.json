@@ -6457,9 +6457,72 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "147:7108596930254255665",
+      "lastPropertyId": "4:2746007777643530486",
+      "name": "BreachNotificationLogEntity",
+      "properties": [
+        {
+          "id": "1:6100650060590688043",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1130936040547910073",
+          "name": "incidentId",
+          "type": 6
+        },
+        {
+          "id": "3:8839135459028461222",
+          "name": "notifiedAt",
+          "type": 10
+        },
+        {
+          "id": "4:2746007777643530486",
+          "name": "platform",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "148:7171199628447014332",
+      "lastPropertyId": "5:542821798146611292",
+      "name": "SecurityIncidentEntity",
+      "properties": [
+        {
+          "id": "1:7436175789439448812",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:308901496290296259",
+          "name": "summary",
+          "type": 9
+        },
+        {
+          "id": "3:677959303315537297",
+          "name": "dataInvolved",
+          "type": 9
+        },
+        {
+          "id": "4:947701359633522066",
+          "name": "dbStatus",
+          "type": 6
+        },
+        {
+          "id": "5:542821798146611292",
+          "name": "detectedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "146:2938026420744963229",
+  "lastEntityId": "148:7171199628447014332",
   "lastIndexId": "150:7397153665969592866",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

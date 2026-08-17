@@ -34,6 +34,10 @@ import 'package:growth_pilot_ai/core/data/entities/local_usage_event_entity.dart
 import 'package:growth_pilot_ai/core/data/repositories/local_usage_event_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/security_audit_log_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/security_audit_log_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/security_incident_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/security_incident_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/breach_notification_log_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/breach_notification_log_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/embedding_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/embedding_service.dart';
 import 'package:growth_pilot_ai/core/services/mock_embedding_service.dart';
@@ -230,6 +234,16 @@ class DependencyInjection {
       _locator.registerLazySingleton<SecurityAuditLogRepository>(
         () => SecurityAuditLogRepository(
             Get.find<ObjectBox>().store.box<SecurityAuditLogEntity>()),
+      );
+
+      // ۸.۱.۱۴ لاگ حوادث امنیتی و اعلان نقض داده (PIPEDA؛ Issue #187)
+      _locator.registerLazySingleton<SecurityIncidentRepository>(
+        () => SecurityIncidentRepository(
+            Get.find<ObjectBox>().store.box<SecurityIncidentEntity>()),
+      );
+      _locator.registerLazySingleton<BreachNotificationLogRepository>(
+        () => BreachNotificationLogRepository(
+            Get.find<ObjectBox>().store.box<BreachNotificationLogEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
