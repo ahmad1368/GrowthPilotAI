@@ -6266,9 +6266,43 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "141:638893243698038040",
+      "lastPropertyId": "5:6114293107273473515",
+      "name": "BusinessContactVisibilityEntity",
+      "properties": [
+        {
+          "id": "1:5088460656093199438",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8880670592844216398",
+          "name": "dbPhoneVisibility",
+          "type": 6
+        },
+        {
+          "id": "3:1407178499733971163",
+          "name": "dbAddressVisibility",
+          "type": 6
+        },
+        {
+          "id": "4:661199662585726869",
+          "name": "dbEmailVisibility",
+          "type": 6
+        },
+        {
+          "id": "5:6114293107273473515",
+          "name": "dbMapLocationVisibility",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "140:286111908199508998",
+  "lastEntityId": "141:638893243698038040",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

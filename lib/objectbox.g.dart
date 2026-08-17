@@ -38,6 +38,7 @@ import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
 import 'core/data/entities/block_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
+import 'core/data/entities/business_contact_visibility_entity.dart';
 import 'core/data/entities/business_rating_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/catalog_listing_entity.dart';
@@ -6288,6 +6289,40 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(141, 638893243698038040),
+      name: 'BusinessContactVisibilityEntity',
+      lastPropertyId: const obx_int.IdUid(5, 6114293107273473515),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 5088460656093199438),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8880670592844216398),
+            name: 'dbPhoneVisibility',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1407178499733971163),
+            name: 'dbAddressVisibility',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 661199662585726869),
+            name: 'dbEmailVisibility',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 6114293107273473515),
+            name: 'dbMapLocationVisibility',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6326,7 +6361,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(140, 286111908199508998),
+      lastEntityId: const obx_int.IdUid(141, 638893243698038040),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13588,7 +13623,49 @@ obx_int.ModelDefinition getObjectBoxModel() {
               completedAt: completedAtParam);
 
           return object;
-        })
+        }),
+    BusinessContactVisibilityEntity:
+        obx_int.EntityDefinition<BusinessContactVisibilityEntity>(
+            model: _entities[139],
+            toOneRelations: (BusinessContactVisibilityEntity object) => [],
+            toManyRelations: (BusinessContactVisibilityEntity object) => {},
+            getId: (BusinessContactVisibilityEntity object) => object.id,
+            setId: (BusinessContactVisibilityEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB:
+                (BusinessContactVisibilityEntity object, fb.Builder fbb) {
+              fbb.startTable(6);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.dbPhoneVisibility);
+              fbb.addInt64(2, object.dbAddressVisibility);
+              fbb.addInt64(3, object.dbEmailVisibility);
+              fbb.addInt64(4, object.dbMapLocationVisibility);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final dbPhoneVisibilityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final dbAddressVisibilityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final dbEmailVisibilityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final dbMapLocationVisibilityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final object = BusinessContactVisibilityEntity(
+                  id: idParam,
+                  dbPhoneVisibility: dbPhoneVisibilityParam,
+                  dbAddressVisibility: dbAddressVisibilityParam,
+                  dbEmailVisibility: dbEmailVisibilityParam,
+                  dbMapLocationVisibility: dbMapLocationVisibilityParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -18002,4 +18079,31 @@ class ActionImpactItemEntity_ {
   /// see [ActionImpactItemEntity.completedAt]
   static final completedAt = obx.QueryDateProperty<ActionImpactItemEntity>(
       _entities[138].properties[6]);
+}
+
+/// [BusinessContactVisibilityEntity] entity fields to define ObjectBox queries.
+class BusinessContactVisibilityEntity_ {
+  /// see [BusinessContactVisibilityEntity.id]
+  static final id = obx.QueryIntegerProperty<BusinessContactVisibilityEntity>(
+      _entities[139].properties[0]);
+
+  /// see [BusinessContactVisibilityEntity.dbPhoneVisibility]
+  static final dbPhoneVisibility =
+      obx.QueryIntegerProperty<BusinessContactVisibilityEntity>(
+          _entities[139].properties[1]);
+
+  /// see [BusinessContactVisibilityEntity.dbAddressVisibility]
+  static final dbAddressVisibility =
+      obx.QueryIntegerProperty<BusinessContactVisibilityEntity>(
+          _entities[139].properties[2]);
+
+  /// see [BusinessContactVisibilityEntity.dbEmailVisibility]
+  static final dbEmailVisibility =
+      obx.QueryIntegerProperty<BusinessContactVisibilityEntity>(
+          _entities[139].properties[3]);
+
+  /// see [BusinessContactVisibilityEntity.dbMapLocationVisibility]
+  static final dbMapLocationVisibility =
+      obx.QueryIntegerProperty<BusinessContactVisibilityEntity>(
+          _entities[139].properties[4]);
 }
