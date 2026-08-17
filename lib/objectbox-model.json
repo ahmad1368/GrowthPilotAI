@@ -6363,9 +6363,33 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "144:5308844151409449080",
+      "lastPropertyId": "3:5941298419576393432",
+      "name": "MicrophoneConsentEntity",
+      "properties": [
+        {
+          "id": "1:8557759116484791658",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9137200988781796691",
+          "name": "optedIn",
+          "type": 1
+        },
+        {
+          "id": "3:5941298419576393432",
+          "name": "decidedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "143:3041621734914494176",
+  "lastEntityId": "144:5308844151409449080",
   "lastIndexId": "149:2224088579099178225",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

@@ -108,6 +108,7 @@ import 'core/data/entities/merchant_tier_override_entity.dart';
 import 'core/data/entities/message_entity.dart';
 import 'core/data/entities/micro_credit_account_entity.dart';
 import 'core/data/entities/micro_credit_loan_entity.dart';
+import 'core/data/entities/microphone_consent_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/notification_conversion_event_entity.dart';
 import 'core/data/entities/payment_entity.dart';
@@ -6388,6 +6389,30 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(144, 5308844151409449080),
+      name: 'MicrophoneConsentEntity',
+      lastPropertyId: const obx_int.IdUid(3, 5941298419576393432),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8557759116484791658),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 9137200988781796691),
+            name: 'optedIn',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5941298419576393432),
+            name: 'decidedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6426,7 +6451,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(143, 3041621734914494176),
+      lastEntityId: const obx_int.IdUid(144, 5308844151409449080),
       lastIndexId: const obx_int.IdUid(149, 2224088579099178225),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -13815,6 +13840,39 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dataUsageConsent: dataUsageConsentParam);
 
           return object;
+        }),
+    MicrophoneConsentEntity: obx_int.EntityDefinition<MicrophoneConsentEntity>(
+        model: _entities[142],
+        toOneRelations: (MicrophoneConsentEntity object) => [],
+        toManyRelations: (MicrophoneConsentEntity object) => {},
+        getId: (MicrophoneConsentEntity object) => object.id,
+        setId: (MicrophoneConsentEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MicrophoneConsentEntity object, fb.Builder fbb) {
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addBool(1, object.optedIn);
+          fbb.addInt64(2, object.decidedAt?.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final decidedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final optedInParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
+          final decidedAtParam = decidedAtValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(decidedAtValue);
+          final object = MicrophoneConsentEntity(
+              id: idParam, optedIn: optedInParam, decidedAt: decidedAtParam);
+
+          return object;
         })
   };
 
@@ -18298,4 +18356,19 @@ class LegalConsentEntity_ {
   /// see [LegalConsentEntity.dataUsageConsent]
   static final dataUsageConsent = obx.QueryBooleanProperty<LegalConsentEntity>(
       _entities[141].properties[3]);
+}
+
+/// [MicrophoneConsentEntity] entity fields to define ObjectBox queries.
+class MicrophoneConsentEntity_ {
+  /// see [MicrophoneConsentEntity.id]
+  static final id = obx.QueryIntegerProperty<MicrophoneConsentEntity>(
+      _entities[142].properties[0]);
+
+  /// see [MicrophoneConsentEntity.optedIn]
+  static final optedIn = obx.QueryBooleanProperty<MicrophoneConsentEntity>(
+      _entities[142].properties[1]);
+
+  /// see [MicrophoneConsentEntity.decidedAt]
+  static final decidedAt = obx.QueryDateProperty<MicrophoneConsentEntity>(
+      _entities[142].properties[2]);
 }
