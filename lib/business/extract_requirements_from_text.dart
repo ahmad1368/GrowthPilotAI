@@ -1,6 +1,8 @@
 import 'package:growth_pilot_ai/business/classify_requirement_priority.dart';
 import 'package:growth_pilot_ai/business/classify_requirement_type.dart';
 import 'package:growth_pilot_ai/business/find_requirement_indicator.dart';
+import 'package:growth_pilot_ai/business/guess_requirement_stakeholder.dart';
+import 'package:growth_pilot_ai/business/map_priority_hint_to_moscow.dart';
 import 'package:growth_pilot_ai/business/split_text_into_sentence_spans.dart';
 import 'package:growth_pilot_ai/core/models/extracted_requirement.dart';
 
@@ -21,11 +23,14 @@ class ExtractRequirementsFromText {
       final indicator = FindRequirementIndicator.call(span.text);
       if (indicator == null) continue;
 
+      final priorityHint = ClassifyRequirementPriority.call(span.text);
       requirements.add(ExtractedRequirement(
         description: span.text,
         type: ClassifyRequirementType.call(span.text),
         indicator: indicator,
-        priorityHint: ClassifyRequirementPriority.call(span.text),
+        priorityHint: priorityHint,
+        moscowPriority: MapPriorityHintToMoscow.call(priorityHint),
+        stakeholder: GuessRequirementStakeholder.call(span.text),
         startIndex: span.start,
         endIndex: span.end,
       ));

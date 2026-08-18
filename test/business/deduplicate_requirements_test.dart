@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/business/deduplicate_requirements.dart';
+import 'package:growth_pilot_ai/core/enum/requirement_moscow_priority.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_priority_hint.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_type.dart';
 import 'package:growth_pilot_ai/core/models/extracted_requirement.dart';
@@ -9,6 +10,8 @@ ExtractedRequirement _req(String description, {int start = 0}) => ExtractedRequi
       type: RequirementType.functional,
       indicator: 'shall',
       priorityHint: RequirementPriorityHint.medium,
+      moscowPriority: RequirementMoscowPriority.shouldHave,
+      stakeholder: 'Unassigned',
       startIndex: start,
       endIndex: start + description.length,
     );
