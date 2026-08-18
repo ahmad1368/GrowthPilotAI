@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_triage_status.dart';
+import 'package:growth_pilot_ai/core/enum/requirement_type.dart';
 
 void main() {
   late RequirementTriageController controller;
@@ -54,6 +55,18 @@ void main() {
       expect(controller.requirements[0].status, RequirementTriageStatus.confirmed);
       expect(controller.requirements[1].status, RequirementTriageStatus.confirmed);
       expect(controller.batchSelected, isEmpty);
+    });
+
+    test('setTypeFilter narrows visibleIndices to matching requirements', () {
+      controller.loadFromText('The system shall log events. The API shall integrate with the database.');
+      expect(controller.requirements[0].type, RequirementType.functional);
+      expect(controller.requirements[1].type, RequirementType.technical);
+
+      controller.setTypeFilter(RequirementType.technical);
+      expect(controller.visibleIndices, [1]);
+
+      controller.setTypeFilter(null);
+      expect(controller.visibleIndices, [0, 1]);
     });
   });
 }

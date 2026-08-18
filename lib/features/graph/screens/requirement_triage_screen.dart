@@ -12,10 +12,11 @@ import 'package:growth_pilot_ai/features/graph/widgets/requirement_undo_banner.d
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// "User Validation Interface & Source Traceability" screen (Issue
-/// #231/#232/#233) — ties together Issue #227's sanitization, #228/
-/// #229's extraction/triage, #231's selection-highlighting/batch/undo,
-/// #232's local processing orchestrator, and #233's KPI summary into
-/// one navigable screen.
+/// #231/#232/#233/#234) — ties together Issue #227's sanitization,
+/// #228/#229's extraction/triage, #231's selection-highlighting/batch/
+/// undo, #232's local processing orchestrator, and #233's KPI summary
+/// into one navigable screen. The full KPI Dashboard lives at
+/// `/requirements/dashboard` (Issue #234).
 class RequirementTriageScreen extends StatelessWidget {
   const RequirementTriageScreen({super.key});
 
@@ -28,7 +29,17 @@ class RequirementTriageScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: const Text('Requirement Triage'), backgroundColor: colors.background),
+      appBar: AppBar(
+        title: const Text('Requirement Triage'),
+        backgroundColor: colors.background,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.dashboard_outlined),
+            tooltip: 'KPI Dashboard',
+            onPressed: () => Get.toNamed('/requirements/dashboard'),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(

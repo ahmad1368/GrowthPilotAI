@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_edit_dialog.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_triage_card.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/requirement_type_filter_chip.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// The "Requirement Triage" screen's card list (Issue #228/#231).
+/// The "Requirement Triage" screen's card list (Issue #228/#231/#234)
+/// — respects [RequirementTriageController.typeFilter] for the
+/// dashboard's drill-down.
 class RequirementTriageList extends StatelessWidget {
   final RequirementTriageController controller;
 
@@ -28,9 +31,12 @@ class RequirementTriageList extends StatelessWidget {
         return Text('No candidate requirements found.',
             style: TextStyle(color: colors.mutedForeground, fontSize: 12));
       }
+      final visible = controller.visibleIndices;
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (var i = 0; i < controller.requirements.length; i++)
+          RequirementTypeFilterChip(controller: controller),
+          for (final i in visible)
             RequirementTriageCard(
               requirement: controller.requirements[i],
               isSelected: controller.selectedIndex.value == i,
