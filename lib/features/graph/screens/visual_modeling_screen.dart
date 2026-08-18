@@ -9,7 +9,7 @@ import 'package:growth_pilot_ai/features/graph/widgets/save_status_indicator.dar
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// "Visual Modeling" screen hosting the `FlutterBridge` WebView (Issue
-/// #220/#222) — `webview_flutter` has no Web-platform implementation
+/// #220/#221) — `webview_flutter` has no Web-platform implementation
 /// bundled here, so on Web this shows a flat fallback instead of
 /// failing to compile/render (architecture rule: guard native-only
 /// packages with `kIsWeb`).

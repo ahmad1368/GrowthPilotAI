@@ -4,7 +4,7 @@ import 'package:growth_pilot_ai/core/enum/canvas_save_status.dart';
 import 'package:growth_pilot_ai/controllers/visual_modeling_bridge_controller.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// "Native Overlays: Save Status indicator" (Issue #222) — flat text
+/// "Native Overlays: Save Status indicator" (Issue #221) — flat text
 /// reacting to `onSaveStatusChanged` bridge messages.
 class SaveStatusIndicator extends StatelessWidget {
   final VisualModelingBridgeController controller;
