@@ -14,6 +14,7 @@ ExtractedRequirement _req(RequirementMoscowPriority priority) => ExtractedRequir
       stakeholder: 'Unassigned',
       startIndex: 0,
       endIndex: 1,
+      confidence: 0.9,
     );
 
 void main() {

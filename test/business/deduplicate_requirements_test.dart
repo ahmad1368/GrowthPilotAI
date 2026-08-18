@@ -14,6 +14,7 @@ ExtractedRequirement _req(String description, {int start = 0}) => ExtractedRequi
       stakeholder: 'Unassigned',
       startIndex: start,
       endIndex: start + description.length,
+      confidence: 0.9,
     );
 
 void main() {

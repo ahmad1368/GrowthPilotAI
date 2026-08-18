@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
+import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/requirement_batch_action_bar.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/requirement_document_input.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/requirement_source_split_view.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/requirement_undo_banner.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+
+/// "User Validation Interface & Source Traceability" screen (Issue
+/// #231) — ties together Issue #227's sanitization, #228/#229's
+/// extraction/triage, and #231's own selection-highlighting/batch/undo
+/// additions into one navigable screen.
+class RequirementTriageScreen extends StatelessWidget {
+  const RequirementTriageScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = ShadTheme.of(context).colorScheme;
+    final triageController = Get.find<RequirementTriageController>();
+    final sanitizationController = Get.find<TextSanitizationController>();
+
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: AppBar(title: const Text('Requirement Triage'), backgroundColor: colors.background),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RequirementDocumentInput(
+                sanitizationController: sanitizationController,
+                triageController: triageController,
+              ),
+              const SizedBox(height: 16),
+              RequirementUndoBanner(controller: triageController),
+              RequirementBatchActionBar(controller: triageController),
+              const SizedBox(height: 12),
+              RequirementSourceSplitView(controller: triageController),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
