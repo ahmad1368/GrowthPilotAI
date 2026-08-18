@@ -7,8 +7,14 @@ import 'package:growth_pilot_ai/controllers/project_metrics_controller.dart';
 import 'package:growth_pilot_ai/controllers/quiet_hours_controller.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
+import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/data/repositories/project_metrics_snapshot_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/business_goal_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traceable_requirement_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traceability_test_case_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traceability_link_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_scanner_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_text_extractor_service.dart';
@@ -45,6 +51,18 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => DocumentProcessingOrchestratorController(Get.find()), fenix: true);
     Get.lazyPut(
       () => ProjectMetricsController(DependencyInjection.get<ProjectMetricsSnapshotRepository>()),
+      fenix: true,
+    );
+    // Issue #238/#242: ناوبر ردیابی الزامات — fenix:true تا لینک‌کردن از
+    // صفحه‌ی Triage بلافاصله در صفحه‌ی Traceability Navigator دیده بشه
+    Get.lazyPut(
+      () => TraceabilityController(
+        DependencyInjection.get<BusinessGoalRepository>(),
+        DependencyInjection.get<TraceableRequirementRepository>(),
+        DependencyInjection.get<TraceabilityTestCaseRepository>(),
+        DependencyInjection.get<TraceabilityLinkRepository>(),
+        DependencyInjection.get<RequirementHistoryRepository>(),
+      ),
       fenix: true,
     );
   }

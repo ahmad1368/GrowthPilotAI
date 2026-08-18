@@ -6786,7 +6786,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(154, 6413853769922160731),
       name: 'TraceabilityTestCaseEntity',
-      lastPropertyId: const obx_int.IdUid(3, 3006558716930873627),
+      lastPropertyId: const obx_int.IdUid(5, 5679356634433227715),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -6803,6 +6803,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(3, 3006558716930873627),
             name: 'description',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6746234337171441561),
+            name: 'tcCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 5679356634433227715),
+            name: 'dbResult',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -6810,7 +6820,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(155, 6861637638351798257),
       name: 'TraceableRequirementEntity',
-      lastPropertyId: const obx_int.IdUid(2, 4840335529288930373),
+      lastPropertyId: const obx_int.IdUid(6, 350333459314616608),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -6822,6 +6832,26 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(2, 4840335529288930373),
             name: 'description',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7649513166160225094),
+            name: 'reqCode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3004191712430276674),
+            name: 'dbDevStatus',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3630393141812745593),
+            name: 'sourceStartIndex',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 350333459314616608),
+            name: 'sourceEndIndex',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -14715,10 +14745,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
             objectToFB: (TraceabilityTestCaseEntity object, fb.Builder fbb) {
               final titleOffset = fbb.writeString(object.title);
               final descriptionOffset = fbb.writeString(object.description);
-              fbb.startTable(4);
+              final tcCodeOffset = fbb.writeString(object.tcCode);
+              fbb.startTable(6);
               fbb.addInt64(0, object.id);
               fbb.addOffset(1, titleOffset);
               fbb.addOffset(2, descriptionOffset);
+              fbb.addOffset(3, tcCodeOffset);
+              fbb.addInt64(4, object.dbResult);
               fbb.finish(fbb.endTable());
               return object.id;
             },
@@ -14727,48 +14760,72 @@ obx_int.ModelDefinition getObjectBoxModel() {
               final rootOffset = buffer.derefObject(0);
               final idParam =
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final tcCodeParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
               final titleParam = const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, '');
               final descriptionParam =
                   const fb.StringReader(asciiOptimization: true)
                       .vTableGet(buffer, rootOffset, 8, '');
+              final dbResultParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
               final object = TraceabilityTestCaseEntity(
                   id: idParam,
+                  tcCode: tcCodeParam,
                   title: titleParam,
-                  description: descriptionParam);
+                  description: descriptionParam,
+                  dbResult: dbResultParam);
 
               return object;
             }),
-    TraceableRequirementEntity:
-        obx_int.EntityDefinition<TraceableRequirementEntity>(
-            model: _entities[153],
-            toOneRelations: (TraceableRequirementEntity object) => [],
-            toManyRelations: (TraceableRequirementEntity object) => {},
-            getId: (TraceableRequirementEntity object) => object.id,
-            setId: (TraceableRequirementEntity object, int id) {
-              object.id = id;
-            },
-            objectToFB: (TraceableRequirementEntity object, fb.Builder fbb) {
-              final descriptionOffset = fbb.writeString(object.description);
-              fbb.startTable(3);
-              fbb.addInt64(0, object.id);
-              fbb.addOffset(1, descriptionOffset);
-              fbb.finish(fbb.endTable());
-              return object.id;
-            },
-            objectFromFB: (obx.Store store, ByteData fbData) {
-              final buffer = fb.BufferContext(fbData);
-              final rootOffset = buffer.derefObject(0);
-              final idParam =
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-              final descriptionParam =
-                  const fb.StringReader(asciiOptimization: true)
-                      .vTableGet(buffer, rootOffset, 6, '');
-              final object = TraceableRequirementEntity(
-                  id: idParam, description: descriptionParam);
+    TraceableRequirementEntity: obx_int.EntityDefinition<
+            TraceableRequirementEntity>(
+        model: _entities[153],
+        toOneRelations: (TraceableRequirementEntity object) => [],
+        toManyRelations: (TraceableRequirementEntity object) => {},
+        getId: (TraceableRequirementEntity object) => object.id,
+        setId: (TraceableRequirementEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TraceableRequirementEntity object, fb.Builder fbb) {
+          final descriptionOffset = fbb.writeString(object.description);
+          final reqCodeOffset = fbb.writeString(object.reqCode);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, descriptionOffset);
+          fbb.addOffset(2, reqCodeOffset);
+          fbb.addInt64(3, object.dbDevStatus);
+          fbb.addInt64(4, object.sourceStartIndex);
+          fbb.addInt64(5, object.sourceEndIndex);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final reqCodeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final dbDevStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final sourceStartIndexParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12);
+          final sourceEndIndexParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final object = TraceableRequirementEntity(
+              id: idParam,
+              reqCode: reqCodeParam,
+              description: descriptionParam,
+              dbDevStatus: dbDevStatusParam,
+              sourceStartIndex: sourceStartIndexParam,
+              sourceEndIndex: sourceEndIndexParam);
 
-              return object;
-            })
+          return object;
+        })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -19540,6 +19597,14 @@ class TraceabilityTestCaseEntity_ {
   static final description =
       obx.QueryStringProperty<TraceabilityTestCaseEntity>(
           _entities[152].properties[2]);
+
+  /// see [TraceabilityTestCaseEntity.tcCode]
+  static final tcCode = obx.QueryStringProperty<TraceabilityTestCaseEntity>(
+      _entities[152].properties[3]);
+
+  /// see [TraceabilityTestCaseEntity.dbResult]
+  static final dbResult = obx.QueryIntegerProperty<TraceabilityTestCaseEntity>(
+      _entities[152].properties[4]);
 }
 
 /// [TraceableRequirementEntity] entity fields to define ObjectBox queries.
@@ -19552,4 +19617,23 @@ class TraceableRequirementEntity_ {
   static final description =
       obx.QueryStringProperty<TraceableRequirementEntity>(
           _entities[153].properties[1]);
+
+  /// see [TraceableRequirementEntity.reqCode]
+  static final reqCode = obx.QueryStringProperty<TraceableRequirementEntity>(
+      _entities[153].properties[2]);
+
+  /// see [TraceableRequirementEntity.dbDevStatus]
+  static final dbDevStatus =
+      obx.QueryIntegerProperty<TraceableRequirementEntity>(
+          _entities[153].properties[3]);
+
+  /// see [TraceableRequirementEntity.sourceStartIndex]
+  static final sourceStartIndex =
+      obx.QueryIntegerProperty<TraceableRequirementEntity>(
+          _entities[153].properties[4]);
+
+  /// see [TraceableRequirementEntity.sourceEndIndex]
+  static final sourceEndIndex =
+      obx.QueryIntegerProperty<TraceableRequirementEntity>(
+          _entities[153].properties[5]);
 }

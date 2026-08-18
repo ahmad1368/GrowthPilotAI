@@ -6755,7 +6755,7 @@
     },
     {
       "id": "154:6413853769922160731",
-      "lastPropertyId": "3:3006558716930873627",
+      "lastPropertyId": "5:5679356634433227715",
       "name": "TraceabilityTestCaseEntity",
       "properties": [
         {
@@ -6773,13 +6773,23 @@
           "id": "3:3006558716930873627",
           "name": "description",
           "type": 9
+        },
+        {
+          "id": "4:6746234337171441561",
+          "name": "tcCode",
+          "type": 9
+        },
+        {
+          "id": "5:5679356634433227715",
+          "name": "dbResult",
+          "type": 6
         }
       ],
       "relations": []
     },
     {
       "id": "155:6861637638351798257",
-      "lastPropertyId": "2:4840335529288930373",
+      "lastPropertyId": "6:350333459314616608",
       "name": "TraceableRequirementEntity",
       "properties": [
         {
@@ -6792,6 +6802,26 @@
           "id": "2:4840335529288930373",
           "name": "description",
           "type": 9
+        },
+        {
+          "id": "3:7649513166160225094",
+          "name": "reqCode",
+          "type": 9
+        },
+        {
+          "id": "4:3004191712430276674",
+          "name": "dbDevStatus",
+          "type": 6
+        },
+        {
+          "id": "5:3630393141812745593",
+          "name": "sourceStartIndex",
+          "type": 6
+        },
+        {
+          "id": "6:350333459314616608",
+          "name": "sourceEndIndex",
+          "type": 6
         }
       ],
       "relations": []
