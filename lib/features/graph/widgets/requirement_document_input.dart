@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
-import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/document_reprocess_dialog.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// Paste raw document text and analyze it (Issue #231's triage screen
-/// entry point) — no document-upload pipeline is wired to this screen
-/// yet (see PR notes), so this is the honest "manual paste" fallback,
-/// same pattern as Issue #227's sanitization controller input.
+/// Paste raw document text and run it through Issue #232's local
+/// processing orchestrator (Upload -> Clean -> Extract -> Save) — no
+/// document-upload pipeline is wired to this screen yet (see PR notes),
+/// so this is the honest "manual paste" fallback, same pattern as
+/// Issue #227's sanitization controller input.
 class RequirementDocumentInput extends StatefulWidget {
-  final TextSanitizationController sanitizationController;
+  final DocumentProcessingOrchestratorController orchestrator;
   final RequirementTriageController triageController;
 
   const RequirementDocumentInput({
     super.key,
-    required this.sanitizationController,
+    required this.orchestrator,
     required this.triageController,
   });
 
@@ -24,10 +27,19 @@ class RequirementDocumentInput extends StatefulWidget {
 class _RequirementDocumentInputState extends State<RequirementDocumentInput> {
   final _textController = TextEditingController();
 
-  void _analyze() {
-    widget.sanitizationController.sanitize(_textController.text);
-    final sanitized = widget.sanitizationController.result.value?.sanitizedText ?? '';
-    widget.triageController.loadFromText(sanitized);
+  Future<void> _analyze() async {
+    final text = _textController.text;
+    final cached = widget.orchestrator.findCached(text);
+    final reuse = cached == null
+        ? true
+        : await showDialog<bool>(context: context, builder: (_) => const DocumentReprocessDialog()) ??
+            true;
+
+    final record = await widget.orchestrator.process(text, reuseCache: reuse);
+    if (record == null) return;
+
+    widget.triageController.loadFromRecord(record);
+    Get.snackbar('Analysis complete', 'Requirements are ready for review.');
   }
 
   @override
