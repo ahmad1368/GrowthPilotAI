@@ -12,6 +12,17 @@ import 'package:growth_pilot_ai/core/data/repositories/notification_conversion_r
 import 'package:growth_pilot_ai/core/data/entities/embedding_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/project_metrics_snapshot_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/project_metrics_snapshot_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/business_goal_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/traceable_requirement_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traceable_requirement_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/traceability_test_case_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traceability_test_case_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/goal_requirement_link_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/requirement_test_case_link_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/traceability_link_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/requirement_history_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/prompt_click_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/prompt_click_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/ai_response_feedback_entity.dart';
@@ -252,6 +263,28 @@ class DependencyInjection {
       _locator.registerLazySingleton<ProjectMetricsSnapshotRepository>(
         () => ProjectMetricsSnapshotRepository(
             Get.find<ObjectBox>().store.box<ProjectMetricsSnapshotEntity>()),
+      );
+
+      // ۸.۱.۱۶ اسکیمای ردیابی الزامات + لاگ ممیزی (Issue #238)
+      _locator.registerLazySingleton<BusinessGoalRepository>(
+        () => BusinessGoalRepository(Get.find<ObjectBox>().store.box<BusinessGoalEntity>()),
+      );
+      _locator.registerLazySingleton<TraceableRequirementRepository>(
+        () => TraceableRequirementRepository(
+            Get.find<ObjectBox>().store.box<TraceableRequirementEntity>()),
+      );
+      _locator.registerLazySingleton<TraceabilityTestCaseRepository>(
+        () => TraceabilityTestCaseRepository(
+            Get.find<ObjectBox>().store.box<TraceabilityTestCaseEntity>()),
+      );
+      _locator.registerLazySingleton<TraceabilityLinkRepository>(
+        () => TraceabilityLinkRepository(
+            Get.find<ObjectBox>().store.box<GoalRequirementLinkEntity>(),
+            Get.find<ObjectBox>().store.box<RequirementTestCaseLinkEntity>()),
+      );
+      _locator.registerLazySingleton<RequirementHistoryRepository>(
+        () => RequirementHistoryRepository(
+            Get.find<ObjectBox>().store.box<RequirementHistoryEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
