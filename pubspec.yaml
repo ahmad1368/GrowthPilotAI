@@ -40,6 +40,7 @@ dependencies:
 
   # --- Networking & Connectivity ---
   connectivity_plus: ^6.0.3
+  webview_flutter: ^4.7.0
 
   # --- AI & Machine Learning ---
   google_mlkit_text_recognition: ^0.15.1
