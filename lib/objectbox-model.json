@@ -6789,7 +6789,7 @@
     },
     {
       "id": "155:6861637638351798257",
-      "lastPropertyId": "6:350333459314616608",
+      "lastPropertyId": "7:1359488105069414411",
       "name": "TraceableRequirementEntity",
       "properties": [
         {
@@ -6821,6 +6821,11 @@
         {
           "id": "6:350333459314616608",
           "name": "sourceEndIndex",
+          "type": 6
+        },
+        {
+          "id": "7:1359488105069414411",
+          "name": "dbMoscowPriority",
           "type": 6
         }
       ],
