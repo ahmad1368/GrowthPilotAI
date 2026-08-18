@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/business/deduplicate_requirements.dart';
 import 'package:growth_pilot_ai/business/extract_requirements_from_text.dart';
 import 'package:growth_pilot_ai/controllers/requirement_batch_selection_mixin.dart';
 import 'package:growth_pilot_ai/controllers/requirement_reject_undo_mixin.dart';
+import 'package:growth_pilot_ai/controllers/requirement_type_filter_mixin.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_moscow_priority.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_triage_status.dart';
 import 'package:growth_pilot_ai/core/models/document_processing_record.dart';
@@ -14,7 +15,7 @@ import 'package:growth_pilot_ai/core/models/extracted_requirement.dart';
 /// a card to highlight its span in the [sourceText] (Issue #231's
 /// "Smart Highlighting"). Batch-selection and reject-undo are mixed in.
 class RequirementTriageController extends GetxController
-    with RequirementRejectUndoMixin, RequirementBatchSelectionMixin {
+    with RequirementRejectUndoMixin, RequirementBatchSelectionMixin, RequirementTypeFilterMixin {
   @override
   final requirements = <ExtractedRequirement>[].obs;
   final sourceText = ''.obs;
@@ -35,6 +36,7 @@ class RequirementTriageController extends GetxController
     requirements.assignAll(loaded);
     selectedIndex.value = null;
     batchSelected.clear();
+    typeFilter.value = null;
     resetUndo();
   }
 
