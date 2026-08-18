@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
+import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/link_to_goal_dialog.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_edit_dialog.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_triage_card.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_type_filter_chip.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// The "Requirement Triage" screen's card list (Issue #228/#231/#234)
-/// — respects [RequirementTriageController.typeFilter] for the
+/// The "Requirement Triage" screen's card list (Issue #228/#231/#234/
+/// #242) — respects [RequirementTriageController.typeFilter] for the
 /// dashboard's drill-down.
 class RequirementTriageList extends StatelessWidget {
   final RequirementTriageController controller;
@@ -21,6 +23,15 @@ class RequirementTriageList extends StatelessWidget {
           initialDescription: controller.requirements[index].description),
     );
     if (edited != null && edited.trim().isNotEmpty) controller.edit(index, edited);
+  }
+
+  Future<void> _linkToGoal(BuildContext context, int index) async {
+    final traceability = Get.find<TraceabilityController>();
+    final goalId = await showDialog<int>(
+        context: context, builder: (_) => LinkToGoalDialog(controller: traceability));
+    if (goalId != null) {
+      traceability.linkExtractedRequirementToGoal(controller.requirements[index], goalId);
+    }
   }
 
   @override
@@ -46,6 +57,7 @@ class RequirementTriageList extends StatelessWidget {
               onConfirm: () => controller.confirm(i),
               onReject: () => controller.reject(i),
               onEdit: () => _editAt(context, i),
+              onLinkToGoal: () => _linkToGoal(context, i),
               onPriorityChanged: (p) => controller.overridePriority(i, p),
               onStakeholderChanged: (s) => controller.overrideStakeholder(i, s),
             ),

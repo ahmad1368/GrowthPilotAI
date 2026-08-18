@@ -19,6 +19,7 @@ class RequirementTriageCard extends StatelessWidget {
   final VoidCallback onConfirm;
   final VoidCallback onReject;
   final VoidCallback onEdit;
+  final VoidCallback? onLinkToGoal;
   final ValueChanged<RequirementMoscowPriority> onPriorityChanged;
   final ValueChanged<String> onStakeholderChanged;
 
@@ -32,6 +33,7 @@ class RequirementTriageCard extends StatelessWidget {
     required this.onConfirm,
     required this.onReject,
     required this.onEdit,
+    this.onLinkToGoal,
     required this.onPriorityChanged,
     required this.onStakeholderChanged,
   });
@@ -63,7 +65,8 @@ class RequirementTriageCard extends StatelessWidget {
               onStakeholderChanged: onStakeholderChanged,
             ),
             const SizedBox(height: 8),
-            RequirementTriageActions(onConfirm: onConfirm, onEdit: onEdit, onReject: onReject),
+            RequirementTriageActions(
+                onConfirm: onConfirm, onEdit: onEdit, onReject: onReject, onLinkToGoal: onLinkToGoal),
           ],
         ),
       ),

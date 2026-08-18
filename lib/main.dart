@@ -37,12 +37,6 @@ import 'package:growth_pilot_ai/features/ai_engine/screens/ai_engine_screen.dart
 import 'package:growth_pilot_ai/features/graph/screens/requirement_triage_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/kpi_dashboard_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/traceability_navigator_screen.dart';
-import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
-import 'package:growth_pilot_ai/core/data/repositories/business_goal_repository.dart';
-import 'package:growth_pilot_ai/core/data/repositories/traceable_requirement_repository.dart';
-import 'package:growth_pilot_ai/core/data/repositories/traceability_test_case_repository.dart';
-import 'package:growth_pilot_ai/core/data/repositories/traceability_link_repository.dart';
-import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
 import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
@@ -195,15 +189,6 @@ class MyApp extends StatelessWidget {
               name: '/requirements/traceability',
               page: () => const TraceabilityNavigatorScreen(),
               middlewares: [ModuleAccessMiddleware()],
-              binding: BindingsBuilder(() {
-                Get.lazyPut(() => TraceabilityController(
-                      DependencyInjection.get<BusinessGoalRepository>(),
-                      DependencyInjection.get<TraceableRequirementRepository>(),
-                      DependencyInjection.get<TraceabilityTestCaseRepository>(),
-                      DependencyInjection.get<TraceabilityLinkRepository>(),
-                      DependencyInjection.get<RequirementHistoryRepository>(),
-                    ));
-              }),
             ),
             GetPage(
               name: '/business-compass',
