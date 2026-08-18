@@ -5,6 +5,7 @@ import 'package:growth_pilot_ai/controllers/requirement_batch_selection_mixin.da
 import 'package:growth_pilot_ai/controllers/requirement_reject_undo_mixin.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_moscow_priority.dart';
 import 'package:growth_pilot_ai/core/enum/requirement_triage_status.dart';
+import 'package:growth_pilot_ai/core/models/document_processing_record.dart';
 import 'package:growth_pilot_ai/core/models/extracted_requirement.dart';
 
 /// Drives the "Requirement Triage" screen (Issue #228/#229/#231) —
@@ -20,9 +21,18 @@ class RequirementTriageController extends GetxController
   final selectedIndex = RxnInt();
 
   void loadFromText(String sanitizedText) {
-    sourceText.value = sanitizedText;
     final extracted = ExtractRequirementsFromText.call(sanitizedText);
-    requirements.assignAll(DeduplicateRequirements.call(extracted));
+    _load(sanitizedText, DeduplicateRequirements.call(extracted));
+  }
+
+  /// Loads an already-processed result (Issue #232's orchestrator
+  /// output), skipping re-extraction entirely.
+  void loadFromRecord(DocumentProcessingRecord record) =>
+      _load(record.sanitizedText, record.requirements);
+
+  void _load(String sanitizedText, List<ExtractedRequirement> loaded) {
+    sourceText.value = sanitizedText;
+    requirements.assignAll(loaded);
     selectedIndex.value = null;
     batchSelected.clear();
     resetUndo();
