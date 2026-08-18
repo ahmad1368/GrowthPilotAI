@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:growth_pilot_ai/business/should_warn_before_leaving_canvas.dart';
 import 'package:growth_pilot_ai/controllers/visual_modeling_bridge_controller.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/export_preview_bottom_sheet.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_edit_bottom_sheet.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/save_status_indicator.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// "Visual Modeling" screen hosting the `FlutterBridge` WebView (Issue
-/// #220/#221) — `webview_flutter` has no Web-platform implementation
+/// #220/#221/#222) — `webview_flutter` has no Web-platform implementation
 /// bundled here, so on Web this shows a flat fallback instead of
 /// failing to compile/render (architecture rule: guard native-only
 /// packages with `kIsWeb`).
@@ -33,6 +34,13 @@ class VisualModelingScreen extends StatelessWidget {
       await showModalBottomSheet<String>(
         context: context,
         builder: (_) => RequirementEditBottomSheet(initialLabel: label),
+      );
+    });
+    ever(controller.exportReady, (payload) {
+      if (payload == null) return;
+      showModalBottomSheet<void>(
+        context: context,
+        builder: (_) => ExportPreviewBottomSheet(payload: payload),
       );
     });
 
