@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_requirement_history_entry.dart';
 import 'package:growth_pilot_ai/business/generate_traceability_code.dart';
+import 'package:growth_pilot_ai/controllers/traceability_gap_analysis_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_goal_deletion_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_lookup_mixin.dart';
+import 'package:growth_pilot_ai/controllers/traceability_matrix_link_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_status_mixin.dart';
 import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceability_test_case_entity.dart';
@@ -20,7 +22,12 @@ import 'package:growth_pilot_ai/core/models/extracted_requirement.dart';
 /// every requirement link. Read-queries, goal-deletion, and dev-
 /// status/result mutation are mixed in.
 class TraceabilityController extends GetxController
-    with TraceabilityLookupMixin, TraceabilityGoalDeletionMixin, TraceabilityStatusMixin {
+    with
+        TraceabilityLookupMixin,
+        TraceabilityGoalDeletionMixin,
+        TraceabilityStatusMixin,
+        TraceabilityGapAnalysisMixin,
+        TraceabilityMatrixLinkMixin {
   @override
   final BusinessGoalRepository goalRepository;
   @override
@@ -35,6 +42,7 @@ class TraceabilityController extends GetxController
   TraceabilityController(this.goalRepository, this.requirementRepository,
       this.testCaseRepository, this.linkRepository, this.historyRepository);
 
+  @override
   final goalList = <BusinessGoalEntity>[].obs;
   @override
   final requirementList = <TraceableRequirementEntity>[].obs;
@@ -85,6 +93,7 @@ class TraceabilityController extends GetxController
       description: requirement.description,
       sourceStartIndex: requirement.startIndex,
       sourceEndIndex: requirement.endIndex,
+      dbMoscowPriority: requirement.moscowPriority.index,
     ));
     _linkAndRecordHistory(requirementId, requirement.description, goalId);
     return requirementId;

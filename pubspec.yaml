@@ -31,6 +31,7 @@ dependencies:
   fl_chart: ^0.66.0
   flutter_animate: ^4.5.0
   graphview: ^1.2.0
+  two_dimensional_scrollables: ^0.5.3
 
   # --- Database & Persistence ---
   objectbox: ^2.5.1

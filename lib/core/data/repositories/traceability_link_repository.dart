@@ -38,8 +38,18 @@ class TraceabilityLinkRepository {
     return _testCaseLinks.getAll().where((l) => l.requirement.targetId == requirementId).toList();
   }
 
+  List<RequirementTestCaseLinkEntity> allTestCaseLinks() => _testCaseLinks.getAll();
+
   void removeGoalLinks(int goalId) {
     for (final link in goalLinksFor(goalId: goalId)) {
+      _goalLinks.remove(link.id);
+    }
+  }
+
+  /// "Interactive Intersections... clicking it should create or remove
+  /// a relationship" (Issue #239).
+  void unlinkGoalFromRequirement(int goalId, int requirementId) {
+    for (final link in goalLinksFor(goalId: goalId, requirementId: requirementId)) {
       _goalLinks.remove(link.id);
     }
   }

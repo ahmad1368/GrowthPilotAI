@@ -26,7 +26,17 @@ class _TraceabilityNavigatorScreenState extends State<TraceabilityNavigatorScree
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: const Text('Traceability Navigator'), backgroundColor: colors.background),
+      appBar: AppBar(
+        title: const Text('Traceability Navigator'),
+        backgroundColor: colors.background,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.grid_on_outlined),
+            tooltip: 'Matrix View',
+            onPressed: () => Get.toNamed('/requirements/traceability/matrix'),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
