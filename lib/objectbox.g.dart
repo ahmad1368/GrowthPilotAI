@@ -122,6 +122,7 @@ import 'core/data/entities/procurement_request_entity.dart';
 import 'core/data/entities/procurement_response_entity.dart';
 import 'core/data/entities/product_form_draft_entity.dart';
 import 'core/data/entities/product_listing_details_entity.dart';
+import 'core/data/entities/project_metrics_snapshot_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/prompt_click_entity.dart';
@@ -6549,6 +6550,100 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(149, 959340033138542412),
+      name: 'ProjectMetricsSnapshotEntity',
+      lastPropertyId: const obx_int.IdUid(17, 3102695123724746413),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7310430895969017571),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7940051456366356161),
+            name: 'capturedAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2987943975060963285),
+            name: 'functionalCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6944950963690546051),
+            name: 'nonFunctionalCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 138694212368900755),
+            name: 'technicalCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6308664682159730226),
+            name: 'businessRuleCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7137305908545090426),
+            name: 'volatilityRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1399604135848618035),
+            name: 'riskScore',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6137744668418666034),
+            name: 'roiEstimate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 8200346347137842195),
+            name: 'complexityIndex',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 1295111121417837350),
+            name: 'completenessRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 8581875962838230146),
+            name: 'engagementRate',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 7600733558311308235),
+            name: 'riskLow',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 5320708575433892173),
+            name: 'riskMedium',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 9183697285791467588),
+            name: 'riskHigh',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 8719056721898318568),
+            name: 'healthScore',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 3102695123724746413),
+            name: 'healthLetter',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6587,7 +6682,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(148, 7171199628447014332),
+      lastEntityId: const obx_int.IdUid(149, 959340033138542412),
       lastIndexId: const obx_int.IdUid(150, 7397153665969592866),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -14176,7 +14271,98 @@ obx_int.ModelDefinition getObjectBoxModel() {
               detectedAt: detectedAtParam);
 
           return object;
-        })
+        }),
+    ProjectMetricsSnapshotEntity:
+        obx_int.EntityDefinition<ProjectMetricsSnapshotEntity>(
+            model: _entities[147],
+            toOneRelations: (ProjectMetricsSnapshotEntity object) => [],
+            toManyRelations: (ProjectMetricsSnapshotEntity object) => {},
+            getId: (ProjectMetricsSnapshotEntity object) => object.id,
+            setId: (ProjectMetricsSnapshotEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ProjectMetricsSnapshotEntity object, fb.Builder fbb) {
+              final healthLetterOffset = fbb.writeString(object.healthLetter);
+              fbb.startTable(18);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.capturedAt.millisecondsSinceEpoch);
+              fbb.addInt64(2, object.functionalCount);
+              fbb.addInt64(3, object.nonFunctionalCount);
+              fbb.addInt64(4, object.technicalCount);
+              fbb.addInt64(5, object.businessRuleCount);
+              fbb.addFloat64(6, object.volatilityRate);
+              fbb.addFloat64(7, object.riskScore);
+              fbb.addFloat64(8, object.roiEstimate);
+              fbb.addFloat64(9, object.complexityIndex);
+              fbb.addFloat64(10, object.completenessRate);
+              fbb.addFloat64(11, object.engagementRate);
+              fbb.addInt64(12, object.riskLow);
+              fbb.addInt64(13, object.riskMedium);
+              fbb.addInt64(14, object.riskHigh);
+              fbb.addFloat64(15, object.healthScore);
+              fbb.addOffset(16, healthLetterOffset);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final capturedAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
+              final functionalCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final nonFunctionalCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+              final technicalCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              final businessRuleCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+              final volatilityRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+              final riskScoreParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
+              final roiEstimateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              final complexityIndexParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
+              final completenessRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0);
+              final engagementRateParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 26, 0);
+              final riskLowParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+              final riskMediumParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+              final riskHighParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+              final healthScoreParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 34, 0);
+              final healthLetterParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 36, '');
+              final object = ProjectMetricsSnapshotEntity(
+                  id: idParam,
+                  capturedAt: capturedAtParam,
+                  functionalCount: functionalCountParam,
+                  nonFunctionalCount: nonFunctionalCountParam,
+                  technicalCount: technicalCountParam,
+                  businessRuleCount: businessRuleCountParam,
+                  volatilityRate: volatilityRateParam,
+                  riskScore: riskScoreParam,
+                  roiEstimate: roiEstimateParam,
+                  complexityIndex: complexityIndexParam,
+                  completenessRate: completenessRateParam,
+                  engagementRate: engagementRateParam,
+                  riskLow: riskLowParam,
+                  riskMedium: riskMediumParam,
+                  riskHigh: riskHighParam,
+                  healthScore: healthScoreParam,
+                  healthLetter: healthLetterParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -18763,4 +18949,89 @@ class SecurityIncidentEntity_ {
   /// see [SecurityIncidentEntity.detectedAt]
   static final detectedAt = obx.QueryDateProperty<SecurityIncidentEntity>(
       _entities[146].properties[4]);
+}
+
+/// [ProjectMetricsSnapshotEntity] entity fields to define ObjectBox queries.
+class ProjectMetricsSnapshotEntity_ {
+  /// see [ProjectMetricsSnapshotEntity.id]
+  static final id = obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+      _entities[147].properties[0]);
+
+  /// see [ProjectMetricsSnapshotEntity.capturedAt]
+  static final capturedAt = obx.QueryDateProperty<ProjectMetricsSnapshotEntity>(
+      _entities[147].properties[1]);
+
+  /// see [ProjectMetricsSnapshotEntity.functionalCount]
+  static final functionalCount =
+      obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[2]);
+
+  /// see [ProjectMetricsSnapshotEntity.nonFunctionalCount]
+  static final nonFunctionalCount =
+      obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[3]);
+
+  /// see [ProjectMetricsSnapshotEntity.technicalCount]
+  static final technicalCount =
+      obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[4]);
+
+  /// see [ProjectMetricsSnapshotEntity.businessRuleCount]
+  static final businessRuleCount =
+      obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[5]);
+
+  /// see [ProjectMetricsSnapshotEntity.volatilityRate]
+  static final volatilityRate =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[6]);
+
+  /// see [ProjectMetricsSnapshotEntity.riskScore]
+  static final riskScore =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[7]);
+
+  /// see [ProjectMetricsSnapshotEntity.roiEstimate]
+  static final roiEstimate =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[8]);
+
+  /// see [ProjectMetricsSnapshotEntity.complexityIndex]
+  static final complexityIndex =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[9]);
+
+  /// see [ProjectMetricsSnapshotEntity.completenessRate]
+  static final completenessRate =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[10]);
+
+  /// see [ProjectMetricsSnapshotEntity.engagementRate]
+  static final engagementRate =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[11]);
+
+  /// see [ProjectMetricsSnapshotEntity.riskLow]
+  static final riskLow = obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+      _entities[147].properties[12]);
+
+  /// see [ProjectMetricsSnapshotEntity.riskMedium]
+  static final riskMedium =
+      obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[13]);
+
+  /// see [ProjectMetricsSnapshotEntity.riskHigh]
+  static final riskHigh =
+      obx.QueryIntegerProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[14]);
+
+  /// see [ProjectMetricsSnapshotEntity.healthScore]
+  static final healthScore =
+      obx.QueryDoubleProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[15]);
+
+  /// see [ProjectMetricsSnapshotEntity.healthLetter]
+  static final healthLetter =
+      obx.QueryStringProperty<ProjectMetricsSnapshotEntity>(
+          _entities[147].properties[16]);
 }

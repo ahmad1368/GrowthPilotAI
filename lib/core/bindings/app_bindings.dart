@@ -7,6 +7,8 @@ import 'package:growth_pilot_ai/controllers/project_metrics_controller.dart';
 import 'package:growth_pilot_ai/controllers/quiet_hours_controller.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
+import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
+import 'package:growth_pilot_ai/core/data/repositories/project_metrics_snapshot_repository.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_scanner_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_text_extractor_service.dart';
@@ -36,11 +38,14 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => DocumentScannerService(), fenix: true);
     Get.lazyPut(() => DocumentTextExtractorService(), fenix: true);
 
-    // Issue #231-#234: پایپلاین Requirement Triage + KPI Dashboard —
+    // Issue #231-#234/#237: پایپلاین Requirement Triage + KPI Dashboard —
     // fenix:true تا صفحه‌ی Dashboard و صفحه‌ی Triage یک وضعیت مشترک ببینن
     Get.lazyPut(() => RequirementTriageController(), fenix: true);
     Get.lazyPut(() => TextSanitizationController(), fenix: true);
     Get.lazyPut(() => DocumentProcessingOrchestratorController(Get.find()), fenix: true);
-    Get.lazyPut(() => ProjectMetricsController(), fenix: true);
+    Get.lazyPut(
+      () => ProjectMetricsController(DependencyInjection.get<ProjectMetricsSnapshotRepository>()),
+      fenix: true,
+    );
   }
 }

@@ -6520,9 +6520,103 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "149:959340033138542412",
+      "lastPropertyId": "17:3102695123724746413",
+      "name": "ProjectMetricsSnapshotEntity",
+      "properties": [
+        {
+          "id": "1:7310430895969017571",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7940051456366356161",
+          "name": "capturedAt",
+          "type": 10
+        },
+        {
+          "id": "3:2987943975060963285",
+          "name": "functionalCount",
+          "type": 6
+        },
+        {
+          "id": "4:6944950963690546051",
+          "name": "nonFunctionalCount",
+          "type": 6
+        },
+        {
+          "id": "5:138694212368900755",
+          "name": "technicalCount",
+          "type": 6
+        },
+        {
+          "id": "6:6308664682159730226",
+          "name": "businessRuleCount",
+          "type": 6
+        },
+        {
+          "id": "7:7137305908545090426",
+          "name": "volatilityRate",
+          "type": 8
+        },
+        {
+          "id": "8:1399604135848618035",
+          "name": "riskScore",
+          "type": 8
+        },
+        {
+          "id": "9:6137744668418666034",
+          "name": "roiEstimate",
+          "type": 8
+        },
+        {
+          "id": "10:8200346347137842195",
+          "name": "complexityIndex",
+          "type": 8
+        },
+        {
+          "id": "11:1295111121417837350",
+          "name": "completenessRate",
+          "type": 8
+        },
+        {
+          "id": "12:8581875962838230146",
+          "name": "engagementRate",
+          "type": 8
+        },
+        {
+          "id": "13:7600733558311308235",
+          "name": "riskLow",
+          "type": 6
+        },
+        {
+          "id": "14:5320708575433892173",
+          "name": "riskMedium",
+          "type": 6
+        },
+        {
+          "id": "15:9183697285791467588",
+          "name": "riskHigh",
+          "type": 6
+        },
+        {
+          "id": "16:8719056721898318568",
+          "name": "healthScore",
+          "type": 8
+        },
+        {
+          "id": "17:3102695123724746413",
+          "name": "healthLetter",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "148:7171199628447014332",
+  "lastEntityId": "149:959340033138542412",
   "lastIndexId": "150:7397153665969592866",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
