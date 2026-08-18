@@ -10,6 +10,8 @@ import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_reposi
 import 'package:growth_pilot_ai/core/data/entities/notification_conversion_event_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/notification_conversion_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/embedding_entity.dart';
+import 'package:growth_pilot_ai/core/data/entities/project_metrics_snapshot_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/project_metrics_snapshot_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/prompt_click_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/prompt_click_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/ai_response_feedback_entity.dart';
@@ -244,6 +246,12 @@ class DependencyInjection {
       _locator.registerLazySingleton<BreachNotificationLogRepository>(
         () => BreachNotificationLogRepository(
             Get.find<ObjectBox>().store.box<BreachNotificationLogEntity>()),
+      );
+
+      // ۸.۱.۱۵ ماندگاری آفلاین KPI Dashboard (Issue #237؛ ObjectBox به‌جای Hive)
+      _locator.registerLazySingleton<ProjectMetricsSnapshotRepository>(
+        () => ProjectMetricsSnapshotRepository(
+            Get.find<ObjectBox>().store.box<ProjectMetricsSnapshotEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)
