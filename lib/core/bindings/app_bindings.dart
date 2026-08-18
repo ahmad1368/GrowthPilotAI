@@ -4,6 +4,8 @@ import 'package:growth_pilot_ai/controllers/notification_preference_controller.d
 import 'package:growth_pilot_ai/controllers/performance_controller.dart';
 import 'package:growth_pilot_ai/controllers/quiet_hours_controller.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
+import 'package:growth_pilot_ai/core/services/ocr/document_scanner_service.dart';
+import 'package:growth_pilot_ai/core/services/ocr/document_text_extractor_service.dart';
 import '../../services/connectivity_service.dart';
 import '../../services/environment_service.dart';
 import '../../services/scanner/scanner_service.dart';
@@ -26,5 +28,8 @@ class AppBindings extends Bindings {
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);
     Get.lazyPut(() => ScannerService(), fenix: true);
+    // Issue #226/#227: اسکن مستندات کسب‌وکار (غیر از رسید) + OCR عمومی
+    Get.lazyPut(() => DocumentScannerService(), fenix: true);
+    Get.lazyPut(() => DocumentTextExtractorService(), fenix: true);
   }
 }
