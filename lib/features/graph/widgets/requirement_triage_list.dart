@@ -36,6 +36,8 @@ class RequirementTriageList extends StatelessWidget {
               onConfirm: () => controller.confirm(i),
               onReject: () => controller.reject(i),
               onEdit: () => _editAt(context, i),
+              onPriorityChanged: (p) => controller.overridePriority(i, p),
+              onStakeholderChanged: (s) => controller.overrideStakeholder(i, s),
             ),
         ],
       );
