@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
+import 'package:growth_pilot_ai/controllers/project_metrics_controller.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/document_reprocess_dialog.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -13,11 +14,13 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 class RequirementDocumentInput extends StatefulWidget {
   final DocumentProcessingOrchestratorController orchestrator;
   final RequirementTriageController triageController;
+  final ProjectMetricsController metricsController;
 
   const RequirementDocumentInput({
     super.key,
     required this.orchestrator,
     required this.triageController,
+    required this.metricsController,
   });
 
   @override
@@ -39,6 +42,7 @@ class _RequirementDocumentInputState extends State<RequirementDocumentInput> {
     if (record == null) return;
 
     widget.triageController.loadFromRecord(record);
+    widget.metricsController.recompute(record.requirements);
     Get.snackbar('Analysis complete', 'Requirements are ready for review.');
   }
 

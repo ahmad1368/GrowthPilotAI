@@ -38,6 +38,7 @@ import 'package:growth_pilot_ai/features/graph/screens/requirement_triage_screen
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
 import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
+import 'package:growth_pilot_ai/controllers/project_metrics_controller.dart';
 import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
@@ -184,6 +185,7 @@ class MyApp extends StatelessWidget {
                 Get.lazyPut(() => RequirementTriageController());
                 Get.lazyPut(() => TextSanitizationController());
                 Get.lazyPut(() => DocumentProcessingOrchestratorController(Get.find()));
+                Get.lazyPut(() => ProjectMetricsController());
               }),
             ),
             GetPage(
