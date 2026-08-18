@@ -8,8 +8,8 @@ import 'package:growth_pilot_ai/core/enum/requirement_type.dart';
 /// description/type/indicator/priority_hint), extended with Issue
 /// #229's `priority` (MoSCoW) and `stakeholder` fields, plus
 /// [startIndex]/[endIndex] into the source `sanitized_text` (the AC's
-/// "View in Source" link) and this app's own local [status] for the
-/// triage flow.
+/// "View in Source" link), Issue #231's [confidence] heatmap value, and
+/// this app's own local [status] for the triage flow.
 @immutable
 class ExtractedRequirement {
   final String description;
@@ -20,6 +20,7 @@ class ExtractedRequirement {
   final String stakeholder;
   final int startIndex;
   final int endIndex;
+  final double confidence;
   final RequirementTriageStatus status;
 
   const ExtractedRequirement({
@@ -31,6 +32,7 @@ class ExtractedRequirement {
     required this.stakeholder,
     required this.startIndex,
     required this.endIndex,
+    required this.confidence,
     this.status = RequirementTriageStatus.pending,
   });
 
@@ -49,6 +51,7 @@ class ExtractedRequirement {
       stakeholder: stakeholder ?? this.stakeholder,
       startIndex: startIndex,
       endIndex: endIndex,
+      confidence: confidence,
       status: status ?? this.status,
     );
   }

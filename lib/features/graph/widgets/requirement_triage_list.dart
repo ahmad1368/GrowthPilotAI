@@ -5,7 +5,7 @@ import 'package:growth_pilot_ai/features/graph/widgets/requirement_edit_dialog.d
 import 'package:growth_pilot_ai/features/graph/widgets/requirement_triage_card.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-/// The "Requirement Triage" screen's card list (Issue #228).
+/// The "Requirement Triage" screen's card list (Issue #228/#231).
 class RequirementTriageList extends StatelessWidget {
   final RequirementTriageController controller;
 
@@ -33,6 +33,10 @@ class RequirementTriageList extends StatelessWidget {
           for (var i = 0; i < controller.requirements.length; i++)
             RequirementTriageCard(
               requirement: controller.requirements[i],
+              isSelected: controller.selectedIndex.value == i,
+              isBatchSelected: controller.batchSelected.contains(i),
+              onTap: () => controller.selectRequirement(i),
+              onBatchToggle: (_) => controller.toggleBatchSelected(i),
               onConfirm: () => controller.confirm(i),
               onReject: () => controller.reject(i),
               onEdit: () => _editAt(context, i),

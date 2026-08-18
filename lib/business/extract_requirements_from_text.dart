@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/business/classify_requirement_type.dart';
 import 'package:growth_pilot_ai/business/find_requirement_indicator.dart';
 import 'package:growth_pilot_ai/business/guess_requirement_stakeholder.dart';
 import 'package:growth_pilot_ai/business/map_priority_hint_to_moscow.dart';
+import 'package:growth_pilot_ai/business/score_requirement_confidence.dart';
 import 'package:growth_pilot_ai/business/split_text_into_sentence_spans.dart';
 import 'package:growth_pilot_ai/core/models/extracted_requirement.dart';
 
@@ -33,6 +34,7 @@ class ExtractRequirementsFromText {
         stakeholder: GuessRequirementStakeholder.call(span.text),
         startIndex: span.start,
         endIndex: span.end,
+        confidence: ScoreRequirementConfidence.call(indicator),
       ));
     }
     return requirements;
