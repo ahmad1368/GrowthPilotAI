@@ -40,6 +40,7 @@ import 'core/data/entities/block_entity.dart';
 import 'core/data/entities/breach_notification_log_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/business_contact_visibility_entity.dart';
+import 'core/data/entities/business_goal_entity.dart';
 import 'core/data/entities/business_rating_entity.dart';
 import 'core/data/entities/cap_expansion_request_entity.dart';
 import 'core/data/entities/catalog_listing_entity.dart';
@@ -74,6 +75,7 @@ import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/fee_waiver_record_entity.dart';
 import 'core/data/entities/forecast_accuracy_report_entity.dart';
 import 'core/data/entities/geofence_zone_entity.dart';
+import 'core/data/entities/goal_requirement_link_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
 import 'core/data/entities/group_purchase_contribution_entity.dart';
 import 'core/data/entities/group_purchase_entity.dart';
@@ -132,6 +134,8 @@ import 'core/data/entities/recommendation_log_entity.dart';
 import 'core/data/entities/referral_invite_entity.dart';
 import 'core/data/entities/referral_reward_entity.dart';
 import 'core/data/entities/registered_user_directory_entity.dart';
+import 'core/data/entities/requirement_history_entity.dart';
+import 'core/data/entities/requirement_test_case_link_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
@@ -148,6 +152,8 @@ import 'core/data/entities/strike_entity.dart';
 import 'core/data/entities/subscription_entity.dart';
 import 'core/data/entities/task_execution_log_entity.dart';
 import 'core/data/entities/telemetry_event_entity.dart';
+import 'core/data/entities/traceability_test_case_entity.dart';
+import 'core/data/entities/traceable_requirement_entity.dart';
 import 'core/data/entities/traffic_count_entity.dart';
 import 'core/data/entities/traffic_steering_directive_entity.dart';
 import 'core/data/entities/transaction_entity.dart';
@@ -6644,6 +6650,181 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(150, 3524418436297156260),
+      name: 'BusinessGoalEntity',
+      lastPropertyId: const obx_int.IdUid(3, 2427968892694616060),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1422072689018978732),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4094168682274488239),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2427968892694616060),
+            name: 'description',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(151, 7752334851037719729),
+      name: 'GoalRequirementLinkEntity',
+      lastPropertyId: const obx_int.IdUid(3, 2979022693973208869),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7937421139033549090),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4087050734416741520),
+            name: 'goalId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(151, 3493703908838898785),
+            relationTarget: 'BusinessGoalEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2979022693973208869),
+            name: 'requirementId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(152, 2005082369874319996),
+            relationTarget: 'TraceableRequirementEntity')
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(152, 883816729503919870),
+      name: 'RequirementHistoryEntity',
+      lastPropertyId: const obx_int.IdUid(8, 6848584528756434723),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3354021654499924271),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8379922575051746519),
+            name: 'requirementId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(153, 685293569417280523),
+            relationTarget: 'TraceableRequirementEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1530608278234059416),
+            name: 'dbChangeType',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6565181568953168996),
+            name: 'changedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(154, 2622083066138665501)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4386916097987372054),
+            name: 'changedBy',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 6002039129508121081),
+            name: 'oldValue',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 5975049855306677376),
+            name: 'newValue',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 6848584528756434723),
+            name: 'reasonForChange',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(153, 7208150017847575378),
+      name: 'RequirementTestCaseLinkEntity',
+      lastPropertyId: const obx_int.IdUid(3, 2310645666473626163),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 156014364539997225),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1157200476581923816),
+            name: 'requirementId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(155, 5020301354298032354),
+            relationTarget: 'TraceableRequirementEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2310645666473626163),
+            name: 'testCaseId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(156, 544195343562718844),
+            relationTarget: 'TraceabilityTestCaseEntity')
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(154, 6413853769922160731),
+      name: 'TraceabilityTestCaseEntity',
+      lastPropertyId: const obx_int.IdUid(3, 3006558716930873627),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 6261449227501156407),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4071448615241403190),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3006558716930873627),
+            name: 'description',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(155, 6861637638351798257),
+      name: 'TraceableRequirementEntity',
+      lastPropertyId: const obx_int.IdUid(2, 4840335529288930373),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1386810350276203499),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4840335529288930373),
+            name: 'description',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6682,8 +6863,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(149, 959340033138542412),
-      lastIndexId: const obx_int.IdUid(150, 7397153665969592866),
+      lastEntityId: const obx_int.IdUid(155, 6861637638351798257),
+      lastIndexId: const obx_int.IdUid(156, 544195343562718844),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -14362,6 +14543,231 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   healthLetter: healthLetterParam);
 
               return object;
+            }),
+    BusinessGoalEntity: obx_int.EntityDefinition<BusinessGoalEntity>(
+        model: _entities[148],
+        toOneRelations: (BusinessGoalEntity object) => [],
+        toManyRelations: (BusinessGoalEntity object) => {},
+        getId: (BusinessGoalEntity object) => object.id,
+        setId: (BusinessGoalEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BusinessGoalEntity object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          final descriptionOffset = fbb.writeString(object.description);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, titleOffset);
+          fbb.addOffset(2, descriptionOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final object = BusinessGoalEntity(
+              id: idParam, title: titleParam, description: descriptionParam);
+
+          return object;
+        }),
+    GoalRequirementLinkEntity:
+        obx_int.EntityDefinition<GoalRequirementLinkEntity>(
+            model: _entities[149],
+            toOneRelations: (GoalRequirementLinkEntity object) =>
+                [object.goal, object.requirement],
+            toManyRelations: (GoalRequirementLinkEntity object) => {},
+            getId: (GoalRequirementLinkEntity object) => object.id,
+            setId: (GoalRequirementLinkEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (GoalRequirementLinkEntity object, fb.Builder fbb) {
+              fbb.startTable(4);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.goal.targetId);
+              fbb.addInt64(2, object.requirement.targetId);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final object = GoalRequirementLinkEntity(id: idParam);
+              object.goal.targetId =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              object.goal.attach(store);
+              object.requirement.targetId =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              object.requirement.attach(store);
+              return object;
+            }),
+    RequirementHistoryEntity: obx_int.EntityDefinition<
+            RequirementHistoryEntity>(
+        model: _entities[150],
+        toOneRelations: (RequirementHistoryEntity object) =>
+            [object.requirement],
+        toManyRelations: (RequirementHistoryEntity object) => {},
+        getId: (RequirementHistoryEntity object) => object.id,
+        setId: (RequirementHistoryEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (RequirementHistoryEntity object, fb.Builder fbb) {
+          final changedByOffset = fbb.writeString(object.changedBy);
+          final oldValueOffset = object.oldValue == null
+              ? null
+              : fbb.writeString(object.oldValue!);
+          final newValueOffset = object.newValue == null
+              ? null
+              : fbb.writeString(object.newValue!);
+          final reasonForChangeOffset = fbb.writeString(object.reasonForChange);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.requirement.targetId);
+          fbb.addInt64(2, object.dbChangeType);
+          fbb.addInt64(3, object.changedAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, changedByOffset);
+          fbb.addOffset(5, oldValueOffset);
+          fbb.addOffset(6, newValueOffset);
+          fbb.addOffset(7, reasonForChangeOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbChangeTypeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final changedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final changedByParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final oldValueParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 14);
+          final newValueParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final reasonForChangeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, '');
+          final object = RequirementHistoryEntity(
+              id: idParam,
+              dbChangeType: dbChangeTypeParam,
+              changedAt: changedAtParam,
+              changedBy: changedByParam,
+              oldValue: oldValueParam,
+              newValue: newValueParam,
+              reasonForChange: reasonForChangeParam);
+          object.requirement.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.requirement.attach(store);
+          return object;
+        }),
+    RequirementTestCaseLinkEntity:
+        obx_int.EntityDefinition<RequirementTestCaseLinkEntity>(
+            model: _entities[151],
+            toOneRelations: (RequirementTestCaseLinkEntity object) =>
+                [object.requirement, object.testCase],
+            toManyRelations: (RequirementTestCaseLinkEntity object) => {},
+            getId: (RequirementTestCaseLinkEntity object) => object.id,
+            setId: (RequirementTestCaseLinkEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (RequirementTestCaseLinkEntity object, fb.Builder fbb) {
+              fbb.startTable(4);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.requirement.targetId);
+              fbb.addInt64(2, object.testCase.targetId);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final object = RequirementTestCaseLinkEntity(id: idParam);
+              object.requirement.targetId =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              object.requirement.attach(store);
+              object.testCase.targetId =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              object.testCase.attach(store);
+              return object;
+            }),
+    TraceabilityTestCaseEntity:
+        obx_int.EntityDefinition<TraceabilityTestCaseEntity>(
+            model: _entities[152],
+            toOneRelations: (TraceabilityTestCaseEntity object) => [],
+            toManyRelations: (TraceabilityTestCaseEntity object) => {},
+            getId: (TraceabilityTestCaseEntity object) => object.id,
+            setId: (TraceabilityTestCaseEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (TraceabilityTestCaseEntity object, fb.Builder fbb) {
+              final titleOffset = fbb.writeString(object.title);
+              final descriptionOffset = fbb.writeString(object.description);
+              fbb.startTable(4);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, titleOffset);
+              fbb.addOffset(2, descriptionOffset);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final titleParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+              final descriptionParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final object = TraceabilityTestCaseEntity(
+                  id: idParam,
+                  title: titleParam,
+                  description: descriptionParam);
+
+              return object;
+            }),
+    TraceableRequirementEntity:
+        obx_int.EntityDefinition<TraceableRequirementEntity>(
+            model: _entities[153],
+            toOneRelations: (TraceableRequirementEntity object) => [],
+            toManyRelations: (TraceableRequirementEntity object) => {},
+            getId: (TraceableRequirementEntity object) => object.id,
+            setId: (TraceableRequirementEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (TraceableRequirementEntity object, fb.Builder fbb) {
+              final descriptionOffset = fbb.writeString(object.description);
+              fbb.startTable(3);
+              fbb.addInt64(0, object.id);
+              fbb.addOffset(1, descriptionOffset);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final descriptionParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+              final object = TraceableRequirementEntity(
+                  id: idParam, description: descriptionParam);
+
+              return object;
             })
   };
 
@@ -19034,4 +19440,116 @@ class ProjectMetricsSnapshotEntity_ {
   static final healthLetter =
       obx.QueryStringProperty<ProjectMetricsSnapshotEntity>(
           _entities[147].properties[16]);
+}
+
+/// [BusinessGoalEntity] entity fields to define ObjectBox queries.
+class BusinessGoalEntity_ {
+  /// see [BusinessGoalEntity.id]
+  static final id = obx.QueryIntegerProperty<BusinessGoalEntity>(
+      _entities[148].properties[0]);
+
+  /// see [BusinessGoalEntity.title]
+  static final title =
+      obx.QueryStringProperty<BusinessGoalEntity>(_entities[148].properties[1]);
+
+  /// see [BusinessGoalEntity.description]
+  static final description =
+      obx.QueryStringProperty<BusinessGoalEntity>(_entities[148].properties[2]);
+}
+
+/// [GoalRequirementLinkEntity] entity fields to define ObjectBox queries.
+class GoalRequirementLinkEntity_ {
+  /// see [GoalRequirementLinkEntity.id]
+  static final id = obx.QueryIntegerProperty<GoalRequirementLinkEntity>(
+      _entities[149].properties[0]);
+
+  /// see [GoalRequirementLinkEntity.goal]
+  static final goal =
+      obx.QueryRelationToOne<GoalRequirementLinkEntity, BusinessGoalEntity>(
+          _entities[149].properties[1]);
+
+  /// see [GoalRequirementLinkEntity.requirement]
+  static final requirement = obx.QueryRelationToOne<GoalRequirementLinkEntity,
+      TraceableRequirementEntity>(_entities[149].properties[2]);
+}
+
+/// [RequirementHistoryEntity] entity fields to define ObjectBox queries.
+class RequirementHistoryEntity_ {
+  /// see [RequirementHistoryEntity.id]
+  static final id = obx.QueryIntegerProperty<RequirementHistoryEntity>(
+      _entities[150].properties[0]);
+
+  /// see [RequirementHistoryEntity.requirement]
+  static final requirement = obx.QueryRelationToOne<RequirementHistoryEntity,
+      TraceableRequirementEntity>(_entities[150].properties[1]);
+
+  /// see [RequirementHistoryEntity.dbChangeType]
+  static final dbChangeType =
+      obx.QueryIntegerProperty<RequirementHistoryEntity>(
+          _entities[150].properties[2]);
+
+  /// see [RequirementHistoryEntity.changedAt]
+  static final changedAt = obx.QueryDateProperty<RequirementHistoryEntity>(
+      _entities[150].properties[3]);
+
+  /// see [RequirementHistoryEntity.changedBy]
+  static final changedBy = obx.QueryStringProperty<RequirementHistoryEntity>(
+      _entities[150].properties[4]);
+
+  /// see [RequirementHistoryEntity.oldValue]
+  static final oldValue = obx.QueryStringProperty<RequirementHistoryEntity>(
+      _entities[150].properties[5]);
+
+  /// see [RequirementHistoryEntity.newValue]
+  static final newValue = obx.QueryStringProperty<RequirementHistoryEntity>(
+      _entities[150].properties[6]);
+
+  /// see [RequirementHistoryEntity.reasonForChange]
+  static final reasonForChange =
+      obx.QueryStringProperty<RequirementHistoryEntity>(
+          _entities[150].properties[7]);
+}
+
+/// [RequirementTestCaseLinkEntity] entity fields to define ObjectBox queries.
+class RequirementTestCaseLinkEntity_ {
+  /// see [RequirementTestCaseLinkEntity.id]
+  static final id = obx.QueryIntegerProperty<RequirementTestCaseLinkEntity>(
+      _entities[151].properties[0]);
+
+  /// see [RequirementTestCaseLinkEntity.requirement]
+  static final requirement = obx.QueryRelationToOne<
+      RequirementTestCaseLinkEntity,
+      TraceableRequirementEntity>(_entities[151].properties[1]);
+
+  /// see [RequirementTestCaseLinkEntity.testCase]
+  static final testCase = obx.QueryRelationToOne<RequirementTestCaseLinkEntity,
+      TraceabilityTestCaseEntity>(_entities[151].properties[2]);
+}
+
+/// [TraceabilityTestCaseEntity] entity fields to define ObjectBox queries.
+class TraceabilityTestCaseEntity_ {
+  /// see [TraceabilityTestCaseEntity.id]
+  static final id = obx.QueryIntegerProperty<TraceabilityTestCaseEntity>(
+      _entities[152].properties[0]);
+
+  /// see [TraceabilityTestCaseEntity.title]
+  static final title = obx.QueryStringProperty<TraceabilityTestCaseEntity>(
+      _entities[152].properties[1]);
+
+  /// see [TraceabilityTestCaseEntity.description]
+  static final description =
+      obx.QueryStringProperty<TraceabilityTestCaseEntity>(
+          _entities[152].properties[2]);
+}
+
+/// [TraceableRequirementEntity] entity fields to define ObjectBox queries.
+class TraceableRequirementEntity_ {
+  /// see [TraceableRequirementEntity.id]
+  static final id = obx.QueryIntegerProperty<TraceableRequirementEntity>(
+      _entities[153].properties[0]);
+
+  /// see [TraceableRequirementEntity.description]
+  static final description =
+      obx.QueryStringProperty<TraceableRequirementEntity>(
+          _entities[153].properties[1]);
 }

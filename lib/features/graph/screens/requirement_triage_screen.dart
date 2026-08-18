@@ -38,6 +38,11 @@ class RequirementTriageScreen extends StatelessWidget {
             tooltip: 'KPI Dashboard',
             onPressed: () => Get.toNamed('/requirements/dashboard'),
           ),
+          IconButton(
+            icon: const Icon(Icons.account_tree_outlined),
+            tooltip: 'Traceability Navigator',
+            onPressed: () => Get.toNamed('/requirements/traceability'),
+          ),
         ],
       ),
       body: Padding(

@@ -6614,10 +6614,191 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "150:3524418436297156260",
+      "lastPropertyId": "3:2427968892694616060",
+      "name": "BusinessGoalEntity",
+      "properties": [
+        {
+          "id": "1:1422072689018978732",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4094168682274488239",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:2427968892694616060",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "151:7752334851037719729",
+      "lastPropertyId": "3:2979022693973208869",
+      "name": "GoalRequirementLinkEntity",
+      "properties": [
+        {
+          "id": "1:7937421139033549090",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4087050734416741520",
+          "name": "goalId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "151:3493703908838898785",
+          "relationTarget": "BusinessGoalEntity"
+        },
+        {
+          "id": "3:2979022693973208869",
+          "name": "requirementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "152:2005082369874319996",
+          "relationTarget": "TraceableRequirementEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "152:883816729503919870",
+      "lastPropertyId": "8:6848584528756434723",
+      "name": "RequirementHistoryEntity",
+      "properties": [
+        {
+          "id": "1:3354021654499924271",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8379922575051746519",
+          "name": "requirementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "153:685293569417280523",
+          "relationTarget": "TraceableRequirementEntity"
+        },
+        {
+          "id": "3:1530608278234059416",
+          "name": "dbChangeType",
+          "type": 6
+        },
+        {
+          "id": "4:6565181568953168996",
+          "name": "changedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "154:2622083066138665501"
+        },
+        {
+          "id": "5:4386916097987372054",
+          "name": "changedBy",
+          "type": 9
+        },
+        {
+          "id": "6:6002039129508121081",
+          "name": "oldValue",
+          "type": 9
+        },
+        {
+          "id": "7:5975049855306677376",
+          "name": "newValue",
+          "type": 9
+        },
+        {
+          "id": "8:6848584528756434723",
+          "name": "reasonForChange",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "153:7208150017847575378",
+      "lastPropertyId": "3:2310645666473626163",
+      "name": "RequirementTestCaseLinkEntity",
+      "properties": [
+        {
+          "id": "1:156014364539997225",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1157200476581923816",
+          "name": "requirementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "155:5020301354298032354",
+          "relationTarget": "TraceableRequirementEntity"
+        },
+        {
+          "id": "3:2310645666473626163",
+          "name": "testCaseId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "156:544195343562718844",
+          "relationTarget": "TraceabilityTestCaseEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "154:6413853769922160731",
+      "lastPropertyId": "3:3006558716930873627",
+      "name": "TraceabilityTestCaseEntity",
+      "properties": [
+        {
+          "id": "1:6261449227501156407",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4071448615241403190",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:3006558716930873627",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "155:6861637638351798257",
+      "lastPropertyId": "2:4840335529288930373",
+      "name": "TraceableRequirementEntity",
+      "properties": [
+        {
+          "id": "1:1386810350276203499",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4840335529288930373",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "149:959340033138542412",
-  "lastIndexId": "150:7397153665969592866",
+  "lastEntityId": "155:6861637638351798257",
+  "lastIndexId": "156:544195343562718844",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
