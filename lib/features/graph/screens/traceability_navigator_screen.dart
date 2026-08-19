@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/goal_coverage_section.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_add_goal_row.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_goal_list.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_requirement_panel.dart';
@@ -43,6 +44,7 @@ class _TraceabilityNavigatorScreenState extends State<TraceabilityNavigatorScree
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GoalCoverageSection(controller: controller),
               TraceabilityAddGoalRow(controller: controller),
               const SizedBox(height: 12),
               TraceabilityGoalList(
