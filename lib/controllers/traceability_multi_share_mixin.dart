@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_export_subject.dart';
 import 'package:growth_pilot_ai/business/build_last_modified_by_map.dart';
@@ -66,7 +67,9 @@ mixin TraceabilityMultiShareMixin on GetxController {
       (bytes: csvBytes, mimeType: 'text/csv', filename: csvName),
     ], subject: BuildExportSubject.call('Traceability Export', timestamp: now));
 
-    exportEventRepository.append(ExportEventEntity(format: 'xlsx', filename: xlsxName, occurredAt: now));
-    exportEventRepository.append(ExportEventEntity(format: 'csv', filename: csvName, occurredAt: now));
+    exportEventRepository.append(ExportEventEntity(
+        format: 'xlsx', filename: xlsxName, fileBytes: Uint8List.fromList(xlsxBytes), occurredAt: now));
+    exportEventRepository.append(ExportEventEntity(
+        format: 'csv', filename: csvName, fileBytes: Uint8List.fromList(csvBytes), occurredAt: now));
   }
 }
