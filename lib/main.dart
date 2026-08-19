@@ -38,6 +38,7 @@ import 'package:growth_pilot_ai/features/graph/screens/requirement_triage_screen
 import 'package:growth_pilot_ai/features/graph/screens/kpi_dashboard_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/traceability_navigator_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/traceability_matrix_screen.dart';
+import 'package:growth_pilot_ai/features/graph/screens/traceability_report_preview_screen.dart';
 import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
@@ -194,6 +195,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/requirements/traceability/matrix',
               page: () => const TraceabilityMatrixScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/requirements/traceability/report-preview',
+              page: () => const TraceabilityReportPreviewScreen(),
               middlewares: [ModuleAccessMiddleware()],
             ),
             GetPage(

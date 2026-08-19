@@ -42,6 +42,11 @@ class _TraceabilityMatrixScreenState extends State<TraceabilityMatrixScreen> {
             tooltip: 'Export to CSV',
             onPressed: controller.exportMatrixToCsv,
           ),
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            tooltip: 'Preview Report',
+            onPressed: () => Get.toNamed('/requirements/traceability/report-preview'),
+          ),
         ],
       ),
       body: Padding(
