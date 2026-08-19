@@ -28,6 +28,23 @@ mixin TraceabilityReportPreviewMixin on GetxController {
     if (!enabledReportSections.remove(section)) enabledReportSections.add(section);
   }
 
+  /// Cheap identity of the current report content — Issue #252's
+  /// caching AC ("if the data hasn't changed since the last export,
+  /// serve a cached version instead of re-rendering"), done as an
+  /// in-memory fingerprint check by [TraceabilityPdfExportJobMixin]
+  /// instead of the issue's server-side/S3 cache (see PR notes).
+  Object get reportContentFingerprint {
+    final sections = enabledReportSections.map((s) => s.index).toList()..sort();
+    return Object.hashAll([
+      ...sections,
+      goalList.length,
+      requirementList.length,
+      testCaseList.length,
+      coverageReport.value?.overallCoverage,
+      coverageReport.value?.uncoveredGoals.length,
+    ]);
+  }
+
   Future<Uint8List> buildReportPdfBytes() {
     return BuildTraceabilityReportPdfDocument.call(
       enabledSections: enabledReportSections,
