@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
 import 'package:growth_pilot_ai/core/enum/traceability_quick_filter.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_matrix_grid.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/traceability_pdf_export_button.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_quick_filter_chips.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_tree_view.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -52,6 +53,7 @@ class _TraceabilityMatrixScreenState extends State<TraceabilityMatrixScreen> {
             tooltip: 'Share All (XLSX + CSV)',
             onPressed: controller.shareAllExports,
           ),
+          TraceabilityPdfExportButton(controller: controller),
         ],
       ),
       body: Padding(
