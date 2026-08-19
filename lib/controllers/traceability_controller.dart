@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/controllers/traceability_impact_analysis_mixin.d
 import 'package:growth_pilot_ai/controllers/traceability_lookup_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_matrix_link_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_multi_share_mixin.dart';
+import 'package:growth_pilot_ai/controllers/traceability_pdf_export_job_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_report_preview_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_status_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_suggestion_mixin.dart';
@@ -41,7 +42,8 @@ class TraceabilityController extends GetxController
         TraceabilitySuggestionMixin,
         TraceabilityExportMixin,
         TraceabilityMultiShareMixin,
-        TraceabilityReportPreviewMixin {
+        TraceabilityReportPreviewMixin,
+        TraceabilityPdfExportJobMixin {
   @override
   final BusinessGoalRepository goalRepository;
   @override
