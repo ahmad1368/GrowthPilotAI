@@ -6875,10 +6875,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "157:3655271620685486042",
+      "lastPropertyId": "4:6405681313346252845",
+      "name": "ExportEventEntity",
+      "properties": [
+        {
+          "id": "1:8598139536948075644",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2713164318780882848",
+          "name": "format",
+          "type": 9
+        },
+        {
+          "id": "3:1042317310737046975",
+          "name": "filename",
+          "type": 9
+        },
+        {
+          "id": "4:6405681313346252845",
+          "name": "occurredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "159:1557451720048057998"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "156:4262377350835097951",
-  "lastIndexId": "158:758627938328351022",
+  "lastEntityId": "157:3655271620685486042",
+  "lastIndexId": "159:1557451720048057998",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

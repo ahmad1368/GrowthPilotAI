@@ -16,6 +16,7 @@ import 'package:growth_pilot_ai/core/data/repositories/traceability_test_case_re
 import 'package:growth_pilot_ai/core/data/repositories/traceability_link_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/suggested_link_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_scanner_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_text_extractor_service.dart';
@@ -64,6 +65,7 @@ class AppBindings extends Bindings {
         DependencyInjection.get<TraceabilityLinkRepository>(),
         DependencyInjection.get<RequirementHistoryRepository>(),
         DependencyInjection.get<SuggestedLinkRepository>(),
+        DependencyInjection.get<ExportEventRepository>(),
       ),
       fenix: true,
     );

@@ -25,6 +25,8 @@ import 'package:growth_pilot_ai/core/data/entities/requirement_history_entity.da
 import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/suggested_link_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/suggested_link_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/export_event_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/prompt_click_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/prompt_click_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/ai_response_feedback_entity.dart';
@@ -292,6 +294,11 @@ class DependencyInjection {
       // ۸.۱.۱۷ لینک‌های پیشنهادی هوش مصنوعی برای ماتریس ردیابی (Issue #244)
       _locator.registerLazySingleton<SuggestedLinkRepository>(
         () => SuggestedLinkRepository(Get.find<ObjectBox>().store.box<SuggestedLinkEntity>()),
+      );
+
+      // ۸.۱.۱۸ لاگ رویدادهای Export/Share (Issue #250)
+      _locator.registerLazySingleton<ExportEventRepository>(
+        () => ExportEventRepository(Get.find<ObjectBox>().store.box<ExportEventEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)

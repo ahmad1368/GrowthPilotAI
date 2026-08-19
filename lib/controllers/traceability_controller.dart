@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/controllers/traceability_goal_deletion_mixin.dar
 import 'package:growth_pilot_ai/controllers/traceability_impact_analysis_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_lookup_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_matrix_link_mixin.dart';
+import 'package:growth_pilot_ai/controllers/traceability_multi_share_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_report_preview_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_status_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_suggestion_mixin.dart';
@@ -15,6 +16,7 @@ import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceability_test_case_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceable_requirement_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/business_goal_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/suggested_link_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/traceability_link_repository.dart';
@@ -38,6 +40,7 @@ class TraceabilityController extends GetxController
         TraceabilityCoverageMixin,
         TraceabilitySuggestionMixin,
         TraceabilityExportMixin,
+        TraceabilityMultiShareMixin,
         TraceabilityReportPreviewMixin {
   @override
   final BusinessGoalRepository goalRepository;
@@ -51,9 +54,17 @@ class TraceabilityController extends GetxController
   final RequirementHistoryRepository historyRepository;
   @override
   final SuggestedLinkRepository suggestionRepository;
+  @override
+  final ExportEventRepository exportEventRepository;
 
-  TraceabilityController(this.goalRepository, this.requirementRepository, this.testCaseRepository,
-      this.linkRepository, this.historyRepository, this.suggestionRepository);
+  TraceabilityController(
+      this.goalRepository,
+      this.requirementRepository,
+      this.testCaseRepository,
+      this.linkRepository,
+      this.historyRepository,
+      this.suggestionRepository,
+      this.exportEventRepository);
 
   @override
   final goalList = <BusinessGoalEntity>[].obs;
