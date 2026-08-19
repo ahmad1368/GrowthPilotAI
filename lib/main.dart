@@ -36,6 +36,7 @@ import 'package:growth_pilot_ai/features/academy/screens/academy_screen.dart';
 import 'package:growth_pilot_ai/features/ai_engine/screens/ai_engine_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/requirement_triage_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/kpi_dashboard_screen.dart';
+import 'package:growth_pilot_ai/controllers/kpi_dashboard_export_controller.dart';
 import 'package:growth_pilot_ai/features/graph/screens/traceability_navigator_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/traceability_matrix_screen.dart';
 import 'package:growth_pilot_ai/features/graph/screens/traceability_report_preview_screen.dart';
@@ -186,6 +187,9 @@ class MyApp extends StatelessWidget {
               name: '/requirements/dashboard',
               page: () => const KpiDashboardScreen(),
               middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => KpiDashboardExportController()),
+              ),
             ),
             GetPage(
               name: '/requirements/traceability',
