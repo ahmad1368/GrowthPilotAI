@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceable_requirement_entity.dart';
-import 'package:growth_pilot_ai/features/graph/widgets/requirement_history_timeline.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/traceability_requirement_action_row.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_requirement_header.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// One requirement's card in the "Traceability Matrix" (Issue #238/
-/// #242) — code + description + dev status + linked test cases + a
-/// link to its [RequirementHistoryTimeline].
+/// #242/#240) — code + description + dev status + linked test cases +
+/// history + "Predict Impact".
 class TraceabilityRequirementCard extends StatefulWidget {
   final TraceabilityController controller;
   final TraceableRequirementEntity requirement;
@@ -46,23 +46,11 @@ class _TraceabilityRequirementCardState extends State<TraceabilityRequirementCar
             Wrap(
                 spacing: 6,
                 children: [for (final t in testCases) Chip(label: Text('${t.tcCode} ${t.title}'))]),
-            Row(
-              children: [
-                Expanded(
-                  child: ShadInput(
-                      controller: _testCaseController, placeholder: const Text('Add test case...')),
-                ),
-                const SizedBox(width: 6),
-                ShadButton.outline(onPressed: _addTestCase, child: const Text('Add')),
-                ShadButton.ghost(
-                  onPressed: () => showDialog<void>(
-                    context: context,
-                    builder: (_) => RequirementHistoryTimeline(
-                        entries: widget.controller.historyForRequirement(widget.requirement.id)),
-                  ),
-                  child: const Text('History'),
-                ),
-              ],
+            TraceabilityRequirementActionRow(
+              controller: widget.controller,
+              requirement: widget.requirement,
+              testCaseController: _testCaseController,
+              onAddTestCase: _addTestCase,
             ),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/business/build_requirement_history_entry.dart';
 import 'package:growth_pilot_ai/business/generate_traceability_code.dart';
 import 'package:growth_pilot_ai/controllers/traceability_gap_analysis_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_goal_deletion_mixin.dart';
+import 'package:growth_pilot_ai/controllers/traceability_impact_analysis_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_lookup_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_matrix_link_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_status_mixin.dart';
@@ -27,7 +28,8 @@ class TraceabilityController extends GetxController
         TraceabilityGoalDeletionMixin,
         TraceabilityStatusMixin,
         TraceabilityGapAnalysisMixin,
-        TraceabilityMatrixLinkMixin {
+        TraceabilityMatrixLinkMixin,
+        TraceabilityImpactAnalysisMixin {
   @override
   final BusinessGoalRepository goalRepository;
   @override
