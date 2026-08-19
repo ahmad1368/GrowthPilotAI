@@ -29,12 +29,19 @@ void main() {
 
       final decoded = Excel.decodeBytes(bytes);
 
-      expect(decoded.tables.keys, containsAll(['Matrix', 'Summary']));
+      expect(decoded.tables.keys, containsAll(['Matrix', 'Summary', 'Grid', 'Requirements']));
       expect(decoded.tables.keys, isNot(contains('Sheet1')));
       final matrixRows = decoded.tables['Matrix']!.rows;
       expect(matrixRows.length, 2); // header + one requirement
       expect(matrixRows[0][0]?.value.toString(), 'Code');
       expect(matrixRows[1][0]?.value.toString(), 'BR-01');
+
+      final gridRows = decoded.tables['Grid']!.rows;
+      expect(gridRows[0][1]?.value.toString(), 'Reduce wait time');
+      expect(gridRows[1][1]?.value.toString(), 'X'); // linked intersection
+
+      final reqRows = decoded.tables['Requirements']!.rows;
+      expect(reqRows[1][0]?.value.toString(), 'BR-01');
     });
   });
 }
