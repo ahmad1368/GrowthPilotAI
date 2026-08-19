@@ -31,7 +31,7 @@ class BuildTraceabilityReportPdfDocument {
     final doc = pw.Document();
     final content = <pw.Widget>[
       if (enabledSections.contains(TraceabilityReportSection.summary))
-        BuildTraceabilitySummaryPdfPage.call(coverageReport),
+        BuildTraceabilitySummaryPdfPage.call(coverageReport, totalGoals: goals.length),
       if (enabledSections.contains(TraceabilityReportSection.matrix))
         BuildTraceabilityMatrixPdfPage.call(
           goals: goals,

@@ -24,8 +24,13 @@ class _TestController extends GetxController with TraceabilityPdfExportJobMixin 
   final ExportEventRepository _exportEventRepository;
   final Future<Uint8List> Function() _bytesProvider;
 
+  Object fingerprint = 0;
+
   @override
   ExportEventRepository get exportEventRepository => _exportEventRepository;
+
+  @override
+  Object get reportContentFingerprint => fingerprint;
 
   @override
   Future<Uint8List> buildReportPdfBytes() => _bytesProvider();
@@ -66,6 +71,34 @@ void main() {
 
       expect(controller.pdfExportJobStatus.value, PdfExportJobStatus.failed);
       expect(repo.appended, isEmpty);
+    });
+
+    test('reuses the cached PDF bytes when the report fingerprint is unchanged', () async {
+      var buildCallCount = 0;
+      final controller = _TestController(_FakeExportEventRepository(), () async {
+        buildCallCount++;
+        return Uint8List(0);
+      });
+
+      await controller.exportReportPdfViaJob();
+      expect(buildCallCount, 1);
+
+      await controller.exportReportPdfViaJob();
+      expect(buildCallCount, 1);
+    });
+
+    test('re-renders when the report fingerprint changes since the last export', () async {
+      var buildCallCount = 0;
+      final controller = _TestController(_FakeExportEventRepository(), () async {
+        buildCallCount++;
+        return Uint8List(0);
+      });
+
+      await controller.exportReportPdfViaJob();
+      controller.fingerprint = 1;
+      await controller.exportReportPdfViaJob();
+
+      expect(buildCallCount, 2);
     });
   });
 }
