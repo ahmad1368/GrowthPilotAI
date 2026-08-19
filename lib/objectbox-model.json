@@ -6878,7 +6878,7 @@
     },
     {
       "id": "157:3655271620685486042",
-      "lastPropertyId": "4:6405681313346252845",
+      "lastPropertyId": "5:7813218735336571374",
       "name": "ExportEventEntity",
       "properties": [
         {
@@ -6903,6 +6903,11 @@
           "type": 10,
           "flags": 8,
           "indexId": "159:1557451720048057998"
+        },
+        {
+          "id": "5:7813218735336571374",
+          "name": "fileBytes",
+          "type": 23
         }
       ],
       "relations": []

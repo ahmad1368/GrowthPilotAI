@@ -44,7 +44,8 @@ mixin TraceabilityPdfExportJobMixin on GetxController {
       final filename = BuildTraceabilityExportFilename.call(now, extension: 'pdf');
       await SharePdfBytes.call(bytes, filename,
           subject: BuildExportSubject.call('Traceability Report', timestamp: now));
-      exportEventRepository.append(ExportEventEntity(format: 'pdf', filename: filename, occurredAt: now));
+      exportEventRepository
+          .append(ExportEventEntity(format: 'pdf', filename: filename, fileBytes: bytes, occurredAt: now));
       pdfExportJobStatus.value = PdfExportJobStatus.ready;
     } catch (e, stack) {
       OmniLogger.error(

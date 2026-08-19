@@ -6909,7 +6909,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(157, 3655271620685486042),
       name: 'ExportEventEntity',
-      lastPropertyId: const obx_int.IdUid(4, 6405681313346252845),
+      lastPropertyId: const obx_int.IdUid(5, 7813218735336571374),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -6932,7 +6932,12 @@ final _entities = <obx_int.ModelEntity>[
             name: 'occurredAt',
             type: 10,
             flags: 8,
-            indexId: const obx_int.IdUid(159, 1557451720048057998))
+            indexId: const obx_int.IdUid(159, 1557451720048057998)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7813218735336571374),
+            name: 'fileBytes',
+            type: 23,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -14966,11 +14971,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectToFB: (ExportEventEntity object, fb.Builder fbb) {
           final formatOffset = fbb.writeString(object.format);
           final filenameOffset = fbb.writeString(object.filename);
-          fbb.startTable(5);
+          final fileBytesOffset = object.fileBytes == null
+              ? null
+              : fbb.writeListInt8(object.fileBytes!);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, formatOffset);
           fbb.addOffset(2, filenameOffset);
           fbb.addInt64(3, object.occurredAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, fileBytesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -14983,12 +14992,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 6, '');
           final filenameParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 8, '');
+          final fileBytesParam = const fb.Uint8ListReader(lazy: false)
+              .vTableGetNullable(buffer, rootOffset, 12) as Uint8List?;
           final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
           final object = ExportEventEntity(
               id: idParam,
               format: formatParam,
               filename: filenameParam,
+              fileBytes: fileBytesParam,
               occurredAt: occurredAtParam);
 
           return object;
@@ -19856,4 +19868,8 @@ class ExportEventEntity_ {
   /// see [ExportEventEntity.occurredAt]
   static final occurredAt =
       obx.QueryDateProperty<ExportEventEntity>(_entities[155].properties[3]);
+
+  /// see [ExportEventEntity.fileBytes]
+  static final fileBytes = obx.QueryByteVectorProperty<ExportEventEntity>(
+      _entities[155].properties[4]);
 }

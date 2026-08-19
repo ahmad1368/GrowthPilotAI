@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_export_subject.dart';
 import 'package:growth_pilot_ai/business/build_last_modified_by_map.dart';
@@ -42,7 +44,8 @@ mixin TraceabilityExportMixin on GetxController {
     final now = DateTime.now();
     final filename = BuildTraceabilityExportFilename.call(now);
     await ShareXlsxBytes.call(bytes, filename, subject: BuildExportSubject.call('Traceability Matrix', timestamp: now));
-    exportEventRepository.append(ExportEventEntity(format: 'xlsx', filename: filename, occurredAt: now));
+    exportEventRepository.append(ExportEventEntity(
+        format: 'xlsx', filename: filename, fileBytes: Uint8List.fromList(bytes), occurredAt: now));
   }
 
   Future<void> exportMatrixToCsv() async {
@@ -57,6 +60,7 @@ mixin TraceabilityExportMixin on GetxController {
     final now = DateTime.now();
     final filename = BuildTraceabilityExportFilename.call(now, extension: 'csv');
     await ShareCsvBytes.call(csv, filename, subject: BuildExportSubject.call('Traceability Matrix', timestamp: now));
-    exportEventRepository.append(ExportEventEntity(format: 'csv', filename: filename, occurredAt: now));
+    exportEventRepository.append(ExportEventEntity(
+        format: 'csv', filename: filename, fileBytes: Uint8List.fromList(utf8.encode(csv)), occurredAt: now));
   }
 }
