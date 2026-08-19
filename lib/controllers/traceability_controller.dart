@@ -8,11 +8,13 @@ import 'package:growth_pilot_ai/controllers/traceability_impact_analysis_mixin.d
 import 'package:growth_pilot_ai/controllers/traceability_lookup_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_matrix_link_mixin.dart';
 import 'package:growth_pilot_ai/controllers/traceability_status_mixin.dart';
+import 'package:growth_pilot_ai/controllers/traceability_suggestion_mixin.dart';
 import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceability_test_case_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceable_requirement_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/business_goal_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/requirement_history_repository.dart';
+import 'package:growth_pilot_ai/core/data/repositories/suggested_link_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/traceability_link_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/traceability_test_case_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/traceable_requirement_repository.dart';
@@ -31,7 +33,8 @@ class TraceabilityController extends GetxController
         TraceabilityGapAnalysisMixin,
         TraceabilityMatrixLinkMixin,
         TraceabilityImpactAnalysisMixin,
-        TraceabilityCoverageMixin {
+        TraceabilityCoverageMixin,
+        TraceabilitySuggestionMixin {
   @override
   final BusinessGoalRepository goalRepository;
   @override
@@ -42,9 +45,11 @@ class TraceabilityController extends GetxController
   final TraceabilityLinkRepository linkRepository;
   @override
   final RequirementHistoryRepository historyRepository;
+  @override
+  final SuggestedLinkRepository suggestionRepository;
 
-  TraceabilityController(this.goalRepository, this.requirementRepository,
-      this.testCaseRepository, this.linkRepository, this.historyRepository);
+  TraceabilityController(this.goalRepository, this.requirementRepository, this.testCaseRepository,
+      this.linkRepository, this.historyRepository, this.suggestionRepository);
 
   @override
   final goalList = <BusinessGoalEntity>[].obs;
@@ -57,6 +62,7 @@ class TraceabilityController extends GetxController
   void onInit() {
     super.onInit();
     refreshAll();
+    refreshSuggestions();
   }
 
   @override
