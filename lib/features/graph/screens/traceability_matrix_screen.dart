@@ -28,7 +28,17 @@ class _TraceabilityMatrixScreenState extends State<TraceabilityMatrixScreen> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: const Text('Traceability Matrix'), backgroundColor: colors.background),
+      appBar: AppBar(
+        title: const Text('Traceability Matrix'),
+        backgroundColor: colors.background,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.file_download_outlined),
+            tooltip: 'Export to Excel',
+            onPressed: controller.exportMatrixToXlsx,
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
