@@ -6830,10 +6830,55 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "156:4262377350835097951",
+      "lastPropertyId": "6:3177464243805341418",
+      "name": "SuggestedLinkEntity",
+      "properties": [
+        {
+          "id": "1:1629219827646253741",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5682056317540345041",
+          "name": "goalId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "157:6790865386230360172",
+          "relationTarget": "BusinessGoalEntity"
+        },
+        {
+          "id": "3:2782190075578080472",
+          "name": "requirementId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "158:758627938328351022",
+          "relationTarget": "TraceableRequirementEntity"
+        },
+        {
+          "id": "4:526428089447130488",
+          "name": "confidenceScore",
+          "type": 8
+        },
+        {
+          "id": "5:4890239260307853906",
+          "name": "reasoning",
+          "type": 9
+        },
+        {
+          "id": "6:3177464243805341418",
+          "name": "dbStatus",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "155:6861637638351798257",
-  "lastIndexId": "156:544195343562718844",
+  "lastEntityId": "156:4262377350835097951",
+  "lastIndexId": "158:758627938328351022",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

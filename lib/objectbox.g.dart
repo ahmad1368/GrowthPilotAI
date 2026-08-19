@@ -150,6 +150,7 @@ import 'core/data/entities/stock_reservation_entity.dart';
 import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/strike_entity.dart';
 import 'core/data/entities/subscription_entity.dart';
+import 'core/data/entities/suggested_link_entity.dart';
 import 'core/data/entities/task_execution_log_entity.dart';
 import 'core/data/entities/telemetry_event_entity.dart';
 import 'core/data/entities/traceability_test_case_entity.dart';
@@ -6860,6 +6861,49 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(156, 4262377350835097951),
+      name: 'SuggestedLinkEntity',
+      lastPropertyId: const obx_int.IdUid(6, 3177464243805341418),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 1629219827646253741),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5682056317540345041),
+            name: 'goalId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(157, 6790865386230360172),
+            relationTarget: 'BusinessGoalEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2782190075578080472),
+            name: 'requirementId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(158, 758627938328351022),
+            relationTarget: 'TraceableRequirementEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 526428089447130488),
+            name: 'confidenceScore',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4890239260307853906),
+            name: 'reasoning',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3177464243805341418),
+            name: 'dbStatus',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6898,8 +6942,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(155, 6861637638351798257),
-      lastIndexId: const obx_int.IdUid(156, 544195343562718844),
+      lastEntityId: const obx_int.IdUid(156, 4262377350835097951),
+      lastIndexId: const obx_int.IdUid(158, 758627938328351022),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -14834,6 +14878,51 @@ obx_int.ModelDefinition getObjectBoxModel() {
               dbMoscowPriority: dbMoscowPriorityParam);
 
           return object;
+        }),
+    SuggestedLinkEntity: obx_int.EntityDefinition<SuggestedLinkEntity>(
+        model: _entities[154],
+        toOneRelations: (SuggestedLinkEntity object) =>
+            [object.goal, object.requirement],
+        toManyRelations: (SuggestedLinkEntity object) => {},
+        getId: (SuggestedLinkEntity object) => object.id,
+        setId: (SuggestedLinkEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SuggestedLinkEntity object, fb.Builder fbb) {
+          final reasoningOffset = fbb.writeString(object.reasoning);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.goal.targetId);
+          fbb.addInt64(2, object.requirement.targetId);
+          fbb.addFloat64(3, object.confidenceScore);
+          fbb.addOffset(4, reasoningOffset);
+          fbb.addInt64(5, object.dbStatus);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final confidenceScoreParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final reasoningParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final dbStatusParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          final object = SuggestedLinkEntity(
+              id: idParam,
+              confidenceScore: confidenceScoreParam,
+              reasoning: reasoningParam,
+              dbStatus: dbStatusParam);
+          object.goal.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.goal.attach(store);
+          object.requirement.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          object.requirement.attach(store);
+          return object;
         })
   };
 
@@ -19650,4 +19739,33 @@ class TraceableRequirementEntity_ {
   static final dbMoscowPriority =
       obx.QueryIntegerProperty<TraceableRequirementEntity>(
           _entities[153].properties[6]);
+}
+
+/// [SuggestedLinkEntity] entity fields to define ObjectBox queries.
+class SuggestedLinkEntity_ {
+  /// see [SuggestedLinkEntity.id]
+  static final id = obx.QueryIntegerProperty<SuggestedLinkEntity>(
+      _entities[154].properties[0]);
+
+  /// see [SuggestedLinkEntity.goal]
+  static final goal =
+      obx.QueryRelationToOne<SuggestedLinkEntity, BusinessGoalEntity>(
+          _entities[154].properties[1]);
+
+  /// see [SuggestedLinkEntity.requirement]
+  static final requirement =
+      obx.QueryRelationToOne<SuggestedLinkEntity, TraceableRequirementEntity>(
+          _entities[154].properties[2]);
+
+  /// see [SuggestedLinkEntity.confidenceScore]
+  static final confidenceScore = obx.QueryDoubleProperty<SuggestedLinkEntity>(
+      _entities[154].properties[3]);
+
+  /// see [SuggestedLinkEntity.reasoning]
+  static final reasoning = obx.QueryStringProperty<SuggestedLinkEntity>(
+      _entities[154].properties[4]);
+
+  /// see [SuggestedLinkEntity.dbStatus]
+  static final dbStatus = obx.QueryIntegerProperty<SuggestedLinkEntity>(
+      _entities[154].properties[5]);
 }
