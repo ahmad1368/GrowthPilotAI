@@ -47,6 +47,11 @@ class _TraceabilityMatrixScreenState extends State<TraceabilityMatrixScreen> {
             tooltip: 'Preview Report',
             onPressed: () => Get.toNamed('/requirements/traceability/report-preview'),
           ),
+          IconButton(
+            icon: const Icon(Icons.ios_share_outlined),
+            tooltip: 'Share All (XLSX + CSV)',
+            onPressed: controller.shareAllExports,
+          ),
         ],
       ),
       body: Padding(

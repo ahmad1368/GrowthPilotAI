@@ -70,6 +70,7 @@ import 'core/data/entities/epsilon_consumption_entity.dart';
 import 'core/data/entities/escrow_account_entity.dart';
 import 'core/data/entities/exchange_rate_cache_entity.dart';
 import 'core/data/entities/exchange_rate_observation_entity.dart';
+import 'core/data/entities/export_event_entity.dart';
 import 'core/data/entities/feature_importance_report_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/fee_waiver_record_entity.dart';
@@ -6904,6 +6905,36 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(157, 3655271620685486042),
+      name: 'ExportEventEntity',
+      lastPropertyId: const obx_int.IdUid(4, 6405681313346252845),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8598139536948075644),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2713164318780882848),
+            name: 'format',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1042317310737046975),
+            name: 'filename',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6405681313346252845),
+            name: 'occurredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(159, 1557451720048057998))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6942,8 +6973,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(156, 4262377350835097951),
-      lastIndexId: const obx_int.IdUid(158, 758627938328351022),
+      lastEntityId: const obx_int.IdUid(157, 3655271620685486042),
+      lastIndexId: const obx_int.IdUid(159, 1557451720048057998),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -14923,6 +14954,44 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.requirement.attach(store);
           return object;
+        }),
+    ExportEventEntity: obx_int.EntityDefinition<ExportEventEntity>(
+        model: _entities[155],
+        toOneRelations: (ExportEventEntity object) => [],
+        toManyRelations: (ExportEventEntity object) => {},
+        getId: (ExportEventEntity object) => object.id,
+        setId: (ExportEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ExportEventEntity object, fb.Builder fbb) {
+          final formatOffset = fbb.writeString(object.format);
+          final filenameOffset = fbb.writeString(object.filename);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, formatOffset);
+          fbb.addOffset(2, filenameOffset);
+          fbb.addInt64(3, object.occurredAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final formatParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final filenameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = ExportEventEntity(
+              id: idParam,
+              format: formatParam,
+              filename: filenameParam,
+              occurredAt: occurredAtParam);
+
+          return object;
         })
   };
 
@@ -19768,4 +19837,23 @@ class SuggestedLinkEntity_ {
   /// see [SuggestedLinkEntity.dbStatus]
   static final dbStatus = obx.QueryIntegerProperty<SuggestedLinkEntity>(
       _entities[154].properties[5]);
+}
+
+/// [ExportEventEntity] entity fields to define ObjectBox queries.
+class ExportEventEntity_ {
+  /// see [ExportEventEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<ExportEventEntity>(_entities[155].properties[0]);
+
+  /// see [ExportEventEntity.format]
+  static final format =
+      obx.QueryStringProperty<ExportEventEntity>(_entities[155].properties[1]);
+
+  /// see [ExportEventEntity.filename]
+  static final filename =
+      obx.QueryStringProperty<ExportEventEntity>(_entities[155].properties[2]);
+
+  /// see [ExportEventEntity.occurredAt]
+  static final occurredAt =
+      obx.QueryDateProperty<ExportEventEntity>(_entities[155].properties[3]);
 }
