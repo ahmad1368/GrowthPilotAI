@@ -5,7 +5,10 @@ import 'package:growth_pilot_ai/features/graph/widgets/traceability_pdf_export_b
 
 /// Extracted from [TraceabilityMatrixScreen]'s AppBar (Issue #253) to
 /// keep the screen under the SRP line budget as export actions
-/// accumulated across #239/#245/#247/#250/#251/#253.
+/// accumulated across #239/#245/#247/#250/#251/#253. The Excel/CSV/
+/// Share-All buttons disable themselves while their own export is in
+/// flight (Issue #254's duplicate-tap guard, mirroring
+/// [TraceabilityPdfExportButton]'s existing behavior).
 class TraceabilityMatrixActions extends StatelessWidget {
   const TraceabilityMatrixActions({super.key, required this.controller});
 
@@ -14,26 +17,26 @@ class TraceabilityMatrixActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisSize: MainAxisSize.min, children: [
-      IconButton(
-        icon: const Icon(Icons.file_download_outlined),
-        tooltip: 'Export to Excel',
-        onPressed: controller.exportMatrixToXlsx,
-      ),
-      IconButton(
-        icon: const Icon(Icons.description_outlined),
-        tooltip: 'Export to CSV',
-        onPressed: controller.exportMatrixToCsv,
-      ),
+      Obx(() => IconButton(
+            icon: const Icon(Icons.file_download_outlined),
+            tooltip: 'Export to Excel',
+            onPressed: controller.isExportingMatrix.value ? null : controller.exportMatrixToXlsx,
+          )),
+      Obx(() => IconButton(
+            icon: const Icon(Icons.description_outlined),
+            tooltip: 'Export to CSV',
+            onPressed: controller.isExportingMatrix.value ? null : controller.exportMatrixToCsv,
+          )),
       IconButton(
         icon: const Icon(Icons.picture_as_pdf_outlined),
         tooltip: 'Preview Report',
         onPressed: () => Get.toNamed('/requirements/traceability/report-preview'),
       ),
-      IconButton(
-        icon: const Icon(Icons.ios_share_outlined),
-        tooltip: 'Share All (XLSX + CSV)',
-        onPressed: controller.shareAllExports,
-      ),
+      Obx(() => IconButton(
+            icon: const Icon(Icons.ios_share_outlined),
+            tooltip: 'Share All (XLSX + CSV)',
+            onPressed: controller.isSharingAll.value ? null : controller.shareAllExports,
+          )),
       TraceabilityPdfExportButton(controller: controller),
       IconButton(
         icon: const Icon(Icons.history_outlined),
