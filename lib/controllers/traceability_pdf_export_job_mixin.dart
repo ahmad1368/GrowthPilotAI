@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_export_subject.dart';
 import 'package:growth_pilot_ai/business/build_traceability_export_filename.dart';
+import 'package:growth_pilot_ai/business/notify_export_saved.dart';
 import 'package:growth_pilot_ai/business/share_pdf_bytes.dart';
 import 'package:growth_pilot_ai/core/data/entities/export_event_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.dart';
@@ -16,7 +17,9 @@ import 'package:growth_pilot_ai/core/utils/logger.dart';
 /// "if the data hasn't changed since the last export, serve a cached
 /// version instead of re-rendering" via [reportContentFingerprint].
 /// Now also surfaces a failure `Get.snackbar` (Issue #254) so a
-/// render/share error doesn't just vanish into the log. Mixed into
+/// render/share error doesn't just vanish into the log, and saves a
+/// copy straight to the device's Downloads folder on success (Issue
+/// #255) via [NotifyExportSaved]. Mixed into
 /// `TraceabilityController` after
 /// `TraceabilityReportPreviewMixin` (needs [buildReportPdfBytes]/
 /// [reportContentFingerprint]) and `TraceabilityMultiShareMixin`
@@ -48,6 +51,7 @@ mixin TraceabilityPdfExportJobMixin on GetxController {
           subject: BuildExportSubject.call('Traceability Report', timestamp: now));
       exportEventRepository
           .append(ExportEventEntity(format: 'pdf', filename: filename, fileBytes: bytes, occurredAt: now));
+      await NotifyExportSaved.call(bytes, filename);
       pdfExportJobStatus.value = PdfExportJobStatus.ready;
     } catch (e, stack) {
       OmniLogger.error(

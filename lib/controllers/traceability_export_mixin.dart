@@ -6,6 +6,7 @@ import 'package:growth_pilot_ai/business/build_last_modified_by_map.dart';
 import 'package:growth_pilot_ai/business/build_traceability_export_filename.dart';
 import 'package:growth_pilot_ai/business/build_traceability_matrix_csv.dart';
 import 'package:growth_pilot_ai/business/export_traceability_matrix_to_xlsx.dart';
+import 'package:growth_pilot_ai/business/notify_export_saved.dart';
 import 'package:growth_pilot_ai/business/run_guarded_export.dart';
 import 'package:growth_pilot_ai/business/share_csv_bytes.dart';
 import 'package:growth_pilot_ai/business/share_xlsx_bytes.dart';
@@ -51,8 +52,10 @@ mixin TraceabilityExportMixin on GetxController {
         final filename = BuildTraceabilityExportFilename.call(now);
         await ShareXlsxBytes.call(bytes, filename,
             subject: BuildExportSubject.call('Traceability Matrix', timestamp: now));
-        exportEventRepository.append(ExportEventEntity(
-            format: 'xlsx', filename: filename, fileBytes: Uint8List.fromList(bytes), occurredAt: now));
+        final xlsxOut = Uint8List.fromList(bytes);
+        exportEventRepository.append(
+            ExportEventEntity(format: 'xlsx', filename: filename, fileBytes: xlsxOut, occurredAt: now));
+        await NotifyExportSaved.call(xlsxOut, filename);
       });
 
   Future<void> exportMatrixToCsv() =>
@@ -69,7 +72,9 @@ mixin TraceabilityExportMixin on GetxController {
         final filename = BuildTraceabilityExportFilename.call(now, extension: 'csv');
         await ShareCsvBytes.call(csv, filename,
             subject: BuildExportSubject.call('Traceability Matrix', timestamp: now));
-        exportEventRepository.append(ExportEventEntity(
-            format: 'csv', filename: filename, fileBytes: Uint8List.fromList(utf8.encode(csv)), occurredAt: now));
+        final csvBytes = Uint8List.fromList(utf8.encode(csv));
+        exportEventRepository.append(
+            ExportEventEntity(format: 'csv', filename: filename, fileBytes: csvBytes, occurredAt: now));
+        await NotifyExportSaved.call(csvBytes, filename);
       });
 }

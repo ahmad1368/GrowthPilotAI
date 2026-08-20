@@ -6,6 +6,7 @@ import 'package:growth_pilot_ai/business/build_last_modified_by_map.dart';
 import 'package:growth_pilot_ai/business/build_traceability_export_filename.dart';
 import 'package:growth_pilot_ai/business/build_traceability_matrix_csv.dart';
 import 'package:growth_pilot_ai/business/export_traceability_matrix_to_xlsx.dart';
+import 'package:growth_pilot_ai/business/notify_export_saved.dart';
 import 'package:growth_pilot_ai/business/run_guarded_export.dart';
 import 'package:growth_pilot_ai/business/share_multiple_export_files.dart';
 import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
@@ -73,9 +74,14 @@ mixin TraceabilityMultiShareMixin on GetxController {
           (bytes: csvBytes, mimeType: 'text/csv', filename: csvName),
         ], subject: BuildExportSubject.call('Traceability Export', timestamp: now));
 
-        exportEventRepository.append(ExportEventEntity(
-            format: 'xlsx', filename: xlsxName, fileBytes: Uint8List.fromList(xlsxBytes), occurredAt: now));
-        exportEventRepository.append(ExportEventEntity(
-            format: 'csv', filename: csvName, fileBytes: Uint8List.fromList(csvBytes), occurredAt: now));
+        final xlsxOut = Uint8List.fromList(xlsxBytes);
+        final csvOut = Uint8List.fromList(csvBytes);
+        exportEventRepository.append(
+            ExportEventEntity(format: 'xlsx', filename: xlsxName, fileBytes: xlsxOut, occurredAt: now));
+        exportEventRepository.append(
+            ExportEventEntity(format: 'csv', filename: csvName, fileBytes: csvOut, occurredAt: now));
+
+        await NotifyExportSaved.call(xlsxOut, xlsxName);
+        await NotifyExportSaved.call(csvOut, csvName);
       });
 }
