@@ -15,7 +15,9 @@ import 'package:growth_pilot_ai/core/utils/logger.dart';
 /// shares it and logs an #250 audit event. Also implements #252's
 /// "if the data hasn't changed since the last export, serve a cached
 /// version instead of re-rendering" via [reportContentFingerprint].
-/// Mixed into `TraceabilityController` after
+/// Now also surfaces a failure `Get.snackbar` (Issue #254) so a
+/// render/share error doesn't just vanish into the log. Mixed into
+/// `TraceabilityController` after
 /// `TraceabilityReportPreviewMixin` (needs [buildReportPdfBytes]/
 /// [reportContentFingerprint]) and `TraceabilityMultiShareMixin`
 /// (needs [exportEventRepository]).
@@ -53,6 +55,7 @@ mixin TraceabilityPdfExportJobMixin on GetxController {
           widgetName: 'TraceabilityPdfExportJobMixin',
           message: e,
           stackTrace: stack);
+      Get.snackbar('Export failed', 'Could not export the PDF report. Please try again.');
       pdfExportJobStatus.value = PdfExportJobStatus.failed;
     }
   }
