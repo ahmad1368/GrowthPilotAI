@@ -56,6 +56,7 @@ import 'package:growth_pilot_ai/features/onboarding/widgets/onboarding_tour_gate
 import 'package:growth_pilot_ai/features/ai_chat/widgets/ai_chat_root_overlay.dart';
 import 'package:growth_pilot_ai/core/widgets/connectivity_gate.dart';
 import 'package:growth_pilot_ai/core/widgets/deep_link_gate.dart';
+import 'package:growth_pilot_ai/core/widgets/beta_feedback_root_overlay.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
@@ -126,7 +127,8 @@ class MyApp extends StatelessWidget {
               child: OnboardingTourGate(
                   child: ConnectivityGate(
                       child: DeepLinkGate(
-                          child: AiChatRootOverlay(child: HomeLayout()))))),
+                          child: BetaFeedbackRootOverlay(
+                              child: AiChatRootOverlay(child: HomeLayout())))))),
           getPages: [
             GetPage(
               name: '/settings',

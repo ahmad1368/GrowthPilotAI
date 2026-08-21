@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/claim_founding_member_spot.dart';
 import 'package:growth_pilot_ai/business/record_local_usage_event.dart';
+import 'package:growth_pilot_ai/business/should_allow_beta_feedback_submission.dart';
 import 'package:growth_pilot_ai/core/analytics/funnel_event_names.dart';
 import 'package:growth_pilot_ai/core/data/entities/beta_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/founding_member_entity.dart';
@@ -53,18 +54,27 @@ class FoundingMemberController extends GetxController {
 
   FoundingMemberEntity? spotFor(String businessId) => _founding.getForBusiness(businessId);
 
-  void submitFeedback({
+  /// Returns false without saving if [businessId] already hit Issue
+  /// #169's 5-per-day rate limit.
+  bool submitFeedback({
     required String businessId,
     required int rating,
     required String comment,
     required String appVersion,
+    String routeName = '',
   }) {
+    final now = DateTime.now();
+    final submittedToday = _feedback.countSubmittedOn(businessId, now);
+    if (!ShouldAllowBetaFeedbackSubmission.call(submittedToday)) return false;
+
     _feedback.append(BetaFeedbackEntity(
       businessId: businessId,
       rating: rating,
       comment: comment,
       appVersion: appVersion,
-      submittedAt: DateTime.now(),
+      routeName: routeName,
+      submittedAt: now,
     ));
+    return true;
   }
 }
