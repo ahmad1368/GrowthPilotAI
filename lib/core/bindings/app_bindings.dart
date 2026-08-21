@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/deep_link_controller.dart';
 import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
+import 'package:growth_pilot_ai/controllers/founding_member_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_attribution_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_preference_controller.dart';
 import 'package:growth_pilot_ai/controllers/performance_controller.dart';
@@ -41,6 +42,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => NotificationAttributionController(), fenix: true);
     // Issue #176: دریافت و مسیریابی Deep Link (growthpilotai://...)
     Get.lazyPut(() => DeepLinkController(), fenix: true);
+    // Issue #191: برنامه Beta "Founding Member" (سهمیه ۱۰۰ نفر اول + فیدبک)
+    Get.lazyPut(() => FoundingMemberController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);
