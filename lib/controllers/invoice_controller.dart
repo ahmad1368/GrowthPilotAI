@@ -2,7 +2,10 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_invoice_entity.dart';
 import 'package:growth_pilot_ai/business/build_invoice_line_items.dart';
 import 'package:growth_pilot_ai/business/build_invoice_pdf_params_from_entity.dart';
+import 'package:growth_pilot_ai/business/build_traceability_export_filename.dart';
 import 'package:growth_pilot_ai/business/calculate_gst_pst.dart';
+import 'package:growth_pilot_ai/business/export_invoices_to_xlsx.dart';
+import 'package:growth_pilot_ai/business/share_xlsx_bytes.dart';
 import 'package:growth_pilot_ai/core/data/entities/invoice_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/invoice_repository.dart';
@@ -59,5 +62,14 @@ class InvoiceController extends GetxController {
     invoice.pdfBytes = pdfResult.data!;
     _invoices.insert(invoice);
     return invoice;
+  }
+
+  /// "Excel exports must include a Tax Summary sheet specifically
+  /// breaking down GST and PST for BC businesses" (Issue #172 AC) —
+  /// [from]/[to] optionally narrow the export to a date range.
+  Future<void> exportTaxSummaryXlsx({DateTime? from, DateTime? to}) async {
+    final bytes = ExportInvoicesToXlsx.call(_invoices.getAll(), from: from, to: to);
+    final filename = BuildTraceabilityExportFilename.call(DateTime.now(), extension: 'xlsx', baseName: 'Tax_Summary');
+    await ShareXlsxBytes.call(bytes, filename);
   }
 }
