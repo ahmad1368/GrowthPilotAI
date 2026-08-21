@@ -15,5 +15,6 @@ const Map<String, String> frTranslations = {
   'onboarding_welcome_title': 'Bienvenue sur GrowthPilot AI',
   'onboarding_welcome_subtitle': 'Choisissez votre langue préférée pour commencer',
   'onboarding_choose_language': 'Sélectionnez une langue',
+  'onboarding_suggested_language': 'Suggéré',
   'onboarding_continue': 'Continuer',
 };

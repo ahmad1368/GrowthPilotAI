@@ -15,5 +15,6 @@ const Map<String, String> faTranslations = {
   'onboarding_welcome_title': 'به GrowthPilot AI خوش آمدید',
   'onboarding_welcome_subtitle': 'برای شروع، زبان مورد نظر خود را انتخاب کنید',
   'onboarding_choose_language': 'یک زبان انتخاب کنید',
+  'onboarding_suggested_language': 'پیشنهادی',
   'onboarding_continue': 'ادامه',
 };

@@ -15,5 +15,6 @@ const Map<String, String> arTranslations = {
   'onboarding_welcome_title': 'مرحبًا بك في GrowthPilot AI',
   'onboarding_welcome_subtitle': 'اختر لغتك المفضلة للبدء',
   'onboarding_choose_language': 'اختر لغة',
+  'onboarding_suggested_language': 'مقترح',
   'onboarding_continue': 'متابعة',
 };
