@@ -3,6 +3,7 @@ import 'package:growth_pilot_ai/controllers/deep_link_controller.dart';
 import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
 import 'package:growth_pilot_ai/controllers/founding_member_controller.dart';
 import 'package:growth_pilot_ai/controllers/subscription_controller.dart';
+import 'package:growth_pilot_ai/controllers/support_chat_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_attribution_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_preference_controller.dart';
 import 'package:growth_pilot_ai/controllers/performance_controller.dart';
@@ -47,6 +48,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => FoundingMemberController(), fenix: true);
     // Issue #171: صفحه محلی مدیریت اشتراک (جایگزین Stripe Customer Portal)
     Get.lazyPut(() => SubscriptionController(), fenix: true);
+    // Issue #193: چت پشتیبانی محلی (جایگزین Intercom/Zendesk)
+    Get.lazyPut(() => SupportChatController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);

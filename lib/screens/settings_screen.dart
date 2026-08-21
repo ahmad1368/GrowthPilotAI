@@ -11,6 +11,7 @@ import '../features/settings/widgets/performance_settings_section.dart';
 import '../features/settings/widgets/notification_preference_section.dart';
 import '../features/settings/widgets/quiet_hours_section.dart';
 import '../features/settings/widgets/founding_member_section.dart';
+import '../controllers/support_chat_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -230,6 +231,22 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: 'Plan, renewal, and cancellation',
                 onTap: () => Get.toNamed('/settings/billing'),
               ),
+
+              const SizedBox(height: 32),
+
+              // In-app support chat (Issue #193)
+              _buildSectionHeader("Support"),
+              const SizedBox(height: 12),
+
+              Obx(() {
+                final unread = Get.find<SupportChatController>().unreadCount.value;
+                return SettingsNavTile(
+                  icon: Icons.support_agent_rounded,
+                  title: 'Chat with Support',
+                  subtitle: unread > 0 ? '$unread new reply' : 'Ask a question, we\'ll follow up',
+                  onTap: () => Get.toNamed('/settings/support'),
+                );
+              }),
 
               const SizedBox(height: 32),
 
