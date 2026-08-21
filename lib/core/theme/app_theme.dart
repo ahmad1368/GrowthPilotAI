@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 
 /// The single canonical Material [ThemeData] (Issue #1) — flat bg #09090b
 /// (dark) / #ffffff (light), matching [AppShadTheme] for screens that also
-/// opt into shadcn_ui.
+/// opt into shadcn_ui. Colors now sourced from [AppDesignTokens] (Issue
+/// #175) instead of its own hex literals.
 class AppTheme {
   static ThemeData buildTheme(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
@@ -10,8 +12,7 @@ class AppTheme {
 
     return ThemeData(
       brightness: brightness,
-      scaffoldBackgroundColor:
-          isDark ? const Color(0xFF09090B) : const Color(0xFFFFFFFF),
+      scaffoldBackgroundColor: AppDesignTokens.background(brightness),
       useMaterial3: true,
       colorSchemeSeed: isDark ? Colors.tealAccent : Colors.teal,
       appBarTheme: AppBarTheme(
