@@ -220,6 +220,19 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
+              // Subscription management (Issue #171)
+              _buildSectionHeader("Billing"),
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.credit_card_rounded,
+                title: 'Manage Billing',
+                subtitle: 'Plan, renewal, and cancellation',
+                onTap: () => Get.toNamed('/settings/billing'),
+              ),
+
+              const SizedBox(height: 32),
+
               // ۲. بخش حساب کاربری (Account)
               _buildSectionHeader("Account"),
               const SizedBox(height: 12),

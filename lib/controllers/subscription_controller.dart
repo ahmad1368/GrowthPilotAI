@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/change_subscription_tier.dart';
 import 'package:growth_pilot_ai/business/check_feature_gate.dart';
 import 'package:growth_pilot_ai/business/find_or_create_subscription.dart';
 import 'package:growth_pilot_ai/business/is_grace_period_expired.dart';
@@ -53,4 +54,10 @@ class SubscriptionController extends GetxController {
     subscription.status = SubscriptionStatus.canceled;
     _subscriptions.upsert(subscription);
   }
+
+  /// The native, in-app "Manage Billing" flow (Issue #171) — changes
+  /// take effect immediately instead of via a Stripe Customer Portal
+  /// redirect (no Stripe account exists in this repo; see PR notes).
+  void changeTier(SubscriptionEntity subscription, SubscriptionTier newTier) =>
+      ChangeSubscriptionTier.call(_subscriptions, subscription, newTier);
 }
