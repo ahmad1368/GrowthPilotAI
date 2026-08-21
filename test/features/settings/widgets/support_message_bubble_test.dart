@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/core/data/entities/support_message_entity.dart';
+import 'package:growth_pilot_ai/core/enum/support_message_sender.dart';
+import 'package:growth_pilot_ai/features/settings/widgets/support_message_bubble.dart';
+
+void main() {
+  group('SupportMessageBubble', () {
+    testWidgets('renders the message body for a user message', (tester) async {
+      final message = SupportMessageEntity(
+        businessId: 'local-user',
+        sender: SupportMessageSender.user,
+        body: 'My bank connection failed',
+        sentAt: DateTime(2026, 1, 1, 10, 30),
+      );
+
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SupportMessageBubble(message: message)),
+      ));
+
+      expect(find.text('My bank connection failed'), findsOneWidget);
+    });
+
+    testWidgets('renders the message body for an agent reply', (tester) async {
+      final message = SupportMessageEntity(
+        businessId: 'local-user',
+        sender: SupportMessageSender.agent,
+        body: 'A team member will follow up shortly.',
+        sentAt: DateTime(2026, 1, 1, 10, 31),
+      );
+
+      await tester.pumpWidget(GetMaterialApp(
+        home: Scaffold(body: SupportMessageBubble(message: message)),
+      ));
+
+      expect(find.text('A team member will follow up shortly.'), findsOneWidget);
+    });
+  });
+}
