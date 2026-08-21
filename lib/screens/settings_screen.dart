@@ -10,6 +10,7 @@ import '../features/settings/widgets/language_settings_section.dart';
 import '../features/settings/widgets/performance_settings_section.dart';
 import '../features/settings/widgets/notification_preference_section.dart';
 import '../features/settings/widgets/quiet_hours_section.dart';
+import '../features/settings/widgets/founding_member_section.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -208,6 +209,14 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: 'Review auto-merged Plaid/accounting transactions',
                 onTap: () => Get.toNamed('/transactions/duplicates'),
               ),
+
+              const SizedBox(height: 32),
+
+              // Founding Member Beta Program (Issue #191)
+              _buildSectionHeader("Founding Member Beta"),
+              const SizedBox(height: 12),
+
+              const FoundingMemberSection(businessId: 'local-user'),
 
               const SizedBox(height: 32),
 
