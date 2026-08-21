@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
+import 'package:growth_pilot_ai/features/graph/widgets/traceability_batch_export_button.dart';
 import 'package:growth_pilot_ai/features/graph/widgets/traceability_pdf_export_button.dart';
 
 /// Extracted from [TraceabilityMatrixScreen]'s AppBar (Issue #253) to
@@ -38,6 +39,7 @@ class TraceabilityMatrixActions extends StatelessWidget {
             onPressed: controller.isSharingAll.value ? null : controller.shareAllExports,
           )),
       TraceabilityPdfExportButton(controller: controller),
+      TraceabilityBatchExportButton(controller: controller),
       IconButton(
         icon: const Icon(Icons.history_outlined),
         tooltip: 'Export History',
