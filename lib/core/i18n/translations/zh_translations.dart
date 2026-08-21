@@ -15,5 +15,6 @@ const Map<String, String> zhTranslations = {
   'onboarding_welcome_title': '欢迎使用 GrowthPilot AI',
   'onboarding_welcome_subtitle': '请选择您的首选语言以开始使用',
   'onboarding_choose_language': '选择语言',
+  'onboarding_suggested_language': '建议',
   'onboarding_continue': '继续',
 };

@@ -15,5 +15,6 @@ const Map<String, String> paTranslations = {
   'onboarding_welcome_title': 'GrowthPilot AI ਵਿੱਚ ਸੁਆਗਤ ਹੈ',
   'onboarding_welcome_subtitle': 'ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਚੁਣੋ',
   'onboarding_choose_language': 'ਇੱਕ ਭਾਸ਼ਾ ਚੁਣੋ',
+  'onboarding_suggested_language': 'ਸੁਝਾਈ ਗਈ',
   'onboarding_continue': 'ਜਾਰੀ ਰੱਖੋ',
 };
