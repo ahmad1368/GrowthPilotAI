@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_traceability_report_pdf_document.dart';
+import 'package:growth_pilot_ai/business/get_branding_settings.dart';
 import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceability_test_case_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/traceable_requirement_entity.dart';
@@ -42,6 +43,7 @@ mixin TraceabilityReportPreviewMixin on GetxController {
       testCaseList.length,
       coverageReport.value?.overallCoverage,
       coverageReport.value?.uncoveredGoals.length,
+      GetBrandingSettings.call()?.updatedAt,
     ]);
   }
 
@@ -55,6 +57,7 @@ mixin TraceabilityReportPreviewMixin on GetxController {
       testCaseLinks: linkRepository.allTestCaseLinks(),
       coverageReport: coverageReport.value ??
           GoalCoverageReport(overallCoverage: 0, uncoveredGoals: const [], computedAt: DateTime.now()),
+      branding: GetBrandingSettings.call(),
     );
   }
 }

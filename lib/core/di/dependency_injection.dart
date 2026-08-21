@@ -27,6 +27,8 @@ import 'package:growth_pilot_ai/core/data/entities/suggested_link_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/suggested_link_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/export_event_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/branding_settings_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/branding_settings_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/prompt_click_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/prompt_click_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/ai_response_feedback_entity.dart';
@@ -299,6 +301,11 @@ class DependencyInjection {
       // ۸.۱.۱۸ لاگ رویدادهای Export/Share (Issue #250)
       _locator.registerLazySingleton<ExportEventRepository>(
         () => ExportEventRepository(Get.find<ObjectBox>().store.box<ExportEventEntity>()),
+      );
+
+      // ۸.۱.۱۹ تنظیمات برندینگ محلی برای هدر PDF (Issue #257)
+      _locator.registerLazySingleton<BrandingSettingsRepository>(
+        () => BrandingSettingsRepository(Get.find<ObjectBox>().store.box<BrandingSettingsEntity>()),
       );
 
       // ۸.۲ کانال دیسپچر نوتیفیکیشن (سوکت/FCM؛ Issue #71؛ فعلاً Mock)

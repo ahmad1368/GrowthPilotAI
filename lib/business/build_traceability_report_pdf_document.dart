@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:growth_pilot_ai/business/build_pdf_branding_header_widget.dart';
 import 'package:growth_pilot_ai/business/build_signature_placeholder_pdf_widget.dart';
 import 'package:growth_pilot_ai/business/build_traceability_matrix_pdf_page.dart';
 import 'package:growth_pilot_ai/business/build_traceability_requirements_pdf_page.dart';
 import 'package:growth_pilot_ai/business/build_traceability_summary_pdf_page.dart';
+import 'package:growth_pilot_ai/core/data/entities/branding_settings_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/business_goal_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/goal_requirement_link_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/requirement_test_case_link_entity.dart';
@@ -17,7 +19,9 @@ import 'package:growth_pilot_ai/core/models/goal_coverage_report.dart';
 /// `pdf`/`printing` packages, already used by #117's dashboard export)
 /// previewed via `printing`'s `PdfPreview` widget, not the issue's
 /// server-rendered Puppeteer stream (no backend exists in this repo;
-/// see PR notes). Every included page carries a "DRAFT" watermark.
+/// see PR notes). Every included page carries a "DRAFT" watermark and,
+/// when [branding] is set, Issue #257's logo/company-name/brand-color
+/// header via [BuildPdfBrandingHeaderWidget].
 class BuildTraceabilityReportPdfDocument {
   static Future<Uint8List> call({
     required Set<TraceabilityReportSection> enabledSections,
@@ -27,8 +31,10 @@ class BuildTraceabilityReportPdfDocument {
     required List<GoalRequirementLinkEntity> goalLinks,
     required List<RequirementTestCaseLinkEntity> testCaseLinks,
     required GoalCoverageReport coverageReport,
+    BrandingSettingsEntity? branding,
   }) async {
     final doc = pw.Document();
+    final header = BuildPdfBrandingHeaderWidget.call(branding);
     final content = <pw.Widget>[
       if (enabledSections.contains(TraceabilityReportSection.summary))
         BuildTraceabilitySummaryPdfPage.call(coverageReport, totalGoals: goals.length),
@@ -51,6 +57,7 @@ class BuildTraceabilityReportPdfDocument {
         build: (context) => pw.Stack(children: [
           pw.Watermark.text('DRAFT'),
           pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            header,
             content[i],
             if (isLast) BuildSignaturePlaceholderPdfWidget.call(),
           ]),

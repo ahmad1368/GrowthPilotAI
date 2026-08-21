@@ -153,6 +153,19 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
+              // Branding config for exported PDFs (Issue #257)
+              _buildSectionHeader("Branding"),
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.palette_outlined,
+                title: 'Branding',
+                subtitle: 'Logo, company name, and brand color for PDF exports',
+                onTap: () => Get.toNamed('/settings/branding'),
+              ),
+
+              const SizedBox(height: 32),
+
               // Accounting & Banking integrations dashboard (Issue #61)
               _buildSectionHeader("Integrations"),
               const SizedBox(height: 12),
