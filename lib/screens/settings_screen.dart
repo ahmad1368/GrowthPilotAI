@@ -250,6 +250,19 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
+              // Local revenue/retention analytics dashboard (Issue #194)
+              _buildSectionHeader("Analytics"),
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.insights_rounded,
+                title: 'Analytics Dashboard',
+                subtitle: 'Conversion funnel and feature popularity',
+                onTap: () => Get.toNamed('/settings/analytics'),
+              ),
+
+              const SizedBox(height: 32),
+
               // ۲. بخش حساب کاربری (Account)
               _buildSectionHeader("Account"),
               const SizedBox(height: 12),

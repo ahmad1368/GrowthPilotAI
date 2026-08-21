@@ -28,6 +28,7 @@ import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
 import 'package:growth_pilot_ai/features/analytics/screens/business_compass_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/billing_settings_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/analytics_dashboard_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/branding_settings_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/support_chat_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/connected_accounts_screen.dart';
@@ -171,6 +172,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/settings/support',
               page: () => const SupportChatScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/analytics',
+              page: () => const AnalyticsDashboardScreen(),
               middlewares: [ModuleAccessMiddleware()],
             ),
             GetPage(

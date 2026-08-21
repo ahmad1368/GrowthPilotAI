@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/deep_link_controller.dart';
+import 'package:growth_pilot_ai/controllers/analytics_dashboard_controller.dart';
 import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
 import 'package:growth_pilot_ai/controllers/founding_member_controller.dart';
 import 'package:growth_pilot_ai/controllers/subscription_controller.dart';
@@ -50,6 +51,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => SubscriptionController(), fenix: true);
     // Issue #193: چت پشتیبانی محلی (جایگزین Intercom/Zendesk)
     Get.lazyPut(() => SupportChatController(), fenix: true);
+    // Issue #194: داشبورد آنالیتیکس محلی (جایگزین Firebase Analytics/GA4)
+    Get.lazyPut(() => AnalyticsDashboardController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/detect_system_app_locale.dart';
+import 'package:growth_pilot_ai/business/record_local_usage_event.dart';
 import 'package:growth_pilot_ai/controllers/locale_controller.dart';
+import 'package:growth_pilot_ai/core/analytics/funnel_event_names.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
+import 'package:growth_pilot_ai/core/enum/usage_event_type.dart';
 import 'package:growth_pilot_ai/features/onboarding/widgets/language_option_tile.dart';
 
 /// First-launch language picker (Issue #429, acceptance criterion 2)
@@ -15,6 +18,7 @@ class LanguageSetupScreen extends StatelessWidget {
   const LanguageSetupScreen({super.key, required this.onDone});
 
   Future<void> _select(AppLocale locale) async {
+    RecordLocalUsageEvent.call(UsageEventType.actionCompleted, FunnelEventNames.signUpStart, DateTime.now());
     await Get.find<LocaleController>().changeLocale(locale);
     onDone();
   }

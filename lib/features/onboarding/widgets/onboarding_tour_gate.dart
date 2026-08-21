@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/record_local_usage_event.dart';
 import 'package:growth_pilot_ai/business/should_show_onboarding.dart';
 import 'package:growth_pilot_ai/controllers/onboarding_controller.dart';
+import 'package:growth_pilot_ai/core/analytics/funnel_event_names.dart';
+import 'package:growth_pilot_ai/core/enum/usage_event_type.dart';
 import 'package:growth_pilot_ai/features/onboarding/screens/onboarding_tour_screen.dart';
 
 /// Gates the real app behind the first-launch feature tour (Issue #162)
@@ -40,7 +43,10 @@ class _OnboardingTourGateState extends State<OnboardingTourGate> {
   Widget build(BuildContext context) {
     if (!_ready) return const SizedBox.shrink();
     if (_showTour) {
-      return OnboardingTourScreen(onDone: () => setState(() => _showTour = false));
+      return OnboardingTourScreen(onDone: () {
+        RecordLocalUsageEvent.call(UsageEventType.actionCompleted, FunnelEventNames.signUpComplete, DateTime.now());
+        setState(() => _showTour = false);
+      });
     }
     return widget.child;
   }
