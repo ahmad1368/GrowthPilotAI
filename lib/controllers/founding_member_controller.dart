@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/claim_founding_member_spot.dart';
+import 'package:growth_pilot_ai/business/record_local_usage_event.dart';
+import 'package:growth_pilot_ai/core/analytics/funnel_event_names.dart';
 import 'package:growth_pilot_ai/core/data/entities/beta_feedback_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/founding_member_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/beta_feedback_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/founding_member_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/subscription_repository.dart';
+import 'package:growth_pilot_ai/core/enum/usage_event_type.dart';
 
 /// Drives the "Founding Member" Beta Program (Issue #191) — claiming a
 /// spot (first 100, local-only count; see PR notes), the "Spots
@@ -33,12 +36,17 @@ class FoundingMemberController extends GetxController {
   }
 
   FoundingMemberEntity? claimSpot(String businessId) {
+    final wasAlreadyMember = spotFor(businessId) != null;
     final spot = ClaimFoundingMemberSpot.call(
       foundingRepo: _founding,
       subscriptionRepo: _subscriptions,
       businessId: businessId,
       now: DateTime.now(),
     );
+    if (!wasAlreadyMember && spot != null) {
+      RecordLocalUsageEvent.call(
+          UsageEventType.actionCompleted, FunnelEventNames.foundingMemberClaimed, DateTime.now());
+    }
     _refreshSpotsRemaining();
     return spot;
   }

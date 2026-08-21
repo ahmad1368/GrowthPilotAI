@@ -5,13 +5,16 @@ import 'package:growth_pilot_ai/business/find_or_create_subscription.dart';
 import 'package:growth_pilot_ai/business/is_grace_period_expired.dart';
 import 'package:growth_pilot_ai/business/is_renewal_notification_due.dart';
 import 'package:growth_pilot_ai/business/is_within_broadcast_limit.dart';
+import 'package:growth_pilot_ai/business/record_local_usage_event.dart';
 import 'package:growth_pilot_ai/controllers/subscription_renewal_handler.dart';
+import 'package:growth_pilot_ai/core/analytics/funnel_event_names.dart';
 import 'package:growth_pilot_ai/core/data/entities/subscription_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/data/repositories/subscription_repository.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/enum/subscription_status.dart';
 import 'package:growth_pilot_ai/core/enum/subscription_tier.dart';
+import 'package:growth_pilot_ai/core/enum/usage_event_type.dart';
 import 'package:growth_pilot_ai/core/interfaces/payment_gateway.dart';
 
 /// "Three tiers via Stripe Billing" (Issue #150): feature gating,
@@ -58,6 +61,11 @@ class SubscriptionController extends GetxController {
   /// The native, in-app "Manage Billing" flow (Issue #171) — changes
   /// take effect immediately instead of via a Stripe Customer Portal
   /// redirect (no Stripe account exists in this repo; see PR notes).
-  void changeTier(SubscriptionEntity subscription, SubscriptionTier newTier) =>
-      ChangeSubscriptionTier.call(_subscriptions, subscription, newTier);
+  void changeTier(SubscriptionEntity subscription, SubscriptionTier newTier) {
+    if (newTier.index > subscription.tier.index) {
+      RecordLocalUsageEvent.call(
+          UsageEventType.actionCompleted, FunnelEventNames.premiumUpgradeInitiated, DateTime.now());
+    }
+    ChangeSubscriptionTier.call(_subscriptions, subscription, newTier);
+  }
 }
