@@ -27,6 +27,7 @@ import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
 import 'package:growth_pilot_ai/features/analytics/screens/business_compass_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/billing_settings_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/branding_settings_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/connected_accounts_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard_screen.dart';
@@ -160,6 +161,11 @@ class MyApp extends StatelessWidget {
               binding: BindingsBuilder(
                 () => Get.lazyPut(() => AccountingIntegrationsController()),
               ),
+            ),
+            GetPage(
+              name: '/settings/billing',
+              page: () => const BillingSettingsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
             ),
             GetPage(
               name: '/settings/branding',
