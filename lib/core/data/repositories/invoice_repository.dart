@@ -10,5 +10,8 @@ class InvoiceRepository {
   List<InvoiceEntity> getForRequest(int requestId) =>
       _box.getAll().where((i) => i.requestId == requestId).toList();
 
+  /// Newest first (Issue #172's tax-summary export).
+  List<InvoiceEntity> getAll() => _box.getAll()..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
   int insert(InvoiceEntity invoice) => _box.put(invoice);
 }
