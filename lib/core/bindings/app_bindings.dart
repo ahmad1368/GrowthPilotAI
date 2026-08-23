@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/controllers/support_chat_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_attribution_controller.dart';
 import 'package:growth_pilot_ai/controllers/notification_preference_controller.dart';
 import 'package:growth_pilot_ai/controllers/performance_controller.dart';
+import 'package:growth_pilot_ai/controllers/pulse_controller.dart';
 import 'package:growth_pilot_ai/controllers/project_metrics_controller.dart';
 import 'package:growth_pilot_ai/controllers/quiet_hours_controller.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
@@ -56,6 +57,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => AnalyticsDashboardController(), fenix: true);
     // Issue #166: پنل سلامت سرویس‌های محلی (جایگزین NestJS /health endpoint)
     Get.lazyPut(() => ServiceHealthController(), fenix: true);
+    // Issue #267/#268: OmniPulse — رادار کسب‌وکار جمع‌سپاری‌شده
+    Get.lazyPut(() => PulseController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);

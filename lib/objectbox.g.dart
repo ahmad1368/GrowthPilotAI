@@ -134,6 +134,7 @@ import 'core/data/entities/project_metrics_snapshot_entity.dart';
 import 'core/data/entities/promo_card_metrics_entity.dart';
 import 'core/data/entities/promotional_offer_entity.dart';
 import 'core/data/entities/prompt_click_entity.dart';
+import 'core/data/entities/pulse_event_entity.dart';
 import 'core/data/entities/purchase_order_entity.dart';
 import 'core/data/entities/recommendation_feedback_entity.dart';
 import 'core/data/entities/recommendation_log_entity.dart';
@@ -7164,6 +7165,61 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(164, 1593827631998554974),
+      name: 'PulseEventEntity',
+      lastPropertyId: const obx_int.IdUid(9, 7130911980727500700),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7117755860184306079),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2986470593852379392),
+            name: 'reporterId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4735965765508583701),
+            name: 'dbCategory',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 3507370701878789361),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1010870348197447035),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4571898840305393977),
+            name: 'region',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8708782218999126917),
+            name: 'estimatedImpactCad',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 1408918529916713352),
+            name: 'helpfulCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7130911980727500700),
+            name: 'reportedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(164, 1832252919499937648))
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -7202,8 +7258,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(163, 1475243761301205428),
-      lastIndexId: const obx_int.IdUid(163, 285815971433973654),
+      lastEntityId: const obx_int.IdUid(164, 1593827631998554974),
+      lastIndexId: const obx_int.IdUid(164, 1832252919499937648),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -15500,6 +15556,67 @@ obx_int.ModelDefinition getObjectBoxModel() {
               isRead: isReadParam);
 
           return object;
+        }),
+    PulseEventEntity: obx_int.EntityDefinition<PulseEventEntity>(
+        model: _entities[162],
+        toOneRelations: (PulseEventEntity object) => [],
+        toManyRelations: (PulseEventEntity object) => {},
+        getId: (PulseEventEntity object) => object.id,
+        setId: (PulseEventEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (PulseEventEntity object, fb.Builder fbb) {
+          final reporterIdOffset = fbb.writeString(object.reporterId);
+          final titleOffset = fbb.writeString(object.title);
+          final descriptionOffset = fbb.writeString(object.description);
+          final regionOffset = fbb.writeString(object.region);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, reporterIdOffset);
+          fbb.addInt64(2, object.dbCategory);
+          fbb.addOffset(3, titleOffset);
+          fbb.addOffset(4, descriptionOffset);
+          fbb.addOffset(5, regionOffset);
+          fbb.addFloat64(6, object.estimatedImpactCad);
+          fbb.addInt64(7, object.helpfulCount);
+          fbb.addInt64(8, object.reportedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final reporterIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dbCategoryParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
+          final regionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final estimatedImpactCadParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          final helpfulCountParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final reportedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
+          final object = PulseEventEntity(
+              id: idParam,
+              reporterId: reporterIdParam,
+              dbCategory: dbCategoryParam,
+              title: titleParam,
+              description: descriptionParam,
+              region: regionParam,
+              estimatedImpactCad: estimatedImpactCadParam,
+              helpfulCount: helpfulCountParam,
+              reportedAt: reportedAtParam);
+
+          return object;
         })
   };
 
@@ -20515,4 +20632,43 @@ class SupportMessageEntity_ {
   /// see [SupportMessageEntity.isRead]
   static final isRead = obx.QueryBooleanProperty<SupportMessageEntity>(
       _entities[161].properties[5]);
+}
+
+/// [PulseEventEntity] entity fields to define ObjectBox queries.
+class PulseEventEntity_ {
+  /// see [PulseEventEntity.id]
+  static final id =
+      obx.QueryIntegerProperty<PulseEventEntity>(_entities[162].properties[0]);
+
+  /// see [PulseEventEntity.reporterId]
+  static final reporterId =
+      obx.QueryStringProperty<PulseEventEntity>(_entities[162].properties[1]);
+
+  /// see [PulseEventEntity.dbCategory]
+  static final dbCategory =
+      obx.QueryIntegerProperty<PulseEventEntity>(_entities[162].properties[2]);
+
+  /// see [PulseEventEntity.title]
+  static final title =
+      obx.QueryStringProperty<PulseEventEntity>(_entities[162].properties[3]);
+
+  /// see [PulseEventEntity.description]
+  static final description =
+      obx.QueryStringProperty<PulseEventEntity>(_entities[162].properties[4]);
+
+  /// see [PulseEventEntity.region]
+  static final region =
+      obx.QueryStringProperty<PulseEventEntity>(_entities[162].properties[5]);
+
+  /// see [PulseEventEntity.estimatedImpactCad]
+  static final estimatedImpactCad =
+      obx.QueryDoubleProperty<PulseEventEntity>(_entities[162].properties[6]);
+
+  /// see [PulseEventEntity.helpfulCount]
+  static final helpfulCount =
+      obx.QueryIntegerProperty<PulseEventEntity>(_entities[162].properties[7]);
+
+  /// see [PulseEventEntity.reportedAt]
+  static final reportedAt =
+      obx.QueryDateProperty<PulseEventEntity>(_entities[162].properties[8]);
 }
