@@ -6911,10 +6911,227 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "158:7381821673203903236",
+      "lastPropertyId": "7:6961199327169077757",
+      "name": "BetaFeedbackEntity",
+      "properties": [
+        {
+          "id": "1:4874517849539421113",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8038216127439256042",
+          "name": "businessId",
+          "type": 9
+        },
+        {
+          "id": "3:4513039360225422773",
+          "name": "rating",
+          "type": 6
+        },
+        {
+          "id": "4:1272688741007525183",
+          "name": "comment",
+          "type": 9
+        },
+        {
+          "id": "5:1289721856779380833",
+          "name": "appVersion",
+          "type": 9
+        },
+        {
+          "id": "6:2003015376539663249",
+          "name": "routeName",
+          "type": 9
+        },
+        {
+          "id": "7:6961199327169077757",
+          "name": "submittedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "160:8826274362267736896"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "159:2345641815084708784",
+      "lastPropertyId": "5:4053297671580266908",
+      "name": "BrandingSettingsEntity",
+      "properties": [
+        {
+          "id": "1:4761115995385329746",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1626983446628890351",
+          "name": "companyName",
+          "type": 9
+        },
+        {
+          "id": "3:1755050953122143565",
+          "name": "brandColorHex",
+          "type": 9
+        },
+        {
+          "id": "4:969234599745624110",
+          "name": "logoBytes",
+          "type": 23
+        },
+        {
+          "id": "5:4053297671580266908",
+          "name": "updatedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "160:1872065865937092994",
+      "lastPropertyId": "3:3134703241081061686",
+      "name": "FoundingMemberCounterEntity",
+      "properties": [
+        {
+          "id": "1:3881017632824135988",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4316257835282140071",
+          "name": "claimedCount",
+          "type": 6
+        },
+        {
+          "id": "3:3134703241081061686",
+          "name": "capacity",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "161:1473710886302521515",
+      "lastPropertyId": "4:5719949215178082413",
+      "name": "FoundingMemberEntity",
+      "properties": [
+        {
+          "id": "1:677031242811509613",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2617432474081692342",
+          "name": "businessId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "161:586216890980155926"
+        },
+        {
+          "id": "3:2174896819664093835",
+          "name": "spotNumber",
+          "type": 6
+        },
+        {
+          "id": "4:5719949215178082413",
+          "name": "claimedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "162:4434372929443272827",
+      "lastPropertyId": "6:7203577866711364143",
+      "name": "OmniLogEntryEntity",
+      "properties": [
+        {
+          "id": "1:3094738045936210287",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3819458188817511090",
+          "name": "dbLevel",
+          "type": 6
+        },
+        {
+          "id": "3:7672660235927718998",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:6331610807302492597",
+          "name": "message",
+          "type": 9
+        },
+        {
+          "id": "5:1296935458613587140",
+          "name": "stackTraceText",
+          "type": 9
+        },
+        {
+          "id": "6:7203577866711364143",
+          "name": "occurredAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "162:5995965668868056656"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "163:1475243761301205428",
+      "lastPropertyId": "6:65940363580292806",
+      "name": "SupportMessageEntity",
+      "properties": [
+        {
+          "id": "1:7988226182042454180",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5574431410934060508",
+          "name": "businessId",
+          "type": 9
+        },
+        {
+          "id": "3:5935920646788126170",
+          "name": "dbSender",
+          "type": 6
+        },
+        {
+          "id": "4:151968915865662678",
+          "name": "body",
+          "type": 9
+        },
+        {
+          "id": "5:761538715891325537",
+          "name": "sentAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "163:285815971433973654"
+        },
+        {
+          "id": "6:65940363580292806",
+          "name": "isRead",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "157:3655271620685486042",
-  "lastIndexId": "159:1557451720048057998",
+  "lastEntityId": "163:1475243761301205428",
+  "lastIndexId": "163:285815971433973654",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -36,7 +36,9 @@ import 'core/data/entities/banking_gateway_transaction_entity.dart';
 import 'core/data/entities/banner_matching_rule_entity.dart';
 import 'core/data/entities/barter_listing_entity.dart';
 import 'core/data/entities/barter_proposal_entity.dart';
+import 'core/data/entities/beta_feedback_entity.dart';
 import 'core/data/entities/block_entity.dart';
+import 'core/data/entities/branding_settings_entity.dart';
 import 'core/data/entities/breach_notification_log_entity.dart';
 import 'core/data/entities/budget_limit_entity.dart';
 import 'core/data/entities/business_contact_visibility_entity.dart';
@@ -75,6 +77,8 @@ import 'core/data/entities/feature_importance_report_entity.dart';
 import 'core/data/entities/feature_module_toggle_entity.dart';
 import 'core/data/entities/fee_waiver_record_entity.dart';
 import 'core/data/entities/forecast_accuracy_report_entity.dart';
+import 'core/data/entities/founding_member_counter_entity.dart';
+import 'core/data/entities/founding_member_entity.dart';
 import 'core/data/entities/geofence_zone_entity.dart';
 import 'core/data/entities/goal_requirement_link_entity.dart';
 import 'core/data/entities/goods_receipt_entity.dart';
@@ -116,6 +120,7 @@ import 'core/data/entities/micro_credit_loan_entity.dart';
 import 'core/data/entities/microphone_consent_entity.dart';
 import 'core/data/entities/neighborhood_expansion_entity.dart';
 import 'core/data/entities/notification_conversion_event_entity.dart';
+import 'core/data/entities/omni_log_entry_entity.dart';
 import 'core/data/entities/payment_entity.dart';
 import 'core/data/entities/placeholder.dart';
 import 'core/data/entities/pre_order_reservation_entity.dart';
@@ -152,6 +157,7 @@ import 'core/data/entities/store_profile_entity.dart';
 import 'core/data/entities/strike_entity.dart';
 import 'core/data/entities/subscription_entity.dart';
 import 'core/data/entities/suggested_link_entity.dart';
+import 'core/data/entities/support_message_entity.dart';
 import 'core/data/entities/task_execution_log_entity.dart';
 import 'core/data/entities/telemetry_event_entity.dart';
 import 'core/data/entities/traceability_test_case_entity.dart';
@@ -6940,6 +6946,219 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(158, 7381821673203903236),
+      name: 'BetaFeedbackEntity',
+      lastPropertyId: const obx_int.IdUid(7, 6961199327169077757),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4874517849539421113),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 8038216127439256042),
+            name: 'businessId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4513039360225422773),
+            name: 'rating',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1272688741007525183),
+            name: 'comment',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1289721856779380833),
+            name: 'appVersion',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2003015376539663249),
+            name: 'routeName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6961199327169077757),
+            name: 'submittedAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(160, 8826274362267736896))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(159, 2345641815084708784),
+      name: 'BrandingSettingsEntity',
+      lastPropertyId: const obx_int.IdUid(5, 4053297671580266908),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4761115995385329746),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1626983446628890351),
+            name: 'companyName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1755050953122143565),
+            name: 'brandColorHex',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 969234599745624110),
+            name: 'logoBytes',
+            type: 23,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4053297671580266908),
+            name: 'updatedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(160, 1872065865937092994),
+      name: 'FoundingMemberCounterEntity',
+      lastPropertyId: const obx_int.IdUid(3, 3134703241081061686),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3881017632824135988),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4316257835282140071),
+            name: 'claimedCount',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3134703241081061686),
+            name: 'capacity',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(161, 1473710886302521515),
+      name: 'FoundingMemberEntity',
+      lastPropertyId: const obx_int.IdUid(4, 5719949215178082413),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 677031242811509613),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2617432474081692342),
+            name: 'businessId',
+            type: 9,
+            flags: 2080,
+            indexId: const obx_int.IdUid(161, 586216890980155926)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2174896819664093835),
+            name: 'spotNumber',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 5719949215178082413),
+            name: 'claimedAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(162, 4434372929443272827),
+      name: 'OmniLogEntryEntity',
+      lastPropertyId: const obx_int.IdUid(6, 7203577866711364143),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3094738045936210287),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 3819458188817511090),
+            name: 'dbLevel',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7672660235927718998),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 6331610807302492597),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 1296935458613587140),
+            name: 'stackTraceText',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7203577866711364143),
+            name: 'occurredAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(162, 5995965668868056656))
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(163, 1475243761301205428),
+      name: 'SupportMessageEntity',
+      lastPropertyId: const obx_int.IdUid(6, 65940363580292806),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7988226182042454180),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5574431410934060508),
+            name: 'businessId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5935920646788126170),
+            name: 'dbSender',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 151968915865662678),
+            name: 'body',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 761538715891325537),
+            name: 'sentAt',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(163, 285815971433973654)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 65940363580292806),
+            name: 'isRead',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -6978,8 +7197,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(157, 3655271620685486042),
-      lastIndexId: const obx_int.IdUid(159, 1557451720048057998),
+      lastEntityId: const obx_int.IdUid(163, 1475243761301205428),
+      lastIndexId: const obx_int.IdUid(163, 285815971433973654),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -15004,6 +15223,271 @@ obx_int.ModelDefinition getObjectBoxModel() {
               occurredAt: occurredAtParam);
 
           return object;
+        }),
+    BetaFeedbackEntity: obx_int.EntityDefinition<BetaFeedbackEntity>(
+        model: _entities[156],
+        toOneRelations: (BetaFeedbackEntity object) => [],
+        toManyRelations: (BetaFeedbackEntity object) => {},
+        getId: (BetaFeedbackEntity object) => object.id,
+        setId: (BetaFeedbackEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BetaFeedbackEntity object, fb.Builder fbb) {
+          final businessIdOffset = fbb.writeString(object.businessId);
+          final commentOffset = fbb.writeString(object.comment);
+          final appVersionOffset = fbb.writeString(object.appVersion);
+          final routeNameOffset = fbb.writeString(object.routeName);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, businessIdOffset);
+          fbb.addInt64(2, object.rating);
+          fbb.addOffset(3, commentOffset);
+          fbb.addOffset(4, appVersionOffset);
+          fbb.addOffset(5, routeNameOffset);
+          fbb.addInt64(6, object.submittedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final businessIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final ratingParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final commentParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final appVersionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final routeNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final submittedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0));
+          final object = BetaFeedbackEntity(
+              id: idParam,
+              businessId: businessIdParam,
+              rating: ratingParam,
+              comment: commentParam,
+              appVersion: appVersionParam,
+              routeName: routeNameParam,
+              submittedAt: submittedAtParam);
+
+          return object;
+        }),
+    BrandingSettingsEntity: obx_int.EntityDefinition<BrandingSettingsEntity>(
+        model: _entities[157],
+        toOneRelations: (BrandingSettingsEntity object) => [],
+        toManyRelations: (BrandingSettingsEntity object) => {},
+        getId: (BrandingSettingsEntity object) => object.id,
+        setId: (BrandingSettingsEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BrandingSettingsEntity object, fb.Builder fbb) {
+          final companyNameOffset = fbb.writeString(object.companyName);
+          final brandColorHexOffset = fbb.writeString(object.brandColorHex);
+          final logoBytesOffset = object.logoBytes == null
+              ? null
+              : fbb.writeListInt8(object.logoBytes!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, companyNameOffset);
+          fbb.addOffset(2, brandColorHexOffset);
+          fbb.addOffset(3, logoBytesOffset);
+          fbb.addInt64(4, object.updatedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final companyNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final brandColorHexParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final logoBytesParam = const fb.Uint8ListReader(lazy: false)
+              .vTableGetNullable(buffer, rootOffset, 10) as Uint8List?;
+          final updatedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final object = BrandingSettingsEntity(
+              id: idParam,
+              companyName: companyNameParam,
+              brandColorHex: brandColorHexParam,
+              logoBytes: logoBytesParam,
+              updatedAt: updatedAtParam);
+
+          return object;
+        }),
+    FoundingMemberCounterEntity:
+        obx_int.EntityDefinition<FoundingMemberCounterEntity>(
+            model: _entities[158],
+            toOneRelations: (FoundingMemberCounterEntity object) => [],
+            toManyRelations: (FoundingMemberCounterEntity object) => {},
+            getId: (FoundingMemberCounterEntity object) => object.id,
+            setId: (FoundingMemberCounterEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (FoundingMemberCounterEntity object, fb.Builder fbb) {
+              fbb.startTable(4);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.claimedCount);
+              fbb.addInt64(2, object.capacity);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final claimedCountParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final capacityParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              final object = FoundingMemberCounterEntity(
+                  id: idParam,
+                  claimedCount: claimedCountParam,
+                  capacity: capacityParam);
+
+              return object;
+            }),
+    FoundingMemberEntity: obx_int.EntityDefinition<FoundingMemberEntity>(
+        model: _entities[159],
+        toOneRelations: (FoundingMemberEntity object) => [],
+        toManyRelations: (FoundingMemberEntity object) => {},
+        getId: (FoundingMemberEntity object) => object.id,
+        setId: (FoundingMemberEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FoundingMemberEntity object, fb.Builder fbb) {
+          final businessIdOffset = fbb.writeString(object.businessId);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, businessIdOffset);
+          fbb.addInt64(2, object.spotNumber);
+          fbb.addInt64(3, object.claimedAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final businessIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final spotNumberParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final claimedAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final object = FoundingMemberEntity(
+              id: idParam,
+              businessId: businessIdParam,
+              spotNumber: spotNumberParam,
+              claimedAt: claimedAtParam);
+
+          return object;
+        }),
+    OmniLogEntryEntity: obx_int.EntityDefinition<OmniLogEntryEntity>(
+        model: _entities[160],
+        toOneRelations: (OmniLogEntryEntity object) => [],
+        toManyRelations: (OmniLogEntryEntity object) => {},
+        getId: (OmniLogEntryEntity object) => object.id,
+        setId: (OmniLogEntryEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (OmniLogEntryEntity object, fb.Builder fbb) {
+          final titleOffset = fbb.writeString(object.title);
+          final messageOffset = fbb.writeString(object.message);
+          final stackTraceTextOffset = object.stackTraceText == null
+              ? null
+              : fbb.writeString(object.stackTraceText!);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.dbLevel);
+          fbb.addOffset(2, titleOffset);
+          fbb.addOffset(3, messageOffset);
+          fbb.addOffset(4, stackTraceTextOffset);
+          fbb.addInt64(5, object.occurredAt.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dbLevelParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final stackTraceTextParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12);
+          final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final object = OmniLogEntryEntity(
+              id: idParam,
+              dbLevel: dbLevelParam,
+              title: titleParam,
+              message: messageParam,
+              stackTraceText: stackTraceTextParam,
+              occurredAt: occurredAtParam);
+
+          return object;
+        }),
+    SupportMessageEntity: obx_int.EntityDefinition<SupportMessageEntity>(
+        model: _entities[161],
+        toOneRelations: (SupportMessageEntity object) => [],
+        toManyRelations: (SupportMessageEntity object) => {},
+        getId: (SupportMessageEntity object) => object.id,
+        setId: (SupportMessageEntity object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SupportMessageEntity object, fb.Builder fbb) {
+          final businessIdOffset = fbb.writeString(object.businessId);
+          final bodyOffset = fbb.writeString(object.body);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, businessIdOffset);
+          fbb.addInt64(2, object.dbSender);
+          fbb.addOffset(3, bodyOffset);
+          fbb.addInt64(4, object.sentAt.millisecondsSinceEpoch);
+          fbb.addBool(5, object.isRead);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final businessIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dbSenderParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final bodyParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final sentAtParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final isReadParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+          final object = SupportMessageEntity(
+              id: idParam,
+              businessId: businessIdParam,
+              dbSender: dbSenderParam,
+              body: bodyParam,
+              sentAt: sentAtParam,
+              isRead: isReadParam);
+
+          return object;
         })
   };
 
@@ -19872,4 +20356,147 @@ class ExportEventEntity_ {
   /// see [ExportEventEntity.fileBytes]
   static final fileBytes = obx.QueryByteVectorProperty<ExportEventEntity>(
       _entities[155].properties[4]);
+}
+
+/// [BetaFeedbackEntity] entity fields to define ObjectBox queries.
+class BetaFeedbackEntity_ {
+  /// see [BetaFeedbackEntity.id]
+  static final id = obx.QueryIntegerProperty<BetaFeedbackEntity>(
+      _entities[156].properties[0]);
+
+  /// see [BetaFeedbackEntity.businessId]
+  static final businessId =
+      obx.QueryStringProperty<BetaFeedbackEntity>(_entities[156].properties[1]);
+
+  /// see [BetaFeedbackEntity.rating]
+  static final rating = obx.QueryIntegerProperty<BetaFeedbackEntity>(
+      _entities[156].properties[2]);
+
+  /// see [BetaFeedbackEntity.comment]
+  static final comment =
+      obx.QueryStringProperty<BetaFeedbackEntity>(_entities[156].properties[3]);
+
+  /// see [BetaFeedbackEntity.appVersion]
+  static final appVersion =
+      obx.QueryStringProperty<BetaFeedbackEntity>(_entities[156].properties[4]);
+
+  /// see [BetaFeedbackEntity.routeName]
+  static final routeName =
+      obx.QueryStringProperty<BetaFeedbackEntity>(_entities[156].properties[5]);
+
+  /// see [BetaFeedbackEntity.submittedAt]
+  static final submittedAt =
+      obx.QueryDateProperty<BetaFeedbackEntity>(_entities[156].properties[6]);
+}
+
+/// [BrandingSettingsEntity] entity fields to define ObjectBox queries.
+class BrandingSettingsEntity_ {
+  /// see [BrandingSettingsEntity.id]
+  static final id = obx.QueryIntegerProperty<BrandingSettingsEntity>(
+      _entities[157].properties[0]);
+
+  /// see [BrandingSettingsEntity.companyName]
+  static final companyName = obx.QueryStringProperty<BrandingSettingsEntity>(
+      _entities[157].properties[1]);
+
+  /// see [BrandingSettingsEntity.brandColorHex]
+  static final brandColorHex = obx.QueryStringProperty<BrandingSettingsEntity>(
+      _entities[157].properties[2]);
+
+  /// see [BrandingSettingsEntity.logoBytes]
+  static final logoBytes = obx.QueryByteVectorProperty<BrandingSettingsEntity>(
+      _entities[157].properties[3]);
+
+  /// see [BrandingSettingsEntity.updatedAt]
+  static final updatedAt = obx.QueryDateProperty<BrandingSettingsEntity>(
+      _entities[157].properties[4]);
+}
+
+/// [FoundingMemberCounterEntity] entity fields to define ObjectBox queries.
+class FoundingMemberCounterEntity_ {
+  /// see [FoundingMemberCounterEntity.id]
+  static final id = obx.QueryIntegerProperty<FoundingMemberCounterEntity>(
+      _entities[158].properties[0]);
+
+  /// see [FoundingMemberCounterEntity.claimedCount]
+  static final claimedCount =
+      obx.QueryIntegerProperty<FoundingMemberCounterEntity>(
+          _entities[158].properties[1]);
+
+  /// see [FoundingMemberCounterEntity.capacity]
+  static final capacity = obx.QueryIntegerProperty<FoundingMemberCounterEntity>(
+      _entities[158].properties[2]);
+}
+
+/// [FoundingMemberEntity] entity fields to define ObjectBox queries.
+class FoundingMemberEntity_ {
+  /// see [FoundingMemberEntity.id]
+  static final id = obx.QueryIntegerProperty<FoundingMemberEntity>(
+      _entities[159].properties[0]);
+
+  /// see [FoundingMemberEntity.businessId]
+  static final businessId = obx.QueryStringProperty<FoundingMemberEntity>(
+      _entities[159].properties[1]);
+
+  /// see [FoundingMemberEntity.spotNumber]
+  static final spotNumber = obx.QueryIntegerProperty<FoundingMemberEntity>(
+      _entities[159].properties[2]);
+
+  /// see [FoundingMemberEntity.claimedAt]
+  static final claimedAt =
+      obx.QueryDateProperty<FoundingMemberEntity>(_entities[159].properties[3]);
+}
+
+/// [OmniLogEntryEntity] entity fields to define ObjectBox queries.
+class OmniLogEntryEntity_ {
+  /// see [OmniLogEntryEntity.id]
+  static final id = obx.QueryIntegerProperty<OmniLogEntryEntity>(
+      _entities[160].properties[0]);
+
+  /// see [OmniLogEntryEntity.dbLevel]
+  static final dbLevel = obx.QueryIntegerProperty<OmniLogEntryEntity>(
+      _entities[160].properties[1]);
+
+  /// see [OmniLogEntryEntity.title]
+  static final title =
+      obx.QueryStringProperty<OmniLogEntryEntity>(_entities[160].properties[2]);
+
+  /// see [OmniLogEntryEntity.message]
+  static final message =
+      obx.QueryStringProperty<OmniLogEntryEntity>(_entities[160].properties[3]);
+
+  /// see [OmniLogEntryEntity.stackTraceText]
+  static final stackTraceText =
+      obx.QueryStringProperty<OmniLogEntryEntity>(_entities[160].properties[4]);
+
+  /// see [OmniLogEntryEntity.occurredAt]
+  static final occurredAt =
+      obx.QueryDateProperty<OmniLogEntryEntity>(_entities[160].properties[5]);
+}
+
+/// [SupportMessageEntity] entity fields to define ObjectBox queries.
+class SupportMessageEntity_ {
+  /// see [SupportMessageEntity.id]
+  static final id = obx.QueryIntegerProperty<SupportMessageEntity>(
+      _entities[161].properties[0]);
+
+  /// see [SupportMessageEntity.businessId]
+  static final businessId = obx.QueryStringProperty<SupportMessageEntity>(
+      _entities[161].properties[1]);
+
+  /// see [SupportMessageEntity.dbSender]
+  static final dbSender = obx.QueryIntegerProperty<SupportMessageEntity>(
+      _entities[161].properties[2]);
+
+  /// see [SupportMessageEntity.body]
+  static final body = obx.QueryStringProperty<SupportMessageEntity>(
+      _entities[161].properties[3]);
+
+  /// see [SupportMessageEntity.sentAt]
+  static final sentAt =
+      obx.QueryDateProperty<SupportMessageEntity>(_entities[161].properties[4]);
+
+  /// see [SupportMessageEntity.isRead]
+  static final isRead = obx.QueryBooleanProperty<SupportMessageEntity>(
+      _entities[161].properties[5]);
 }
