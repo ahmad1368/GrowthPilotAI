@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Long-press action sheet (Issue #132): Reply or Forward a message.
+/// Long-press action sheet (Issue #132): Reply or Forward a message,
+/// plus Delete (Issue #317 feature #19) when [onDelete] is provided —
+/// callers pass it only for the current user's own messages.
 void showChatMessageActions(BuildContext context,
-    {required VoidCallback onReply, required VoidCallback onForward}) {
+    {required VoidCallback onReply, required VoidCallback onForward, VoidCallback? onDelete}) {
   showModalBottomSheet(
     context: context,
     builder: (_) => SafeArea(
@@ -23,6 +25,15 @@ void showChatMessageActions(BuildContext context,
             onForward();
           },
         ),
+        if (onDelete != null)
+          ListTile(
+            leading: const Icon(Icons.delete_outline),
+            title: const Text('Delete for Everyone'),
+            onTap: () {
+              Navigator.pop(context);
+              onDelete();
+            },
+          ),
       ]),
     ),
   );

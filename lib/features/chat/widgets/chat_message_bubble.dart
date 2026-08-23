@@ -17,6 +17,7 @@ class ChatMessageBubble extends StatelessWidget {
   final VoidCallback? onTapReplyPreview;
   final VoidCallback onReply;
   final VoidCallback onForward;
+  final VoidCallback? onDelete;
 
   const ChatMessageBubble({
     super.key,
@@ -25,6 +26,7 @@ class ChatMessageBubble extends StatelessWidget {
     this.onTapReplyPreview,
     required this.onReply,
     required this.onForward,
+    this.onDelete,
   });
 
   @override
@@ -35,7 +37,10 @@ class ChatMessageBubble extends StatelessWidget {
     return Align(
       alignment: isMe ? AlignmentDirectional.centerEnd : AlignmentDirectional.centerStart,
       child: GestureDetector(
-        onLongPress: () => showChatMessageActions(context, onReply: onReply, onForward: onForward),
+        onLongPress: message.isDeleted
+            ? null
+            : () => showChatMessageActions(context,
+                onReply: onReply, onForward: onForward, onDelete: onDelete),
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -46,19 +51,24 @@ class ChatMessageBubble extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-            if (message.isForwarded)
-              Text('Forwarded', style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic, color: fg.withValues(alpha: 0.7))),
-            if (message.isReply)
-              ChatReplyPreview(text: message.replyPreviewText ?? '', onTap: onTapReplyPreview),
-            if (message.hasAttachment)
-              ChatAttachmentChip(
-                bytes: message.attachmentBytes!,
-                fileName: message.attachmentFileName ?? '',
-                fileSize: message.attachmentFileSize ?? 0,
-                mimeType: message.attachmentMimeType ?? '',
-              )
-            else
-              Text(message.body, style: TextStyle(color: fg)),
+            if (message.isDeleted)
+              Text('This message was deleted',
+                  style: TextStyle(fontStyle: FontStyle.italic, color: fg.withValues(alpha: 0.6)))
+            else ...[
+              if (message.isForwarded)
+                Text('Forwarded', style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic, color: fg.withValues(alpha: 0.7))),
+              if (message.isReply)
+                ChatReplyPreview(text: message.replyPreviewText ?? '', onTap: onTapReplyPreview),
+              if (message.hasAttachment)
+                ChatAttachmentChip(
+                  bytes: message.attachmentBytes!,
+                  fileName: message.attachmentFileName ?? '',
+                  fileSize: message.attachmentFileSize ?? 0,
+                  mimeType: message.attachmentMimeType ?? '',
+                )
+              else
+                Text(message.body, style: TextStyle(color: fg)),
+            ],
             if (message.metadataTags.isNotEmpty) ...[
               const SizedBox(height: 2),
               ChatMessageTagChips(tags: message.metadataTags),

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_chat_attachment_message.dart';
 import 'package:growth_pilot_ai/business/build_reply_message.dart';
 import 'package:growth_pilot_ai/business/chat_send_rate_limiter.dart';
+import 'package:growth_pilot_ai/business/dispatch_message_deletion.dart';
 import 'package:growth_pilot_ai/business/extract_message_tags.dart';
+import 'package:growth_pilot_ai/business/handle_incoming_chat_message.dart';
 import 'package:growth_pilot_ai/business/purge_expired_room_messages.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
@@ -73,6 +75,10 @@ class ChatMessageRelayHandler {
     return _dispatch(message);
   }
 
+  /// "Delete for Everyone" (Issue #317 feature #19).
+  Future<bool> deleteMessage(ChatRoomMessageEntity message) =>
+      DispatchMessageDeletion.call(_gateway, inbox, message);
+
   /// Tags the message before it's ever broadcast (Issue #128), matching
   /// the issue's own `handleMessage` ordering (tag, then emit). Flood-
   /// guarded first (Issue #575) — a sender past the rate limit is
@@ -96,9 +102,8 @@ class ChatMessageRelayHandler {
   void _onIncoming(ChatRoomMessageEntity message) {
     if (message.roomId != roomId) return;
     if (isSenderBlocked?.call(message.senderId) ?? false) return;
-    _messages.insert(message);
-    if (_pending.remove(message)) return;
-    inbox.add(message);
+    HandleIncomingChatMessage.call(
+        repo: _messages, inbox: inbox, pending: _pending, message: message);
   }
 
   void dispose() => _subscription.cancel();

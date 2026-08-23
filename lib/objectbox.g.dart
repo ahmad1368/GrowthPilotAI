@@ -4690,7 +4690,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(107, 7003417229316413981),
       name: 'ChatRoomMessageEntity',
-      lastPropertyId: const obx_int.IdUid(16, 3098558704689495561),
+      lastPropertyId: const obx_int.IdUid(17, 3702380016370623785),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4773,6 +4773,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(16, 3098558704689495561),
             name: 'selfDestructAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 3702380016370623785),
+            name: 'isDeleted',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -12634,7 +12639,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               : fbb.writeString(object.attachmentMimeType!);
           final metadataTagsOffset = fbb.writeList(
               object.metadataTags.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(17);
+          fbb.startTable(18);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.roomId);
           fbb.addOffset(2, senderIdOffset);
@@ -12651,6 +12656,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(13, attachmentMimeTypeOffset);
           fbb.addOffset(14, metadataTagsOffset);
           fbb.addInt64(15, object.selfDestructAt?.millisecondsSinceEpoch);
+          fbb.addBool(16, object.isDeleted);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -12701,6 +12707,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final selfDestructAtParam = selfDestructAtValue == null
               ? null
               : DateTime.fromMillisecondsSinceEpoch(selfDestructAtValue);
+          final isDeletedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 36, false);
           final object = ChatRoomMessageEntity(
               id: idParam,
               roomId: roomIdParam,
@@ -12717,7 +12725,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               attachmentFileSize: attachmentFileSizeParam,
               attachmentMimeType: attachmentMimeTypeParam,
               metadataTags: metadataTagsParam,
-              selfDestructAt: selfDestructAtParam);
+              selfDestructAt: selfDestructAtParam,
+              isDeleted: isDeletedParam);
 
           return object;
         }),
@@ -18935,6 +18944,10 @@ class ChatRoomMessageEntity_ {
   /// see [ChatRoomMessageEntity.selfDestructAt]
   static final selfDestructAt = obx.QueryDateProperty<ChatRoomMessageEntity>(
       _entities[105].properties[15]);
+
+  /// see [ChatRoomMessageEntity.isDeleted]
+  static final isDeleted = obx.QueryBooleanProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[16]);
 }
 
 /// [AbuseReportEntity] entity fields to define ObjectBox queries.

@@ -50,6 +50,13 @@ class ChatRoomMessageEntity {
   @Property(type: PropertyType.date)
   DateTime? selfDestructAt;
 
+  /// "Unsending / Deleting for Everyone Without Trace" (Issue #317
+  /// feature #19) — when true, [body]/attachment fields have already
+  /// been wiped by [BuildDeletedMessage]; the row survives (rather than
+  /// being removed outright) so [replyToMessageId] threads and
+  /// [readAt]/[metadataTags] history stay consistent.
+  bool isDeleted;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -67,6 +74,7 @@ class ChatRoomMessageEntity {
     this.attachmentMimeType,
     this.metadataTags = const [],
     this.selfDestructAt,
+    this.isDeleted = false,
   });
 
   bool get isRead => readAt != null;

@@ -79,6 +79,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                     currentUserId: widget.currentUserId,
                     onReply: (m) => setState(() => _replyingTo = m),
                     onForward: (m) => _actions.forward(context, m),
+                    onDelete: _actions.delete,
                   ),
                 ),
                 ChatInputBar(
