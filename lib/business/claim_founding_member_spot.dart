@@ -17,6 +17,8 @@ class ClaimFoundingMemberSpot {
     required SubscriptionRepository subscriptionRepo,
     required String businessId,
     required DateTime now,
+    String? acquisitionSource,
+    String? acquisitionCampaign,
   }) {
     final existing = foundingRepo.getForBusiness(businessId);
     if (existing != null) return existing;
@@ -26,7 +28,13 @@ class ClaimFoundingMemberSpot {
       return null;
     }
 
-    final spot = FoundingMemberEntity(businessId: businessId, spotNumber: counter.claimedCount + 1, claimedAt: now);
+    final spot = FoundingMemberEntity(
+      businessId: businessId,
+      spotNumber: counter.claimedCount + 1,
+      claimedAt: now,
+      acquisitionSource: acquisitionSource,
+      acquisitionCampaign: acquisitionCampaign,
+    );
     foundingRepo.incrementCounter();
     foundingRepo.saveMember(spot);
 

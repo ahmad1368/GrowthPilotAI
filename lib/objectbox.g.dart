@@ -7085,7 +7085,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(161, 1473710886302521515),
       name: 'FoundingMemberEntity',
-      lastPropertyId: const obx_int.IdUid(4, 5719949215178082413),
+      lastPropertyId: const obx_int.IdUid(6, 7530467441075327687),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -7108,6 +7108,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(4, 5719949215178082413),
             name: 'claimedAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 3986677840559798005),
+            name: 'acquisitionSource',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7530467441075327687),
+            name: 'acquisitionCampaign',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -15533,11 +15543,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (FoundingMemberEntity object, fb.Builder fbb) {
           final businessIdOffset = fbb.writeString(object.businessId);
-          fbb.startTable(5);
+          final acquisitionSourceOffset = object.acquisitionSource == null
+              ? null
+              : fbb.writeString(object.acquisitionSource!);
+          final acquisitionCampaignOffset = object.acquisitionCampaign == null
+              ? null
+              : fbb.writeString(object.acquisitionCampaign!);
+          fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, businessIdOffset);
           fbb.addInt64(2, object.spotNumber);
           fbb.addInt64(3, object.claimedAt.millisecondsSinceEpoch);
+          fbb.addOffset(4, acquisitionSourceOffset);
+          fbb.addOffset(5, acquisitionCampaignOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -15552,11 +15570,19 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           final claimedAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
+          final acquisitionSourceParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12);
+          final acquisitionCampaignParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 14);
           final object = FoundingMemberEntity(
               id: idParam,
               businessId: businessIdParam,
               spotNumber: spotNumberParam,
-              claimedAt: claimedAtParam);
+              claimedAt: claimedAtParam,
+              acquisitionSource: acquisitionSourceParam,
+              acquisitionCampaign: acquisitionCampaignParam);
 
           return object;
         }),
@@ -20749,6 +20775,16 @@ class FoundingMemberEntity_ {
   /// see [FoundingMemberEntity.claimedAt]
   static final claimedAt =
       obx.QueryDateProperty<FoundingMemberEntity>(_entities[159].properties[3]);
+
+  /// see [FoundingMemberEntity.acquisitionSource]
+  static final acquisitionSource =
+      obx.QueryStringProperty<FoundingMemberEntity>(
+          _entities[159].properties[4]);
+
+  /// see [FoundingMemberEntity.acquisitionCampaign]
+  static final acquisitionCampaign =
+      obx.QueryStringProperty<FoundingMemberEntity>(
+          _entities[159].properties[5]);
 }
 
 /// [OmniLogEntryEntity] entity fields to define ObjectBox queries.

@@ -71,6 +71,38 @@ void main() {
       expect(foundingRepo.counter.claimedCount, 1);
     });
 
+    test('stores acquisition source/campaign when provided (Issue #192)', () {
+      final foundingRepo = _FakeFoundingMemberRepository();
+      final subscriptionRepo = _FakeSubscriptionRepository();
+
+      final spot = ClaimFoundingMemberSpot.call(
+        foundingRepo: foundingRepo,
+        subscriptionRepo: subscriptionRepo,
+        businessId: 'b1',
+        now: DateTime(2026, 1, 1),
+        acquisitionSource: 'linkedin',
+        acquisitionCampaign: 'bc_outreach',
+      );
+
+      expect(spot!.acquisitionSource, 'linkedin');
+      expect(spot.acquisitionCampaign, 'bc_outreach');
+    });
+
+    test('acquisition source/campaign are optional (organic signup)', () {
+      final foundingRepo = _FakeFoundingMemberRepository();
+      final subscriptionRepo = _FakeSubscriptionRepository();
+
+      final spot = ClaimFoundingMemberSpot.call(
+        foundingRepo: foundingRepo,
+        subscriptionRepo: subscriptionRepo,
+        businessId: 'b1',
+        now: DateTime(2026, 1, 1),
+      );
+
+      expect(spot!.acquisitionSource, isNull);
+      expect(spot.acquisitionCampaign, isNull);
+    });
+
     test('returns null once the program is full (Issue #191 AC: 101st user)', () {
       final foundingRepo = _FakeFoundingMemberRepository()..counter = FoundingMemberCounterEntity(claimedCount: 100, capacity: 100);
       final subscriptionRepo = _FakeSubscriptionRepository();

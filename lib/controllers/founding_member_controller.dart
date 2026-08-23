@@ -10,6 +10,7 @@ import 'package:growth_pilot_ai/core/data/repositories/beta_feedback_repository.
 import 'package:growth_pilot_ai/core/data/repositories/founding_member_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/subscription_repository.dart';
 import 'package:growth_pilot_ai/core/enum/usage_event_type.dart';
+import 'package:growth_pilot_ai/services/acquisition_attribution_service.dart';
 
 /// Drives the "Founding Member" Beta Program (Issue #191) — claiming a
 /// spot (first 100, local-only count; see PR notes), the "Spots
@@ -38,11 +39,15 @@ class FoundingMemberController extends GetxController {
 
   FoundingMemberEntity? claimSpot(String businessId) {
     final wasAlreadyMember = spotFor(businessId) != null;
+    final attribution =
+        Get.isRegistered<AcquisitionAttributionService>() ? Get.find<AcquisitionAttributionService>().current : null;
     final spot = ClaimFoundingMemberSpot.call(
       foundingRepo: _founding,
       subscriptionRepo: _subscriptions,
       businessId: businessId,
       now: DateTime.now(),
+      acquisitionSource: attribution?.source,
+      acquisitionCampaign: attribution?.campaign,
     );
     if (!wasAlreadyMember && spot != null) {
       RecordLocalUsageEvent.call(
