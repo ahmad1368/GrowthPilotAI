@@ -16,6 +16,7 @@ class PulseEventEntity {
   String region;
   double estimatedImpactCad;
   int helpfulCount;
+  int growthScoreEarned;
 
   @Property(type: PropertyType.date)
   @Index()
@@ -30,6 +31,7 @@ class PulseEventEntity {
     required this.region,
     required this.estimatedImpactCad,
     this.helpfulCount = 0,
+    this.growthScoreEarned = 0,
     required this.reportedAt,
   });
 

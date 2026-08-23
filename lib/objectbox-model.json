@@ -7161,7 +7161,7 @@
     },
     {
       "id": "164:1593827631998554974",
-      "lastPropertyId": "9:7130911980727500700",
+      "lastPropertyId": "10:6046093074756441260",
       "name": "PulseEventEntity",
       "properties": [
         {
@@ -7211,6 +7211,11 @@
           "type": 10,
           "flags": 8,
           "indexId": "164:1832252919499937648"
+        },
+        {
+          "id": "10:6046093074756441260",
+          "name": "growthScoreEarned",
+          "type": 6
         }
       ],
       "relations": []
