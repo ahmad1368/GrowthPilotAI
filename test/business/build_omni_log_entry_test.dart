@@ -34,5 +34,17 @@ void main() {
 
       expect(entry.stackTraceText, trace.toString());
     });
+
+    test('redacts a SIN and a leaked API key before persisting (Issue #206)', () {
+      final entry = BuildOmniLogEntry.call(
+        level: OmniLogLevel.error,
+        title: 'Sync failed',
+        message: 'user SIN 123-456-789, apiKey=abc123xyz',
+        now: now,
+      );
+
+      expect(entry.message, isNot(contains('123-456-789')));
+      expect(entry.message, isNot(contains('abc123xyz')));
+    });
   });
 }
