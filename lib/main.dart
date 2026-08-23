@@ -33,6 +33,7 @@ import 'package:growth_pilot_ai/features/settings/screens/analytics_dashboard_sc
 import 'package:growth_pilot_ai/features/settings/screens/branding_settings_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/support_chat_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/service_health_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/two_factor_auth_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/connected_accounts_screen.dart';
 import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard_screen.dart';
 import 'package:growth_pilot_ai/controllers/branding_settings_controller.dart';
@@ -186,6 +187,11 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/settings/health',
               page: () => const ServiceHealthScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/2fa',
+              page: () => const TwoFactorAuthScreen(),
               middlewares: [ModuleAccessMiddleware()],
             ),
             GetPage(
