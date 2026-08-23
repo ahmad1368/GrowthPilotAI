@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_error_handler.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_spatial_sorter.dart';

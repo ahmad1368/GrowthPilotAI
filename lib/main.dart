@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
 import 'package:growth_pilot_ai/widgets/global_error_view.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';

@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/models/ocr_form_data.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
 
 class OcrConfirmationController {
   final _repository = GetIt.I<TransactionRepository>();
@@ -43,10 +43,7 @@ class OcrConfirmationController {
       ));
 
       OmniLogger.info(
-        title: "ثبت تراکنش OCR",
-        message: "فروشنده: ${vendorController.text} | مبلغ: $parsedAmount",
-        widgetName: "OcrConfirmationController",
-      );
+          "ثبت تراکنش OCR (OcrConfirmationController): فروشنده: ${vendorController.text} | مبلغ: $parsedAmount");
 
       return true;
     } catch (e, stack) {
