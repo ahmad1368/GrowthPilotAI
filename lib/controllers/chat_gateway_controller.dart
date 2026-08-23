@@ -89,6 +89,9 @@ class ChatGatewayController extends GetxController {
           String senderId, String fileName, String mimeType, Uint8List bytes) =>
       _relay.sendAttachment(senderId, fileName, mimeType, bytes);
 
+  /// "Delete for Everyone" (Issue #317 feature #19).
+  Future<bool> deleteMessage(ChatRoomMessageEntity message) => _relay.deleteMessage(message);
+
   bool forwardMessage(ChatRoomMessageEntity original, int targetRoomId, String forwarderId) =>
       _forward.forward(original, targetRoomId, forwarderId);
 

@@ -24,6 +24,9 @@ class ChatRoomActions {
   void sendAttachment(String fileName, String mimeType, Uint8List bytes) =>
       controller.sendAttachment(currentUserId, fileName, mimeType, bytes);
 
+  /// "Delete for Everyone" (Issue #317 feature #19).
+  void delete(ChatRoomMessageEntity message) => controller.deleteMessage(message);
+
   void forward(BuildContext context, ChatRoomMessageEntity message) {
     showChatForwardRoomPicker(
       context,

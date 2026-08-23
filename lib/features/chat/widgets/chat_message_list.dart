@@ -12,6 +12,7 @@ class ChatMessageList extends StatelessWidget {
   final String currentUserId;
   final void Function(ChatRoomMessageEntity) onReply;
   final void Function(ChatRoomMessageEntity) onForward;
+  final void Function(ChatRoomMessageEntity) onDelete;
 
   const ChatMessageList({
     super.key,
@@ -19,6 +20,7 @@ class ChatMessageList extends StatelessWidget {
     required this.currentUserId,
     required this.onReply,
     required this.onForward,
+    required this.onDelete,
   });
 
   @override
@@ -38,6 +40,7 @@ class ChatMessageList extends StatelessWidget {
               isMe: m.senderId == currentUserId,
               onReply: () => onReply(m),
               onForward: () => onForward(m),
+              onDelete: m.senderId == currentUserId ? () => onDelete(m) : null,
               onTapReplyPreview:
                   m.replyToMessageId == null ? null : () => _scrollTo(keys[m.replyToMessageId]),
             ),
