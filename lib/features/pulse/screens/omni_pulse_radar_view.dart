@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:growth_pilot_ai/controllers/pulse_controller.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/pulse/widgets/pulse_event_card.dart';
 import 'package:growth_pilot_ai/features/pulse/widgets/pulse_gratification_banner.dart';
 import 'package:growth_pilot_ai/features/pulse/widgets/submit_pulse_report_sheet.dart';
@@ -14,10 +15,16 @@ class OmniPulseRadarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = ShadTheme.of(context).colorScheme;
+    // Bug fix: this screen never had a ShadTheme ancestor, so the
+    // ShadTheme.of(context) calls here and in PulseEventCard/
+    // PulseGratificationBanner would throw as soon as this rendered.
+    final shadTheme = AppShadTheme.build(Theme.of(context).brightness);
+    final colors = shadTheme.colorScheme;
     final controller = Get.find<PulseController>();
 
-    return Scaffold(
+    return ShadTheme(
+      data: shadTheme,
+      child: Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
         title: const Text('OmniPulse'),
@@ -64,6 +71,7 @@ class OmniPulseRadarView extends StatelessWidget {
           ]),
         );
       }),
+      ),
     );
   }
 

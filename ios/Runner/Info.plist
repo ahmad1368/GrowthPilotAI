@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>My First App</string>
+    <string>GrowthPilot AI</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -27,10 +27,16 @@
     <key>LSRequiresIPhoneOS</key>
     <true/>
 
+    <!-- Issue #189 (App Store Review Guidelines, Section 5): consolidated
+         from two duplicate copies of these same three keys — duplicate
+         plist keys are invalid and Xcode/App Store tooling only honors
+         one, silently dropping the other's wording. -->
     <key>NSCameraUsageDescription</key>
-    <string>This app needs camera access to scan receipts and extract financial data.</string>
+    <string>GrowthPilotAI uses your camera to scan receipts and invoices, so their vendor, amount, and GST/HST are extracted automatically instead of typed in by hand.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>This app needs access to your gallery to process saved receipt images.</string>
+    <string>GrowthPilotAI accesses your photo library so you can import an existing receipt or invoice photo for automatic scanning.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Required by the system camera interface when scanning receipts — GrowthPilotAI does not record or use audio.</string>
 
     <key>UIApplicationSceneManifest</key>
     <dict>
@@ -72,13 +78,6 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
-    <key>NSCameraUsageDescription</key>
-        <string>We need access to your camera to scan and crop your receipts for expense tracking.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-        <string>We need access to your photo library to allow you to select and crop saved receipt images.</string>
-    <key>NSMicrophoneUsageDescription</key>
-        <string>We need access to your microphone (only required by the system camera interface).</string>
-
     <!-- Custom-scheme deep links (Issue #176) — growthpilotai://products/99
          etc. Not a Universal Link: that needs a real hosted
          apple-app-site-association file, which this repo has no

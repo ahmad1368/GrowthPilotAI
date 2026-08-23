@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:growth_pilot_ai/business/delete_all_local_data.dart';
+import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
+import 'package:growth_pilot_ai/features/settings/widgets/delete_account_dialog.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
@@ -21,7 +26,13 @@ class SettingsScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = AdaptiveTheme.of(context).mode.isDark;
 
-    return Scaffold(
+    // ShadDialog/ShadButton/ShadInput used by the Delete Account flow
+    // below need a ShadTheme ancestor (Issue #189) — this screen has
+    // none otherwise, matching the same self-wrap pattern every other
+    // shadcn_ui-consuming screen in this app already uses.
+    return ShadTheme(
+      data: AppShadTheme.build(theme.brightness),
+      child: Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
@@ -308,6 +319,16 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 12),
 
+              // In-app account deletion (Issue #189: App Store 5.1.1(v))
+              SettingsNavTile(
+                icon: Icons.delete_forever_rounded,
+                title: 'Delete Account',
+                subtitle: 'Permanently erase all local data on this device',
+                onTap: () => _deleteAccount(context),
+              ),
+
+              const SizedBox(height: 12),
+
               // ۳. بخش امنیت (Security) - ملموس کردن قابلیت‌های جدید
               _buildSectionHeader("Security"),
               const SizedBox(height: 12),
@@ -362,6 +383,20 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
       ),
+      ),
+    );
+  }
+
+  Future<void> _deleteAccount(BuildContext context) async {
+    final confirmed = await showDeleteAccountDialog(context);
+    if (confirmed != true) return;
+
+    await DeleteAllLocalData.call(Get.find<ObjectBox>());
+    Get.snackbar(
+      'Account deleted',
+      'Close and reopen the app to finish resetting it.',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 6),
     );
   }
 
