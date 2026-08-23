@@ -1,0 +1,6 @@
+# Issue #190. Requires an androidTest instrumentation module (Espresso/
+# UI Automator) driving the app — none exists yet in android/app/src
+# (only "main", "debug", "profile" source sets do); see Fastfile notes.
+locales(['en-CA', 'fr-CA'])
+clear_previous_screenshots(true)
+use_tests_in_packages(['com.example.growth_pilot_ai.screenshots'])

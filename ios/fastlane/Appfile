@@ -1,0 +1,9 @@
+# Issue #190 — real values come from CI secrets, never hardcoded (AC:
+# "API Keys are securely stored in environment variables ... NOT
+# hardcoded"). Current bundle id is still Flutter's scaffold default
+# (see ios/Runner.xcodeproj) — set APP_BUNDLE_ID once this app has a
+# real one before running any lane that talks to App Store Connect.
+app_identifier(ENV["APP_BUNDLE_ID"] || "com.example.myFirstApp")
+apple_id(ENV["APPLE_ID"])
+itc_team_id(ENV["ITC_TEAM_ID"])
+team_id(ENV["APPLE_TEAM_ID"])

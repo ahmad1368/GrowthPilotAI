@@ -1,0 +1,19 @@
+# Issue #190 — Canadian bilingual locales + the 5 store-required device
+# classes (AC: "at least 5 different device sizes"). Toggle Presentation
+# Mode (Issue #195's PresentationModeService, in-app Settings > Developer
+# Tools) before running `fastlane screenshots` so captures show clean,
+# 100%-mock Canadian demo data instead of a developer's real data.
+devices([
+  "iPhone 16 Pro Max",
+  "iPhone 16",
+  "iPhone SE (3rd generation)",
+  "iPad Pro (12.9-inch) (6th generation)",
+  "iPad (10th generation)"
+])
+
+languages(["en-CA", "fr-CA"])
+
+scheme("Runner")
+output_directory("./fastlane/screenshots")
+clear_previous_screenshots(true)
+override_status_bar(true)

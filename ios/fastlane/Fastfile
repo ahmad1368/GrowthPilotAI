@@ -1,0 +1,33 @@
+# Issue #190. Scaffolding only — cannot be dry-run in this environment
+# (no Xcode/ruby/fastlane gems, no Apple Developer credentials, no
+# simulator per this pipeline's own no-visual-QA rule). Every credential
+# is read from ENV (CI secrets), matching the issue's AC that keys are
+# never hardcoded.
+default_platform(:ios)
+
+platform :ios do
+  desc "Capture Canadian bilingual screenshots (Issue #190)"
+  lane :screenshots do
+    # Requires a RunnerUITests UI test target driving the app to each
+    # screen and calling snapshot("screen_name") — that Xcode scheme
+    # doesn't exist yet in this repo (only the RunnerTests unit-test
+    # target does) and can't be added via a text-file-only change; see
+    # PR notes. This lane is real Fastlane wiring, but won't produce
+    # screenshots until that target is added.
+    capture_screenshots
+    frame_screenshots(white: true)
+  end
+
+  desc "Push a build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "Runner.xcodeproj")
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+    upload_to_testflight(api_key_path: ENV["APP_STORE_CONNECT_API_KEY_PATH"])
+  end
+
+  desc "Screenshots, then a build to TestFlight"
+  lane :release do
+    screenshots
+    beta
+  end
+end
