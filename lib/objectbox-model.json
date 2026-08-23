@@ -4603,7 +4603,7 @@
     },
     {
       "id": "107:7003417229316413981",
-      "lastPropertyId": "15:1613434332761408984",
+      "lastPropertyId": "16:3098558704689495561",
       "name": "ChatRoomMessageEntity",
       "properties": [
         {
@@ -4683,6 +4683,11 @@
           "id": "15:1613434332761408984",
           "name": "metadataTags",
           "type": 30
+        },
+        {
+          "id": "16:3098558704689495561",
+          "name": "selfDestructAt",
+          "type": 10
         }
       ],
       "relations": []

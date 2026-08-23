@@ -45,6 +45,11 @@ class ChatRoomMessageEntity {
   // only need the label to render.
   List<String> metadataTags;
 
+  /// Secret Chat self-destruct timer (Issue #317 feature #2) — null means
+  /// the message never expires. See [IsMessageExpired].
+  @Property(type: PropertyType.date)
+  DateTime? selfDestructAt;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -61,6 +66,7 @@ class ChatRoomMessageEntity {
     this.attachmentFileSize,
     this.attachmentMimeType,
     this.metadataTags = const [],
+    this.selfDestructAt,
   });
 
   bool get isRead => readAt != null;
