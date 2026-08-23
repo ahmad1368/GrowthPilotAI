@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/features/chat/chat_room_actions.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_input_bar.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_message_list.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_room_header.dart';
+import 'package:growth_pilot_ai/features/chat/widgets/chat_theme_picker_sheet.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_typing_indicator.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -71,12 +72,18 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                   onToggleOnline: _controller.toggleOtherOnline,
                   onBlock: () => _moderation.block(context),
                   onReport: () => _moderation.report(context),
+                  onCustomizeTheme: () => showChatThemePickerSheet(
+                    context,
+                    currentHex: _controller.room?.themeColorHex,
+                    onSelect: _controller.setRoomTheme,
+                  ),
                 ),
                 ChatTypingIndicator(isTyping: _controller.room?.isOtherTyping ?? false),
                 Expanded(
                   child: ChatMessageList(
                     messages: _controller.messages,
                     currentUserId: widget.currentUserId,
+                    themeColorHex: _controller.room?.themeColorHex,
                     onReply: (m) => setState(() => _replyingTo = m),
                     onForward: (m) => _actions.forward(context, m),
                     onEdit: (m) => _actions.edit(context, m),

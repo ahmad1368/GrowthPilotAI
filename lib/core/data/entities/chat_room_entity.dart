@@ -20,6 +20,11 @@ class ChatRoomEntity {
   @Property(type: PropertyType.date)
   DateTime createdAt;
 
+  /// "Custom Chat Themes, Hex Color Pickers" (Issue #317 feature #25)
+  /// — null means the default theme color (Dark Mode itself is already
+  /// global via AdaptiveTheme, so this only covers the per-room accent).
+  String? themeColorHex;
+
   ChatRoomEntity({
     this.id = 0,
     required this.participantAId,
@@ -27,5 +32,6 @@ class ChatRoomEntity {
     this.isOtherOnline = false,
     this.isOtherTyping = false,
     required this.createdAt,
+    this.themeColorHex,
   });
 }
