@@ -1,7 +1,7 @@
 // lib/features/document_classification/data/services/tflite_classifier_service.dart
 import 'dart:io';
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
 import 'package:growth_pilot_ai/core/models/classification_request.dart';
 import 'package:growth_pilot_ai/core/constants/app_assets.dart';
 import '../../domain/repositories/abstract_classifier_service.dart';

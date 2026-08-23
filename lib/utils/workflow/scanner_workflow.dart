@@ -12,7 +12,7 @@ import 'package:growth_pilot_ai/features/document_classification/data/services/t
 import 'package:growth_pilot_ai/features/document_classification/presentation/views/ocr_confirmation_view.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/services/document/document_classifier.dart';
-import '../../core/services/omni_logger.dart';
+import '../../core/utils/logger.dart';
 import '../../services/scanner/scanner_service.dart';
 import '../../widgets/image_source_sheet.dart';
 import '../../widgets/omni_glass_panel.dart';
@@ -112,10 +112,7 @@ class ScannerWorkflow {
       );
 
       OmniLogger.info(
-        title: "ارزیابی کیفیت داکیومنت با TFLite",
-        message: "میزان تطابق رسید: ${classificationResult.confidence}",
-        widgetName: "ScannerWorkflow",
-      );
+          "ارزیابی کیفیت داکیومنت با TFLite (ScannerWorkflow): میزان تطابق رسید: ${classificationResult.confidence}");
 
       if (!classificationResult.isValid) {
         classifier.dispose();
@@ -153,11 +150,7 @@ class ScannerWorkflow {
         parsedAmount = financialData.amount ?? 0.0;
 
         OmniLogger.info(
-          title: "استخراج اطلاعات مالی موفق",
-          message:
-              "ارز: ${financialData.currency} | تاریخ: $parsedDate | مبلغ: $parsedAmount",
-          widgetName: "ScannerWorkflow",
-        );
+            "استخراج اطلاعات مالی موفق (ScannerWorkflow): ارز: ${financialData.currency} | تاریخ: $parsedDate | مبلغ: $parsedAmount");
       }
 
       _currentStepId.value = 'completed';
