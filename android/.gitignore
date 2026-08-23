@@ -12,3 +12,10 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# Fastlane (Issue #190) — generated output and secrets, never committed.
+fastlane/report.xml
+fastlane/screenshots/**/*.png
+fastlane/metadata/android/**/images
+supply-*.json
+play-console-*.json
