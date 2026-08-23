@@ -11,6 +11,7 @@ import 'package:growth_pilot_ai/controllers/performance_controller.dart';
 import 'package:growth_pilot_ai/controllers/project_metrics_controller.dart';
 import 'package:growth_pilot_ai/controllers/quiet_hours_controller.dart';
 import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
+import 'package:growth_pilot_ai/controllers/service_health_controller.dart';
 import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
 import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
@@ -53,6 +54,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => SupportChatController(), fenix: true);
     // Issue #194: داشبورد آنالیتیکس محلی (جایگزین Firebase Analytics/GA4)
     Get.lazyPut(() => AnalyticsDashboardController(), fenix: true);
+    // Issue #166: پنل سلامت سرویس‌های محلی (جایگزین NestJS /health endpoint)
+    Get.lazyPut(() => ServiceHealthController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);
