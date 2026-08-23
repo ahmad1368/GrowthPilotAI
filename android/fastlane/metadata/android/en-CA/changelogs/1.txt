@@ -1,0 +1,4 @@
+What's New for Canadian users:
+- Ontario HST (13%) is now supported alongside BC's GST/PST split for automatic tax extraction.
+- Faster, more accurate receipt and invoice scanning.
+- General stability improvements.

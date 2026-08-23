@@ -25,6 +25,16 @@ platform :ios do
     upload_to_testflight(api_key_path: ENV["APP_STORE_CONNECT_API_KEY_PATH"])
   end
 
+  desc "Upload ASO store-listing text only — name/subtitle/keywords/description (Issue #188), no binary or screenshots"
+  lane :metadata do
+    deliver(
+      api_key_path: ENV["APP_STORE_CONNECT_API_KEY_PATH"],
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      force: true
+    )
+  end
+
   desc "Screenshots, then a build to TestFlight"
   lane :release do
     screenshots
