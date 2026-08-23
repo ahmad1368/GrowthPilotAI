@@ -23,4 +23,13 @@ void main() {
 
     expect(message, isNull);
   });
+
+  test('sanitizes a script tag out of the file name (Issue #167)', () {
+    final message = BuildChatAttachmentMessage.call(
+        roomId: 1, senderId: 'buyer', fileName: '<script>alert(1)</script>spec.png',
+        mimeType: 'image/png', bytes: bytes, now: now);
+
+    expect(message!.attachmentFileName, 'alert(1)spec.png');
+    expect(message.body, 'alert(1)spec.png');
+  });
 }
