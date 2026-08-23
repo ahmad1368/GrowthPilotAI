@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # Flutter/Dart packages (Issue #183) — this repo has no NestJS/React
+  # workspace, so npm/yarn ecosystems don't apply; "pub" is the real one.
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+
+  # Keep the GitHub Actions themselves (actions/checkout, flutter-action,
+  # etc.) patched too — an outdated Action is a supply-chain risk the same
+  # way an outdated pub package is.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
