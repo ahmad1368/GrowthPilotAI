@@ -155,6 +155,19 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
+              // OmniPulse crowdsourced business radar (Issue #267/#268)
+              _buildSectionHeader("Community"),
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.campaign_outlined,
+                title: 'OmniPulse',
+                subtitle: 'Live business bottlenecks and hazards near you',
+                onTap: () => Get.toNamed('/pulse'),
+              ),
+
+              const SizedBox(height: 32),
+
               // Branding config for exported PDFs (Issue #257)
               _buildSectionHeader("Branding"),
               const SizedBox(height: 12),

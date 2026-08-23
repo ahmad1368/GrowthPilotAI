@@ -7133,10 +7133,66 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "164:1593827631998554974",
+      "lastPropertyId": "9:7130911980727500700",
+      "name": "PulseEventEntity",
+      "properties": [
+        {
+          "id": "1:7117755860184306079",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2986470593852379392",
+          "name": "reporterId",
+          "type": 9
+        },
+        {
+          "id": "3:4735965765508583701",
+          "name": "dbCategory",
+          "type": 6
+        },
+        {
+          "id": "4:3507370701878789361",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "5:1010870348197447035",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:4571898840305393977",
+          "name": "region",
+          "type": 9
+        },
+        {
+          "id": "7:8708782218999126917",
+          "name": "estimatedImpactCad",
+          "type": 8
+        },
+        {
+          "id": "8:1408918529916713352",
+          "name": "helpfulCount",
+          "type": 6
+        },
+        {
+          "id": "9:7130911980727500700",
+          "name": "reportedAt",
+          "type": 10,
+          "flags": 8,
+          "indexId": "164:1832252919499937648"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "163:1475243761301205428",
-  "lastIndexId": "163:285815971433973654",
+  "lastEntityId": "164:1593827631998554974",
+  "lastIndexId": "164:1832252919499937648",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
