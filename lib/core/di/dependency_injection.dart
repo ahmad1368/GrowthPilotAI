@@ -5,6 +5,9 @@ import 'package:growth_pilot_ai/business/anonymizer_service.dart';
 import 'package:growth_pilot_ai/business/intelligence_cache_sync_service.dart';
 import 'package:growth_pilot_ai/business/local_benchmark_comparator_service.dart';
 import 'package:growth_pilot_ai/business/insight_trigger_service.dart';
+import 'package:growth_pilot_ai/business/low_stock_scan_trigger_service.dart';
+import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/inventory_item_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
 import 'package:growth_pilot_ai/core/data/entities/notification_conversion_event_entity.dart';
@@ -322,6 +325,18 @@ class DependencyInjection {
       );
       _locator.registerLazySingleton<DispatchNotificationUseCase>(
         () => DispatchNotificationUseCase(_locator<NotificationChannel>()),
+      );
+
+      // ۸.۲.۱ اسکن خودکار موجودی کم (Issue #440 AC 2)
+      _locator.registerLazySingleton<InventoryItemRepository>(
+        () => InventoryItemRepository(Get.find<ObjectBox>().store.box<InventoryItemEntity>()),
+      );
+      _locator.registerLazySingleton<LowStockScanTriggerService>(
+        () => LowStockScanTriggerService(
+          _locator<InventoryItemRepository>(),
+          _locator<InboxNotificationRepository>(),
+          _locator<DispatchNotificationUseCase>(),
+        ),
       );
 
       // ۸.۳ رجیستری اتصال بلادرنگ مشترک بین چت/بازار/نوتیفیکیشن (Issue #130؛ Mock)

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/business/low_stock_scan_trigger_service.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_category_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_attribute_entity.dart';
 import 'package:growth_pilot_ai/core/data/entities/inventory_item_entity.dart';
@@ -33,6 +35,14 @@ class InventoryReportBody extends StatefulWidget {
 class _InventoryReportBodyState extends State<InventoryReportBody> {
   late List<InventoryItemEntity> _items = widget.initialItems;
   late List<InventoryCategoryEntity> _categories = widget.initialCategories;
+
+  @override
+  void initState() {
+    super.initState();
+    // Automated low-stock background worker (Issue #440 AC 2) — throttled
+    // internally, so revisiting this screen doesn't re-scan every time.
+    GetIt.I<LowStockScanTriggerService>().scanIfDue();
+  }
 
   Future<void> _addItem() async {
     final draft = await showInventoryItemDialog(context, _categories, _items, widget.vendors);
