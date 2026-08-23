@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/data_source_mode_label.dart';
 import 'package:growth_pilot_ai/pages/settings_page.dart';
 import 'package:growth_pilot_ai/utils/image_workflow_helper.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
@@ -111,8 +112,7 @@ class InsightPage extends StatelessWidget {
         // نشانگر وضعیت دیتابیس (فقط در حالت Debug نمایش داده می‌شود)
         if (kDebugMode)
           Obx(() => Tooltip(
-                message:
-                    env.isRemoteEnabled.value ? "Cloud Mode" : "Local Mode",
+                message: DataSourceModeLabel.call(env.isRemoteEnabled.value),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: Icon(
