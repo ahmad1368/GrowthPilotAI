@@ -15,6 +15,7 @@ import 'package:growth_pilot_ai/controllers/requirement_triage_controller.dart';
 import 'package:growth_pilot_ai/controllers/service_health_controller.dart';
 import 'package:growth_pilot_ai/controllers/text_sanitization_controller.dart';
 import 'package:growth_pilot_ai/controllers/traceability_controller.dart';
+import 'package:growth_pilot_ai/controllers/two_factor_auth_controller.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/data/repositories/project_metrics_snapshot_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/business_goal_repository.dart';
@@ -59,6 +60,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => ServiceHealthController(), fenix: true);
     // Issue #267/#268: OmniPulse — رادار کسب‌وکار جمع‌سپاری‌شده
     Get.lazyPut(() => PulseController(), fenix: true);
+    // Issue #317 feature #3: احراز هویت دو مرحله‌ای (TOTP)
+    Get.lazyPut(() => TwoFactorAuthController(), fenix: true);
 
     // سرویس‌های پردازشی (که قبلاً با هم ساختیم)
     Get.lazyPut(() => OCRService(), fenix: true);

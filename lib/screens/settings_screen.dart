@@ -312,23 +312,30 @@ class SettingsScreen extends StatelessWidget {
               _buildSectionHeader("Security"),
               const SizedBox(height: 12),
 
-              const OmniGlassPanel(
-                opacity: 0.1,
+              Material(
+                color: isDark ? const Color(0xFF18181B) : Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                elevation: isDark ? 0 : 1,
+                shadowColor: Colors.black.withValues(alpha: 0.08),
                 child: ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                  leading: Icon(Icons.security_rounded,
-                      color: Colors.greenAccent),
-                  title: AdaptiveText("Local Encryption"),
-                  subtitle: AdaptiveText(
-                    "AES-256 Protection Active",
-                    fontSize: 11,
-                  ),
-                  trailing: Icon(
-                    Icons.verified_user_rounded,
-                    color: Colors.blueAccent,
-                    size: 20,
-                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  leading: Icon(Icons.security_rounded, color: theme.colorScheme.onSurface),
+                  title: Text("Local Encryption", style: TextStyle(color: theme.colorScheme.onSurface)),
+                  subtitle: Text("AES-256 Protection Active",
+                      style: TextStyle(fontSize: 11, color: theme.colorScheme.onSurface.withValues(alpha: 0.6))),
+                  trailing: Icon(Icons.verified_user_rounded,
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6), size: 20),
                 ),
+              ),
+
+              const SizedBox(height: 12),
+
+              // Two-Factor Authentication (Issue #317 feature #3)
+              SettingsNavTile(
+                icon: Icons.phonelink_lock_rounded,
+                title: 'Two-Factor Authentication',
+                subtitle: 'Protect your account with an authenticator app',
+                onTap: () => Get.toNamed('/settings/2fa'),
               ),
 
               const SizedBox(height: 48),
