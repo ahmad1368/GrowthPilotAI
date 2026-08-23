@@ -9,6 +9,7 @@ import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
 import 'package:growth_pilot_ai/core/models/message_tag.dart';
+import 'package:growth_pilot_ai/validators/input_sanitizer.dart';
 
 /// Sends/receives messages for one open room (Issue #122) via
 /// [ChatGatewayService]. Sending is optimistic (Issue #131 "Optimistic
@@ -33,13 +34,21 @@ class ChatMessageRelayHandler {
     inbox.assignAll(_messages.getForRoom(id));
   }
 
+  /// Sanitizes [body] against script/HTML injection (Issue #167 "Input
+  /// Sanitization") before it's persisted and broadcast to peers.
   Future<bool> send(String senderId, String body) => _dispatch(ChatRoomMessageEntity(
-      roomId: roomId, senderId: senderId, body: body, sentAt: DateTime.now()));
+      roomId: roomId,
+      senderId: senderId,
+      body: InputSanitizer.clean(body),
+      sentAt: DateTime.now()));
 
   /// Threaded reply (Issue #132) — [parent] must belong to this room.
   Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
       _dispatch(BuildReplyMessage.call(
-          parent: parent, senderId: senderId, body: body, now: DateTime.now()));
+          parent: parent,
+          senderId: senderId,
+          body: InputSanitizer.clean(body),
+          now: DateTime.now()));
 
   /// Media/document attachment (Issue #133) — false if [mimeType] fails
   /// the allow-list, without dispatching anything.
