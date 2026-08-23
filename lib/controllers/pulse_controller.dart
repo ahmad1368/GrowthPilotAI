@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/business/compute_total_growth_score.dart';
 import 'package:growth_pilot_ai/business/pulse_analytics_processor.dart';
 import 'package:growth_pilot_ai/core/data/entities/pulse_event_entity.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
@@ -15,6 +16,7 @@ class PulseController extends GetxController {
   late PulseEventRepository _events;
   final feed = <PulseEventEntity>[].obs;
   final Rxn<PulseGratificationResult> lastGratification = Rxn<PulseGratificationResult>();
+  final totalGrowthScore = 0.obs;
 
   @override
   void onInit() {
@@ -23,7 +25,10 @@ class PulseController extends GetxController {
     _refresh();
   }
 
-  void _refresh() => feed.assignAll(_events.getAll());
+  void _refresh() {
+    feed.assignAll(_events.getAll());
+    totalGrowthScore.value = ComputeTotalGrowthScore.call(feed, reporterId);
+  }
 
   void submitReport({
     required PulseCategory category,
@@ -32,6 +37,8 @@ class PulseController extends GetxController {
     required String region,
     required double estimatedImpactCad,
   }) {
+    final gratification =
+        PulseAnalyticsProcessor.call(category: category, estimatedImpactCad: estimatedImpactCad, helpfulCount: 0);
     _events.append(PulseEventEntity(
       reporterId: reporterId,
       dbCategory: category.index,
@@ -39,10 +46,10 @@ class PulseController extends GetxController {
       description: description,
       region: region,
       estimatedImpactCad: estimatedImpactCad,
+      growthScoreEarned: gratification.growthScoreEarned,
       reportedAt: DateTime.now(),
     ));
-    lastGratification.value =
-        PulseAnalyticsProcessor.call(category: category, estimatedImpactCad: estimatedImpactCad, helpfulCount: 0);
+    lastGratification.value = gratification;
     _refresh();
   }
 

@@ -19,7 +19,22 @@ class OmniPulseRadarView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: const Text('OmniPulse'), backgroundColor: colors.background),
+      appBar: AppBar(
+        title: const Text('OmniPulse'),
+        backgroundColor: colors.background,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Center(
+              child: Obx(() => Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(Icons.military_tech_outlined, size: 16, color: colors.primary),
+                    const SizedBox(width: 4),
+                    Text('${controller.totalGrowthScore.value}', style: TextStyle(color: colors.foreground)),
+                  ])),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openReportSheet(context, controller),
         child: const Icon(Icons.campaign_outlined),

@@ -7195,7 +7195,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(164, 1593827631998554974),
       name: 'PulseEventEntity',
-      lastPropertyId: const obx_int.IdUid(9, 7130911980727500700),
+      lastPropertyId: const obx_int.IdUid(10, 6046093074756441260),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -7243,7 +7243,12 @@ final _entities = <obx_int.ModelEntity>[
             name: 'reportedAt',
             type: 10,
             flags: 8,
-            indexId: const obx_int.IdUid(164, 1832252919499937648))
+            indexId: const obx_int.IdUid(164, 1832252919499937648)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 6046093074756441260),
+            name: 'growthScoreEarned',
+            type: 6,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -15664,7 +15669,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final titleOffset = fbb.writeString(object.title);
           final descriptionOffset = fbb.writeString(object.description);
           final regionOffset = fbb.writeString(object.region);
-          fbb.startTable(10);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, reporterIdOffset);
           fbb.addInt64(2, object.dbCategory);
@@ -15674,6 +15679,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(6, object.estimatedImpactCad);
           fbb.addInt64(7, object.helpfulCount);
           fbb.addInt64(8, object.reportedAt.millisecondsSinceEpoch);
+          fbb.addInt64(9, object.growthScoreEarned);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -15697,6 +15703,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
           final helpfulCountParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          final growthScoreEarnedParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           final reportedAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0));
           final object = PulseEventEntity(
@@ -15708,6 +15716,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               region: regionParam,
               estimatedImpactCad: estimatedImpactCadParam,
               helpfulCount: helpfulCountParam,
+              growthScoreEarned: growthScoreEarnedParam,
               reportedAt: reportedAtParam);
 
           return object;
@@ -20833,6 +20842,10 @@ class PulseEventEntity_ {
   /// see [PulseEventEntity.reportedAt]
   static final reportedAt =
       obx.QueryDateProperty<PulseEventEntity>(_entities[162].properties[8]);
+
+  /// see [PulseEventEntity.growthScoreEarned]
+  static final growthScoreEarned =
+      obx.QueryIntegerProperty<PulseEventEntity>(_entities[162].properties[9]);
 }
 
 /// [ScheduledChatMessageEntity] entity fields to define ObjectBox queries.
