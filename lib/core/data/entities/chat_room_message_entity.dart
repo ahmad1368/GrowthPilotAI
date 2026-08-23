@@ -69,6 +69,11 @@ class ChatRoomMessageEntity {
   /// action (unlike edit/delete). See [ToggleMessagePin].
   bool isPinned;
 
+  /// "Silent Messages (Sending without sound/vibration)" (Issue #317
+  /// feature #21) — suppresses [ChatNotificationHandler]'s push
+  /// dispatch for this message; it still saves and shows normally.
+  bool isSilent;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -89,6 +94,7 @@ class ChatRoomMessageEntity {
     this.isDeleted = false,
     this.editedAt,
     this.isPinned = false,
+    this.isSilent = false,
   });
 
   bool get isRead => readAt != null;

@@ -50,8 +50,8 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     super.dispose();
   }
 
-  void _send(String text) {
-    _actions.send(text, _replyingTo);
+  void _send(String text, bool isSilent) {
+    _actions.send(text, _replyingTo, isSilent: isSilent);
     if (_replyingTo != null) setState(() => _replyingTo = null);
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:growth_pilot_ai/business/batch_chat_notifications.dart';
 import 'package:growth_pilot_ai/business/dispatch_notification_usecase.dart';
+import 'package:growth_pilot_ai/business/should_notify_for_message.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
@@ -24,7 +25,8 @@ class ChatNotificationHandler {
   }
 
   Future<void> _onMessage(ChatRoomMessageEntity message) async {
-    if (message.roomId != roomId || message.senderId == currentUserId) return;
+    if (message.roomId != roomId) return;
+    if (!ShouldNotifyForMessage.call(message, currentUserId)) return;
     final now = DateTime.now();
     final recent = _notifications.since(now.subtract(const Duration(hours: 1)));
     final notification = BatchChatNotifications.call(recent, message.senderId, roomId, now);

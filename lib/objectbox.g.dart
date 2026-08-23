@@ -4696,7 +4696,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(107, 7003417229316413981),
       name: 'ChatRoomMessageEntity',
-      lastPropertyId: const obx_int.IdUid(19, 8711471662290831681),
+      lastPropertyId: const obx_int.IdUid(20, 1174438300102655173),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4793,6 +4793,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(19, 8711471662290831681),
             name: 'isPinned',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 1174438300102655173),
+            name: 'isSilent',
             type: 1,
             flags: 0)
       ],
@@ -12704,7 +12709,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               : fbb.writeString(object.attachmentMimeType!);
           final metadataTagsOffset = fbb.writeList(
               object.metadataTags.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(20);
+          fbb.startTable(21);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.roomId);
           fbb.addOffset(2, senderIdOffset);
@@ -12724,6 +12729,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addBool(16, object.isDeleted);
           fbb.addInt64(17, object.editedAt?.millisecondsSinceEpoch);
           fbb.addBool(18, object.isPinned);
+          fbb.addBool(19, object.isSilent);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -12783,6 +12789,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               : DateTime.fromMillisecondsSinceEpoch(editedAtValue);
           final isPinnedParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
+          final isSilentParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 42, false);
           final object = ChatRoomMessageEntity(
               id: idParam,
               roomId: roomIdParam,
@@ -12802,7 +12810,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               selfDestructAt: selfDestructAtParam,
               isDeleted: isDeletedParam,
               editedAt: editedAtParam,
-              isPinned: isPinnedParam);
+              isPinned: isPinnedParam,
+              isSilent: isSilentParam);
 
           return object;
         }),
@@ -19084,6 +19093,10 @@ class ChatRoomMessageEntity_ {
   /// see [ChatRoomMessageEntity.isPinned]
   static final isPinned = obx.QueryBooleanProperty<ChatRoomMessageEntity>(
       _entities[105].properties[18]);
+
+  /// see [ChatRoomMessageEntity.isSilent]
+  static final isSilent = obx.QueryBooleanProperty<ChatRoomMessageEntity>(
+      _entities[105].properties[19]);
 }
 
 /// [AbuseReportEntity] entity fields to define ObjectBox queries.

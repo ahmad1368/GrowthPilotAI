@@ -10,7 +10,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 /// is a future issue). [replyPreview] shows a cancellable "Replying
 /// to…" banner (Issue #132).
 class ChatInputBar extends StatefulWidget {
-  final void Function(String) onSend;
+  final void Function(String text, bool isSilent) onSend;
   final void Function(String fileName, String mimeType, Uint8List bytes) onSendAttachment;
   final void Function(String text, DateTime scheduledFor) onSchedule;
   final String? replyPreview;
@@ -31,12 +31,14 @@ class ChatInputBar extends StatefulWidget {
 
 class _ChatInputBarState extends State<ChatInputBar> {
   final _controller = TextEditingController();
+  bool _isSilent = false;
 
   void _submit() {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
-    widget.onSend(text);
+    widget.onSend(text, _isSilent);
     _controller.clear();
+    setState(() => _isSilent = false);
   }
 
   Future<void> _attach() async {
@@ -68,6 +70,11 @@ class _ChatInputBarState extends State<ChatInputBar> {
         Row(children: [
           ShadButton.ghost(onPressed: _attach, child: const Icon(Icons.attach_file, size: 16)),
           ShadButton.ghost(onPressed: _schedule, child: const Icon(Icons.schedule_send_outlined, size: 16)),
+          // "Silent Messages" (Issue #317 feature #21) — toggled per send.
+          ShadButton.ghost(
+            onPressed: () => setState(() => _isSilent = !_isSilent),
+            child: Icon(_isSilent ? Icons.notifications_off : Icons.notifications_off_outlined, size: 16),
+          ),
           Expanded(
             child: ShadInput(
               controller: _controller,
