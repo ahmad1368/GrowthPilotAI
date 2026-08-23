@@ -263,6 +263,19 @@ class SettingsScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
+              // Local dependency diagnostics panel (Issue #166)
+              _buildSectionHeader("System"),
+              const SizedBox(height: 12),
+
+              SettingsNavTile(
+                icon: Icons.monitor_heart_rounded,
+                title: 'System Health',
+                subtitle: 'Database, storage, and connectivity status',
+                onTap: () => Get.toNamed('/settings/health'),
+              ),
+
+              const SizedBox(height: 32),
+
               // ۲. بخش حساب کاربری (Account)
               _buildSectionHeader("Account"),
               const SizedBox(height: 12),
