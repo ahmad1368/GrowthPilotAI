@@ -2,9 +2,10 @@
 
 A local-first, AI-assisted financial operations app for small businesses:
 bank/accounting reconciliation (Plaid, Xero, QuickBooks), automated
-transaction-to-accounting mapping, document/receipt capture, and
-compliance-aware, encrypted on-device data storage — built with Flutter for
-mobile and web.
+transaction-to-accounting mapping, document/receipt capture,
+compliance-aware encrypted on-device data storage, an on-device AI
+assistant, analytics dashboards, and encrypted business chat — built with
+Flutter for mobile and web.
 
 See [`docs/PRODUCT_VISION.md`](docs/PRODUCT_VISION.md) for the full mission,
 vision, target users, product principles, and roadmap. New feature issues
