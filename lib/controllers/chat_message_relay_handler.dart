@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/build_chat_attachment_message.dart';
 import 'package:growth_pilot_ai/business/build_reply_message.dart';
+import 'package:growth_pilot_ai/business/chat_send_rate_limiter.dart';
 import 'package:growth_pilot_ai/business/extract_message_tags.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
@@ -62,8 +63,11 @@ class ChatMessageRelayHandler {
   }
 
   /// Tags the message before it's ever broadcast (Issue #128), matching
-  /// the issue's own `handleMessage` ordering (tag, then emit).
+  /// the issue's own `handleMessage` ordering (tag, then emit). Flood-
+  /// guarded first (Issue #575) — a sender past the rate limit is
+  /// dropped silently, same as an attachment failing the MIME allow-list.
   Future<bool> _dispatch(ChatRoomMessageEntity message) async {
+    if (!ChatSendRateLimiter.allows(inbox, message.senderId, DateTime.now())) return false;
     message.metadataTags =
         ExtractMessageTags.call(message.body).map(messageTagDisplayLabel).toList();
     inbox.add(message);
