@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/business/is_sticker_message.dart';
 import 'package:growth_pilot_ai/business/parse_hex_color.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_attachment_chip.dart';
@@ -85,6 +86,10 @@ class ChatMessageBubble extends StatelessWidget {
                   fileSize: message.attachmentFileSize ?? 0,
                   mimeType: message.attachmentMimeType ?? '',
                 )
+              else if (IsStickerMessage.call(message.body))
+                // "Custom Stickers and Vector Emojis" (Issue #317 feature
+                // #23) — rendered bare and large, no bubble text styling.
+                Text(message.body, style: const TextStyle(fontSize: 40))
               else
                 Text(message.body, style: TextStyle(color: fg)),
             ],
