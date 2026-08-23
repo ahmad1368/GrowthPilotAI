@@ -30,3 +30,4 @@ and mark the old one "Superseded by NNNN".
 | [0003](0003-flat-shadcn-ui-design-system.md) | Flat shadcn_ui design system, retiring Glassmorphism | Accepted |
 | [0004](0004-local-first-reinterpretation-over-literal-backend-specs.md) | Reinterpret infeasible backend-dependent issues locally, don't skip them | Accepted |
 | [0005](0005-automated-per-issue-pipeline-deferred-verification.md) | Automated per-issue PR pipeline with deferred verification | Accepted |
+| [0006](0006-append-only-persisted-enum-ordering.md) | Append-only ordering for enums backed by a persisted int index | Accepted |
