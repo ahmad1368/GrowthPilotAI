@@ -96,6 +96,9 @@ class ChatGatewayController extends GetxController {
   Future<bool> editMessage(ChatRoomMessageEntity message, String newBody) =>
       _relay.editMessage(message, newBody);
 
+  /// Pin/unpin (Issue #317 feature #22).
+  Future<bool> togglePin(ChatRoomMessageEntity message) => _relay.togglePin(message);
+
   bool forwardMessage(ChatRoomMessageEntity original, int targetRoomId, String forwarderId) =>
       _forward.forward(original, targetRoomId, forwarderId);
 

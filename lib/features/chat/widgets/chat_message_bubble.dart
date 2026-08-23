@@ -19,6 +19,7 @@ class ChatMessageBubble extends StatelessWidget {
   final VoidCallback onForward;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final VoidCallback onTogglePin;
 
   const ChatMessageBubble({
     super.key,
@@ -29,6 +30,7 @@ class ChatMessageBubble extends StatelessWidget {
     required this.onForward,
     this.onEdit,
     this.onDelete,
+    required this.onTogglePin,
   });
 
   @override
@@ -42,7 +44,12 @@ class ChatMessageBubble extends StatelessWidget {
         onLongPress: message.isDeleted
             ? null
             : () => showChatMessageActions(context,
-                onReply: onReply, onForward: onForward, onEdit: onEdit, onDelete: onDelete),
+                onReply: onReply,
+                onForward: onForward,
+                onEdit: onEdit,
+                onDelete: onDelete,
+                onTogglePin: onTogglePin,
+                isPinned: message.isPinned),
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -53,6 +60,11 @@ class ChatMessageBubble extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+            if (message.isPinned && !message.isDeleted)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: Icon(Icons.push_pin, size: 12, color: fg.withValues(alpha: 0.7)),
+              ),
             if (message.isDeleted)
               Text('This message was deleted',
                   style: TextStyle(fontStyle: FontStyle.italic, color: fg.withValues(alpha: 0.6)))

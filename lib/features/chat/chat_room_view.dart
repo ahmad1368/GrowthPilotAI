@@ -81,6 +81,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                     onForward: (m) => _actions.forward(context, m),
                     onEdit: (m) => _actions.edit(context, m),
                     onDelete: _actions.delete,
+                    onTogglePin: _actions.togglePin,
                   ),
                 ),
                 ChatInputBar(

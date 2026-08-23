@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 /// Long-press action sheet (Issue #132): Reply or Forward a message,
-/// plus Edit (feature #18) and Delete (feature #19) — Issue #317 —
-/// when [onEdit]/[onDelete] are provided; callers pass them only for
-/// the current user's own messages.
+/// plus Edit (feature #18), Pin/Unpin (feature #22), and Delete
+/// (feature #19) — Issue #317. [onEdit]/[onDelete] are passed only for
+/// the current user's own messages; [onTogglePin] is available to any
+/// participant, since pinning is room curation, not an ownership action.
 void showChatMessageActions(BuildContext context,
     {required VoidCallback onReply,
     required VoidCallback onForward,
     VoidCallback? onEdit,
-    VoidCallback? onDelete}) {
+    VoidCallback? onDelete,
+    required VoidCallback onTogglePin,
+    required bool isPinned}) {
   showModalBottomSheet(
     context: context,
     builder: (_) => SafeArea(
@@ -38,6 +41,14 @@ void showChatMessageActions(BuildContext context,
               onEdit();
             },
           ),
+        ListTile(
+          leading: Icon(isPinned ? Icons.push_pin : Icons.push_pin_outlined),
+          title: Text(isPinned ? 'Unpin' : 'Pin'),
+          onTap: () {
+            Navigator.pop(context);
+            onTogglePin();
+          },
+        ),
         if (onDelete != null)
           ListTile(
             leading: const Icon(Icons.delete_outline),
