@@ -14,9 +14,9 @@ class ChatRoomActions {
 
   ChatRoomActions(this.controller, this.currentUserId);
 
-  void send(String text, ChatRoomMessageEntity? replyingTo) {
+  void send(String text, ChatRoomMessageEntity? replyingTo, {bool isSilent = false}) {
     if (replyingTo == null) {
-      controller.sendMessage(currentUserId, text);
+      controller.sendMessage(currentUserId, text, isSilent: isSilent);
     } else {
       controller.sendReply(currentUserId, text, replyingTo);
     }

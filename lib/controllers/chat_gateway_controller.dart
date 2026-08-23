@@ -94,8 +94,8 @@ class ChatGatewayController extends GetxController {
   void reportPeer(String reporterId, String targetId, ModerationReason reason) =>
       _moderation.submitReport(reporterId, targetId, reason, messages);
 
-  Future<bool> sendMessage(String senderId, String body) =>
-      _relay.send(senderId, body);
+  Future<bool> sendMessage(String senderId, String body, {bool isSilent = false}) =>
+      _relay.send(senderId, body, isSilent: isSilent);
 
   Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
       _relay.sendReply(senderId, body, parent);

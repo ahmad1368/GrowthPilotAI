@@ -48,14 +48,17 @@ class ChatMessageRelayHandler {
   /// Sanitization") before it's persisted and broadcast to peers.
   /// [selfDestructAfter] opts this message into Issue #317 feature #2's
   /// Secret Chat timer — null (the default) means it never expires.
-  Future<bool> send(String senderId, String body, {Duration? selfDestructAfter}) {
+  /// [isSilent] suppresses the recipient's push notification (feature #21).
+  Future<bool> send(String senderId, String body,
+      {Duration? selfDestructAfter, bool isSilent = false}) {
     final now = DateTime.now();
     return _dispatch(ChatRoomMessageEntity(
         roomId: roomId,
         senderId: senderId,
         body: InputSanitizer.clean(body),
         sentAt: now,
-        selfDestructAt: selfDestructAfter == null ? null : now.add(selfDestructAfter)));
+        selfDestructAt: selfDestructAfter == null ? null : now.add(selfDestructAfter),
+        isSilent: isSilent));
   }
 
   /// Threaded reply (Issue #132) — [parent] must belong to this room.
