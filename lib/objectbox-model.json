@@ -4603,7 +4603,7 @@
     },
     {
       "id": "107:7003417229316413981",
-      "lastPropertyId": "17:3702380016370623785",
+      "lastPropertyId": "18:675639749668754748",
       "name": "ChatRoomMessageEntity",
       "properties": [
         {
@@ -4693,6 +4693,11 @@
           "id": "17:3702380016370623785",
           "name": "isDeleted",
           "type": 1
+        },
+        {
+          "id": "18:675639749668754748",
+          "name": "editedAt",
+          "type": 10
         }
       ],
       "relations": []
