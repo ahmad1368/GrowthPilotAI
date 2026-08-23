@@ -92,6 +92,10 @@ class ChatGatewayController extends GetxController {
   /// "Delete for Everyone" (Issue #317 feature #19).
   Future<bool> deleteMessage(ChatRoomMessageEntity message) => _relay.deleteMessage(message);
 
+  /// "Message Editing" (Issue #317 feature #18).
+  Future<bool> editMessage(ChatRoomMessageEntity message, String newBody) =>
+      _relay.editMessage(message, newBody);
+
   bool forwardMessage(ChatRoomMessageEntity original, int targetRoomId, String forwarderId) =>
       _forward.forward(original, targetRoomId, forwarderId);
 

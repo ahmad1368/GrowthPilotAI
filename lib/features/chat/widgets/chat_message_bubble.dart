@@ -17,6 +17,7 @@ class ChatMessageBubble extends StatelessWidget {
   final VoidCallback? onTapReplyPreview;
   final VoidCallback onReply;
   final VoidCallback onForward;
+  final VoidCallback? onEdit;
   final VoidCallback? onDelete;
 
   const ChatMessageBubble({
@@ -26,6 +27,7 @@ class ChatMessageBubble extends StatelessWidget {
     this.onTapReplyPreview,
     required this.onReply,
     required this.onForward,
+    this.onEdit,
     this.onDelete,
   });
 
@@ -40,7 +42,7 @@ class ChatMessageBubble extends StatelessWidget {
         onLongPress: message.isDeleted
             ? null
             : () => showChatMessageActions(context,
-                onReply: onReply, onForward: onForward, onDelete: onDelete),
+                onReply: onReply, onForward: onForward, onEdit: onEdit, onDelete: onDelete),
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -75,6 +77,10 @@ class ChatMessageBubble extends StatelessWidget {
             ],
             const SizedBox(height: 2),
             Row(mainAxisSize: MainAxisSize.min, children: [
+              if (message.isEdited && !message.isDeleted) ...[
+                Text('edited', style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic, color: fg.withValues(alpha: 0.7))),
+                const SizedBox(width: 4),
+              ],
               Text(time, style: TextStyle(fontSize: 10, color: fg.withValues(alpha: 0.7))),
               if (isMe) ...[
                 const SizedBox(width: 4),

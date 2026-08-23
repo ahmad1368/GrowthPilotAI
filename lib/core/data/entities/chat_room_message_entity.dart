@@ -57,6 +57,12 @@ class ChatRoomMessageEntity {
   /// [readAt]/[metadataTags] history stay consistent.
   bool isDeleted;
 
+  /// "Message Editing (Post-sending with edit history)" (Issue #317
+  /// feature #18) — null means never edited. Only the latest [body] is
+  /// kept (no full history log); see [BuildEditedMessage] PR notes.
+  @Property(type: PropertyType.date)
+  DateTime? editedAt;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -75,9 +81,11 @@ class ChatRoomMessageEntity {
     this.metadataTags = const [],
     this.selfDestructAt,
     this.isDeleted = false,
+    this.editedAt,
   });
 
   bool get isRead => readAt != null;
   bool get isReply => replyToMessageId != null;
   bool get hasAttachment => attachmentBytes != null;
+  bool get isEdited => editedAt != null;
 }
