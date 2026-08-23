@@ -37,6 +37,9 @@ class ChatRoomActions {
     );
   }
 
+  /// Pin/unpin (Issue #317 feature #22).
+  void togglePin(ChatRoomMessageEntity message) => controller.togglePin(message);
+
   void forward(BuildContext context, ChatRoomMessageEntity message) {
     showChatForwardRoomPicker(
       context,

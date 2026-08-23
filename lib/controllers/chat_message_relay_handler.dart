@@ -7,6 +7,7 @@ import 'package:growth_pilot_ai/business/build_reply_message.dart';
 import 'package:growth_pilot_ai/business/chat_send_rate_limiter.dart';
 import 'package:growth_pilot_ai/business/dispatch_message_deletion.dart';
 import 'package:growth_pilot_ai/business/dispatch_message_edit.dart';
+import 'package:growth_pilot_ai/business/dispatch_message_pin_toggle.dart';
 import 'package:growth_pilot_ai/business/extract_message_tags.dart';
 import 'package:growth_pilot_ai/business/handle_incoming_chat_message.dart';
 import 'package:growth_pilot_ai/business/purge_expired_room_messages.dart';
@@ -83,6 +84,10 @@ class ChatMessageRelayHandler {
   /// "Message Editing" (Issue #317 feature #18).
   Future<bool> editMessage(ChatRoomMessageEntity message, String newBody) =>
       DispatchMessageEdit.call(_gateway, inbox, message, newBody);
+
+  /// Pin/unpin (Issue #317 feature #22) — available to any participant.
+  Future<bool> togglePin(ChatRoomMessageEntity message) =>
+      DispatchMessagePinToggle.call(_gateway, inbox, message);
 
   /// Tags the message before it's ever broadcast (Issue #128), matching
   /// the issue's own `handleMessage` ordering (tag, then emit). Flood-

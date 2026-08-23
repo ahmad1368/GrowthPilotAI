@@ -63,6 +63,12 @@ class ChatRoomMessageEntity {
   @Property(type: PropertyType.date)
   DateTime? editedAt;
 
+  /// "Pinned Messages in Chats" (Issue #317 feature #22) — surfaced
+  /// at the top of the room; toggled by any participant, not just the
+  /// sender, since pinning is room curation rather than an ownership
+  /// action (unlike edit/delete). See [ToggleMessagePin].
+  bool isPinned;
+
   ChatRoomMessageEntity({
     this.id = 0,
     required this.roomId,
@@ -82,6 +88,7 @@ class ChatRoomMessageEntity {
     this.selfDestructAt,
     this.isDeleted = false,
     this.editedAt,
+    this.isPinned = false,
   });
 
   bool get isRead => readAt != null;
