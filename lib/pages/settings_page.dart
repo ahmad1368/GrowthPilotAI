@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/data_source_switcher_tile.dart';
+import 'package:growth_pilot_ai/features/settings/widgets/presentation_mode_switcher_tile.dart';
 import '../widgets/adaptive_text.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -33,6 +34,8 @@ class SettingsPage extends StatelessWidget {
             ),
             SizedBox(height: 12),
             DataSourceSwitcherTile(),
+            SizedBox(height: 12),
+            PresentationModeSwitcherTile(),
           ],
 
           // سایر تنظیمات عمومی در آینده اینجا اضافه می‌شوند
