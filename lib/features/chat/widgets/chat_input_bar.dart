@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_reply_banner.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/pick_chat_attachment.dart';
+import 'package:growth_pilot_ai/features/chat/widgets/sticker_picker_sheet.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 /// Contextual Action Bar (Issue #123/#136 AC) — a flat text field, send
@@ -47,6 +48,11 @@ class _ChatInputBarState extends State<ChatInputBar> {
     widget.onSendAttachment(picked.fileName, picked.mimeType, picked.bytes);
   }
 
+  /// "Custom Stickers and Vector Emojis" (Issue #317 feature #23) — a
+  /// sticker is just sent as a normal message (no new dispatch path).
+  void _openStickers() =>
+      showStickerPickerSheet(context, onSelect: (emoji) => widget.onSend(emoji, _isSilent));
+
   /// "Schedule Send" (Issue #317 feature #20).
   Future<void> _schedule() async {
     final text = _controller.text.trim();
@@ -69,6 +75,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
           ChatReplyBanner(preview: widget.replyPreview!, onCancel: widget.onCancelReply),
         Row(children: [
           ShadButton.ghost(onPressed: _attach, child: const Icon(Icons.attach_file, size: 16)),
+          ShadButton.ghost(onPressed: _openStickers, child: const Icon(Icons.emoji_emotions_outlined, size: 16)),
           ShadButton.ghost(onPressed: _schedule, child: const Icon(Icons.schedule_send_outlined, size: 16)),
           // "Silent Messages" (Issue #317 feature #21) — toggled per send.
           ShadButton.ghost(
