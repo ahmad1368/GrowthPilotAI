@@ -15,6 +15,7 @@ class ChatMessageList extends StatelessWidget {
   final void Function(ChatRoomMessageEntity) onEdit;
   final void Function(ChatRoomMessageEntity) onDelete;
   final void Function(ChatRoomMessageEntity) onTogglePin;
+  final String? themeColorHex;
 
   const ChatMessageList({
     super.key,
@@ -25,6 +26,7 @@ class ChatMessageList extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onTogglePin,
+    this.themeColorHex,
   });
 
   @override
@@ -47,6 +49,7 @@ class ChatMessageList extends StatelessWidget {
               onEdit: m.senderId == currentUserId ? () => onEdit(m) : null,
               onDelete: m.senderId == currentUserId ? () => onDelete(m) : null,
               onTogglePin: () => onTogglePin(m),
+              themeColorHex: themeColorHex,
               onTapReplyPreview:
                   m.replyToMessageId == null ? null : () => _scrollTo(keys[m.replyToMessageId]),
             ),

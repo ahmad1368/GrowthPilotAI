@@ -11,6 +11,7 @@ class ChatRoomHeader extends StatelessWidget {
   final VoidCallback onToggleOnline;
   final VoidCallback onBlock;
   final VoidCallback onReport;
+  final VoidCallback onCustomizeTheme;
 
   const ChatRoomHeader({
     super.key,
@@ -19,6 +20,7 @@ class ChatRoomHeader extends StatelessWidget {
     required this.onToggleOnline,
     required this.onBlock,
     required this.onReport,
+    required this.onCustomizeTheme,
   });
 
   @override
@@ -38,6 +40,8 @@ class ChatRoomHeader extends StatelessWidget {
         ShadButton.ghost(
             onPressed: onToggleOnline,
             child: Text(isOnline ? 'Online' : 'Offline', style: const TextStyle(fontSize: 11))),
+        ShadButton.ghost(
+            onPressed: onCustomizeTheme, child: const Icon(Icons.palette_outlined, size: 18)),
         PopupMenuButton<String>(
           icon: const Icon(Icons.more_vert, size: 18),
           onSelected: (value) => value == 'block' ? onBlock() : onReport(),

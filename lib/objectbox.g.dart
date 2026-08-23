@@ -4650,7 +4650,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(106, 8190860710355553987),
       name: 'ChatRoomEntity',
-      lastPropertyId: const obx_int.IdUid(6, 7267756990634831526),
+      lastPropertyId: const obx_int.IdUid(7, 8449743504516256720),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -4684,6 +4684,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(6, 7267756990634831526),
             name: 'createdAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8449743504516256720),
+            name: 'themeColorHex',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -12625,13 +12630,17 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectToFB: (ChatRoomEntity object, fb.Builder fbb) {
           final participantAIdOffset = fbb.writeString(object.participantAId);
           final participantBIdOffset = fbb.writeString(object.participantBId);
-          fbb.startTable(7);
+          final themeColorHexOffset = object.themeColorHex == null
+              ? null
+              : fbb.writeString(object.themeColorHex!);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, participantAIdOffset);
           fbb.addOffset(2, participantBIdOffset);
           fbb.addBool(3, object.isOtherOnline);
           fbb.addBool(4, object.isOtherTyping);
           fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(6, themeColorHexOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -12652,13 +12661,17 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final themeColorHexParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16);
           final object = ChatRoomEntity(
               id: idParam,
               participantAId: participantAIdParam,
               participantBId: participantBIdParam,
               isOtherOnline: isOtherOnlineParam,
               isOtherTyping: isOtherTypingParam,
-              createdAt: createdAtParam);
+              createdAt: createdAtParam,
+              themeColorHex: themeColorHexParam);
 
           return object;
         }),
@@ -18980,6 +18993,10 @@ class ChatRoomEntity_ {
   /// see [ChatRoomEntity.createdAt]
   static final createdAt =
       obx.QueryDateProperty<ChatRoomEntity>(_entities[104].properties[5]);
+
+  /// see [ChatRoomEntity.themeColorHex]
+  static final themeColorHex =
+      obx.QueryStringProperty<ChatRoomEntity>(_entities[104].properties[6]);
 }
 
 /// [ChatRoomMessageEntity] entity fields to define ObjectBox queries.

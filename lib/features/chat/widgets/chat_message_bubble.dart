@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/business/parse_hex_color.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_attachment_chip.dart';
 import 'package:growth_pilot_ai/features/chat/widgets/chat_message_tag_chips.dart';
@@ -20,6 +21,7 @@ class ChatMessageBubble extends StatelessWidget {
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
   final VoidCallback onTogglePin;
+  final String? themeColorHex;
 
   const ChatMessageBubble({
     super.key,
@@ -31,12 +33,15 @@ class ChatMessageBubble extends StatelessWidget {
     this.onEdit,
     this.onDelete,
     required this.onTogglePin,
+    this.themeColorHex,
   });
 
   @override
   Widget build(BuildContext context) {
     final colors = ShadTheme.of(context).colorScheme;
     final time = TimeOfDay.fromDateTime(message.sentAt).format(context);
+    final bubbleColor =
+        isMe && themeColorHex != null ? ParseHexColor.call(themeColorHex!) : (isMe ? colors.primary : colors.card);
     final fg = isMe ? colors.primaryForeground : colors.foreground;
     return Align(
       alignment: isMe ? AlignmentDirectional.centerEnd : AlignmentDirectional.centerStart,
@@ -55,7 +60,7 @@ class ChatMessageBubble extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           constraints: const BoxConstraints(maxWidth: 280),
           decoration: BoxDecoration(
-            color: isMe ? colors.primary : colors.card,
+            color: bubbleColor,
             border: isMe ? null : Border.all(color: colors.border),
             borderRadius: BorderRadius.circular(12),
           ),

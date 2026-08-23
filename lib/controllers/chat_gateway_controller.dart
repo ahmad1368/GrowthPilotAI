@@ -127,6 +127,13 @@ class ChatGatewayController extends GetxController {
     _room.refresh();
   }
 
+  /// "Custom Chat Themes" (Issue #317 feature #25).
+  void setRoomTheme(String? hex) {
+    room!.themeColorHex = hex;
+    _rooms.upsert(room!);
+    _room.refresh();
+  }
+
   void toggleOtherTyping() {
     _presence.toggleTyping(room!);
     _room.refresh();
