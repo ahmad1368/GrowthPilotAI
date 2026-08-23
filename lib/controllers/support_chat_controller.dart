@@ -33,14 +33,14 @@ class SupportChatController extends GetxController {
     final now = DateTime.now();
     _messages.append(SupportMessageEntity(
       businessId: businessId,
-      sender: SupportMessageSender.user,
+      dbSender: SupportMessageSender.user.index,
       body: safeText,
       sentAt: now,
       isRead: true,
     ));
     _messages.append(SupportMessageEntity(
       businessId: businessId,
-      sender: SupportMessageSender.agent,
+      dbSender: SupportMessageSender.agent.index,
       body: BuildAutoSupportReply.call(safeText),
       sentAt: now.add(const Duration(seconds: 1)),
     ));
