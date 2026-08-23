@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/data_source_switcher_tile.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/presentation_mode_switcher_tile.dart';
 import '../widgets/adaptive_text.dart';
@@ -10,7 +12,13 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // DataSourceSwitcherTile/PresentationModeSwitcherTile need a
+    // ShadTheme ancestor (bug fix: this screen never had one, so both
+    // would throw "ShadTheme.of() called with a context that does not
+    // contain a ShadTheme" as soon as Developer Tools rendered).
+    return ShadTheme(
+      data: AppShadTheme.build(Theme.of(context).brightness),
+      child: Scaffold(
       backgroundColor: Colors.transparent, // برای حفظ تم شیشه‌ای پس‌زمینه
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -43,6 +51,7 @@ class SettingsPage extends StatelessWidget {
           AdaptiveText("App Version: 1.0.0 (Build 2026)",
               style: TextStyle(fontSize: 12, color: Colors.grey)),
         ],
+      ),
       ),
     );
   }
