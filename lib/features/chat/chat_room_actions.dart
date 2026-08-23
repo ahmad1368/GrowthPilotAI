@@ -40,6 +40,10 @@ class ChatRoomActions {
   /// Pin/unpin (Issue #317 feature #22).
   void togglePin(ChatRoomMessageEntity message) => controller.togglePin(message);
 
+  /// "Message Scheduling" (Issue #317 feature #20).
+  void scheduleMessage(String text, DateTime scheduledFor) =>
+      controller.scheduleMessage(currentUserId, text, scheduledFor);
+
   void forward(BuildContext context, ChatRoomMessageEntity message) {
     showChatForwardRoomPicker(
       context,

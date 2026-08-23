@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/business/list_forwardable_chat_rooms.dart';
 import 'package:growth_pilot_ai/controllers/chat_connection_authorizer.dart';
+import 'package:growth_pilot_ai/business/dispatch_due_scheduled_messages.dart';
 import 'package:growth_pilot_ai/business/dispatch_notification_usecase.dart';
 import 'package:growth_pilot_ai/controllers/chat_forward_handler.dart';
 import 'package:growth_pilot_ai/controllers/chat_message_relay_handler.dart';
@@ -18,6 +19,8 @@ import 'package:growth_pilot_ai/core/data/repositories/auth_session_repository.d
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_repository.dart';
 import 'package:growth_pilot_ai/core/data/repositories/inbox_notification_repository.dart';
+import 'package:growth_pilot_ai/core/data/entities/scheduled_chat_message_entity.dart';
+import 'package:growth_pilot_ai/core/data/repositories/scheduled_chat_message_repository.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/enum/moderation_reason.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
@@ -33,6 +36,7 @@ class ChatGatewayController extends GetxController {
   late ChatNotificationHandler _notifications;
   late ModerationController _moderation;
   late ChatRoomRepository _rooms;
+  late ScheduledChatMessageRepository _scheduled;
   final _room = Rx<ChatRoomEntity?>(null);
   ChatRoomEntity? get room => _room.value;
 
@@ -43,6 +47,7 @@ class ChatGatewayController extends GetxController {
     super.onInit();
     final store = Get.find<ObjectBox>().store;
     _rooms = ChatRoomRepository(store.box());
+    _scheduled = ScheduledChatMessageRepository(store.box());
     final gateway = DependencyInjection.get<ChatGatewayService>();
     final messageRepo = ChatRoomMessageRepository(store.box());
     _relay = ChatMessageRelayHandler(messageRepo, gateway, messages);
@@ -66,8 +71,18 @@ class ChatGatewayController extends GetxController {
       _notifications.currentUserId = currentUserId;
       _notifications.roomId = room!.id;
       _relay.isSenderBlocked = (senderId) => _moderation.isBlocked(currentUserId, senderId);
+      // Issue #317 feature #20 — fire-and-forget, mirrors #440's
+      // scan-on-visit trigger shape.
+      DispatchDueScheduledMessages.call(_scheduled, _relay, room!.id, DateTime.now());
     }
     return room != null;
+  }
+
+  /// "Message Scheduling" (Issue #317 feature #20) — held until
+  /// [scheduledFor], dispatched the next time this room is opened.
+  void scheduleMessage(String senderId, String body, DateTime scheduledFor) {
+    _scheduled.insert(ScheduledChatMessageEntity(
+        roomId: room!.id, senderId: senderId, body: body, scheduledFor: scheduledFor, createdAt: DateTime.now()));
   }
 
   bool isPeerBlocked(String currentUserId, String otherUserId) =>

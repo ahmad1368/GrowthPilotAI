@@ -145,6 +145,7 @@ import 'core/data/entities/requirement_history_entity.dart';
 import 'core/data/entities/requirement_test_case_link_entity.dart';
 import 'core/data/entities/review_feedback_entity.dart';
 import 'core/data/entities/rewarded_unlock_entity.dart';
+import 'core/data/entities/scheduled_chat_message_entity.dart';
 import 'core/data/entities/scheduled_task_entity.dart';
 import 'core/data/entities/seasonal_catalog_item_entity.dart';
 import 'core/data/entities/security_audit_log_entity.dart';
@@ -7235,6 +7236,47 @@ final _entities = <obx_int.ModelEntity>[
             indexId: const obx_int.IdUid(164, 1832252919499937648))
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(165, 6673131331430651503),
+      name: 'ScheduledChatMessageEntity',
+      lastPropertyId: const obx_int.IdUid(6, 7451562792152882104),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2055942820396519745),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5415894885268892685),
+            name: 'roomId',
+            type: 6,
+            flags: 8,
+            indexId: const obx_int.IdUid(165, 260650258627852234)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6644548645332837508),
+            name: 'senderId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 901437742925448853),
+            name: 'body',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 589330927656117092),
+            name: 'scheduledFor',
+            type: 10,
+            flags: 8,
+            indexId: const obx_int.IdUid(166, 513860910178412826)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7451562792152882104),
+            name: 'createdAt',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -7273,8 +7315,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(164, 1593827631998554974),
-      lastIndexId: const obx_int.IdUid(164, 1832252919499937648),
+      lastEntityId: const obx_int.IdUid(165, 6673131331430651503),
+      lastIndexId: const obx_int.IdUid(166, 513860910178412826),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -15647,7 +15689,55 @@ obx_int.ModelDefinition getObjectBoxModel() {
               reportedAt: reportedAtParam);
 
           return object;
-        })
+        }),
+    ScheduledChatMessageEntity:
+        obx_int.EntityDefinition<ScheduledChatMessageEntity>(
+            model: _entities[163],
+            toOneRelations: (ScheduledChatMessageEntity object) => [],
+            toManyRelations: (ScheduledChatMessageEntity object) => {},
+            getId: (ScheduledChatMessageEntity object) => object.id,
+            setId: (ScheduledChatMessageEntity object, int id) {
+              object.id = id;
+            },
+            objectToFB: (ScheduledChatMessageEntity object, fb.Builder fbb) {
+              final senderIdOffset = fbb.writeString(object.senderId);
+              final bodyOffset = fbb.writeString(object.body);
+              fbb.startTable(7);
+              fbb.addInt64(0, object.id);
+              fbb.addInt64(1, object.roomId);
+              fbb.addOffset(2, senderIdOffset);
+              fbb.addOffset(3, bodyOffset);
+              fbb.addInt64(4, object.scheduledFor.millisecondsSinceEpoch);
+              fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+              fbb.finish(fbb.endTable());
+              return object.id;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+              final buffer = fb.BufferContext(fbData);
+              final rootOffset = buffer.derefObject(0);
+              final idParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+              final roomIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+              final senderIdParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 8, '');
+              final bodyParam = const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, '');
+              final scheduledForParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+              final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+              final object = ScheduledChatMessageEntity(
+                  id: idParam,
+                  roomId: roomIdParam,
+                  senderId: senderIdParam,
+                  body: bodyParam,
+                  scheduledFor: scheduledForParam,
+                  createdAt: createdAtParam);
+
+              return object;
+            })
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -20713,4 +20803,31 @@ class PulseEventEntity_ {
   /// see [PulseEventEntity.reportedAt]
   static final reportedAt =
       obx.QueryDateProperty<PulseEventEntity>(_entities[162].properties[8]);
+}
+
+/// [ScheduledChatMessageEntity] entity fields to define ObjectBox queries.
+class ScheduledChatMessageEntity_ {
+  /// see [ScheduledChatMessageEntity.id]
+  static final id = obx.QueryIntegerProperty<ScheduledChatMessageEntity>(
+      _entities[163].properties[0]);
+
+  /// see [ScheduledChatMessageEntity.roomId]
+  static final roomId = obx.QueryIntegerProperty<ScheduledChatMessageEntity>(
+      _entities[163].properties[1]);
+
+  /// see [ScheduledChatMessageEntity.senderId]
+  static final senderId = obx.QueryStringProperty<ScheduledChatMessageEntity>(
+      _entities[163].properties[2]);
+
+  /// see [ScheduledChatMessageEntity.body]
+  static final body = obx.QueryStringProperty<ScheduledChatMessageEntity>(
+      _entities[163].properties[3]);
+
+  /// see [ScheduledChatMessageEntity.scheduledFor]
+  static final scheduledFor = obx.QueryDateProperty<ScheduledChatMessageEntity>(
+      _entities[163].properties[4]);
+
+  /// see [ScheduledChatMessageEntity.createdAt]
+  static final createdAt = obx.QueryDateProperty<ScheduledChatMessageEntity>(
+      _entities[163].properties[5]);
 }

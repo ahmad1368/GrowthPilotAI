@@ -12,6 +12,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 class ChatInputBar extends StatefulWidget {
   final void Function(String) onSend;
   final void Function(String fileName, String mimeType, Uint8List bytes) onSendAttachment;
+  final void Function(String text, DateTime scheduledFor) onSchedule;
   final String? replyPreview;
   final VoidCallback? onCancelReply;
 
@@ -19,6 +20,7 @@ class ChatInputBar extends StatefulWidget {
     super.key,
     required this.onSend,
     required this.onSendAttachment,
+    required this.onSchedule,
     this.replyPreview,
     this.onCancelReply,
   });
@@ -43,6 +45,19 @@ class _ChatInputBarState extends State<ChatInputBar> {
     widget.onSendAttachment(picked.fileName, picked.mimeType, picked.bytes);
   }
 
+  /// "Schedule Send" (Issue #317 feature #20).
+  Future<void> _schedule() async {
+    final text = _controller.text.trim();
+    if (text.isEmpty || !mounted) return;
+    final date = await showDatePicker(
+        context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(const Duration(days: 365)));
+    if (date == null || !mounted) return;
+    final time = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (time == null) return;
+    widget.onSchedule(text, DateTime(date.year, date.month, date.day, time.hour, time.minute));
+    _controller.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -52,6 +67,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
           ChatReplyBanner(preview: widget.replyPreview!, onCancel: widget.onCancelReply),
         Row(children: [
           ShadButton.ghost(onPressed: _attach, child: const Icon(Icons.attach_file, size: 16)),
+          ShadButton.ghost(onPressed: _schedule, child: const Icon(Icons.schedule_send_outlined, size: 16)),
           Expanded(
             child: ShadInput(
               controller: _controller,

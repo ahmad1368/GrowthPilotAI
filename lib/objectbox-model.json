@@ -7204,10 +7204,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "165:6673131331430651503",
+      "lastPropertyId": "6:7451562792152882104",
+      "name": "ScheduledChatMessageEntity",
+      "properties": [
+        {
+          "id": "1:2055942820396519745",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5415894885268892685",
+          "name": "roomId",
+          "type": 6,
+          "flags": 8,
+          "indexId": "165:260650258627852234"
+        },
+        {
+          "id": "3:6644548645332837508",
+          "name": "senderId",
+          "type": 9
+        },
+        {
+          "id": "4:901437742925448853",
+          "name": "body",
+          "type": 9
+        },
+        {
+          "id": "5:589330927656117092",
+          "name": "scheduledFor",
+          "type": 10,
+          "flags": 8,
+          "indexId": "166:513860910178412826"
+        },
+        {
+          "id": "6:7451562792152882104",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "164:1593827631998554974",
-  "lastIndexId": "164:1832252919499937648",
+  "lastEntityId": "165:6673131331430651503",
+  "lastIndexId": "166:513860910178412826",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

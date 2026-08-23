@@ -87,6 +87,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                 ChatInputBar(
                   onSend: _send,
                   onSendAttachment: _actions.sendAttachment,
+                  onSchedule: _actions.scheduleMessage,
                   replyPreview: _replyingTo?.body,
                   onCancelReply: () => setState(() => _replyingTo = null),
                 ),
