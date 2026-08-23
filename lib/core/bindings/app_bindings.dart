@@ -30,6 +30,7 @@ import 'package:growth_pilot_ai/core/services/ocr/document_scanner_service.dart'
 import 'package:growth_pilot_ai/core/services/ocr/document_text_extractor_service.dart';
 import '../../services/connectivity_service.dart';
 import '../../services/environment_service.dart';
+import '../../services/presentation_mode_service.dart';
 import '../../services/scanner/scanner_service.dart';
 
 class AppBindings extends Bindings {
@@ -38,6 +39,8 @@ class AppBindings extends Bindings {
     // سرویس‌های زیرساختی
     Get.lazyPut(() => EnvironmentService(), fenix: true);
     Get.lazyPut(() => ConnectivityService(), fenix: true);
+    // Issue #195: حالت "آماده ضبط" برای فیلم‌برداری App Preview
+    Get.lazyPut(() => PresentationModeService(), fenix: true);
     // Issue #110: تشخیص سطح سخت‌افزار + حالت صرفه‌جویی باتری
     Get.lazyPut(() => PerformanceController(), fenix: true);
     // Issue #158: مرکز تنظیمات اعلان‌ها (Push/Email/SMS در هر دسته)

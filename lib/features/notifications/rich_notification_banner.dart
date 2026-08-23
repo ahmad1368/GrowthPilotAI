@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/notification_attribution_controller.dart';
 import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dart';
+import 'package:growth_pilot_ai/services/presentation_mode_service.dart';
 
 /// Foreground "Rich Notification" banner (Issue #160) — this offline-first
 /// client has no FCM/service-worker background delivery, so this is the
@@ -11,6 +12,12 @@ import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dar
 /// also start a Last-Click attribution session (Issue #161).
 class RichNotificationBanner {
   static void show(InboxNotificationEntity notification) {
+    // Issue #195: no pop-ups while recording App Preview footage.
+    if (Get.isRegistered<PresentationModeService>() &&
+        Get.find<PresentationModeService>().isEnabled.value) {
+      return;
+    }
+
     final isDark = Get.isDarkMode;
     final fg = isDark ? Colors.white : Colors.black;
 
