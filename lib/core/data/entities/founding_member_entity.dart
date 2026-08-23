@@ -16,10 +16,16 @@ class FoundingMemberEntity {
   @Property(type: PropertyType.date)
   DateTime claimedAt;
 
+  // Issue #192: which marketing channel/campaign drove this signup.
+  String? acquisitionSource;
+  String? acquisitionCampaign;
+
   FoundingMemberEntity({
     this.id = 0,
     required this.businessId,
     required this.spotNumber,
     required this.claimedAt,
+    this.acquisitionSource,
+    this.acquisitionCampaign,
   });
 }

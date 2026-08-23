@@ -28,6 +28,7 @@ import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.d
 import 'package:growth_pilot_ai/core/services/ocr/ocr_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_scanner_service.dart';
 import 'package:growth_pilot_ai/core/services/ocr/document_text_extractor_service.dart';
+import '../../services/acquisition_attribution_service.dart';
 import '../../services/connectivity_service.dart';
 import '../../services/environment_service.dart';
 import '../../services/presentation_mode_service.dart';
@@ -41,6 +42,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => ConnectivityService(), fenix: true);
     // Issue #195: حالت "آماده ضبط" برای فیلم‌برداری App Preview
     Get.lazyPut(() => PresentationModeService(), fenix: true);
+    // Issue #192: ردیابی UTM لینکدین تا لحظه‌ی claim کردن Founding Member
+    Get.lazyPut(() => AcquisitionAttributionService(), fenix: true);
     // Issue #110: تشخیص سطح سخت‌افزار + حالت صرفه‌جویی باتری
     Get.lazyPut(() => PerformanceController(), fenix: true);
     // Issue #158: مرکز تنظیمات اعلان‌ها (Push/Email/SMS در هر دسته)
