@@ -18,4 +18,9 @@ class ChatRoomMessageRepository {
     query.close();
     return result;
   }
+
+  /// Purges Secret Chat messages past their self-destruct timer (Issue
+  /// #317 feature #2), mirroring [InboxNotificationRepository.removeAll].
+  void removeExpired(List<ChatRoomMessageEntity> expired) =>
+      _box.removeMany(expired.map((m) => m.id).toList());
 }

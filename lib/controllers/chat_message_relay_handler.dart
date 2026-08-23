@@ -6,6 +6,7 @@ import 'package:growth_pilot_ai/business/build_chat_attachment_message.dart';
 import 'package:growth_pilot_ai/business/build_reply_message.dart';
 import 'package:growth_pilot_ai/business/chat_send_rate_limiter.dart';
 import 'package:growth_pilot_ai/business/extract_message_tags.dart';
+import 'package:growth_pilot_ai/business/purge_expired_room_messages.dart';
 import 'package:growth_pilot_ai/core/data/entities/chat_room_message_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/chat_room_message_repository.dart';
 import 'package:growth_pilot_ai/core/interfaces/chat_gateway_service.dart';
@@ -30,18 +31,28 @@ class ChatMessageRelayHandler {
     _subscription = _gateway.incomingMessages.listen(_onIncoming);
   }
 
+  /// Sweeps Secret Chat messages past their self-destruct timer (Issue
+  /// #317 feature #2) before loading the room, same lazy-cleanup timing
+  /// as [InsightTriggerService]'s stale-notification purge.
   void openRoom(int id) {
     roomId = id;
-    inbox.assignAll(_messages.getForRoom(id));
+    inbox.assignAll(
+        PurgeExpiredRoomMessages.call(_messages, _messages.getForRoom(id), DateTime.now()));
   }
 
   /// Sanitizes [body] against script/HTML injection (Issue #167 "Input
   /// Sanitization") before it's persisted and broadcast to peers.
-  Future<bool> send(String senderId, String body) => _dispatch(ChatRoomMessageEntity(
-      roomId: roomId,
-      senderId: senderId,
-      body: InputSanitizer.clean(body),
-      sentAt: DateTime.now()));
+  /// [selfDestructAfter] opts this message into Issue #317 feature #2's
+  /// Secret Chat timer — null (the default) means it never expires.
+  Future<bool> send(String senderId, String body, {Duration? selfDestructAfter}) {
+    final now = DateTime.now();
+    return _dispatch(ChatRoomMessageEntity(
+        roomId: roomId,
+        senderId: senderId,
+        body: InputSanitizer.clean(body),
+        sentAt: now,
+        selfDestructAt: selfDestructAfter == null ? null : now.add(selfDestructAfter)));
+  }
 
   /// Threaded reply (Issue #132) — [parent] must belong to this room.
   Future<bool> sendReply(String senderId, String body, ChatRoomMessageEntity parent) =>
