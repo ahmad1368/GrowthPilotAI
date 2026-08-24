@@ -10,7 +10,7 @@ void main() {
     testWidgets('renders the message body for a user message', (tester) async {
       final message = SupportMessageEntity(
         businessId: 'local-user',
-        sender: SupportMessageSender.user,
+        dbSender: SupportMessageSender.user.index,
         body: 'My bank connection failed',
         sentAt: DateTime(2026, 1, 1, 10, 30),
       );
@@ -25,7 +25,7 @@ void main() {
     testWidgets('renders the message body for an agent reply', (tester) async {
       final message = SupportMessageEntity(
         businessId: 'local-user',
-        sender: SupportMessageSender.agent,
+        dbSender: SupportMessageSender.agent.index,
         body: 'A team member will follow up shortly.',
         sentAt: DateTime(2026, 1, 1, 10, 31),
       );

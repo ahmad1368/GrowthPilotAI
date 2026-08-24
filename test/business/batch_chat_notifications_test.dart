@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/business/batch_chat_notifications.dart';
-import 'package:growth_pilot_ai/core/data/entities/inbox_notification_entity.dart';
 
 void main() {
   final now = DateTime(2026, 1, 1, 12);

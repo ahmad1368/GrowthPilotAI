@@ -37,6 +37,14 @@ class _TestController extends GetxController with TraceabilityPdfExportJobMixin 
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  // exportReportPdfViaJob() calls Get.snackbar on failure - without
+  // testMode, that needs a real mounted GetMaterialApp navigator, which
+  // a plain test() (no widget pumped) can never provide. See GetX's own
+  // README: "if you are using your navigation in your controllers, use
+  // Get.testMode = true".
+  Get.testMode = true;
+
   group('TraceabilityPdfExportJobMixin', () {
     test('starts idle', () {
       final controller = _TestController(_FakeExportEventRepository(), () async => Uint8List(0));
