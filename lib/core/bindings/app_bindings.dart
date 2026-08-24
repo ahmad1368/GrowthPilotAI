@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:growth_pilot_ai/controllers/deep_link_controller.dart';
+import 'package:growth_pilot_ai/controllers/legal_consent_controller.dart';
+import 'package:growth_pilot_ai/core/data/repositories/legal_consent_repository.dart';
 import 'package:growth_pilot_ai/controllers/analytics_dashboard_controller.dart';
 import 'package:growth_pilot_ai/controllers/document_processing_orchestrator_controller.dart';
 import 'package:growth_pilot_ai/controllers/founding_member_controller.dart';
@@ -42,6 +45,8 @@ class AppBindings extends Bindings {
     Get.lazyPut(() => ConnectivityService(), fenix: true);
     // Issue #195: حالت "آماده ضبط" برای فیلم‌برداری App Preview
     Get.lazyPut(() => PresentationModeService(), fenix: true);
+    // Issue #168/#215: پذیرش قوانین و سیاست حریم خصوصی (اتصال چارچوب موجود اما بی‌استفاده)
+    Get.lazyPut(() => LegalConsentController(GetIt.I<LegalConsentRepository>()), fenix: true);
     // Issue #192: ردیابی UTM لینکدین تا لحظه‌ی claim کردن Founding Member
     Get.lazyPut(() => AcquisitionAttributionService(), fenix: true);
     // Issue #110: تشخیص سطح سخت‌افزار + حالت صرفه‌جویی باتری
