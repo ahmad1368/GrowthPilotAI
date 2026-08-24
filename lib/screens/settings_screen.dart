@@ -3,9 +3,14 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:growth_pilot_ai/business/delete_all_local_data.dart';
+import 'package:growth_pilot_ai/controllers/legal_consent_controller.dart';
+import 'package:growth_pilot_ai/controllers/subscription_controller.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/enum/subscription_tier.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
+import 'package:growth_pilot_ai/features/legal/screens/legal_document_screen.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/delete_account_dialog.dart';
+import 'package:growth_pilot_ai/features/settings/widgets/legal_compliance_section.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/theme_toggle.dart';
@@ -325,6 +330,22 @@ class SettingsScreen extends StatelessWidget {
                 title: 'Delete Account',
                 subtitle: 'Permanently erase all local data on this device',
                 onTap: () => _deleteAccount(context),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Legal & Compliance (Issue #168/#215) - wires in the
+              // existing but previously-never-mounted consent framework.
+              _buildSectionHeader("Legal"),
+              const SizedBox(height: 12),
+
+              LegalComplianceSection(
+                controller: Get.find<LegalConsentController>(),
+                hasPremiumSubscription: Get.find<SubscriptionController>()
+                        .subscriptionFor('local-user')
+                        .tier !=
+                    SubscriptionTier.starter,
+                onViewTerms: () => Get.to(() => const LegalDocumentScreen()),
               ),
 
               const SizedBox(height: 12),
