@@ -25,12 +25,17 @@ class OmniLogger {
   }
 
   /// ثبت متمرکز خطاها همراه با مشخصات دقیق کاربر، ویجت و سیستم ارور
+  ///
+  /// [userId] used to default to a specific developer's real name
+  /// (Issue #165) — meaning every error logged anywhere in the app,
+  /// unless a caller explicitly overrode it, was mis-tagged with one
+  /// person's identity instead of whoever actually triggered it.
   static void error({
     required String title,
     required String widgetName,
     dynamic message,
     StackTrace? stackTrace,
-    String userId = "Ahmad_Salem_Pour",
+    String userId = 'local-user',
   }) {
     // ترکیب اطلاعات ساختاریافته برای نمایش یکپارچه در کنسول و دیباگ
     final structuredMessage =
@@ -41,6 +46,6 @@ class OmniLogger {
       error: structuredMessage,
       stackTrace: stackTrace,
     );
-    PersistOmniLogEntry.call(OmniLogLevel.error, title, structuredMessage, stackTrace);
+    PersistOmniLogEntry.call(OmniLogLevel.error, title, structuredMessage, stackTrace, userId);
   }
 }

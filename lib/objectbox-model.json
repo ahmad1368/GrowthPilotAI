@@ -7089,7 +7089,7 @@
     },
     {
       "id": "162:4434372929443272827",
-      "lastPropertyId": "6:7203577866711364143",
+      "lastPropertyId": "7:7945886165324188885",
       "name": "OmniLogEntryEntity",
       "properties": [
         {
@@ -7124,6 +7124,13 @@
           "type": 10,
           "flags": 8,
           "indexId": "162:5995965668868056656"
+        },
+        {
+          "id": "7:7945886165324188885",
+          "name": "userId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "167:2239176518840021657"
         }
       ],
       "relations": []
@@ -7275,7 +7282,7 @@
     }
   ],
   "lastEntityId": "165:6673131331430651503",
-  "lastIndexId": "166:513860910178412826",
+  "lastIndexId": "167:2239176518840021657",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
