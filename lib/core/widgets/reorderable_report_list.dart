@@ -26,6 +26,7 @@ class ReorderableReportList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       buildDefaultDragHandles: false,
       onReorderStart: (_) => HapticFeedback.mediumImpact(),
+      // ignore: deprecated_member_use
       onReorder: onReorder,
       children: [for (var i = 0; i < layout.length; i++) _tile(i)],
     );

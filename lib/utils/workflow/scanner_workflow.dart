@@ -44,11 +44,13 @@ class ScannerWorkflow {
         onSourceSelected: (source) async {
           Get.back();
           await Future.delayed(const Duration(milliseconds: 100));
+          if (!context.mounted) return;
 
           final outcome = await _processImageWorkflow(source, context);
 
           // زمان دادن به فریم‌ورک برای بستن کامل دیالوگ لودینگ قبلی
           await Future.delayed(const Duration(milliseconds: 250));
+          if (!context.mounted) return;
 
           if (outcome.success && outcome.data != null) {
             _navigateToConfirmation(
