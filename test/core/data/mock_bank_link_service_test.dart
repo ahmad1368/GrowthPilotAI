@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growth_pilot_ai/core/data/datasources/mock_bank_link_service.dart';
+import 'package:growth_pilot_ai/core/enum/plaid_product.dart';
 
 void main() {
   late MockBankLinkService service;
@@ -10,6 +11,18 @@ void main() {
     final response = await service.createLinkToken();
     expect(response.success, isTrue);
     expect(response.data, isNotEmpty);
+  });
+
+  test('defaults to transactions/auth/identity only (Issue #62/#63 Data Minimization)', () async {
+    // No products override — must not throw and must still succeed with
+    // the AC's mandated default scope, not Plaid's full product catalog.
+    final response = await service.createLinkToken();
+    expect(response.success, isTrue);
+  });
+
+  test('accepts a caller-restricted product scope', () async {
+    final response = await service.createLinkToken(products: [PlaidProduct.transactions]);
+    expect(response.success, isTrue);
   });
 
   group('openLink', () {

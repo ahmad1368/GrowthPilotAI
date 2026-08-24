@@ -1,3 +1,4 @@
+import 'package:growth_pilot_ai/core/enum/plaid_product.dart';
 import 'package:growth_pilot_ai/core/interfaces/bank_link_service.dart';
 import 'package:growth_pilot_ai/core/models/linked_bank_account.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
@@ -8,8 +9,10 @@ import 'package:growth_pilot_ai/core/utils/logger.dart';
 /// Plaid or a server. Web-safe. Tokens are never written to the log.
 class MockBankLinkService implements BankLinkService {
   @override
-  OmniResult<String> createLinkToken() async {
-    OmniLogger.info('Created Plaid link token (country: CA)');
+  OmniResult<String> createLinkToken(
+      {List<PlaidProduct> products = const [PlaidProduct.transactions, PlaidProduct.auth, PlaidProduct.identity]}) async {
+    final scopes = products.map((p) => p.name).join(',');
+    OmniLogger.info('Created Plaid link token (country: CA, products: $scopes)');
     return OmniResponse.success('link-sandbox-ca', message: 'Link token ready');
   }
 
