@@ -14,6 +14,11 @@ class OmniLogEntryEntity {
   String message;
   String? stackTraceText;
 
+  // Issue #165: a real, queryable tag instead of the free-text "User: X"
+  // string this used to only appear inside [message] as.
+  @Index()
+  String userId;
+
   @Index()
   @Property(type: PropertyType.date)
   DateTime occurredAt;
@@ -24,6 +29,7 @@ class OmniLogEntryEntity {
     required this.title,
     required this.message,
     this.stackTraceText,
+    this.userId = 'local-user',
     required this.occurredAt,
   });
 }

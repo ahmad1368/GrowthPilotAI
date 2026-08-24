@@ -91,7 +91,7 @@ void main() {
   }, (Object error, StackTrace stack) {
     OmniLogger.error(
         title: "GLOBAL UNCAUGHT EXCEPTION",
-        message: "$error | User: Ahmad_Salem_Pour",
+        message: "$error",
         stackTrace: stack,
         widgetName: "main.dart");
   });

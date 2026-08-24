@@ -35,6 +35,17 @@ void main() {
       expect(entry.stackTraceText, trace.toString());
     });
 
+    test('defaults userId to local-user, not a hardcoded real name (Issue #165)', () {
+      final entry = BuildOmniLogEntry.call(level: OmniLogLevel.error, title: 't', now: now);
+      expect(entry.userId, 'local-user');
+    });
+
+    test('stores a caller-provided userId as a real structured field', () {
+      final entry =
+          BuildOmniLogEntry.call(level: OmniLogLevel.error, title: 't', now: now, userId: 'biz-42');
+      expect(entry.userId, 'biz-42');
+    });
+
     test('redacts a SIN and a leaked API key before persisting (Issue #206)', () {
       final entry = BuildOmniLogEntry.call(
         level: OmniLogLevel.error,

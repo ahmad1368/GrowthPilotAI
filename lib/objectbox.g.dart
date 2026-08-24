@@ -7125,7 +7125,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(162, 4434372929443272827),
       name: 'OmniLogEntryEntity',
-      lastPropertyId: const obx_int.IdUid(6, 7203577866711364143),
+      lastPropertyId: const obx_int.IdUid(7, 7945886165324188885),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -7158,7 +7158,13 @@ final _entities = <obx_int.ModelEntity>[
             name: 'occurredAt',
             type: 10,
             flags: 8,
-            indexId: const obx_int.IdUid(162, 5995965668868056656))
+            indexId: const obx_int.IdUid(162, 5995965668868056656)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 7945886165324188885),
+            name: 'userId',
+            type: 9,
+            flags: 2048,
+            indexId: const obx_int.IdUid(167, 2239176518840021657))
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -7341,7 +7347,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(165, 6673131331430651503),
-      lastIndexId: const obx_int.IdUid(166, 513860910178412826),
+      lastIndexId: const obx_int.IdUid(167, 2239176518840021657),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [1407349826204092014],
@@ -15600,13 +15606,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final stackTraceTextOffset = object.stackTraceText == null
               ? null
               : fbb.writeString(object.stackTraceText!);
-          fbb.startTable(7);
+          final userIdOffset = fbb.writeString(object.userId);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.dbLevel);
           fbb.addOffset(2, titleOffset);
           fbb.addOffset(3, messageOffset);
           fbb.addOffset(4, stackTraceTextOffset);
           fbb.addInt64(5, object.occurredAt.millisecondsSinceEpoch);
+          fbb.addOffset(6, userIdOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -15624,6 +15632,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final stackTraceTextParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 12);
+          final userIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
           final occurredAtParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
           final object = OmniLogEntryEntity(
@@ -15632,6 +15642,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               title: titleParam,
               message: messageParam,
               stackTraceText: stackTraceTextParam,
+              userId: userIdParam,
               occurredAt: occurredAtParam);
 
           return object;
@@ -20812,6 +20823,10 @@ class OmniLogEntryEntity_ {
   /// see [OmniLogEntryEntity.occurredAt]
   static final occurredAt =
       obx.QueryDateProperty<OmniLogEntryEntity>(_entities[160].properties[5]);
+
+  /// see [OmniLogEntryEntity.userId]
+  static final userId =
+      obx.QueryStringProperty<OmniLogEntryEntity>(_entities[160].properties[6]);
 }
 
 /// [SupportMessageEntity] entity fields to define ObjectBox queries.

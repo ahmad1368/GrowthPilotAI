@@ -10,7 +10,7 @@ import 'package:growth_pilot_ai/core/enum/omni_log_level.dart';
 /// the app.
 class PersistOmniLogEntry {
   static void call(OmniLogLevel level, String title, dynamic message,
-      [StackTrace? stackTrace]) {
+      [StackTrace? stackTrace, String userId = 'local-user']) {
     if (!GetIt.I.isRegistered<OmniLogEntryRepository>()) return;
     try {
       GetIt.I<OmniLogEntryRepository>().insert(BuildOmniLogEntry.call(
@@ -19,6 +19,7 @@ class PersistOmniLogEntry {
         message: message,
         stackTrace: stackTrace,
         now: DateTime.now(),
+        userId: userId,
       ));
     } catch (_) {
       // Best-effort: never let offline log persistence itself throw.

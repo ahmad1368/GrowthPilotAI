@@ -16,6 +16,7 @@ class BuildOmniLogEntry {
     dynamic message,
     StackTrace? stackTrace,
     required DateTime now,
+    String userId = 'local-user',
   }) {
     final safeMessage = RedactSecrets.call(RedactPii.call(message?.toString() ?? ''));
     return OmniLogEntryEntity(
@@ -23,6 +24,7 @@ class BuildOmniLogEntry {
       title: RedactSecrets.call(RedactPii.call(title)),
       message: safeMessage,
       stackTraceText: stackTrace?.toString(),
+      userId: userId,
       occurredAt: now,
     );
   }
