@@ -16,13 +16,11 @@ jobs:
         with:
           flutter-version: "3.x"
 
-      - name: Verify Environment
-        run: |
-          echo "Checking Flutter version..."
-          flutter --version
-          echo "Checking directory structure..."
-          ls -F
+      - name: Install dependencies
+        run: flutter pub get
 
-      - name: Basic Health Check
-        run: |
-          echo "System is healthy and ready for deployment."
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
