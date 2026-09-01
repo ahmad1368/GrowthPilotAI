@@ -32,6 +32,7 @@ void main() {
     final env = Get.put(EnvironmentService());
     env.isRemoteEnabled.value = false;
     await tester.pumpWidget(_wrap(const DataSourceSwitcherTile()));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byType(ShadSwitch));
     await tester.pump();

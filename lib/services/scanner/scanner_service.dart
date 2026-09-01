@@ -52,6 +52,10 @@ class ScannerService {
             statusCode: 401);
       }
 
+      if (!context.mounted) {
+        return OmniResponse<File>.error("صفحه دیگر فعال نیست.", statusCode: 499);
+      }
+
       // ۳. گزارش شروع فرآیند برش
       onProgress?.call('cropping', 0.5);
 
