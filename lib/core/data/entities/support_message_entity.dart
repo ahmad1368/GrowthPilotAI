@@ -22,11 +22,12 @@ class SupportMessageEntity {
   SupportMessageEntity({
     this.id = 0,
     required this.businessId,
-    this.dbSender = 0,
+    int? dbSender,
+    SupportMessageSender sender = SupportMessageSender.user,
     required this.body,
     required this.sentAt,
     this.isRead = false,
-  });
+  }) : dbSender = dbSender ?? sender.index;
 
   SupportMessageSender get sender => SupportMessageSender.values[dbSender];
   set sender(SupportMessageSender value) => dbSender = value.index;

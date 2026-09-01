@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/business/build_bulk_tag_assignments.dart';
-import 'package:growth_pilot_ai/core/data/entities/merchant_tag_entity.dart';
 import 'package:growth_pilot_ai/core/models/merchant_tag_summary.dart';
 import 'package:growth_pilot_ai/features/analytics/widgets/merchant_tag_fields.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';

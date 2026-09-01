@@ -38,6 +38,10 @@ class ScannerService {
     ScanProgressCallback? onProgress,
   }) async {
     try {
+      // رنگ اصلی تم پیش از هر await خوانده می‌شود تا استفاده از context
+      // بعد از گپ ناهمزمان (use_build_context_synchronously) رخ ندهد.
+      final primaryColor = Theme.of(context).primaryColor;
+
       // ۱. گزارش شروع فرآیند انتخاب
       onProgress?.call('picking', 0.1);
 
@@ -61,7 +65,7 @@ class ScannerService {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'تنظیم لبه‌های سند',
-            toolbarColor: Theme.of(context).primaryColor,
+            toolbarColor: primaryColor,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,

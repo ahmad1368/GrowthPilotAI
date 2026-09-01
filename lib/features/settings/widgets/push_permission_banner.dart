@@ -26,9 +26,9 @@ class PushPermissionBanner extends StatelessWidget {
               child: Text('Push notifications are blocked in system settings',
                   style: TextStyle(color: theme.colorScheme.onSurface, fontSize: 12)),
             ),
-            TextButton(
+            const TextButton(
               onPressed: PushPermissionService.openSystemSettings,
-              child: const Text('Enable'),
+              child: Text('Enable'),
             ),
           ]),
         );
