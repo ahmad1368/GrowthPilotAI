@@ -5,14 +5,19 @@ import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/delete_account_dialog.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+// ShadTheme lives in `builder:` (not just around `home:`) because
+// showShadDialog pushes onto the root Navigator, which sits outside any
+// ShadTheme wrapped only around `home` — matching the app-wide fix in
+// main.dart's GetMaterialApp.
 Widget _harness() => GetMaterialApp(
-      home: ShadTheme(
+      builder: (context, child) => ShadTheme(
         data: AppShadTheme.build(Brightness.light),
-        child: Builder(
-          builder: (context) => ShadButton(
-            onPressed: () => showDeleteAccountDialog(context),
-            child: const Text('Open'),
-          ),
+        child: child!,
+      ),
+      home: Builder(
+        builder: (context) => ShadButton(
+          onPressed: () => showDeleteAccountDialog(context),
+          child: const Text('Open'),
         ),
       ),
     );

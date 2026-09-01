@@ -7,6 +7,9 @@ import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/support_message_bubble.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+// SupportMessageBubble reads ShadTheme.of(context) directly, so it needs a
+// ShadTheme ancestor when pumped in isolation (in the real app this comes
+// from SupportChatScreen's self-wrap / the app-wide builder in main.dart).
 Widget _wrap(Widget child) => GetMaterialApp(
       home: ShadTheme(
         data: AppShadTheme.build(Brightness.light),

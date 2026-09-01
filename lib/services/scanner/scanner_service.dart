@@ -38,6 +38,9 @@ class ScannerService {
     ScanProgressCallback? onProgress,
   }) async {
     try {
+      // مقدار پیش از هر await ثبت می‌شود تا context بعد از gap ناهمگام استفاده نشود
+      final primaryColor = Theme.of(context).primaryColor;
+
       // ۱. گزارش شروع فرآیند انتخاب
       onProgress?.call('picking', 0.1);
 
@@ -65,7 +68,7 @@ class ScannerService {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'تنظیم لبه‌های سند',
-            toolbarColor: Theme.of(context).primaryColor,
+            toolbarColor: primaryColor,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
