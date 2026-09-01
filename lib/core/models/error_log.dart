@@ -1,4 +1,4 @@
-import 'package:growth_pilot_ai/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart'; // <--- این خط باید حتماً باشد
 
 @Entity()
 class ErrorLog {

@@ -1,0 +1,58 @@
+import 'package:flutter/foundation.dart';
+import 'package:growth_pilot_ai/core/enum/requirement_moscow_priority.dart';
+import 'package:growth_pilot_ai/core/enum/requirement_priority_hint.dart';
+import 'package:growth_pilot_ai/core/enum/requirement_triage_status.dart';
+import 'package:growth_pilot_ai/core/enum/requirement_type.dart';
+
+/// One candidate requirement (Issue #228's own `Requirement` schema:
+/// description/type/indicator/priority_hint), extended with Issue
+/// #229's `priority` (MoSCoW) and `stakeholder` fields, plus
+/// [startIndex]/[endIndex] into the source `sanitized_text` (the AC's
+/// "View in Source" link), Issue #231's [confidence] heatmap value, and
+/// this app's own local [status] for the triage flow.
+@immutable
+class ExtractedRequirement {
+  final String description;
+  final RequirementType type;
+  final String indicator;
+  final RequirementPriorityHint priorityHint;
+  final RequirementMoscowPriority moscowPriority;
+  final String stakeholder;
+  final int startIndex;
+  final int endIndex;
+  final double confidence;
+  final RequirementTriageStatus status;
+
+  const ExtractedRequirement({
+    required this.description,
+    required this.type,
+    required this.indicator,
+    required this.priorityHint,
+    required this.moscowPriority,
+    required this.stakeholder,
+    required this.startIndex,
+    required this.endIndex,
+    required this.confidence,
+    this.status = RequirementTriageStatus.pending,
+  });
+
+  ExtractedRequirement copyWith({
+    String? description,
+    RequirementMoscowPriority? moscowPriority,
+    String? stakeholder,
+    RequirementTriageStatus? status,
+  }) {
+    return ExtractedRequirement(
+      description: description ?? this.description,
+      type: type,
+      indicator: indicator,
+      priorityHint: priorityHint,
+      moscowPriority: moscowPriority ?? this.moscowPriority,
+      stakeholder: stakeholder ?? this.stakeholder,
+      startIndex: startIndex,
+      endIndex: endIndex,
+      confidence: confidence,
+      status: status ?? this.status,
+    );
+  }
+}

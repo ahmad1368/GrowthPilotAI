@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/business/describe_commission_structure.dart';
+import 'package:growth_pilot_ai/core/data/entities/merchant_config_entity.dart';
+import 'package:growth_pilot_ai/core/models/merchant_trust_score.dart';
+import 'package:growth_pilot_ai/features/analytics/widgets/trust_score_badge.dart';
+
+/// One merchant's configuration profile row (Issue #338), plus its
+/// computed trust score badge (Issue #347, acceptance criterion 2).
+/// Tapping opens its dedicated management profile for direct parameter
+/// editing.
+class MerchantConfigRow extends StatelessWidget {
+  final MerchantConfigEntity config;
+  final MerchantTrustScore? trustScore;
+  final VoidCallback onTap;
+
+  const MerchantConfigRow(
+      {super.key, required this.config, this.trustScore, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+                child: Text('${config.businessName} (${config.businessId})',
+                    overflow: TextOverflow.ellipsis)),
+            if (trustScore != null) ...[
+              TrustScoreBadge(trustScore: trustScore!),
+              const SizedBox(width: 8),
+            ],
+            Text(DescribeCommissionStructure.call(config),
+                style: TextStyle(fontWeight: FontWeight.w600, color: scheme.primary)),
+            const SizedBox(width: 8),
+            Icon(Icons.chevron_right, size: 18, color: scheme.onSurface.withValues(alpha: 0.5)),
+          ],
+        ),
+      ),
+    );
+  }
+}

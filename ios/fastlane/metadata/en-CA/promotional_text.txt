@@ -1,0 +1,1 @@
+CRA-ready GST/HST tracking, local vendor matching, and bank sync — built local-first for Canadian small businesses.

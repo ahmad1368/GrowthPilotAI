@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/intelligence_status_controller.dart';
 import '../controllers/transaction_controller.dart';
 import '../pages/main_wrapper.dart'; // حتما این را اضافه کنید
 import 'app_drawer.dart';
-import 'glass_app_bar.dart';
+import 'app_shell_bar.dart';
 import 'home_body.dart';
 import 'home_bottom_nav.dart';
+import 'intelligence_status_badge.dart';
 import 'notification_badge.dart';
 import 'home_logic.dart';
 import 'notification_sheet.dart';
@@ -35,6 +37,7 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
   @override
   Widget build(BuildContext context) {
     Get.put(TransactionController());
+    Get.put(IntelligenceStatusController());
 
     // پیدا کردن کنترلر ناوبری که در مراحل قبل ساختیم
     // اگر MainWrapper را هنوز در خروجی اصلی قرار ندادید، اینجا این خط را بگذارید:
@@ -44,10 +47,14 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       extendBodyBehindAppBar: true,
       extendBody: true,
       drawer: const AppDrawer(),
-      appBar: GlassAppBar(
+      appBar: AppShellBar(
         title: "GrowthPilot AI",
         opacity: appBarOpacity,
         actions: [
+          const Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: IntelligenceStatusBadge(),
+          ),
           NotificationBadge(count: unreadCount, onTap: _openNotifications),
           IconButton(
             icon: const Icon(Icons.settings_outlined),

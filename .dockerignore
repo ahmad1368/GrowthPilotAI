@@ -1,0 +1,16 @@
+# Issue #182 — keep the build context lean; none of this is needed to
+# build the Flutter web output.
+.git
+.dart_tool
+.idea
+.vscode
+build
+android
+ios
+linux
+macos
+windows
+test
+docs
+*.md
+.claude

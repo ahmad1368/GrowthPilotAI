@@ -1,0 +1,17 @@
+Built for the Canadian small business owner.
+
+GrowthPilot AI is a local-first back office for Canadian SMBs — bank and accounting reconciliation, receipt/invoice scanning, and B2B vendor tools, designed around Canadian tax rules instead of bolted on afterward.
+
+WHY GROWTHPILOT AI
+
+- CRA-Ready Tracking: Automatic GST/HST/PST extraction from scanned receipts and invoices, with BC and Ontario tax rules built in.
+- Local-First Privacy: Your financial data is processed and stored on your device first — not centralized in someone else's cloud.
+- B2B Vendor Matching: Find and compare local vendors, with price benchmarking against your region.
+- Bank & Accounting Sync: Connect your bank (Plaid) and accounting platform (Xero, QuickBooks Online) to keep your books current automatically.
+- Business Chat: Negotiate with buyers and vendors in an encrypted, in-app chat built for B2B deals.
+
+DESIGNED FOR CANADA
+
+GrowthPilot AI is built around Canadian business realities — GST/HST/PST tax handling, Canadian bank and accounting integrations, and a local-first data model aligned with Canadian privacy expectations.
+
+Whether you're in Surrey, Burnaby, Toronto, or anywhere in between, GrowthPilot AI is built to work the way Canadian small businesses actually operate.

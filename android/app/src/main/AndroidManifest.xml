@@ -35,6 +35,17 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <!-- Custom-scheme deep links (Issue #176) — growthpilotai://products/99
+                 etc. Not an `https` App Link: that needs a real hosted
+                 assetlinks.json, which this repo has no domain/backend to
+                 serve (see PR notes). -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="growthpilotai"/>
+            </intent-filter>
         </activity>
 
         <activity
@@ -45,10 +56,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
-        <meta-data
-            android:name="io.flutter.embedding.android.EnableImpeller"
-            android:value="false" />
 
     </application>
 

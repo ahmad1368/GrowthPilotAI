@@ -35,7 +35,7 @@ class OCRResult {
     try {
       // منطق OCR شما در اینجا...
       // فرض کنیم خروجی خام استخراج شده:
-      final String rawText = "متن تست";
+      const String rawText = "متن تست";
       final List<dynamic> rawElements = [];
 
       final result = OCRResult(

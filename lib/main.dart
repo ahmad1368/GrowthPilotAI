@@ -1,66 +1,101 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/core/services/omni_logger.dart';
+import 'package:growth_pilot_ai/core/utils/logger.dart';
 import 'package:growth_pilot_ai/widgets/global_error_view.dart';
-
-// Imports Core & Infrastructure
-import 'core/bindings/app_bindings.dart';
-import 'core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
+import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
+import 'package:growth_pilot_ai/core/bindings/app_bindings.dart';
+import 'package:growth_pilot_ai/controllers/category_mapping_controller.dart';
+import 'package:growth_pilot_ai/controllers/accounting_integrations_controller.dart';
+import 'package:growth_pilot_ai/controllers/connected_accounts_controller.dart';
+import 'package:growth_pilot_ai/controllers/transaction_match_controller.dart';
+import 'package:growth_pilot_ai/controllers/inbox_controller.dart';
+import 'package:growth_pilot_ai/controllers/business_compass_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_layout_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_config_controller.dart';
+import 'package:growth_pilot_ai/controllers/widget_preview_controller.dart';
+import 'package:growth_pilot_ai/controllers/dashboard_export_controller.dart';
+import 'package:growth_pilot_ai/controllers/dashboard_template_controller.dart';
+import 'package:growth_pilot_ai/core/interfaces/widget_layout_store.dart';
+import 'package:growth_pilot_ai/core/interfaces/widget_config_store.dart';
+import 'package:growth_pilot_ai/core/interfaces/dashboard_export_service.dart';
+import 'package:growth_pilot_ai/core/interfaces/dashboard_template_store.dart';
+import 'package:growth_pilot_ai/features/analytics/report_widgets_bootstrap.dart';
+import 'package:growth_pilot_ai/core/theme/app_theme.dart';
+import 'package:growth_pilot_ai/features/analytics/presentation/screens/forecast_screen.dart';
+import 'package:growth_pilot_ai/features/analytics/screens/business_compass_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/billing_settings_screen.dart';
+import 'package:growth_pilot_ai/features/pulse/screens/omni_pulse_radar_view.dart';
+import 'package:growth_pilot_ai/features/settings/screens/analytics_dashboard_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/branding_settings_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/support_chat_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/service_health_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/two_factor_auth_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/connected_accounts_screen.dart';
+import 'package:growth_pilot_ai/features/settings/screens/integrations_dashboard_screen.dart';
+import 'package:growth_pilot_ai/controllers/branding_settings_controller.dart';
+import 'package:growth_pilot_ai/features/transactions/screens/category_mapping_screen.dart';
+import 'package:growth_pilot_ai/features/transactions/screens/duplicate_matches_screen.dart';
+import 'package:growth_pilot_ai/features/inbox/screens/inbox_screen.dart';
+import 'package:growth_pilot_ai/features/academy/screens/academy_screen.dart';
+import 'package:growth_pilot_ai/features/ai_engine/screens/ai_engine_screen.dart';
+import 'package:growth_pilot_ai/features/graph/screens/requirement_triage_screen.dart';
+import 'package:growth_pilot_ai/features/graph/screens/kpi_dashboard_screen.dart';
+import 'package:growth_pilot_ai/controllers/kpi_dashboard_export_controller.dart';
+import 'package:growth_pilot_ai/features/graph/screens/traceability_navigator_screen.dart';
+import 'package:growth_pilot_ai/features/graph/screens/traceability_matrix_screen.dart';
+import 'package:growth_pilot_ai/features/graph/screens/traceability_report_preview_screen.dart';
+import 'package:growth_pilot_ai/features/graph/screens/export_history_screen.dart';
+import 'package:growth_pilot_ai/controllers/export_history_controller.dart';
+import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.dart';
+import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
+import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
+import 'package:growth_pilot_ai/core/enum/app_locale.dart';
+import 'package:growth_pilot_ai/features/onboarding/widgets/app_locale_gate.dart';
+import 'package:growth_pilot_ai/features/onboarding/widgets/legal_consent_gate.dart';
+import 'package:growth_pilot_ai/features/onboarding/widgets/onboarding_tour_gate.dart';
+import 'package:growth_pilot_ai/features/ai_chat/widgets/ai_chat_root_overlay.dart';
+import 'package:growth_pilot_ai/core/widgets/connectivity_gate.dart';
+import 'package:growth_pilot_ai/core/widgets/deep_link_gate.dart';
+import 'package:growth_pilot_ai/core/widgets/beta_feedback_root_overlay.dart';
 import 'widgets/home_layout.dart';
 import 'screens/settings_screen.dart';
 
-import 'dart:async';
-// ایمپورت‌های پروژه‌ی خودت را اینجا اضافه کن (OmniLogger, AppBindings, ObjectBox و غیره)
-
 void main() {
-  // تمام کدهایی که دارای await هستند یا ممکن است خطا بدهند را در این ناحیه امن قرار می‌دهیم
   runZonedGuarded(() async {
-    // ۱. اطمینان از مقداردهی اولیه موتور فلاتر
     WidgetsFlutterBinding.ensureInitialized();
 
-    // ۲. مدیریت خطاهای فریم‌ورک (UI Errors)
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);
       OmniLogger.error(
-        title: "Flutter Framework Error",
-        message: details.exception,
-        stackTrace: details.stack,
-      );
+          title: "Flutter Framework Error",
+          message: details.exception,
+          stackTrace: details.stack,
+          widgetName: "main.dart");
     };
 
-    // اختصاصی‌سازی صفحه قرمز با استاندارد پروژه
-    ErrorWidget.builder = (FlutterErrorDetails details) {
-      // استفاده از ویجت جدید که بر پایه OmniGlassPanel است
-      return GlobalErrorView(details: details);
-    };
+    ErrorWidget.builder = (details) => GlobalErrorView(details: details);
 
-    // ۴. راه‌اندازی دیتابیس ObjectBox (قابلیت قبلی شما)
     final objectbox = await ObjectBox.create();
     Get.put<ObjectBox>(objectbox, permanent: true);
 
-    // ۵. دریافت وضعیت تم (قابلیت قبلی شما)
+    await DependencyInjection.init();
+    ReportWidgetsBootstrap.register();
+    ReportWidgetsBootstrap.registerConfig();
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
-    // ۶. اجرای اپلیکیشن با استفاده از Bindings برای تزریق وابستگی‌ها
-    runApp(MyApp(
-      savedThemeMode: savedThemeMode,
-    ));
+    runApp(MyApp(savedThemeMode: savedThemeMode));
   }, (Object error, StackTrace stack) {
-    // ۷. توری نجات نهایی (Async Errors)
-    // هر خطایی که در بالا catch نشود، اینجا شکار می‌شود
     OmniLogger.error(
-      title: "GLOBAL UNCAUGHT EXCEPTION",
-      message: error,
-      stackTrace: stack,
-    );
-
-    // در اینجا می‌توانید لاگ را به سرور هم بفرستید
+        title: "GLOBAL UNCAUGHT EXCEPTION",
+        message: "$error",
+        stackTrace: stack,
+        widgetName: "main.dart");
   });
 }
-
-// نکته در مورد MyApp:
-// حتما در GetMaterialApp مقدار initialBinding: AppBindings() را قرار دهید.
 
 class MyApp extends StatelessWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -69,89 +104,195 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      // --- Light Theme ---
-      light: _buildLightTheme(),
-
-      // --- Dark Theme ---
-      dark: _buildDarkTheme(),
-
+      light: AppTheme.buildTheme(Brightness.light),
+      dark: AppTheme.buildTheme(Brightness.dark),
       initial: savedThemeMode ?? AdaptiveThemeMode.system,
-
-      builder: (theme, darkTheme) {
-        return GetMaterialApp(
+      // [Issue #8] Cross-fades the whole app between light/dark instead of
+      // the instant theme swap AdaptiveTheme does on its own.
+      builder: (theme, darkTheme) => AnimatedSwitcher(
+        duration: const Duration(milliseconds: 400),
+        child: GetMaterialApp(
+          key: ValueKey(theme.brightness),
           title: 'GrowthPilot AI',
           debugShowCheckedModeBanner: false,
-
-          // استفاده از سیستم تزریق وابستگی مرکزی ما
           initialBinding: AppBindings(),
-
           theme: theme,
           darkTheme: darkTheme,
-
-          home: const HomeLayout(),
-          getPages: [
-            GetPage(name: '/settings', page: () => const SettingsScreen()),
+          translations: AppTranslations(),
+          locale: const Locale('en'),
+          fallbackLocale: const Locale('en'),
+          supportedLocales: AppLocale.values.map((l) => Locale(l.languageCode)),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
           ],
-
-          // انیمیشن نرم تعویض تم
-          builder: (context, child) {
-            return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 600),
-              child: Container(
-                key: ValueKey(theme.brightness),
-                child: child,
+          home: const AppLocaleGate(
+              child: LegalConsentGate(
+                  child: OnboardingTourGate(
+                      child: ConnectivityGate(
+                          child: DeepLinkGate(
+                              child: BetaFeedbackRootOverlay(
+                                  child: AiChatRootOverlay(child: HomeLayout()))))))),
+          getPages: [
+            GetPage(
+              name: '/settings',
+              page: () => const SettingsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/academy',
+              page: () => const AcademyScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/ai-engine',
+              page: () => const AiEngineScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/forecast',
+              page: () => const ForecastScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/category-mapping',
+              page: () => const CategoryMappingScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => CategoryMappingController()),
               ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  // متدهای کمکی برای تمیز ماندن متد Build
-  ThemeData _buildLightTheme() {
-    return ThemeData(
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: const Color(0xFFF7F8FA),
-      useMaterial3: true,
-      colorSchemeSeed: Colors.teal,
-      elevatedButtonTheme: _buttonTheme(Colors.teal, Colors.white),
-      appBarTheme: _appBarTheme(Colors.black),
-    );
-  }
-
-  ThemeData _buildDarkTheme() {
-    return ThemeData(
-      brightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xFF0A0A0A),
-      useMaterial3: true,
-      colorSchemeSeed: Colors.tealAccent,
-      elevatedButtonTheme:
-          _buttonTheme(Colors.tealAccent.shade700, Colors.black),
-      appBarTheme: _appBarTheme(Colors.white),
-    );
-  }
-
-  ElevatedButtonThemeData _buttonTheme(Color bg, Color fg) {
-    return ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: bg,
-        foregroundColor: fg,
-        minimumSize: const Size(100, 45),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        textStyle: const TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 14, fontFamily: 'Vazir'),
+            ),
+            GetPage(
+              name: '/settings/integrations',
+              page: () => const IntegrationsDashboardScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => AccountingIntegrationsController()),
+              ),
+            ),
+            GetPage(
+              name: '/settings/billing',
+              page: () => const BillingSettingsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/support',
+              page: () => const SupportChatScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/analytics',
+              page: () => const AnalyticsDashboardScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/health',
+              page: () => const ServiceHealthScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/2fa',
+              page: () => const TwoFactorAuthScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/pulse',
+              page: () => const OmniPulseRadarView(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/settings/branding',
+              page: () => const BrandingSettingsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => BrandingSettingsController()),
+              ),
+            ),
+            GetPage(
+              name: '/settings/connected-accounts',
+              page: () => const ConnectedAccountsScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => ConnectedAccountsController()),
+              ),
+            ),
+            GetPage(
+              name: '/transactions/duplicates',
+              page: () => const DuplicateMatchesScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => TransactionMatchController()),
+              ),
+            ),
+            GetPage(
+              name: '/inbox',
+              page: () => const InboxScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => InboxController()),
+              ),
+            ),
+            GetPage(
+              name: '/requirements/triage',
+              page: () => const RequirementTriageScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/requirements/dashboard',
+              page: () => const KpiDashboardScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(() => KpiDashboardExportController()),
+              ),
+            ),
+            GetPage(
+              name: '/requirements/traceability',
+              page: () => const TraceabilityNavigatorScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/requirements/traceability/matrix',
+              page: () => const TraceabilityMatrixScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/requirements/traceability/report-preview',
+              page: () => const TraceabilityReportPreviewScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+            ),
+            GetPage(
+              name: '/requirements/traceability/export-history',
+              page: () => const ExportHistoryScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(
+                () => Get.lazyPut(
+                  () => ExportHistoryController(DependencyInjection.get<ExportEventRepository>()),
+                ),
+              ),
+            ),
+            GetPage(
+              name: '/business-compass',
+              page: () => const BusinessCompassScreen(),
+              middlewares: [ModuleAccessMiddleware()],
+              binding: BindingsBuilder(() {
+                Get.lazyPut(() => BusinessCompassController());
+                Get.lazyPut(() => WidgetLayoutController(
+                    DependencyInjection.get<WidgetLayoutStore>()));
+                Get.lazyPut(() => WidgetConfigController(
+                    DependencyInjection.get<WidgetConfigStore>()));
+                Get.lazyPut(() =>
+                    WidgetPreviewController(Get.find<WidgetConfigController>()));
+                Get.lazyPut(() => DashboardExportController(
+                    DependencyInjection.get<DashboardExportService>()));
+                Get.lazyPut(() => DashboardTemplateController(
+                    Get.find<WidgetLayoutController>(),
+                    DependencyInjection.get<DashboardTemplateStore>()));
+              }),
+            ),
+          ],
+        ),
       ),
-    );
-  }
-
-  AppBarTheme _appBarTheme(Color contentColor) {
-    return AppBarTheme(
-      iconTheme: IconThemeData(color: contentColor),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      centerTitle: true,
     );
   }
 }

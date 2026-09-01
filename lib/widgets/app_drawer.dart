@@ -45,7 +45,18 @@ class AppDrawer extends StatelessWidget {
                           _buildDrawerItem(
                             icon: Icons.analytics_rounded,
                             title: "Growth Metrics",
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pop(context);
+                              Get.toNamed('/forecast');
+                            },
+                          ),
+                          _buildDrawerItem(
+                            icon: Icons.rule_rounded,
+                            title: "Category Mapping",
+                            onTap: () {
+                              Navigator.pop(context);
+                              Get.toNamed('/category-mapping');
+                            },
                           ),
                           _buildDrawerItem(
                             icon: Icons.cloud_done_rounded,
@@ -86,12 +97,12 @@ class AppDrawer extends StatelessWidget {
                     ),
 
                     // فوتر دراور برای نسخه اپلیکیشن
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 10),
                       child: AdaptiveText(
                         "GrowthPilot AI v1.0.8",
                         fontSize: 10,
-                        style: const TextStyle(color: Colors.white24),
+                        style: TextStyle(color: Colors.white24),
                       ),
                     )
                   ],

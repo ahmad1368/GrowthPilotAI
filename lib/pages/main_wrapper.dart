@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +37,7 @@ class NavigationController extends GetxController {
 }
 
 class MainWrapper extends StatelessWidget {
-  MainWrapper({super.key});
+  const MainWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +51,12 @@ class MainWrapper extends StatelessWidget {
           // صفحات
           Obx(() => IndexedStack(
                 index: controller.currentIndex.value,
-                children: [
-                  const Center(child: AdaptiveText("Home")),
-                  const Center(child: AdaptiveText("Insights")),
-                  const SizedBox.shrink(),
-                  const Center(child: AdaptiveText("Profile")),
-                  const Center(child: AdaptiveText("Settings")),
+                children: const [
+                  Center(child: AdaptiveText("Home")),
+                  Center(child: AdaptiveText("Insights")),
+                  SizedBox.shrink(),
+                  Center(child: AdaptiveText("Profile")),
+                  Center(child: AdaptiveText("Settings")),
                 ],
               )),
 

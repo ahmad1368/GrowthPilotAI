@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'adaptive_text.dart';
 
 class OmniButton extends StatelessWidget {
   final String label;

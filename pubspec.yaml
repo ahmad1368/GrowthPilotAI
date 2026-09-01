@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  image: ^4.3.0
 
   # --- Core & Security ---
   get: ^4.6.6
@@ -16,12 +20,18 @@ dependencies:
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
 
+  # --- Security & Hashing ---
+  crypto: ^3.0.7
+  encrypt: ^5.0.3
+
   # --- UI, Fonts & Themes ---
   cupertino_icons: ^1.0.6
   google_fonts: ^6.1.0
   adaptive_theme: ^3.7.0
   fl_chart: ^0.66.0
   flutter_animate: ^4.5.0
+  graphview: ^1.2.0
+  two_dimensional_scrollables: ^0.5.3
 
   # --- Database & Persistence ---
   objectbox: ^2.5.1
@@ -31,16 +41,37 @@ dependencies:
 
   # --- Networking & Connectivity ---
   connectivity_plus: ^6.0.3
+  webview_flutter: ^4.7.0
+  app_links: ^6.3.2
 
   # --- AI & Machine Learning ---
   google_mlkit_text_recognition: ^0.15.1
+  google_mlkit_document_scanner: ^0.4.0
   permission_handler: ^12.0.1
   flutter_bounceable: ^1.2.0
   flutter_tesseract_ocr: ^0.4.30
   logger: ^2.7.0
+  tflite_flutter: ^0.12.1
+  get_it: ^9.2.1
+  shadcn_ui: ^0.55.0
+  flutter_staggered_grid_view: ^0.7.0
+
+  # --- Export & Sharing ---
+  pdf: ^3.12.0
+  printing: ^5.14.3
+  excel: ^4.0.6
+  archive: ^3.6.1
+  share_plus: ^12.0.2
+  url_launcher: ^6.3.1
+  file_picker: ^8.1.2
+
+  # --- Performance ---
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   build_runner: ^2.4.9
   objectbox_generator: ^2.5.1
@@ -48,7 +79,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # بخش فونت‌ها یا دارایی‌ها را اگر دارید اینجا اضافه کنید
-  # assets:
-  #   - assets/images/
+  assets:
+    - assets/models/mobilenet_v2_1.0_224_quant.tflite

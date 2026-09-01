@@ -1,0 +1,28 @@
+# Issue #190. Scaffolding only — cannot be dry-run in this environment
+# (no ruby/fastlane gems, no Google Play service-account credentials, no
+# emulator per this pipeline's own no-visual-QA rule). Every credential
+# is read from ENV (CI secrets), matching the issue's AC that keys are
+# never hardcoded.
+default_platform(:android)
+
+platform :android do
+  desc "Capture Canadian bilingual screenshots (Issue #190)"
+  lane :screenshots do
+    # Requires an androidTest instrumentation module (see Screengrabfile
+    # comment) that doesn't exist yet in this repo — real Fastlane
+    # wiring, but won't produce screenshots until that module is added.
+    screengrab
+  end
+
+  desc "Push a build to the Play Console internal testing track"
+  lane :beta do
+    gradle(task: "bundleRelease", project_dir: "android/")
+    upload_to_play_store(track: "internal", aab: "android/app/build/outputs/bundle/release/app-release.aab")
+  end
+
+  desc "Screenshots, then a build to the Play Console internal track"
+  lane :release do
+    screenshots
+    beta
+  end
+end

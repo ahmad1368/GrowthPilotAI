@@ -35,7 +35,7 @@ class StepIndicatorPoint extends StatelessWidget {
               boxShadow: isCurrent
                   ? [
                       BoxShadow(
-                          color: Colors.cyanAccent.withOpacity(0.6),
+                          color: Colors.cyanAccent.withValues(alpha: 0.6),
                           blurRadius: 10)
                     ]
                   : [],

@@ -1,0 +1,26 @@
+name: Flutter CI / Test Pipeline
+
+on:
+  push:
+    branches: [stage]
+  pull_request:
+    branches: [stage]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test

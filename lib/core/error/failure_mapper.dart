@@ -9,6 +9,7 @@ class FailureMapper {
     // اصلاح فراخوانی لاگر بر اساس پارامترهایی که با هم ست کردیم
     OmniLogger.error(
       title: "Exception Captured in Mapper",
+      widgetName: "FailureMapper",
       message: error, // تغییر نام از error به message بر اساس پیام خطا
       stackTrace: stack, // تغییر نام احتمالی از stack به stackTrace
     );

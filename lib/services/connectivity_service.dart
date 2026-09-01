@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'package:flutter/foundation.dart';
 
 class ConnectivityService extends GetxService {
   final Connectivity _connectivity = Connectivity();

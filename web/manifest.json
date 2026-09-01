@@ -1,11 +1,11 @@
 {
-    "name": "growth_pilot_ai",
-    "short_name": "growth_pilot_ai",
+    "name": "GrowthPilot AI",
+    "short_name": "GrowthPilot AI",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#09090b",
+    "theme_color": "#09090b",
+    "description": "Local-first back office for Canadian SMBs — CRA-ready GST/HST tracking, bank and accounting reconciliation, receipt scanning, and B2B vendor matching.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

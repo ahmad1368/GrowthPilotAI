@@ -1,0 +1,8 @@
+# Issue #177. No NestJS backend exists to generate this dynamically
+# (there's no "public marketplace route vs. private dashboard route"
+# distinction either — this is a single client-rendered SPA shell, and
+# the real privacy boundary is that user data lives in local on-device
+# storage, never on a server a crawler could reach). Static and
+# permissive, matching how most SPA app-shells handle this.
+User-agent: *
+Allow: /

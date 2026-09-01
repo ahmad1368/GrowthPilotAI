@@ -1,0 +1,53 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const fs = require('fs'); process.stdin.pipe(fs.createWriteStream('hooks/post-log.json'))\""
+          }
+        ]
+      },
+      {
+        "desc": "Security layer preventing unauthorized file reads, greps, or shell cats.",
+        "matcher": "Read|Grep|Bash",
+        "hooks": [
+          { "type": "command", "command": "node $PWD/hooks/security_filter.js" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "desc": "Runs tsc and automated tests, intercepts linter/compiler output, and feeds errors back to Claude.",
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $PWD/hooks/compiler_linter_bridge.js"
+          }
+        ]
+      },
+      {
+        "matcher": "WriteFile|EditFile",
+        "hooks": [{ "type": "command", "command": "flutter analyze" }]
+      },
+      {
+        "desc": "Launches a separate AI instance to review query duplication in high-value directories.",
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $PWD/hooks/query_duplication_reviewer.js"
+          }
+        ]
+      },
+      {
+        "desc": "Automatically format code style after Claude modifications.",
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "flutter format ." }]
+      }
+    ]
+  }
+}

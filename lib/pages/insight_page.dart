@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/services/scanner/scanner_service.dart';
-import 'package:growth_pilot_ai/utils/workflow/scanner_workflow.dart';
 import '../controllers/transaction_controller.dart';
 import '../utils/ui_helper.dart';
 import '../widgets/adaptive_text.dart';
 import '../widgets/omni_glass_panel.dart';
-import '../widgets/insight/insight_header.dart';
 import '../widgets/insight/insight_list_item.dart';
 import '../models/insight_model.dart';
 
@@ -29,7 +26,6 @@ class InsightPage extends StatefulWidget {
 }
 
 class _InsightPageState extends State<InsightPage> {
-  final ScannerService _scanner = ScannerService();
   final controller = Get.find<TransactionController>();
   int? selectedIndex;
 
@@ -37,7 +33,7 @@ class _InsightPageState extends State<InsightPage> {
     15,
     (i) => InsightModel(
         id: i,
-        title: "تحلیل هوشمند شماره ${i + 1}",
+        title: "تحلیل جدید هوشمند شماره ${i + 1}",
         description: "الگوهای مصرفی و جزئیات تراکنش‌های اخیر.",
         efficiency: "85%"),
   );
@@ -45,11 +41,8 @@ class _InsightPageState extends State<InsightPage> {
   @override
   Widget build(BuildContext context) {
     final bool isWide = UIHelper.isWide(context);
-
-    // در فایل insight_page.dart
     return Scaffold(
       backgroundColor: Colors.transparent,
-      floatingActionButton: null, // دکمه قبلی حذف شد
       body: widget.child ?? (isWide ? _buildWideLayout() : _buildListView()),
     );
   }
@@ -69,42 +62,30 @@ class _InsightPageState extends State<InsightPage> {
       controller: widget.controller,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        // _buildSliverHeader(),
+        _buildSliverHeader(),
         _buildSliverList(),
       ],
     );
   }
 
-  // Widget _buildSliverHeader() {
-  //   return SliverToBoxAdapter(
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(20),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           _buildTitleRow(),
-  //           const SizedBox(height: 16),
-  //           Obx(() => InsightHeader(
-  //               total: controller.filteredTransactions
-  //                   .fold(0.0, (sum, item) => sum + item.amount))),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _buildSliverHeader() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: _buildTitleRow(),
+      ),
+    );
+  }
 
   Widget _buildTitleRow() {
-    if (widget.title == null) return const SizedBox.shrink();
     return Row(
       children: [
         if (widget.icon != null)
           Icon(widget.icon, color: Colors.blueAccent, size: 28),
         const SizedBox(width: 12),
-        AdaptiveText(widget.title!,
+        AdaptiveText(widget.title ?? "",
             style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
       ],
     );
   }

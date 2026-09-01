@@ -1,5 +1,5 @@
 import '../../models/ocr_result.dart';
-import '../omni_logger.dart';
+import '../../utils/logger.dart';
 
 class OCRErrorHandler {
   static OCRResult? handle(Object e, StackTrace stack) {

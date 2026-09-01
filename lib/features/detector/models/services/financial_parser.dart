@@ -2,6 +2,7 @@ import 'package:growth_pilot_ai/core/abstracts/base_financial_parser.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/features/detector/models/financial_parser_request.dart';
 import 'package:growth_pilot_ai/features/detector/models/financial_parser_result.dart';
+import '../utils/amount_parser.dart';
 import '../utils/parser_regex_patterns.dart';
 import 'date_utility_parser.dart';
 
@@ -17,8 +18,10 @@ class FinancialParser
     String currency = 'CAD'; // پیش‌فرض لوکیشن کانادا شما
     if (ParserRegexPatterns.usdPattern.hasMatch(fullText)) currency = 'USD';
 
-    final result =
-        FinancialParserResult(extractedDate: date, currency: currency);
+    final amount = AmountParser.extractTotal(fullText);
+
+    final result = FinancialParserResult(
+        extractedDate: date, currency: currency, amount: amount);
 
     if (!validate(result)) {
       return OmniResponse.error(

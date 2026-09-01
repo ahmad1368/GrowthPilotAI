@@ -1,3 +1,7 @@
+# Claude
+.env
+.claude/next-issue-cache.json
+
 # Miscellaneous
 *.class
 *.log
@@ -43,3 +47,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+node_modules/
