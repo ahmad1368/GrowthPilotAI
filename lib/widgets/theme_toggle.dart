@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/theme_controller.dart';
 
 class ThemeToggle extends StatelessWidget {
   const ThemeToggle({super.key});
@@ -10,13 +12,7 @@ class ThemeToggle extends StatelessWidget {
     final isDark = AdaptiveTheme.of(context).mode.isDark;
 
     return GestureDetector(
-      onTap: () {
-        if (isDark) {
-          AdaptiveTheme.of(context).setLight();
-        } else {
-          AdaptiveTheme.of(context).setDark();
-        }
-      },
+      onTap: Get.find<ThemeController>().toggleTheme,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         width: 60,
