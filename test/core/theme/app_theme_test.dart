@@ -1,23 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:growth_pilot_ai/core/theme/app_theme.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
-  // GoogleFonts.inter() returns its TextStyle synchronously (what these
-  // tests assert on) but also kicks off a background font-file fetch that
-  // flutter_test's zone otherwise reports as an unrelated test failure.
-  // Awaiting+swallowing it here keeps these tests independent of network
-  // conditions instead of flaking on font-CDN availability.
-  tearDown(() async {
-    try {
-      await GoogleFonts.pendingFonts();
-    } catch (_) {}
-  });
-
   group('AppTheme', () {
     test('light() and dark() provide the required static entry points (Issue #1 AC)', () {
       expect(AppTheme.light().brightness, Brightness.light);

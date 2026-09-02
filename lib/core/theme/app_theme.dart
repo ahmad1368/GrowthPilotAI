@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 
 /// The single canonical Material [ThemeData] (Issue #1) — flat bg #09090b
@@ -60,21 +59,31 @@ class AppTheme {
   /// Financial-figure-legible type scale (Issue #1 AC): headlineLarge
   /// 24sp/bold/-0.5 letter-spacing, bodyMedium 14sp/regular/1.5 line-height,
   /// labelSmall 12sp/medium for tabular transaction lists.
+  ///
+  /// Uses a plain [TextStyle] naming the "Inter" font family rather than
+  /// the google_fonts package's dynamic network-fetched variant: that
+  /// package deterministically fails under Flutter's test binding (which
+  /// blocks all real HTTP for test isolation) and would make the app's
+  /// core typography depend on network access at runtime. Falls back to
+  /// the platform default font until Inter is bundled as a real asset.
   static TextTheme _textTheme(Color textColor) {
     return TextTheme(
-      headlineLarge: GoogleFonts.inter(
+      headlineLarge: TextStyle(
+        fontFamily: 'Inter',
         fontSize: 24,
         fontWeight: FontWeight.bold,
         letterSpacing: -0.5,
         color: textColor,
       ),
-      bodyMedium: GoogleFonts.inter(
+      bodyMedium: TextStyle(
+        fontFamily: 'Inter',
         fontSize: 14,
         fontWeight: FontWeight.normal,
         height: 1.5,
         color: textColor,
       ),
-      labelSmall: GoogleFonts.inter(
+      labelSmall: TextStyle(
+        fontFamily: 'Inter',
         fontSize: 12,
         fontWeight: FontWeight.w500,
         color: textColor,
