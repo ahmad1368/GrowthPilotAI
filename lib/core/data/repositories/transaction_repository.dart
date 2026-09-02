@@ -1,3 +1,4 @@
+import 'package:growth_pilot_ai/business/validate_transaction_amount.dart';
 import 'package:growth_pilot_ai/core/error/failure_mapper.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 
@@ -12,10 +13,14 @@ class TransactionRepository {
   /// Basic CRUD (Issue #14): [insert]/[update] both map to ObjectBox `put`
   /// (an id of 0 inserts, a non-zero id upserts); [delete] and [getAll] are
   /// thin passthroughs.
-  int insert(TransactionEntity transaction) => _box.put(transaction);
+  int insert(TransactionEntity transaction) {
+    ValidateTransactionAmount.call(transaction.amount);
+    return _box.put(transaction);
+  }
 
   bool update(TransactionEntity transaction) {
     if (transaction.id == 0) return false;
+    ValidateTransactionAmount.call(transaction.amount);
     _box.put(transaction);
     return true;
   }
