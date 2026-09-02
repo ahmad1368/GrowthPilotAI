@@ -14,7 +14,14 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.x"
+          # Pinned (not "3.x") so CI's analyzer/SDK stays in lockstep with
+          # the version this whole codebase was actually developed and
+          # verified against - a floating "latest 3.x" silently picked up
+          # a newer SDK release with a new deprecation (onReorder ->
+          # onReorderItem) that doesn't even exist in this pinned version,
+          # failing `flutter analyze` on unrelated, pre-existing code the
+          # moment this CI gate went live.
+          flutter-version: "3.41.6"
 
       - name: Install dependencies
         run: flutter pub get

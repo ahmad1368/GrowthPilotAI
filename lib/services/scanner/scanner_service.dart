@@ -38,8 +38,7 @@ class ScannerService {
     ScanProgressCallback? onProgress,
   }) async {
     try {
-      // رنگ اصلی تم پیش از هر await خوانده می‌شود تا استفاده از context
-      // بعد از گپ ناهمزمان (use_build_context_synchronously) رخ ندهد.
+      // مقدار پیش از هر await ثبت می‌شود تا context بعد از gap ناهمگام استفاده نشود
       final primaryColor = Theme.of(context).primaryColor;
 
       // ۱. گزارش شروع فرآیند انتخاب
@@ -54,6 +53,10 @@ class ScannerService {
       if (pickedFile == null) {
         return OmniResponse<File>.error("عملیات توسط کاربر لغو شد.",
             statusCode: 401);
+      }
+
+      if (!context.mounted) {
+        return OmniResponse<File>.error("صفحه دیگر فعال نیست.", statusCode: 499);
       }
 
       // ۳. گزارش شروع فرآیند برش

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
 import 'package:growth_pilot_ai/core/utils/logger.dart';
 import 'package:growth_pilot_ai/widgets/global_error_view.dart';
 import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
@@ -118,6 +120,15 @@ class MyApp extends StatelessWidget {
           initialBinding: AppBindings(),
           theme: theme,
           darkTheme: darkTheme,
+          // Wraps every route — including dialogs/bottom sheets pushed on
+          // the root Navigator, which sit outside any per-screen self-wrap
+          // — in a ShadTheme ancestor, so shadcn_ui widgets never crash
+          // with "ShadTheme.of() called with a context that does not
+          // contain a ShadTheme" regardless of where they're shown from.
+          builder: (context, child) => ShadTheme(
+            data: AppShadTheme.build(Theme.of(context).brightness),
+            child: child!,
+          ),
           translations: AppTranslations(),
           locale: const Locale('en'),
           fallbackLocale: const Locale('en'),

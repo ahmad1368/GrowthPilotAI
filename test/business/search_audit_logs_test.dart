@@ -24,7 +24,7 @@ void main() {
       final entry = BuildAuditLogEntry.call(
           changeType: 'updated profile', targetMerchant: 'Acme Foods', newValue: '5%');
 
-      expect(entry.adminId, 'Ahmad_Salem_Pour');
+      expect(entry.adminId, 'local-user');
       expect(entry.previousValue, isEmpty);
     });
   });
