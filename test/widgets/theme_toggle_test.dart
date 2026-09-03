@@ -2,22 +2,34 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/theme_controller.dart';
 import 'package:growth_pilot_ai/widgets/theme_toggle.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
 void main() {
   setUp(() {
+    Get.testMode = true;
     SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync.empty();
   });
 
+  tearDown(() {
+    Get.reset();
+  });
+
+  // GetMaterialApp (not plain MaterialApp) + a registered ThemeController:
+  // ThemeToggle now routes its tap through Get.find<ThemeController>()
+  // (Issue #2), which itself resolves AdaptiveTheme via Get.context — that
+  // only works when GetX owns the navigator.
   Future<void> pumpToggle(WidgetTester tester) async {
+    Get.put(ThemeController());
     await tester.pumpWidget(
       AdaptiveTheme(
         light: ThemeData.light(),
         dark: ThemeData.dark(),
         initial: AdaptiveThemeMode.light,
-        builder: (light, dark) => MaterialApp(
+        builder: (light, dark) => GetMaterialApp(
           theme: light,
           darkTheme: dark,
           home: const Scaffold(body: Center(child: ThemeToggle())),
