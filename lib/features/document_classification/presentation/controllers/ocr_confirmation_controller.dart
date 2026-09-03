@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:growth_pilot_ai/business/cleanup_temp_receipt_image.dart';
 import 'package:growth_pilot_ai/core/data/entities/transaction_entity.dart';
 import 'package:growth_pilot_ai/core/data/repositories/transaction_repository.dart';
 import 'package:growth_pilot_ai/core/models/ocr_form_data.dart';
@@ -12,6 +16,7 @@ class OcrConfirmationController {
   late TextEditingController amountController;
   late TextEditingController vendorController;
   late TextEditingController descController;
+  late File _receiptImage;
 
   DateTime selectedDate = DateTime.now();
 
@@ -21,6 +26,7 @@ class OcrConfirmationController {
         TextEditingController(text: initialData.amount.toString());
     descController = TextEditingController(text: initialData.description);
     selectedDate = initialData.date;
+    _receiptImage = initialData.receiptImage;
   }
 
   /// متد ذخیره‌سازی تراکنش ویرایش‌شده پس از اعتبارسنجی موفق فرم
@@ -44,6 +50,10 @@ class OcrConfirmationController {
 
       OmniLogger.info(
           "ثبت تراکنش OCR (OcrConfirmationController): فروشنده: ${vendorController.text} | مبلغ: $parsedAmount");
+
+      // Issue #21 AC: delete the temp/cropped receipt image once its data is
+      // safely in ObjectBox - best-effort, never blocks a successful save.
+      unawaited(CleanupTempReceiptImage.call(_receiptImage));
 
       return true;
     } catch (e, stack) {
