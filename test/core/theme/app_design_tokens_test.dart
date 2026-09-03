@@ -32,5 +32,16 @@ void main() {
       expect(AppDesignTokens.radiusSm, lessThan(AppDesignTokens.radiusMd));
       expect(AppDesignTokens.radiusMd, lessThan(AppDesignTokens.radiusLg));
     });
+
+    test('brand palette resolvers return the Issue #1 spec hex values', () {
+      expect(AppDesignTokens.primary(Brightness.light), const Color(0xFF2563EB));
+      expect(AppDesignTokens.primary(Brightness.dark), const Color(0xFF3B82F6));
+      expect(AppDesignTokens.secondary(Brightness.light), const Color(0xFF10B981));
+      expect(AppDesignTokens.secondary(Brightness.dark), const Color(0xFF34D399));
+      expect(AppDesignTokens.error(Brightness.light), const Color(0xFFEF4444));
+      expect(AppDesignTokens.error(Brightness.dark), const Color(0xFFF87171));
+      expect(AppDesignTokens.textPrimary(Brightness.light), const Color(0xFF1E293B));
+      expect(AppDesignTokens.textPrimary(Brightness.dark), const Color(0xFFF1F5F9));
+    });
   });
 }
