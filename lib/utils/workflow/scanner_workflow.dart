@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/core/models/ocr_block_data.dart';
 import 'package:growth_pilot_ai/core/models/ocr_result.dart';
 import 'package:growth_pilot_ai/core/models/omni_response.dart';
 import 'package:growth_pilot_ai/core/models/ocr_form_data.dart';
@@ -9,6 +10,7 @@ import 'package:growth_pilot_ai/core/widgets/omni_step_progress.dart';
 import 'package:growth_pilot_ai/features/detector/models/financial_parser_request.dart';
 import 'package:growth_pilot_ai/features/detector/models/services/financial_parser.dart';
 import 'package:growth_pilot_ai/features/document_classification/data/services/tflite_classifier_service.dart';
+import 'package:growth_pilot_ai/features/document_classification/presentation/enums/widgets/document_scanner_view.dart';
 import 'package:growth_pilot_ai/features/document_classification/presentation/views/ocr_confirmation_view.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/services/document/document_classifier.dart';
@@ -35,9 +37,17 @@ class ScannerWorkflow {
   final RxString _currentStepId = 'picking'.obs;
   final RxDouble _subProgress = 0.0.obs;
 
+  // Issue #26: feeds the scanning-line/bounding-box overlay shown over the
+  // captured receipt while OCR/classification/parsing runs.
+  final Rx<File?> _capturedImage = Rx<File?>(null);
+  final RxList<OCRBlockData> _ocrBlocks = <OCRBlockData>[].obs;
+  final Rx<Size> _imageSize = Rx<Size>(Size.zero);
+
   void start(BuildContext context, Function(String) onSave) async {
     _currentStepId.value = 'picking';
     _subProgress.value = 0.0;
+    _capturedImage.value = null;
+    _ocrBlocks.clear();
 
     Get.bottomSheet(
       ImageSourceSheet(
@@ -74,6 +84,9 @@ class ScannerWorkflow {
     _ocrService.dispose();
     _currentStepId.close();
     _subProgress.close();
+    _capturedImage.close();
+    _ocrBlocks.close();
+    _imageSize.close();
   }
 
   OmniResult<OCRResult> startProcess(
@@ -105,6 +118,11 @@ class ScannerWorkflow {
 
       _currentStepId.value = 'finalizing';
       _subProgress.value = 0.2;
+      // Issue #26: the scanning overlay reuses the cropped receipt as its
+      // "camera preview" — this app has no live camera feed, only a
+      // pick-then-crop flow, so the laser line/bounding boxes render over
+      // the actual captured image instead.
+      _capturedImage.value = File(scannerRes.data!.path);
 
       final classifier = TFliteClassifierService();
       await classifier.loadModel();
@@ -133,6 +151,9 @@ class ScannerWorkflow {
       }
 
       _subProgress.value = 0.7;
+      // Issue #26: bounding boxes fade in once RecognizedText is back.
+      _ocrBlocks.value = ocrRes.data!.blocks;
+      _imageSize.value = ocrRes.data!.imageSize;
 
       final classRes = DocumentClassifier.detect(ocrRes.data!.fullText);
       final financialParser = FinancialParser();
@@ -183,11 +204,46 @@ class ScannerWorkflow {
       Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Obx(() => OmniStepProgress(
-                allSteps: ScanPipelines.docScanSteps,
-                currentStepId: _currentStepId.value,
-                subProgress: _subProgress.value,
-              )),
+          // مقادیر Rx به‌صورت صریح با .value خونده می‌شن (نه پاس دادن آبجکت Rx
+          // خام به ویجت فرزند) تا Obx بتونه تغییراتشون رو ردیابی و ری‌بیلد کنه —
+          // در غیر این صورت خوندنشون داخل DocumentScannerView.build() اتفاق
+          // می‌افته که خارج از closure ردیابی‌شونده‌ی Obx هست.
+          child: Obx(() {
+            final capturedImage = _capturedImage.value;
+            final blocks = _ocrBlocks.value;
+            final imageSize = _imageSize.value;
+            final stepId = _currentStepId.value;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Issue #26: scanning-line + bounding-box overlay over the
+                // captured receipt; the laser line disappears once
+                // 'finalizing' ends.
+                if (capturedImage != null) ...[
+                  SizedBox(
+                    height: 220,
+                    child: DocumentScannerView(
+                      // OCRPainter scales X/Y independently assuming the
+                      // whole image maps onto the container — BoxFit.fill
+                      // matches that so boxes stay aligned with the text
+                      // (BoxFit.cover would crop and misalign them).
+                      cameraPreview:
+                          Image.file(capturedImage, fit: BoxFit.fill),
+                      isLoading: stepId == 'finalizing',
+                      ocrBlocks: blocks,
+                      originalImageSize: imageSize,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                OmniStepProgress(
+                  allSteps: ScanPipelines.docScanSteps,
+                  currentStepId: stepId,
+                  subProgress: _subProgress.value,
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
