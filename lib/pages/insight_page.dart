@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/transaction_controller.dart';
+import '../core/theme/app_design_tokens.dart';
 import '../utils/ui_helper.dart';
-import '../widgets/adaptive_text.dart';
-import '../widgets/omni_glass_panel.dart';
 import '../widgets/insight/insight_list_item.dart';
 import '../models/insight_model.dart';
 
@@ -48,10 +47,11 @@ class _InsightPageState extends State<InsightPage> {
   }
 
   Widget _buildWideLayout() {
+    final onSurface = Theme.of(context).colorScheme.onSurface;
     return Row(
       children: [
         Expanded(flex: 2, child: _buildListView()),
-        VerticalDivider(width: 1, color: Colors.white.withValues(alpha: 0.05)),
+        VerticalDivider(width: 1, color: onSurface.withValues(alpha: 0.08)),
         Expanded(flex: 3, child: _buildDetailsView()),
       ],
     );
@@ -87,9 +87,9 @@ class _InsightPageState extends State<InsightPage> {
         if (widget.icon != null)
           Icon(widget.icon, color: Colors.blueAccent, size: 28),
         const SizedBox(width: 12),
-        AdaptiveText(widget.title ?? "",
-            style: const TextStyle(
-                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+        Text(widget.title ?? "",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontSize: 22, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -126,24 +126,27 @@ class _InsightPageState extends State<InsightPage> {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: selectedIndex == null
-          ? const Center(child: AdaptiveText("یک مورد را انتخاب کنید"))
+          ? Center(
+              child: Text("یک مورد را انتخاب کنید",
+                  style: Theme.of(context).textTheme.bodyMedium))
           : _detailsPanel(),
     );
   }
 
   Widget _detailsPanel() {
+    final insight = dummyInsights[selectedIndex!];
     return Padding(
       key: ValueKey(selectedIndex),
       padding: const EdgeInsets.all(24.0),
-      child: OmniGlassPanel(
-        title: dummyInsights[selectedIndex!].title,
-        description: dummyInsights[selectedIndex!].description,
-        leadingIcon: widget.icon ?? Icons.psychology_alt_rounded,
+      child: _insightCard(
+        title: insight.title,
+        description: insight.description,
+        icon: widget.icon ?? Icons.psychology_alt_rounded,
         actionButtons: [
           TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.troubleshoot_rounded),
-              label: const AdaptiveText("تحلیل عمیق‌تر")),
+              label: const Text("تحلیل عمیق‌تر")),
         ],
       ),
     );
@@ -153,12 +156,63 @@ class _InsightPageState extends State<InsightPage> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => OmniGlassPanel(
+      builder: (context) => _insightCard(
         title: data.title,
         description: data.description,
-        showCloseButton: true,
-        fullBorderRadius: false,
-        leadingIcon: widget.icon ?? Icons.insights_rounded,
+        icon: widget.icon ?? Icons.insights_rounded,
+        topRoundedOnly: true,
+      ),
+    );
+  }
+
+  /// Flat replacement for the former OmniGlassPanel title/description/
+  /// actions card (matches NotificationSheet/InsightListItem's pattern).
+  Widget _insightCard({
+    required String title,
+    required String description,
+    required IconData icon,
+    List<Widget>? actionButtons,
+    bool topRoundedOnly = false,
+  }) {
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: AppDesignTokens.card(theme.brightness),
+        borderRadius: topRoundedOnly
+            ? const BorderRadius.vertical(top: Radius.circular(24))
+            : BorderRadius.circular(AppDesignTokens.radiusLg),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: onSurface.withValues(alpha: 0.9), size: 24),
+              const SizedBox(width: 12),
+              Expanded(
+                  child: Text(title,
+                      style: theme.textTheme.titleLarge
+                          ?.copyWith(fontWeight: FontWeight.w800))),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(description,
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(color: onSurface.withValues(alpha: 0.7))),
+          if (actionButtons != null) ...[
+            const SizedBox(height: 20),
+            Divider(color: onSurface.withValues(alpha: 0.08), height: 1),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(spacing: 12, children: actionButtons),
+            ),
+          ],
+        ],
       ),
     );
   }
