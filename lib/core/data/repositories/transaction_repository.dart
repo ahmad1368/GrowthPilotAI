@@ -27,7 +27,17 @@ class TransactionRepository {
 
   bool delete(int id) => _box.remove(id);
 
-  List<TransactionEntity> getAll() => _box.getAll();
+  /// Issue #14 AC: ordered by date descending, matching every other query
+  /// method in this repository (getByDateRange/search/watchAll).
+  List<TransactionEntity> getAll() {
+    final query = _box
+        .query()
+        .order(TransactionEntity_.date, flags: Order.descending)
+        .build();
+    final results = query.find();
+    query.close();
+    return results;
+  }
 
   /// Provides a real-time stream of all transactions sorted by date.
   /// This automatically triggers whenever the Transaction box changes (Reactive UI).
