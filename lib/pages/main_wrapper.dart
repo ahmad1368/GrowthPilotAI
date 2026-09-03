@@ -1,9 +1,5 @@
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:growth_pilot_ai/utils/workflow/scanner_workflow.dart';
-import 'package:growth_pilot_ai/widgets/adaptive_text.dart';
-import 'package:growth_pilot_ai/widgets/home_bottom_nav.dart';
 
 class NavigationController extends GetxController {
   var currentIndex = 0.obs;
@@ -33,43 +29,5 @@ class NavigationController extends GetxController {
     // ۲. حتماً منابع را آزاد می‌کنیم (بسیار مهم برای Issue #22)
     _scannerWorkflow.dispose();
     super.onClose();
-  }
-}
-
-class MainWrapper extends StatelessWidget {
-  const MainWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // ایجاد کنترلر
-    final controller = Get.put(NavigationController());
-
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // صفحات
-          Obx(() => IndexedStack(
-                index: controller.currentIndex.value,
-                children: const [
-                  Center(child: AdaptiveText("Home")),
-                  Center(child: AdaptiveText("Insights")),
-                  SizedBox.shrink(),
-                  Center(child: AdaptiveText("Profile")),
-                  Center(child: AdaptiveText("Settings")),
-                ],
-              )),
-
-          // در بخش build فایل main_wrapper.dart
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Obx(() => HomeBottomNav(
-                  currentIndex: controller.currentIndex.value,
-                  // دیگر نیازی به پاس دادن onTap نیست چون خودش Get.find می‌کند
-                )),
-          ),
-        ],
-      ),
-    );
   }
 }
