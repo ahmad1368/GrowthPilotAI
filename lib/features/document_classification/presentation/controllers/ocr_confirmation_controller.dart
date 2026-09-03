@@ -16,17 +16,30 @@ class OcrConfirmationController {
   late TextEditingController amountController;
   late TextEditingController vendorController;
   late TextEditingController descController;
-  late File _receiptImage;
 
-  DateTime selectedDate = DateTime.now();
+  /// [Issue #27] Editable via the confirmation screen's date picker — a
+  /// ValueNotifier (rather than a plain field) so the picker's selection
+  /// actually reaches the UI without a full form rebuild.
+  late ValueNotifier<DateTime> dateNotifier;
+
+  /// [Issue #27] The cropped receipt image; was captured by ScannerWorkflow
+  /// but previously dropped before reaching this screen even though the
+  /// issue's own AC requires displaying it as a header.
+  File? receiptImage;
+
+  /// Detected receipt currency (Issue #24) — not yet persisted on
+  /// [TransactionEntity], which has no currency field; kept here so it's
+  /// available to the confirmation screen and future save logic.
+  String currency = 'CAD';
 
   void init(OcrFormData initialData) {
     vendorController = TextEditingController(text: initialData.vendorName);
     amountController =
         TextEditingController(text: initialData.amount.toString());
     descController = TextEditingController(text: initialData.description);
-    selectedDate = initialData.date;
-    _receiptImage = initialData.receiptImage;
+    dateNotifier = ValueNotifier(initialData.date);
+    receiptImage = initialData.receiptImage;
+    currency = initialData.currency;
   }
 
   /// متد ذخیره‌سازی تراکنش ویرایش‌شده پس از اعتبارسنجی موفق فرم
@@ -36,13 +49,13 @@ class OcrConfirmationController {
         return false;
       }
 
-      final parsedAmount = double.tryParse(amountController.text) ?? 0.0;
+      final parsedAmount = double.parse(amountController.text);
 
       // [Issue #27] ثبت واقعی در ObjectBox — قبلاً ریپازیتوری Mock بود و این
       // متد فقط تظاهر به موفقیت می‌کرد بدون ذخیره‌سازی واقعی.
       _repository.insert(TransactionEntity(
         amount: parsedAmount,
-        date: selectedDate,
+        date: dateNotifier.value,
         description: descController.text.isNotEmpty
             ? descController.text
             : vendorController.text,
@@ -53,7 +66,10 @@ class OcrConfirmationController {
 
       // Issue #21 AC: delete the temp/cropped receipt image once its data is
       // safely in ObjectBox - best-effort, never blocks a successful save.
-      unawaited(CleanupTempReceiptImage.call(_receiptImage));
+      final imageToClean = receiptImage;
+      if (imageToClean != null) {
+        unawaited(CleanupTempReceiptImage.call(imageToClean));
+      }
 
       return true;
     } catch (e, stack) {
@@ -71,5 +87,6 @@ class OcrConfirmationController {
     amountController.dispose();
     vendorController.dispose();
     descController.dispose();
+    dateNotifier.dispose();
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../controllers/ocr_confirmation_controller.dart';
+import '../utils/ocr_amount_validator.dart';
+import 'ocr_date_field.dart';
+import 'ocr_receipt_image_header.dart';
 
 class OcrEditableFields extends StatelessWidget {
   final OcrConfirmationController controller;
@@ -10,11 +13,17 @@ class OcrEditableFields extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final receiptImage = controller.receiptImage;
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // [Issue #27] Image Header AC — was captured but never displayed.
+          if (receiptImage != null) ...[
+            OcrReceiptImageHeader(image: receiptImage),
+            const SizedBox(height: 16),
+          ],
           _buildLabel(context, "نام فروشنده / نوع سند:"),
           TextFormField(
             controller: controller.vendorController,
@@ -30,7 +39,14 @@ class OcrEditableFields extends StatelessWidget {
                 ?.copyWith(fontWeight: FontWeight.bold),
             decoration:
                 _getInputDecoration(context, Icons.attach_money_rounded),
+            // [Issue #27] Save used to accept any input, silently
+            // defaulting an invalid amount to 0.0 instead of blocking it.
+            validator: OcrAmountValidator.validate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
+          const SizedBox(height: 16),
+          _buildLabel(context, "تاریخ:"),
+          OcrDateField(dateNotifier: controller.dateNotifier),
           const SizedBox(height: 16),
           _buildLabel(context, "متن کامل استخراج شده (OCR Text):"),
           TextFormField(

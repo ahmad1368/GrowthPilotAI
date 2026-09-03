@@ -1,106 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:growth_pilot_ai/utils/ui_helper.dart'; // اضافه شد
-import '../widgets/omni_glass_panel.dart';
-import '../widgets/adaptive_text.dart';
-import 'insight_page.dart';
 
-class SecurityStatusPage extends StatefulWidget {
+/// Data security summary (Issue #16).
+///
+/// This previously claimed the local database was "encrypted with
+/// AES-256", stored a "hardware-backed key", and had "biometric
+/// protection" - none of which is true. ObjectBox's password/at-rest
+/// encryption parameter isn't available in this project's package
+/// version (verified: openStore() in objectbox.g.dart has no such
+/// parameter), and the field-level cipher built for Issue #262
+/// (TransactionFieldCipher) is explicitly not wired into
+/// TransactionEntity/TransactionRepository yet - its own doc comment
+/// says so. Rewritten to describe only what actually protects local
+/// data today, per this repo's flat design system (no
+/// glassmorphism/legacy widgets).
+class SecurityStatusPage extends StatelessWidget {
   const SecurityStatusPage({super.key});
 
   @override
-  State<SecurityStatusPage> createState() => _SecurityStatusPageState();
-}
-
-class _SecurityStatusPageState extends State<SecurityStatusPage> {
-  // تعریف اسکرول کنترلر برای رفع خطای InsightPage
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // نکته: InsightPage فعلاً لیست داخلی خودش را نشان می‌دهد.
-    // اگر می‌خواهی فقط محتوای امنیتی را نشان دهی، بهتر است مستقیماً از Scaffold و OmniGlassPanel استفاده کنی.
-    // اما برای رفع خطا طبق ساختار فعلی شما:
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(
+      appBar: AppBar(title: const Text('Data Security')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
         children: [
-          // نمایش InsightPage به عنوان پس‌زمینه یا ساختار اصلی
-          InsightPage(controller: _scrollController),
-
-          // نمایش محتوای امنیتی روی صفحه به صورت Overlay یا جایگزین
-          Center(
-            child: Container(
-              width: UIHelper.getAdaptiveWidth(context),
-              padding: const EdgeInsets.all(16.0),
-              child: OmniGlassPanel(
-                title: 'امنیت داده‌ها (AES-256)',
-                fullBorderRadius: true,
-                showCloseButton: true,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.lock_person_rounded,
-                        size: 64,
-                        color: Colors.greenAccent,
-                      ),
-                      const SizedBox(height: 20),
-                      const AdaptiveText(
-                        'دیتابیس با استاندارد AES-256 رمزنگاری شد',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      const Divider(height: 40, color: Colors.white24),
-                      _buildSecurityFeature(
-                        Icons.vpn_key_rounded,
-                        'کلید سخت‌افزاری',
-                        'ذخیره شده در Secure Storage سخت‌افزاری',
-                      ),
-                      _buildSecurityFeature(
-                        Icons.verified_user_rounded,
-                        'انطباق با PIPEDA',
-                        'استاندارد حفاظت از حریم خصوصی کانادا',
-                      ),
-                      _buildSecurityFeature(
-                        Icons.phonelink_lock_rounded, // اصلاح شده
-                        'محافظت بیومتریک',
-                        'دسترسی محدود به صاحب دستگاه',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          Icon(Icons.shield_outlined, size: 64, color: theme.colorScheme.primary),
+          const SizedBox(height: 20),
+          Text(
+            'Your data stays on this device',
+            style: theme.textTheme.headlineSmall,
+            textAlign: TextAlign.center,
+          ),
+          const Divider(height: 40),
+          _buildSecurityFeature(
+            context,
+            Icons.smartphone_rounded,
+            'App Sandbox',
+            "Local data is stored in this app's private, OS-protected "
+                'storage - other apps cannot read it directly.',
+          ),
+          _buildSecurityFeature(
+            context,
+            Icons.wifi_off_rounded,
+            'Local-Only by Default',
+            'Transactions are processed and stored on-device; nothing is '
+                'sent to an external server unless you explicitly enable sync.',
+          ),
+          _buildSecurityFeature(
+            context,
+            Icons.lock_outline_rounded,
+            'Encryption at Rest',
+            'Not yet enabled - planned as a future update.',
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSecurityFeature(IconData icon, String title, String subtitle) {
+  Widget _buildSecurityFeature(
+      BuildContext context, IconData icon, String title, String subtitle) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.blueAccent, size: 28),
+          Icon(icon, color: theme.colorScheme.primary, size: 28),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AdaptiveText(title,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                AdaptiveText(subtitle,
-                    style:
-                        const TextStyle(fontSize: 11, color: Colors.white54)),
+                Text(title, style: theme.textTheme.titleSmall),
+                Text(subtitle, style: theme.textTheme.bodySmall),
               ],
             ),
           ),
