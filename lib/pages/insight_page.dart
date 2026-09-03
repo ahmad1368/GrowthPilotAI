@@ -69,9 +69,13 @@ class _InsightPageState extends State<InsightPage> {
   }
 
   Widget _buildSliverHeader() {
+    // Issue #9 AC: HomeLayout's Scaffold uses extendBodyBehindAppBar, so
+    // this scrolling content starts under the status bar + app bar unless
+    // it adds that safe-area inset itself.
+    final topInset = MediaQuery.of(context).padding.top + kToolbarHeight;
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.fromLTRB(20, topInset + 20, 20, 0),
         child: _buildTitleRow(),
       ),
     );
@@ -91,8 +95,12 @@ class _InsightPageState extends State<InsightPage> {
   }
 
   Widget _buildSliverList() {
+    // Issue #9 AC: extendBody means the floating HomeBottomNav can overlap
+    // the last list item unless this accounts for the actual safe-area
+    // inset (not just a fixed guess) on top of the nav's own footprint.
+    final bottomInset = MediaQuery.of(context).padding.bottom + 80;
     return SliverPadding(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 100),
+      padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) => InsightListItem(
