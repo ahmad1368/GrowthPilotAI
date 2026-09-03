@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 /// "Glassmorphism Constants" and React/Tailwind sync don't apply (no
 /// React web app exists here; see PR notes).
 class AppDesignTokens {
-  // --- Color ---
+  // --- Color (surface) ---
   static const darkBackground = Color(0xFF09090B);
   static const darkCard = Color(0xFF18181B);
   static const lightBackground = Color(0xFFFFFFFF);
@@ -17,6 +17,25 @@ class AppDesignTokens {
   static Color background(Brightness brightness) =>
       brightness == Brightness.dark ? darkBackground : lightBackground;
   static Color card(Brightness brightness) => brightness == Brightness.dark ? darkCard : lightCard;
+
+  // --- Color (brand palette, Issue #1) ---
+  static const lightPrimary = Color(0xFF2563EB);
+  static const darkPrimary = Color(0xFF3B82F6);
+  static const lightSecondary = Color(0xFF10B981);
+  static const darkSecondary = Color(0xFF34D399);
+  static const lightError = Color(0xFFEF4444);
+  static const darkError = Color(0xFFF87171);
+  static const lightTextPrimary = Color(0xFF1E293B);
+  static const darkTextPrimary = Color(0xFFF1F5F9);
+
+  static Color primary(Brightness brightness) =>
+      brightness == Brightness.dark ? darkPrimary : lightPrimary;
+  static Color secondary(Brightness brightness) =>
+      brightness == Brightness.dark ? darkSecondary : lightSecondary;
+  static Color error(Brightness brightness) =>
+      brightness == Brightness.dark ? darkError : lightError;
+  static Color textPrimary(Brightness brightness) =>
+      brightness == Brightness.dark ? darkTextPrimary : lightTextPrimary;
 
   // --- Spacing (4pt grid) ---
   static const spaceXs = 4.0;

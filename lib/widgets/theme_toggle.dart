@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:get/get.dart';
+import 'package:growth_pilot_ai/controllers/theme_controller.dart';
 
 class ThemeToggle extends StatelessWidget {
   const ThemeToggle({super.key});
@@ -17,11 +19,9 @@ class ThemeToggle extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          if (isDark) {
-            AdaptiveTheme.of(context).setLight();
-          } else {
-            AdaptiveTheme.of(context).setDark();
-          }
+          // Issue #2 AC: route through the ThemeController service layer
+          // instead of calling AdaptiveTheme.of(context) directly.
+          Get.find<ThemeController>().toggleTheme();
           HapticFeedback.mediumImpact();
         },
         // Issue #7 AC: minimum 44x44 tappable hit area even though the
