@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
-import 'omni_glass_panel.dart';
 import '../models/notification_model.dart';
 import 'notification_card.dart';
-import 'adaptive_text.dart';
 
+/// Flat notification sheet/detail dialog — replaces the former
+/// OmniGlassPanel/AdaptiveText wrappers with plain flat containers (matches
+/// HomeBottomNav/AppDrawer's pattern) and fixes hardcoded white text/
+/// dividers that only looked correct in dark mode.
 class NotificationSheet extends StatelessWidget {
   final List<AppNotification> notifications;
   final Function(AppNotification) onRead;
@@ -17,8 +20,10 @@ class NotificationSheet extends StatelessWidget {
     required this.onDelete,
   });
 
-  // نمایش جزئیات نوتیفیکیشن با استفاده از پنل شیشه‌ای استاندارد
   void _showDetails(BuildContext context, AppNotification item) {
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -27,24 +32,40 @@ class NotificationSheet extends StatelessWidget {
         child: Container(
           width: UIHelper.getAdaptiveWidth(context),
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: OmniGlassPanel(
-            title: item.title,
-            description: item.body,
-            showCloseButton: true,
-            isInteractive: true,
-            actionButtons: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: AppDesignTokens.card(theme.brightness),
+              borderRadius: BorderRadius.circular(AppDesignTokens.radiusLg),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.title, style: theme.textTheme.titleLarge),
+                const SizedBox(height: 12),
+                Text(item.body,
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: onSurface.withValues(alpha: 0.7))),
+                const SizedBox(height: 20),
+                Divider(color: onSurface.withValues(alpha: 0.08), height: 1),
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text("Understand Insight"),
                   ),
                 ),
-                child: const AdaptiveText("Understand Insight"),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -54,55 +75,52 @@ class NotificationSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
     final bool isWide = UIHelper.isWide(context);
 
     return Center(
       child: Container(
         // عرض تطبیق‌پذیر برای نمایش درست در تبلت و دسکتاپ
         width: isWide ? 600 : double.infinity,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        height: MediaQuery.of(context).size.height * 0.75,
+        decoration: BoxDecoration(
+          color: AppDesignTokens.card(theme.brightness),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         ),
-        child: OmniGlassPanel(
-          opacity: 0.2, // کمی تیره‌تر برای تمایز از صفحه زیرین
-          height: MediaQuery.of(context).size.height * 0.75,
-          child: Column(
-            children: [
-              // دسته بالای منو (Handle)
-              Container(
-                width: 45,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(10),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            // دسته بالای منو (Handle)
+            Container(
+              width: 45,
+              height: 4,
+              decoration: BoxDecoration(
+                color: onSurface.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                "NOTIFICATIONS",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2.0,
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: AdaptiveText(
-                  "NOTIFICATIONS",
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-
-              const Divider(color: Colors.white10, height: 1),
-
-              Expanded(
-                child: notifications.isEmpty
-                    ? const Center(
-                        child: AdaptiveText(
-                          "No messages yet",
-                          style: TextStyle(color: Colors.white38),
-                        ),
-                      )
-                    : _buildNotificationList(context, isWide),
-              ),
-            ],
-          ),
+            ),
+            Divider(color: onSurface.withValues(alpha: 0.1), height: 1),
+            Expanded(
+              child: notifications.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No messages yet",
+                        style: TextStyle(color: onSurface.withValues(alpha: 0.4)),
+                      ),
+                    )
+                  : _buildNotificationList(context, isWide),
+            ),
+          ],
         ),
       ),
     );
