@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../adaptive_text.dart';
 
+/// Flat document-type selector — replaces the former AdaptiveText usage
+/// with plain Text; the dropdown underline now follows [Theme.of(context)]
+/// instead of a dark-only hardcoded white.
 class DocumentTypeSelector extends StatelessWidget {
   final String initialType;
   final List<String> availableTypes;
@@ -17,14 +19,15 @@ class DocumentTypeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
     final iconColor = isDarkMode ? Colors.white : Colors.black;
+    final onSurface = theme.colorScheme.onSurface;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // استفاده از AdaptiveText طبق استاندارد پروژه
-        AdaptiveText(
+        Text(
           "نوع سند شناسایی شده:",
           style: TextStyle(
             color: iconColor.withValues(alpha: 0.6), // استفاده از withValues
@@ -41,14 +44,15 @@ class DocumentTypeSelector extends StatelessWidget {
               child: DropdownButton<String>(
                 value:
                     availableTypes.contains(initialType) ? initialType : null,
-                hint: AdaptiveText(initialType),
+                hint: Text(initialType),
                 isExpanded: true,
-                underline: Container(height: 1, color: Colors.white10),
+                underline: Container(
+                    height: 1, color: onSurface.withValues(alpha: 0.1)),
                 dropdownColor: isDarkMode ? Colors.grey[900] : Colors.white,
                 items: availableTypes
                     .map((type) => DropdownMenuItem(
                           value: type,
-                          child: AdaptiveText(type),
+                          child: Text(type),
                         ))
                     .toList(),
                 onChanged: (val) => onTypeSelected(val!),

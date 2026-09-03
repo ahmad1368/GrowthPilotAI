@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 import 'package:growth_pilot_ai/core/widgets/omni_step_progress.dart';
 import 'package:image_picker/image_picker.dart';
 
-// ایمپورت ویجت‌های اختصاصی پروژه شما
-import 'omni_glass_panel.dart';
-import 'adaptive_text.dart';
 import '../core/constants/scan_pipelines.dart';
 
+/// Flat image-source bottom sheet — replaces the former OmniGlassPanel/
+/// AdaptiveText wrapper with a plain top-rounded flat container (matches
+/// AppDrawer/NotificationSheet's pattern).
 class ImageSourceSheet extends StatelessWidget {
   final Function(ImageSource) onSourceSelected;
 
@@ -16,63 +17,66 @@ class ImageSourceSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Get.isDarkMode;
+    final theme = Theme.of(context);
 
     return Material(
       color: Colors.transparent,
-      child: OmniGlassPanel(
-        opacity: isDark ? 0.1 : 0.9,
-        fullBorderRadius: false,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // ۱. هندل بالای صفحه برای بستن (Handle)
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.white24 : Colors.black12,
-                  borderRadius: BorderRadius.circular(10),
-                ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppDesignTokens.card(theme.brightness),
+          borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // ۱. هندل بالای صفحه برای بستن (Handle)
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: isDark ? Colors.white24 : Colors.black12,
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(height: 25),
+            ),
+            const SizedBox(height: 25),
 
-              // ۲. نوار پیشرفت استاندارد (نمایش مرحله اول: انتخاب منبع)
-              OmniStepProgress(
-                allSteps: ScanPipelines.docScanSteps,
-                currentStepId: 'picking', // مرحله فعلی: انتخاب منبع
-                subProgress: 0.5, // ۵۰ درصد این مرحله طی شده
-              ),
+            // ۲. نوار پیشرفت استاندارد (نمایش مرحله اول: انتخاب منبع)
+            OmniStepProgress(
+              allSteps: ScanPipelines.docScanSteps,
+              currentStepId: 'picking', // مرحله فعلی: انتخاب منبع
+              subProgress: 0.5, // ۵۰ درصد این مرحله طی شده
+            ),
 
-              const SizedBox(height: 30),
+            const SizedBox(height: 30),
 
-              const AdaptiveText(
-                "انتخاب منبع تصویر",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 25),
+            Text(
+              "انتخاب منبع تصویر",
+              style: theme.textTheme.titleMedium
+                  ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 25),
 
-              // ۳. گزینه‌ها با قابلیت Hover و انیمیشن
-              _InteractiveOption(
-                icon: Icons.camera_alt_rounded,
-                label: "دوربین",
-                onTap: () => onSourceSelected(ImageSource.camera),
-                isDark: isDark,
-              ),
+            // ۳. گزینه‌ها با قابلیت Hover و انیمیشن
+            _InteractiveOption(
+              icon: Icons.camera_alt_rounded,
+              label: "دوربین",
+              onTap: () => onSourceSelected(ImageSource.camera),
+              isDark: isDark,
+            ),
 
-              const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-              _InteractiveOption(
-                icon: Icons.photo_library_rounded,
-                label: "گالری",
-                onTap: () => onSourceSelected(ImageSource.gallery),
-                isDark: isDark,
-              ),
+            _InteractiveOption(
+              icon: Icons.photo_library_rounded,
+              label: "گالری",
+              onTap: () => onSourceSelected(ImageSource.gallery),
+              isDark: isDark,
+            ),
 
-              const SizedBox(height: 40), // فضای خالی پایین برای زیبایی
-            ],
-          ),
+            const SizedBox(height: 40), // فضای خالی پایین برای زیبایی
+          ],
         ),
       ),
     );
@@ -142,12 +146,14 @@ class _InteractiveOptionState extends State<_InteractiveOption> {
               ),
             ],
           ),
-          title: AdaptiveText(
+          title: Text(
             widget.label,
             style: TextStyle(
               fontSize: 16,
               fontWeight: _isHovered ? FontWeight.bold : FontWeight.w500,
-              color: _isHovered ? Colors.cyanAccent : null,
+              color: _isHovered
+                  ? Colors.cyanAccent
+                  : Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
           trailing: AnimatedPadding(
