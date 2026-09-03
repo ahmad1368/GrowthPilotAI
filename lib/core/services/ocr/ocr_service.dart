@@ -9,7 +9,9 @@ import 'package:growth_pilot_ai/core/di/dependency_injection.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_error_handler.dart';
 import 'package:growth_pilot_ai/core/services/ocr/ocr_spatial_sorter.dart';
 import 'package:growth_pilot_ai/features/document_classification/domain/repositories/abstract_classifier_service.dart';
+import 'ocr_block_mapper.dart';
 import 'ocr_confidence_calculator.dart';
+import 'ocr_image_size_reader.dart';
 
 /// [Issue #21] Lazily creates the ML Kit [TextRecognizer] on first use so it
 /// never opens on web, where the plugin has no implementation (Issue #19).
@@ -41,11 +43,14 @@ class OCRService {
       final inputImage = InputImage.fromFile(imageFile);
       final RecognizedText recognizedText =
           await _textRecognizer!.processImage(inputImage);
+      final sortedBlocks = OCRSpatialSorter.sort(recognizedText);
 
       final result = OCRResult(
         fullText: recognizedText.text,
-        elements: OCRSpatialSorter.sort(recognizedText),
+        elements: sortedBlocks,
         confidence: OcrConfidenceCalculator.calculate(recognizedText),
+        blocks: OcrBlockMapper.map(sortedBlocks),
+        imageSize: await OcrImageSizeReader.read(imageFile),
       );
 
       return OmniResponse<OCRResult>.success(result);
