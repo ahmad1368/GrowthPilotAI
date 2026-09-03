@@ -17,9 +17,7 @@ import '../../core/services/document/document_classifier.dart';
 import '../../core/utils/logger.dart';
 import '../../services/scanner/scanner_service.dart';
 import '../../widgets/image_source_sheet.dart';
-import '../../widgets/omni_glass_panel.dart';
-import '../../widgets/adaptive_text.dart';
-import '../../widgets/omni_button.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../core/constants/scan_pipelines.dart';
 
 class ScannerWorkflow {
@@ -286,30 +284,37 @@ class ScannerWorkflow {
       Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: OmniGlassPanel(
-            title: title,
-            leadingIcon: icon,
-            actionButtons: [
-              OmniButton(
-                label: "اسکن مجدد سند",
-                icon: Icons.refresh_rounded,
-                isPrimary: true,
-                onTap: () {
-                  Get.back();
-                  start(context, onSave);
-                },
-              ),
-              OmniButton(
-                label: "انصراف",
-                icon: Icons.cancel_outlined,
-                isPrimary: false,
-                onTap: () {
-                  Get.back();
-                  if (Get.isDialogOpen == true) Get.back();
-                },
-              ),
-            ],
-            child: AdaptiveText(message, textAlign: TextAlign.center),
+          child: ShadCard(
+            title: Row(
+              children: [
+                Icon(icon, size: 20),
+                const SizedBox(width: 8),
+                Expanded(child: Text(title)),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(message, textAlign: TextAlign.center),
+                const SizedBox(height: 16),
+                ShadButton(
+                  onPressed: () {
+                    Get.back();
+                    start(context, onSave);
+                  },
+                  child: const Text("اسکن مجدد سند"),
+                ),
+                const SizedBox(height: 8),
+                ShadButton.outline(
+                  onPressed: () {
+                    Get.back();
+                    if (Get.isDialogOpen == true) Get.back();
+                  },
+                  child: const Text("انصراف"),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:growth_pilot_ai/core/models/ocr_form_data.dart';
-import 'package:growth_pilot_ai/widgets/omni_glass_panel.dart';
 import '../controllers/ocr_confirmation_controller.dart';
 import '../widgets/ocr_editable_fields.dart';
 import '../widgets/ocr_action_buttons.dart';
 
+/// Flat OCR confirmation screen — replaces the former OmniGlassPanel wrapper
+/// with the app's standard ShadCard (title/child), matching the convention
+/// already used throughout lib/features/settings and lib/features/transactions.
 class OcrConfirmationView extends StatefulWidget {
   final OcrFormData initialData;
   const OcrConfirmationView({super.key, required this.initialData});
@@ -30,19 +33,30 @@ class _OcrConfirmationViewState extends State<OcrConfirmationView> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _controller.formKey,
-            child: OmniGlassPanel(
-              title: "تایید و ویرایش فاکتور فیسکال",
-              leadingIcon: Icons.rate_review_rounded,
-              opacity: isDark ? 0.15 : 0.85,
-              actionButtons: [OcrActionButtons(controller: _controller)],
-              child: OcrEditableFields(controller: _controller),
+            child: ShadCard(
+              title: Row(
+                children: [
+                  Icon(Icons.rate_review_rounded,
+                      color: Theme.of(context).colorScheme.primary, size: 20),
+                  const SizedBox(width: 8),
+                  const Expanded(child: Text("تایید و ویرایش فاکتور فیسکال")),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  OcrEditableFields(controller: _controller),
+                  const SizedBox(height: 16),
+                  OcrActionButtons(controller: _controller),
+                ],
+              ),
             ),
           ),
         ),
