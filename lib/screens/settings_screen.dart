@@ -12,9 +12,8 @@ import 'package:growth_pilot_ai/features/legal/screens/legal_document_screen.dar
 import 'package:growth_pilot_ai/features/settings/widgets/delete_account_dialog.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/legal_compliance_section.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
-import '../widgets/adaptive_text.dart';
+import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 import '../widgets/theme_toggle.dart';
-import '../widgets/omni_glass_panel.dart';
 import '../features/settings/widgets/settings_nav_tile.dart';
 import '../features/settings/widgets/language_settings_section.dart';
 import '../features/settings/widgets/performance_settings_section.dart';
@@ -43,10 +42,9 @@ class SettingsScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: const AdaptiveText(
+        title: const Text(
           "Settings",
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: Icon(
@@ -69,8 +67,11 @@ class SettingsScreen extends StatelessWidget {
               _buildSectionHeader("Appearance"),
               const SizedBox(height: 12),
 
-              OmniGlassPanel(
-                opacity: 0.1,
+              Container(
+                decoration: BoxDecoration(
+                  color: AppDesignTokens.card(theme.brightness),
+                  borderRadius: BorderRadius.circular(AppDesignTokens.radiusMd),
+                ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: Icon(
@@ -78,12 +79,13 @@ class SettingsScreen extends StatelessWidget {
                     color: isDark ? Colors.cyanAccent : Colors.orangeAccent,
                     size: 28,
                   ),
-                  title: const AdaptiveText("App Theme",
-                      fontWeight: FontWeight.bold),
-                  subtitle: AdaptiveText(
+                  title: Text("App Theme",
+                      style: theme.textTheme.bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold)),
+                  subtitle: Text(
                     "Switch between Day and Night",
-                    fontSize: 12,
-                    style: TextStyle(
+                    style: theme.textTheme.bodySmall?.copyWith(
+                        fontSize: 12,
                         color:
                             theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                   ),
@@ -201,17 +203,20 @@ class SettingsScreen extends StatelessWidget {
               _buildSectionHeader("Integrations"),
               const SizedBox(height: 12),
 
-              OmniGlassPanel(
-                opacity: 0.1,
+              Container(
+                decoration: BoxDecoration(
+                  color: AppDesignTokens.card(theme.brightness),
+                  borderRadius: BorderRadius.circular(AppDesignTokens.radiusMd),
+                ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: Icon(Icons.account_balance_rounded,
                       color: theme.colorScheme.onSurface),
-                  title: const AdaptiveText("Accounting & Banking"),
-                  subtitle: AdaptiveText(
+                  title: const Text("Accounting & Banking"),
+                  subtitle: Text(
                     "Plaid, QuickBooks, Xero connections",
-                    fontSize: 12,
-                    style: TextStyle(
+                    style: theme.textTheme.bodySmall?.copyWith(
+                        fontSize: 12,
                         color:
                             theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                   ),
@@ -309,13 +314,16 @@ class SettingsScreen extends StatelessWidget {
               _buildSectionHeader("Account"),
               const SizedBox(height: 12),
 
-              OmniGlassPanel(
-                opacity: 0.1,
+              Container(
+                decoration: BoxDecoration(
+                  color: AppDesignTokens.card(theme.brightness),
+                  borderRadius: BorderRadius.circular(AppDesignTokens.radiusMd),
+                ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   leading: Icon(Icons.person_outline_rounded,
                       color: theme.colorScheme.onSurface),
-                  title: const AdaptiveText("Profile Settings"),
+                  title: const Text("Profile Settings"),
                   trailing: Icon(Icons.chevron_right_rounded,
                       color:
                           theme.colorScheme.onSurface.withValues(alpha: 0.3)),
@@ -386,14 +394,15 @@ class SettingsScreen extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    const Icon(Icons.auto_awesome,
-                        size: 16, color: Colors.white24),
+                    Icon(Icons.auto_awesome,
+                        size: 16,
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
                     const SizedBox(height: 8),
-                    AdaptiveText(
+                    Text(
                       "GrowthPilot AI v1.0.8",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      style: TextStyle(
+                      style: theme.textTheme.bodySmall?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
                           color: theme.colorScheme.onSurface
                               .withValues(alpha: 0.4)),
                     ),
@@ -424,11 +433,13 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 8),
-      child: AdaptiveText(
+      child: Text(
         title.toUpperCase(),
-        fontSize: 11,
-        fontWeight: FontWeight.w900,
-        style: const TextStyle(letterSpacing: 1.2, color: Colors.blueAccent),
+        style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
+            color: Colors.blueAccent),
       ),
     );
   }
