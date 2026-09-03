@@ -15,12 +15,18 @@ class OcrConfirmationController {
 
   DateTime selectedDate = DateTime.now();
 
+  /// Detected receipt currency (Issue #24) — not yet persisted on
+  /// [TransactionEntity], which has no currency field; kept here so it's
+  /// available to the confirmation screen and future save logic.
+  String currency = 'CAD';
+
   void init(OcrFormData initialData) {
     vendorController = TextEditingController(text: initialData.vendorName);
     amountController =
         TextEditingController(text: initialData.amount.toString());
     descController = TextEditingController(text: initialData.description);
     selectedDate = initialData.date;
+    currency = initialData.currency;
   }
 
   /// متد ذخیره‌سازی تراکنش ویرایش‌شده پس از اعتبارسنجی موفق فرم
