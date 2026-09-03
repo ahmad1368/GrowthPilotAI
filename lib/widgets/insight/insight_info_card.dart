@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../adaptive_text.dart';
 
+/// Flat info card — replaces the former AdaptiveText usage with plain
+/// Text and fixes hardcoded white colors that only looked correct in dark
+/// mode; now derived from [Theme.of(context)].
 class InsightInfoCard extends StatelessWidget {
   final String title;
   final String value;
@@ -17,12 +19,14 @@ class InsightInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.05),
+        color: onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+        border: Border.all(color: onSurface.withValues(alpha: 0.05)),
       ),
       child: Row(
         children: [
@@ -32,24 +36,21 @@ class InsightInfoCard extends StatelessWidget {
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(width: 12),
-          _buildTextContent(),
+          _buildTextContent(context, onSurface),
         ],
       ),
     );
   }
 
-  Widget _buildTextContent() {
+  Widget _buildTextContent(BuildContext context, Color onSurface) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AdaptiveText(title,
+        Text(title,
+            style: TextStyle(color: onSurface.withValues(alpha: 0.5), fontSize: 11)),
+        Text(value,
             style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.5), fontSize: 11)),
-        AdaptiveText(value,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold)),
+                color: onSurface, fontSize: 16, fontWeight: FontWeight.bold)),
       ],
     );
   }
