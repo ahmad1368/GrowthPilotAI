@@ -70,19 +70,35 @@ class TransactionRepository {
     return results;
   }
 
-  /// ۲. جستجوی متنی در توضیحات (Case-Insensitive)
+  /// ۲. جستجوی متنی در توضیحات و نام فروشنده (Case-Insensitive)
+  ///
+  /// Issue #15 AC explicitly asks for "description and vendor name". Run
+  /// as two separate queries and merge/dedupe: ObjectBox link conditions
+  /// AND with the rest of the query rather than OR, so a single query
+  /// can't express "description matches OR linked vendor.name matches".
   List<TransactionEntity> search(String text) {
     if (text.isEmpty) return [];
 
-    final query = _box
+    final descQuery = _box
         .query(
             TransactionEntity_.description.contains(text, caseSensitive: false))
-        .order(TransactionEntity_.date, flags: Order.descending)
         .build();
+    final descResults = descQuery.find();
+    descQuery.close();
 
-    final results = query.find();
-    query.close();
-    return results;
+    final vendorQueryBuilder = _box.query();
+    vendorQueryBuilder.link(TransactionEntity_.vendor,
+        VendorEntity_.name.contains(text, caseSensitive: false));
+    final vendorQuery = vendorQueryBuilder.build();
+    final vendorResults = vendorQuery.find();
+    vendorQuery.close();
+
+    final merged = <int, TransactionEntity>{
+      for (final t in [...descResults, ...vendorResults]) t.id: t,
+    };
+    final combined = merged.values.toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+    return combined;
   }
 
   List<TransactionEntity> getAdvancedFilter({
