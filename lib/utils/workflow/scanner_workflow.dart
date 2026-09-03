@@ -145,11 +145,13 @@ class ScannerWorkflow {
 
       DateTime parsedDate = DateTime.now();
       double parsedAmount = 0.0;
+      String parsedCurrency = 'CAD';
 
       if (parserResponse.success && parserResponse.data != null) {
         final financialData = parserResponse.data!;
         parsedDate = financialData.extractedDate;
         parsedAmount = financialData.amount ?? 0.0;
+        parsedCurrency = financialData.currency;
 
         OmniLogger.info(
             "استخراج اطلاعات مالی موفق (ScannerWorkflow): ارز: ${financialData.currency} | تاریخ: $parsedDate | مبلغ: $parsedAmount");
@@ -162,7 +164,7 @@ class ScannerWorkflow {
 
       return OmniResponse.success(ocrRes.data!,
           message: "${classRes.data ?? "سایر موارد"}|${scannerRes.data!.path}|"
-              "${parsedDate.toIso8601String()}|$parsedAmount");
+              "${parsedDate.toIso8601String()}|$parsedAmount|$parsedCurrency");
     } catch (e, stack) {
       if (isOverlayVisible) Get.back();
       OmniLogger.error(
@@ -201,6 +203,8 @@ class ScannerWorkflow {
     // [Issue #23] مبلغ واقعی رسید (نه امتیاز اطمینان OCR) از نتیجه‌ی
     // FinancialParser می‌آید که در payload چهارمین بخش است.
     final amount = parts.length > 3 ? double.tryParse(parts[3]) ?? 0.0 : 0.0;
+    // [Issue #24] ارز تشخیص‌داده‌شده — پنجمین بخش payload.
+    final currency = parts.length > 4 ? parts[4] : 'CAD';
 
     Get.to(() => OcrConfirmationView(
           initialData: OcrFormData(
@@ -209,6 +213,7 @@ class ScannerWorkflow {
             vendorName: docType,
             description: result.fullText,
             receiptImage: File(imagePath),
+            currency: currency,
           ),
         ));
   }
