@@ -56,6 +56,7 @@ import 'package:growth_pilot_ai/core/data/repositories/export_event_repository.d
 import 'package:growth_pilot_ai/routes/module_access_middleware.dart';
 import 'package:growth_pilot_ai/core/i18n/app_translations.dart';
 import 'package:growth_pilot_ai/core/enum/app_locale.dart';
+import 'package:growth_pilot_ai/features/auth/widgets/login_gate.dart';
 import 'package:growth_pilot_ai/features/onboarding/widgets/app_locale_gate.dart';
 import 'package:growth_pilot_ai/features/onboarding/widgets/legal_consent_gate.dart';
 import 'package:growth_pilot_ai/features/onboarding/widgets/onboarding_tour_gate.dart';
@@ -139,12 +140,13 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           home: const AppLocaleGate(
-              child: LegalConsentGate(
-                  child: OnboardingTourGate(
-                      child: ConnectivityGate(
-                          child: DeepLinkGate(
-                              child: BetaFeedbackRootOverlay(
-                                  child: AiChatRootOverlay(child: HomeLayout()))))))),
+              child: LoginGate(
+                  child: LegalConsentGate(
+                      child: OnboardingTourGate(
+                          child: ConnectivityGate(
+                              child: DeepLinkGate(
+                                  child: BetaFeedbackRootOverlay(
+                                      child: AiChatRootOverlay(child: HomeLayout())))))))),
           getPages: [
             GetPage(
               name: '/settings',
