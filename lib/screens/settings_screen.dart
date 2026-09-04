@@ -8,6 +8,7 @@ import 'package:growth_pilot_ai/controllers/subscription_controller.dart';
 import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
 import 'package:growth_pilot_ai/core/enum/subscription_tier.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
+import 'package:growth_pilot_ai/core/widgets/app_notifier.dart';
 import 'package:growth_pilot_ai/features/legal/screens/legal_document_screen.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/delete_account_dialog.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/legal_compliance_section.dart';
@@ -422,11 +423,11 @@ class SettingsScreen extends StatelessWidget {
     if (confirmed != true) return;
 
     await DeleteAllLocalData.call(Get.find<ObjectBox>());
-    Get.snackbar(
-      'Account deleted',
-      'Close and reopen the app to finish resetting it.',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: const Duration(seconds: 6),
+    // [Issue #784] Icon-led notification instead of a plain text snackbar.
+    AppNotifier.show(
+      title: 'Account deleted',
+      message: 'Close and reopen the app to finish resetting it.',
+      type: AppNotificationType.success,
     );
   }
 

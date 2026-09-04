@@ -33,15 +33,22 @@ void main() {
       expect(AppDesignTokens.radiusMd, lessThan(AppDesignTokens.radiusLg));
     });
 
-    test('brand palette resolvers return the Issue #1 spec hex values', () {
-      expect(AppDesignTokens.primary(Brightness.light), const Color(0xFF2563EB));
-      expect(AppDesignTokens.primary(Brightness.dark), const Color(0xFF3B82F6));
-      expect(AppDesignTokens.secondary(Brightness.light), const Color(0xFF10B981));
-      expect(AppDesignTokens.secondary(Brightness.dark), const Color(0xFF34D399));
-      expect(AppDesignTokens.error(Brightness.light), const Color(0xFFEF4444));
+    test('brand palette resolvers return the Issue #784 warm spec hex values', () {
+      expect(AppDesignTokens.primary(Brightness.light), const Color(0xFFF97316));
+      expect(AppDesignTokens.primary(Brightness.dark), const Color(0xFFEA580C));
+      expect(AppDesignTokens.secondary(Brightness.light), const Color(0xFFD97706));
+      expect(AppDesignTokens.secondary(Brightness.dark), const Color(0xFFFBBF24));
+      expect(AppDesignTokens.error(Brightness.light), const Color(0xFFDC2626));
       expect(AppDesignTokens.error(Brightness.dark), const Color(0xFFF87171));
-      expect(AppDesignTokens.textPrimary(Brightness.light), const Color(0xFF1E293B));
-      expect(AppDesignTokens.textPrimary(Brightness.dark), const Color(0xFFF1F5F9));
+      expect(AppDesignTokens.textPrimary(Brightness.light), const Color(0xFF2A1607));
+      expect(AppDesignTokens.textPrimary(Brightness.dark), const Color(0xFFFDF4E7));
+    });
+
+    test('success token stays distinct from primary/secondary (Issue #784)', () {
+      expect(AppDesignTokens.success, isNot(AppDesignTokens.lightPrimary));
+      expect(AppDesignTokens.success, isNot(AppDesignTokens.darkPrimary));
+      expect(AppDesignTokens.success, isNot(AppDesignTokens.lightSecondary));
+      expect(AppDesignTokens.success, isNot(AppDesignTokens.darkSecondary));
     });
   });
 }
