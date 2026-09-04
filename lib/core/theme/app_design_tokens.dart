@@ -7,26 +7,38 @@ import 'package:flutter/material.dart';
 /// repo's fixed no-BackdropFilter palette rule; the issue's literal
 /// "Glassmorphism Constants" and React/Tailwind sync don't apply (no
 /// React web app exists here; see PR notes).
+///
+/// [Issue #784] Warm redesign: surfaces and brand colors moved from a
+/// cool zinc/blue palette to a warm amber/orange one. Surfaces keep a
+/// slight brown/cream tint instead of pure black/white so the warmth
+/// carries through backgrounds, not just accents.
 class AppDesignTokens {
   // --- Color (surface) ---
-  static const darkBackground = Color(0xFF09090B);
-  static const darkCard = Color(0xFF18181B);
-  static const lightBackground = Color(0xFFFFFFFF);
-  static const lightCard = Color(0xFFFFFFFF);
+  static const darkBackground = Color(0xFF1C1210);
+  static const darkCard = Color(0xFF2A1F1A);
+  static const lightBackground = Color(0xFFFFFBF5);
+  static const lightCard = Color(0xFFFFF8F0);
 
   static Color background(Brightness brightness) =>
       brightness == Brightness.dark ? darkBackground : lightBackground;
   static Color card(Brightness brightness) => brightness == Brightness.dark ? darkCard : lightCard;
 
-  // --- Color (brand palette, Issue #1) ---
-  static const lightPrimary = Color(0xFF2563EB);
-  static const darkPrimary = Color(0xFF3B82F6);
-  static const lightSecondary = Color(0xFF10B981);
-  static const darkSecondary = Color(0xFF34D399);
-  static const lightError = Color(0xFFEF4444);
+  // --- Color (brand palette, Issue #1, warmed for Issue #784) ---
+  // Matches shadcn_ui's own ShadOrangeColorScheme primary per mode, so the
+  // Material and shadcn_ui layers render the identical orange.
+  static const lightPrimary = Color(0xFFF97316);
+  static const darkPrimary = Color(0xFFEA580C);
+  static const lightSecondary = Color(0xFFD97706);
+  static const darkSecondary = Color(0xFFFBBF24);
+  static const lightError = Color(0xFFDC2626);
   static const darkError = Color(0xFFF87171);
-  static const lightTextPrimary = Color(0xFF1E293B);
-  static const darkTextPrimary = Color(0xFFF1F5F9);
+
+  /// [Issue #784] Dedicated success green for status icons/notifications —
+  /// kept separate from the warm primary/secondary so "success" stays
+  /// instantly recognizable regardless of the app's warm accent colors.
+  static const success = Color(0xFF16A34A);
+  static const lightTextPrimary = Color(0xFF2A1607);
+  static const darkTextPrimary = Color(0xFFFDF4E7);
 
   static Color primary(Brightness brightness) =>
       brightness == Brightness.dark ? darkPrimary : lightPrimary;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 
-/// The single canonical Material [ThemeData] (Issue #1) — flat bg #09090b
-/// (dark) / #ffffff (light), matching [AppShadTheme] for screens that also
+/// The single canonical Material [ThemeData] (Issue #1) — flat, warm
+/// surfaces (Issue #784), matching [AppShadTheme] for screens that also
 /// opt into shadcn_ui. Colors and typography sourced from
 /// [AppDesignTokens] (Issue #175) instead of its own hex literals.
 class AppTheme {

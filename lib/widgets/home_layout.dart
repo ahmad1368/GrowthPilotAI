@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/intelligence_status_controller.dart';
 import '../controllers/transaction_controller.dart';
+import '../core/theme/app_background_pattern.dart';
 import '../pages/main_wrapper.dart'; // حتما این را اضافه کنید
 import 'app_drawer.dart';
 import 'app_shell_bar.dart';
@@ -63,15 +64,18 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
         ],
       ),
       // محتوا را بر اساس انتخاب منو نمایش می‌دهیم
-      body: Obx(() {
-        if (navControl.currentIndex.value == 0) {
-          return HomeBody(controller: scrollController);
-        } else {
-          // اگر ایندکس تغییر کرد، اجازه دهید MainWrapper صفحات را مدیریت کند
-          // یا فعلاً برای تست همان HomeBody را برگردانید
-          return HomeBody(controller: scrollController);
-        }
-      }),
+      // [Issue #784] پس‌زمینه‌ی برند شده پشت محتوای اصلی برنامه
+      body: AppBackgroundPattern(
+        child: Obx(() {
+          if (navControl.currentIndex.value == 0) {
+            return HomeBody(controller: scrollController);
+          } else {
+            // اگر ایندکس تغییر کرد، اجازه دهید MainWrapper صفحات را مدیریت کند
+            // یا فعلاً برای تست همان HomeBody را برگردانید
+            return HomeBody(controller: scrollController);
+          }
+        }),
+      ),
 
       // اصلاح بخش خطا: حذف onTap و استفاده از Obx
       bottomNavigationBar: Obx(() => HomeBottomNav(
