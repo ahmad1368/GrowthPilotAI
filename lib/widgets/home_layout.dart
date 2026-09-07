@@ -59,7 +59,12 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
           NotificationBadge(count: unreadCount, onTap: _openNotifications),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
-            onPressed: () => Navigator.pushNamed(context, '/settings'),
+            // [Issue #794] A raw Navigator.pushNamed here didn't reliably
+            // resolve through GetMaterialApp's page/middleware pipeline
+            // (ModuleAccessMiddleware on the '/settings' GetPage), silently
+            // no-op'ing. Get.toNamed matches how every other route in this
+            // app is pushed.
+            onPressed: () => Get.toNamed('/settings'),
           ),
         ],
       ),
