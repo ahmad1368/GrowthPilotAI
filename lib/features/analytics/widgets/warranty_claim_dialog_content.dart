@@ -40,11 +40,11 @@ class _WarrantyClaimDialogContentState extends State<WarrantyClaimDialogContent>
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Warranty Claim'),
-      description: WarrantyClaimFields(
+      description: SingleChildScrollView(child: WarrantyClaimFields(
         itemNameController: _itemNameController,
         claimCostController: _claimCostController,
         coverageRevenueController: _coverageRevenueController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

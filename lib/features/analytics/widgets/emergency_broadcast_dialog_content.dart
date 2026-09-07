@@ -40,7 +40,7 @@ class _EmergencyBroadcastDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Compose Emergency Broadcast'),
-      description: StatefulBuilder(builder: (context, setLocalState) {
+      description: SingleChildScrollView(child: StatefulBuilder(builder: (context, setLocalState) {
         return EmergencyBroadcastFields(
           selectedNeighborhoods: _selectedNeighborhoods,
           messageController: _messageController,
@@ -49,7 +49,7 @@ class _EmergencyBroadcastDialogContentState
               ? _selectedNeighborhoods.remove(n)
               : _selectedNeighborhoods.add(n)),
         );
-      }),
+      })),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

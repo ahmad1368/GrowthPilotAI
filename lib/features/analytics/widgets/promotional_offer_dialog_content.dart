@@ -49,13 +49,13 @@ class _PromotionalOfferDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Offer Dispatch'),
-      description: PromotionalOfferFields(
+      description: SingleChildScrollView(child: PromotionalOfferFields(
         offerTextController: _offerTextController,
         targetFilterController: _targetFilterController,
         sentCountController: _sentCountController,
         openedCountController: _openedCountController,
         usedCountController: _usedCountController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

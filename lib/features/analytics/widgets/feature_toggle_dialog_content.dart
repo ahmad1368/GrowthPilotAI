@@ -42,12 +42,12 @@ class _FeatureToggleDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: Text(widget.existing == null ? 'Add Module' : 'Edit Module'),
-      description: FeatureToggleFields(
+      description: SingleChildScrollView(child: FeatureToggleFields(
         moduleNameController: _moduleNameController,
         routeNameController: _routeNameController,
         isEnabled: _isEnabled,
         onEnabledChanged: (v) => setState(() => _isEnabled = v),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

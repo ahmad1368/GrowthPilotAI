@@ -60,14 +60,14 @@ class _DiscountCampaignDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Discount Campaign'),
-      description: DiscountCampaignFields(
+      description: SingleChildScrollView(child: DiscountCampaignFields(
         nameController: _nameController,
         discountPercentController: _discountPercentController,
         startDate: _startDate,
         endDate: _endDate,
         onPickStartDate: _pickStartDate,
         onPickEndDate: _pickEndDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

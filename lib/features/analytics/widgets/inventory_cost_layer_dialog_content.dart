@@ -34,13 +34,13 @@ class _InventoryCostLayerDialogContentState extends State<InventoryCostLayerDial
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Record Cost Layer'),
-      description: InventoryCostLayerFields(
+      description: SingleChildScrollView(child: InventoryCostLayerFields(
         items: widget.items,
         selectedItem: _selectedItem,
         onItemChanged: (v) => setState(() => _selectedItem = v),
         quantityController: _quantityController,
         unitCostController: _unitCostController,
-      ),
+      )),
       actions: [
         StockDialogActions(
             onCancel: () => Navigator.of(context).pop(), onSubmit: _submit, submitLabel: 'Save'),

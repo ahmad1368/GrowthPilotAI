@@ -58,14 +58,14 @@ class _NeighborhoodExpansionDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Neighborhood Evaluation'),
-      description: NeighborhoodExpansionFields(
+      description: SingleChildScrollView(child: NeighborhoodExpansionFields(
         neighborhoodController: _neighborhoodController,
         demandGapController: _demandGapController,
         competitorCountController: _competitorCountController,
         costController: _costController,
         evaluatedAt: _evaluatedAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

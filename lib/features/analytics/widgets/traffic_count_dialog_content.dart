@@ -46,12 +46,12 @@ class _TrafficCountDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Traffic Count'),
-      description: TrafficCountFields(
+      description: SingleChildScrollView(child: TrafficCountFields(
         footController: _footController,
         vehicleController: _vehicleController,
         date: _date,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -28,12 +28,12 @@ class _StoreSquareFootageDialogContentState extends State<StoreSquareFootageDial
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Set Store Floor Space'),
-      description: ShadInput(
+      description: SingleChildScrollView(child: ShadInput(
         placeholder: const Text('Square footage'),
         controller: _controller,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

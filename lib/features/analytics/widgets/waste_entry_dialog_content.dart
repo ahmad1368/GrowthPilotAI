@@ -31,12 +31,12 @@ class _WasteEntryDialogContentState extends State<WasteEntryDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Waste Entry'),
-      description: WasteEntryFields(
+      description: SingleChildScrollView(child: WasteEntryFields(
         descriptionController: _descriptionController,
         valueController: _valueController,
         reason: _reason,
         onReasonChanged: (r) => setState(() => _reason = r),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -31,7 +31,7 @@ class _InventoryCategoryDialogContentState extends State<InventoryCategoryDialog
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Add Category'),
-      description: Column(
+      description: SingleChildScrollView(child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +50,7 @@ class _InventoryCategoryDialogContentState extends State<InventoryCategoryDialog
             onChanged: (value) => setState(() => _parent = value),
           ),
         ],
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

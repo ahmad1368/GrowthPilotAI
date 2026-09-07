@@ -26,10 +26,10 @@ class _BudgetLimitDialogContentState extends State<BudgetLimitDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Set Budget Limit'),
-      description: BudgetLimitFields(
+      description: SingleChildScrollView(child: BudgetLimitFields(
         categoryController: _categoryController,
         limitController: _limitController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -37,12 +37,12 @@ class _RewardedUnlockDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Unlock with a Rewarded Promo'),
-      description: RewardedUnlockFields(
+      description: SingleChildScrollView(child: RewardedUnlockFields(
         moduleNameController: _moduleNameController,
         merchantNameController: _merchantNameController,
         selectedDurationMinutes: _durationMinutes,
         onDurationChanged: (m) => setState(() => _durationMinutes = m),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

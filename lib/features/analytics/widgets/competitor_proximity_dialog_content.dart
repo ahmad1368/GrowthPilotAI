@@ -52,7 +52,7 @@ class _CompetitorProximityDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Competitor Sighting'),
-      description: CompetitorProximityFields(
+      description: SingleChildScrollView(child: CompetitorProximityFields(
         competitorController: _competitorController,
         categoryController: _categoryController,
         distanceController: _distanceController,
@@ -60,7 +60,7 @@ class _CompetitorProximityDialogContentState
         onScaleChanged: (s) => setState(() => _scale = s),
         spottedAt: _spottedAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

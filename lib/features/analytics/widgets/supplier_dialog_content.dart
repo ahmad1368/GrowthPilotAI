@@ -33,12 +33,12 @@ class _SupplierDialogContentState extends State<SupplierDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Add Supplier'),
-      description: SupplierFields(
+      description: SingleChildScrollView(child: SupplierFields(
         nameController: _nameController,
         contactController: _contactController,
         paymentTermsController: _paymentTermsController,
         leadTimeController: _leadTimeController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

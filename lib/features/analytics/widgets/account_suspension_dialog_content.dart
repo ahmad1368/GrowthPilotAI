@@ -36,12 +36,12 @@ class _AccountSuspensionDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Suspend Merchant Account'),
-      description: AccountSuspensionFields(
+      description: SingleChildScrollView(child: AccountSuspensionFields(
         merchantNameController: _merchantNameController,
         reasonController: _reasonController,
         selectedDurationHours: _durationHours,
         onDurationChanged: (h) => setState(() => _durationHours = h),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

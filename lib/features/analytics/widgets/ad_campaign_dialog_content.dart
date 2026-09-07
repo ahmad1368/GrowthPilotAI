@@ -58,7 +58,7 @@ class _AdCampaignDialogContentState extends State<AdCampaignDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Ad Campaign'),
-      description: AdCampaignFields(
+      description: SingleChildScrollView(child: AdCampaignFields(
         nameController: _nameController,
         costController: _costController,
         channel: _channel,
@@ -67,7 +67,7 @@ class _AdCampaignDialogContentState extends State<AdCampaignDialogContent> {
         endDate: _endDate,
         onPickStartDate: _pickStartDate,
         onPickEndDate: _pickEndDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

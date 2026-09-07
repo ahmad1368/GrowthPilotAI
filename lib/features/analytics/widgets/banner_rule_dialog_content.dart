@@ -43,11 +43,11 @@ class _BannerRuleDialogContentState extends State<BannerRuleDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: Text(widget.existing == null ? 'Add Matching Rule' : 'Edit Matching Rule'),
-      description: BannerRuleFields(
+      description: SingleChildScrollView(child: BannerRuleFields(
         reportTopicController: _reportTopicController,
         categoryController: _categoryController,
         priorityWeightController: _priorityWeightController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

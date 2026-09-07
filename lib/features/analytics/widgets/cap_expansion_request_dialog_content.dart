@@ -32,10 +32,10 @@ class _CapExpansionRequestDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Request Cap Increase'),
-      description: CapExpansionRequestFields(
+      description: SingleChildScrollView(child: CapExpansionRequestFields(
         requestedCapController: _requestedCapController,
         reasonController: _reasonController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

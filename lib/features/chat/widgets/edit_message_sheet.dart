@@ -51,10 +51,15 @@ class _EditMessageFormState extends State<_EditMessageForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      ShadInput(controller: _controller, placeholder: const Text('Edit message')),
-      const SizedBox(height: 12),
-      ShadButton(onPressed: _save, child: const Text('Save')),
-    ]);
+    // [Issue #790] Same keyboard-shrinks-the-sheet risk as
+    // showModalBottomSheet(isScrollControlled: true) forms elsewhere —
+    // wrap in SingleChildScrollView so it scrolls instead of overflowing.
+    return SingleChildScrollView(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        ShadInput(controller: _controller, placeholder: const Text('Edit message')),
+        const SizedBox(height: 12),
+        ShadButton(onPressed: _save, child: const Text('Save')),
+      ]),
+    );
   }
 }

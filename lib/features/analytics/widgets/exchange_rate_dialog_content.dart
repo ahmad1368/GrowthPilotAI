@@ -61,7 +61,7 @@ class _ExchangeRateDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Exchange Rate Check'),
-      description: ExchangeRateFields(
+      description: SingleChildScrollView(child: ExchangeRateFields(
         currencyPairController: _currencyPairController,
         productController: _productController,
         baselineRateController: _baselineRateController,
@@ -69,7 +69,7 @@ class _ExchangeRateDialogContentState
         importCostController: _importCostController,
         observedAt: _observedAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),
