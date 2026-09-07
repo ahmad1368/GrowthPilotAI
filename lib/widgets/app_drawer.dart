@@ -189,18 +189,23 @@ class AppDrawer extends StatelessWidget {
   }
 
   /// [Issue #802] Honest placeholder for drawer entries with no real
-  /// feature behind them yet — closes the drawer first so the dialog
-  /// isn't shown stacked underneath it.
+  /// feature behind them yet. Closes the drawer first, then shows the
+  /// dialog via Get.dialog — a plain `showDialog(context: context, ...)`
+  /// here used the drawer item's own BuildContext right after popping it,
+  /// which is unmounting at that point (the drawer is closing), so the
+  /// dialog silently never appeared. Get.dialog uses GetX's own root
+  /// overlay instead of that local, about-to-be-unmounted context —
+  /// matching how the adjacent "Security Center" item's Get.to() call
+  /// (which works) avoids the same trap.
   void _showComingSoon(BuildContext context, {required String title}) {
     Navigator.pop(context);
-    showDialog(
-      context: context,
-      builder: (context) => ShadDialog.alert(
+    Get.dialog(
+      ShadDialog.alert(
         title: Text(title),
         description: const Text('Coming Soon'),
         actions: [
           ShadButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Get.back(),
             child: const Text('OK'),
           ),
         ],
