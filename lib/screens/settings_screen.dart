@@ -1,456 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:growth_pilot_ai/business/delete_all_local_data.dart';
-import 'package:growth_pilot_ai/controllers/legal_consent_controller.dart';
-import 'package:growth_pilot_ai/controllers/subscription_controller.dart';
-import 'package:growth_pilot_ai/core/data/objectbox_provider.dart';
-import 'package:growth_pilot_ai/core/enum/subscription_tier.dart';
 import 'package:growth_pilot_ai/core/theme/app_shad_theme.dart';
-import 'package:growth_pilot_ai/core/widgets/app_notifier.dart';
-import 'package:growth_pilot_ai/features/legal/screens/legal_document_screen.dart';
-import 'package:growth_pilot_ai/features/settings/widgets/delete_account_dialog.dart';
-import 'package:growth_pilot_ai/features/settings/widgets/legal_compliance_section.dart';
-import 'package:growth_pilot_ai/utils/ui_helper.dart';
-import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
-import '../widgets/theme_toggle.dart';
-import '../features/settings/widgets/settings_nav_tile.dart';
-import '../features/settings/widgets/language_settings_section.dart';
-import '../features/settings/widgets/performance_settings_section.dart';
-import '../features/settings/widgets/notification_preference_section.dart';
-import '../features/settings/widgets/quiet_hours_section.dart';
-import '../features/settings/widgets/founding_member_section.dart';
-import '../controllers/support_chat_controller.dart';
+import 'package:growth_pilot_ai/features/settings/widgets/settings_tab_definitions.dart';
 
-class SettingsScreen extends StatelessWidget {
+/// [Issue #808] Settings screen, reorganized from one long flat scroll
+/// (15 sections stacked in a single ListView) into four grouped tabs —
+/// General, Account & Security, Integrations & Billing, More (see
+/// [kSettingsTabs]). No setting was removed in the reorganization; see
+/// the individual tab files (lib/features/settings/screens/
+/// settings_*_tab.dart) for the section-by-section mapping.
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String _selected = 'general';
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = AdaptiveTheme.of(context).mode.isDark;
-
-    // ShadDialog/ShadButton/ShadInput used by the Delete Account flow
-    // below need a ShadTheme ancestor (Issue #189) — this screen has
-    // none otherwise, matching the same self-wrap pattern every other
-    // shadcn_ui-consuming screen in this app already uses.
     return ShadTheme(
       data: AppShadTheme.build(theme.brightness),
       child: Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: const Text(
-          "Settings",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: theme.colorScheme.onSurface,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Center(
-        // اضافه شدن Center برای مدیریت نمایشگرهای عریض
-        child: Container(
-          // استفاده از UIHelper برای تعیین عرض هوشمند
-          width: UIHelper.getAdaptiveWidth(context),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            children: [
-              // ۱. بخش ظاهر (Appearance)
-              _buildSectionHeader("Appearance"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  color: AppDesignTokens.card(theme.brightness),
-                  borderRadius: BorderRadius.circular(AppDesignTokens.radiusMd),
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: Icon(
-                    isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-                    color: isDark ? Colors.cyanAccent : Colors.orangeAccent,
-                    size: 28,
-                  ),
-                  title: Text("App Theme",
-                      style: theme.textTheme.bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.bold)),
-                  subtitle: Text(
-                    "Switch between Day and Night",
-                    style: theme.textTheme.bodySmall?.copyWith(
-                        fontSize: 12,
-                        color:
-                            theme.colorScheme.onSurface.withValues(alpha: 0.6)),
-                  ),
-                  // [Issue #794/#800 investigation] ListTile computes its
-                  // trailing widget's intrinsic width to lay itself out;
-                  // ThemeToggle's outer Container only declares a minWidth
-                  // (no explicit/max width), which made that computation
-                  // blow up ("Trailing widget consumes the entire tile
-                  // width"), cascading into a full render-tree crash the
-                  // first time this screen actually got rendered. A fixed-
-                  // width SizedBox gives ListTile a definite width to work
-                  // with without touching ThemeToggle itself (it lays out
-                  // fine in every other, non-ListTile context).
-                  trailing: const SizedBox(width: 60, child: ThemeToggle()),
-                ),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Language settings (Issue #429)
-              _buildSectionHeader("Language"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const LanguageSettingsSection(),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Power Saver Mode / hardware tier throttling (Issue #110)
-              _buildSectionHeader("Performance"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const PerformanceSettingsSection(),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Unified Notification Preference Center (Issue #158)
-              _buildSectionHeader("Notifications"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const NotificationPreferenceSection(),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Quiet Hours & daily alert frequency cap (Issue #159)
-              _buildSectionHeader("Quiet Hours"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const QuietHoursSection(),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Business Academy video hub (Issue #163)
-              _buildSectionHeader("Learning"),
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.play_circle_outline_rounded,
-                title: 'Business Academy',
-                subtitle: 'Tutorials, marketplace guides, and legal videos',
-                onTap: () => Get.toNamed('/academy'),
-              ),
-
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.psychology_outlined,
-                title: 'AI Engine',
-                subtitle: 'On-device AI model — download, pause, resume',
-                onTap: () => Get.toNamed('/ai-engine'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // OmniPulse crowdsourced business radar (Issue #267/#268)
-              _buildSectionHeader("Community"),
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.campaign_outlined,
-                title: 'OmniPulse',
-                subtitle: 'Live business bottlenecks and hazards near you',
-                onTap: () => Get.toNamed('/pulse'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Branding config for exported PDFs (Issue #257)
-              _buildSectionHeader("Branding"),
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.palette_outlined,
-                title: 'Branding',
-                subtitle: 'Logo, company name, and brand color for PDF exports',
-                onTap: () => Get.toNamed('/settings/branding'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Accounting & Banking integrations dashboard (Issue #61)
-              _buildSectionHeader("Integrations"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  color: AppDesignTokens.card(theme.brightness),
-                  borderRadius: BorderRadius.circular(AppDesignTokens.radiusMd),
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: Icon(Icons.account_balance_rounded,
-                      color: theme.colorScheme.onSurface),
-                  title: const Text("Accounting & Banking"),
-                  subtitle: Text(
-                    "Plaid, QuickBooks, Xero connections",
-                    style: theme.textTheme.bodySmall?.copyWith(
-                        fontSize: 12,
-                        color:
-                            theme.colorScheme.onSurface.withValues(alpha: 0.6)),
-                  ),
-                  trailing: Icon(Icons.chevron_right_rounded,
-                      color:
-                          theme.colorScheme.onSurface.withValues(alpha: 0.3)),
-                  onTap: () => Get.toNamed('/settings/integrations'),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.account_balance_wallet_rounded,
-                title: 'Connected Accounts',
-                subtitle: 'Manage linked bank sub-accounts',
-                onTap: () => Get.toNamed('/settings/connected-accounts'),
-              ),
-
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.compare_arrows_rounded,
-                title: 'Duplicate Matches',
-                subtitle: 'Review auto-merged Plaid/accounting transactions',
-                onTap: () => Get.toNamed('/transactions/duplicates'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Founding Member Beta Program (Issue #191)
-              _buildSectionHeader("Founding Member Beta"),
-              const SizedBox(height: 12),
-
-              const FoundingMemberSection(businessId: 'local-user'),
-
-              const SizedBox(height: 32),
-
-              // Subscription management (Issue #171)
-              _buildSectionHeader("Billing"),
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.credit_card_rounded,
-                title: 'Manage Billing',
-                subtitle: 'Plan, renewal, and cancellation',
-                onTap: () => Get.toNamed('/settings/billing'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // In-app support chat (Issue #193)
-              _buildSectionHeader("Support"),
-              const SizedBox(height: 12),
-
-              Obx(() {
-                final unread = Get.find<SupportChatController>().unreadCount.value;
-                return SettingsNavTile(
-                  icon: Icons.support_agent_rounded,
-                  title: 'Chat with Support',
-                  subtitle: unread > 0 ? '$unread new reply' : 'Ask a question, we\'ll follow up',
-                  onTap: () => Get.toNamed('/settings/support'),
-                );
-              }),
-
-              const SizedBox(height: 32),
-
-              // Local revenue/retention analytics dashboard (Issue #194)
-              _buildSectionHeader("Analytics"),
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.insights_rounded,
-                title: 'Analytics Dashboard',
-                subtitle: 'Conversion funnel and feature popularity',
-                onTap: () => Get.toNamed('/settings/analytics'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Local dependency diagnostics panel (Issue #166)
-              _buildSectionHeader("System"),
-              const SizedBox(height: 12),
-
-              SettingsNavTile(
-                icon: Icons.monitor_heart_rounded,
-                title: 'System Health',
-                subtitle: 'Database, storage, and connectivity status',
-                onTap: () => Get.toNamed('/settings/health'),
-              ),
-
-              const SizedBox(height: 32),
-
-              // ۲. بخش حساب کاربری (Account)
-              _buildSectionHeader("Account"),
-              const SizedBox(height: 12),
-
-              Container(
-                decoration: BoxDecoration(
-                  color: AppDesignTokens.card(theme.brightness),
-                  borderRadius: BorderRadius.circular(AppDesignTokens.radiusMd),
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: Icon(Icons.person_outline_rounded,
-                      color: theme.colorScheme.onSurface),
-                  title: const Text("Profile Settings"),
-                  trailing: Icon(Icons.chevron_right_rounded,
-                      color:
-                          theme.colorScheme.onSurface.withValues(alpha: 0.3)),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // In-app account deletion (Issue #189: App Store 5.1.1(v))
-              SettingsNavTile(
-                icon: Icons.delete_forever_rounded,
-                title: 'Delete Account',
-                subtitle: 'Permanently erase all local data on this device',
-                onTap: () => _deleteAccount(context),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Legal & Compliance (Issue #168/#215) - wires in the
-              // existing but previously-never-mounted consent framework.
-              _buildSectionHeader("Legal"),
-              const SizedBox(height: 12),
-
-              LegalComplianceSection(
-                controller: Get.find<LegalConsentController>(),
-                hasPremiumSubscription: Get.find<SubscriptionController>()
-                        .subscriptionFor('local-user')
-                        .tier !=
-                    SubscriptionTier.starter,
-                onViewTerms: () => Get.to(() => const LegalDocumentScreen()),
-              ),
-
-              const SizedBox(height: 12),
-
-              // ۳. بخش امنیت (Security) - ملموس کردن قابلیت‌های جدید
-              _buildSectionHeader("Security"),
-              const SizedBox(height: 12),
-
-              Material(
-                color: isDark ? const Color(0xFF18181B) : Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                elevation: isDark ? 0 : 1,
-                shadowColor: Colors.black.withValues(alpha: 0.08),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  leading: Icon(Icons.security_rounded, color: theme.colorScheme.onSurface),
-                  title: Text("Local Encryption", style: TextStyle(color: theme.colorScheme.onSurface)),
-                  subtitle: Text("AES-256 Protection Active",
-                      style: TextStyle(fontSize: 11, color: theme.colorScheme.onSurface.withValues(alpha: 0.6))),
-                  trailing: Icon(Icons.verified_user_rounded,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6), size: 20),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // Two-Factor Authentication (Issue #317 feature #3)
-              SettingsNavTile(
-                icon: Icons.phonelink_lock_rounded,
-                title: 'Two-Factor Authentication',
-                subtitle: 'Protect your account with an authenticator app',
-                onTap: () => Get.toNamed('/settings/2fa'),
-              ),
-
-              const SizedBox(height: 48),
-
-              // نسخه اپلیکیشن با طراحی مینیمال
-              Center(
-                child: Column(
-                  children: [
-                    Icon(Icons.auto_awesome,
-                        size: 16,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
-                    const SizedBox(height: 8),
-                    Text(
-                      "GrowthPilot AI v1.0.8",
-                      style: theme.textTheme.bodySmall?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w300,
-                          color: theme.colorScheme.onSurface
-                              .withValues(alpha: 0.4)),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          title: const Text("Settings", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded, color: theme.colorScheme.onSurface),
+            onPressed: () => Navigator.pop(context),
           ),
         ),
-      ),
-      ),
-    );
-  }
-
-  Future<void> _deleteAccount(BuildContext context) async {
-    final confirmed = await showDeleteAccountDialog(context);
-    if (confirmed != true) return;
-
-    await DeleteAllLocalData.call(Get.find<ObjectBox>());
-    // [Issue #784] Icon-led notification instead of a plain text snackbar.
-    AppNotifier.show(
-      title: 'Account deleted',
-      message: 'Close and reopen the app to finish resetting it.',
-      type: AppNotificationType.success,
-    );
-  }
-
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 8),
-      child: Text(
-        title.toUpperCase(),
-        style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.2,
-            color: Colors.blueAccent),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: ShadTabs<String>(
+            value: _selected,
+            onChanged: (v) => setState(() => _selected = v),
+            scrollable: true,
+            // ShadTabs keeps every tab's content mounted by default
+            // (maintainState: true) so only the *selected* tab's Expanded
+            // wrapper would give its ListView bounded height — the other
+            // three would sit as plain non-flex Column children and hit
+            // the exact "unbounded ListView" crash fixed project-wide in
+            // #791/#793. false unmounts non-selected tabs entirely.
+            maintainState: false,
+            tabs: kSettingsTabs,
+          ),
+        ),
       ),
     );
   }
