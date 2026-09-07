@@ -12,6 +12,7 @@ import 'intelligence_status_badge.dart';
 import 'notification_badge.dart';
 import 'home_logic.dart';
 import 'notification_sheet.dart';
+import '../pages/insight_page.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -67,12 +68,17 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       // [Issue #784] پس‌زمینه‌ی برند شده پشت محتوای اصلی برنامه
       body: AppBackgroundPattern(
         child: Obx(() {
-          if (navControl.currentIndex.value == 0) {
-            return HomeBody(controller: scrollController);
-          } else {
-            // اگر ایندکس تغییر کرد، اجازه دهید MainWrapper صفحات را مدیریت کند
-            // یا فعلاً برای تست همان HomeBody را برگردانید
-            return HomeBody(controller: scrollController);
+          switch (navControl.currentIndex.value) {
+            // [Issue #798] Was unconditionally HomeBody for every index —
+            // the "Insights" bottom-nav tab did nothing. Note: HomeBody
+            // itself already just renders InsightPage (see home_body.dart),
+            // so this wires the tab to the same real Insights screen the
+            // Home tab already shows, rather than adding a second
+            // half-built one.
+            case 1:
+              return InsightPage(controller: scrollController);
+            default:
+              return HomeBody(controller: scrollController);
           }
         }),
       ),
