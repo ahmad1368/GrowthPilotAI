@@ -38,13 +38,13 @@ class _ServiceRestrictionDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Service Restriction'),
-      description: ServiceRestrictionFields(
+      description: SingleChildScrollView(child: ServiceRestrictionFields(
         merchantNameController: _merchantNameController,
         serviceNameController: _serviceNameController,
         reasonMessageController: _reasonMessageController,
         isBlocked: _isBlocked,
         onBlockedChanged: (v) => setState(() => _isBlocked = v),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

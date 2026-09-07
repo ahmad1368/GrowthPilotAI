@@ -56,14 +56,14 @@ class _CompetitorPriceDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Competitor Price Check'),
-      description: CompetitorPriceFields(
+      description: SingleChildScrollView(child: CompetitorPriceFields(
         productController: _productController,
         competitorController: _competitorController,
         ourPriceController: _ourPriceController,
         competitorPriceController: _competitorPriceController,
         observedAt: _observedAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

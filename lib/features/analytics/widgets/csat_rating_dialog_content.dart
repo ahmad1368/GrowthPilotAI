@@ -42,13 +42,13 @@ class _CsatRatingDialogContentState extends State<CsatRatingDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log CSAT Rating'),
-      description: CsatRatingFields(
+      description: SingleChildScrollView(child: CsatRatingFields(
         score: _score,
         onScoreChanged: (s) => setState(() => _score = s),
         noteController: _noteController,
         date: _date,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

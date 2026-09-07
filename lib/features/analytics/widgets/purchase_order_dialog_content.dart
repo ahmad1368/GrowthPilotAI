@@ -34,7 +34,7 @@ class _PurchaseOrderDialogContentState extends State<PurchaseOrderDialogContent>
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Review Purchase Order'),
-      description: Column(
+      description: SingleChildScrollView(child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +46,7 @@ class _PurchaseOrderDialogContentState extends State<PurchaseOrderDialogContent>
           const SizedBox(height: 8),
           Text('Estimated total: \$${widget.draft.estimatedTotal.toStringAsFixed(2)}'),
         ],
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -30,12 +30,12 @@ class _StockReservationDialogContentState extends State<StockReservationDialogCo
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Reserve for Online Checkout'),
-      description: StockReservationFields(
+      description: SingleChildScrollView(child: StockReservationFields(
         items: widget.items,
         selectedItem: _selectedItem,
         onItemChanged: (value) => setState(() => _selectedItem = value),
         quantityController: _quantityController,
-      ),
+      )),
       actions: [
         StockDialogActions(
             onCancel: () => Navigator.of(context).pop(), onSubmit: _submit, submitLabel: 'Reserve'),

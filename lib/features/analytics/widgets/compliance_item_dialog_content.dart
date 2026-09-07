@@ -37,11 +37,11 @@ class _ComplianceItemDialogContentState extends State<ComplianceItemDialogConten
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Add Compliance Item'),
-      description: ComplianceItemFields(
+      description: SingleChildScrollView(child: ComplianceItemFields(
         nameController: _nameController,
         expiryDate: _expiryDate,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

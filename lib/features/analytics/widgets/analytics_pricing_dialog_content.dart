@@ -50,14 +50,14 @@ class _AnalyticsPricingDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Assign Pricing Tier'),
-      description: AnalyticsPricingFields(
+      description: SingleChildScrollView(child: AnalyticsPricingFields(
         merchantNameController: _merchantNameController,
         tierNameController: _tierNameController,
         monthlyFeeController: _monthlyFeeController,
         previousTierNameController: _previousTierNameController,
         previousMonthlyFeeController: _previousMonthlyFeeController,
         invoicedAmountController: _invoicedAmountController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

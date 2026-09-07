@@ -43,13 +43,13 @@ class _ReviewFeedbackDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Customer Review'),
-      description: ReviewFeedbackFields(
+      description: SingleChildScrollView(child: ReviewFeedbackFields(
         reviewTextController: _reviewTextController,
         domain: _domain,
         onDomainChanged: (d) => setState(() => _domain = d),
         submittedAt: _submittedAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -62,13 +62,13 @@ class _StaffShiftDialogContentState extends State<StaffShiftDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Staff Shift'),
-      description: StaffShiftFields(
+      description: SingleChildScrollView(child: StaffShiftFields(
         nameController: _nameController,
         startTime: _startTime,
         endTime: _endTime,
         onPickStart: _pickStart,
         onPickEnd: _pickEnd,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

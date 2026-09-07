@@ -39,11 +39,11 @@ class _VisitorCountDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Visitor Count'),
-      description: VisitorCountFields(
+      description: SingleChildScrollView(child: VisitorCountFields(
         countController: _countController,
         date: _date,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

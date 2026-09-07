@@ -41,7 +41,7 @@ class _GoodsReceiptDialogContentState extends State<GoodsReceiptDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Record Goods Receipt'),
-      description: GoodsReceiptFormFields(
+      description: SingleChildScrollView(child: GoodsReceiptFormFields(
         orders: widget.orders,
         selectedOrder: _selectedOrder,
         onOrderChanged: (value) => setState(() => _selectedOrder = value),
@@ -49,7 +49,7 @@ class _GoodsReceiptDialogContentState extends State<GoodsReceiptDialogContent> {
         damagedOrMissingController: _damagedOrMissingController,
         invoiceReferenceController: _invoiceReferenceController,
         invoiceAmountController: _invoiceAmountController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
             onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),

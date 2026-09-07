@@ -38,12 +38,12 @@ class _StockTakeDialogContentState extends State<StockTakeDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Record Stock Take'),
-      description: StockTakeFields(
+      description: SingleChildScrollView(child: StockTakeFields(
         items: widget.items,
         selectedItem: _selectedItem,
         onItemChanged: (value) => setState(() => _selectedItem = value),
         physicalCountController: _physicalCountController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

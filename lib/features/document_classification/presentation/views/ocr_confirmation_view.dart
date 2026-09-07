@@ -48,11 +48,18 @@ class _OcrConfirmationViewState extends State<OcrConfirmationView> {
                   const Expanded(child: Text("تایید و ویرایش فاکتور فیسکال")),
                 ],
               ),
+              // [Issue #790] OcrEditableFields renders its own
+              // SingleChildScrollView; as a plain (non-flex) child of this
+              // Column it would receive unbounded height and crash with
+              // "Vertical viewport was given unbounded height." Expanded
+              // gives it the bounded height it needs from this screen's
+              // Scaffold, so the fields scroll while the action buttons
+              // stay pinned below — same order/behavior as before.
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  OcrEditableFields(controller: _controller),
+                  Expanded(child: OcrEditableFields(controller: _controller)),
                   const SizedBox(height: 16),
                   OcrActionButtons(controller: _controller),
                 ],

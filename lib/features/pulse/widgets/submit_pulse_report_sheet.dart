@@ -46,28 +46,34 @@ class _SubmitPulseReportSheetState extends State<SubmitPulseReportSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-      ShadSelect<PulseCategory>(
-        initialValue: _category,
-        options: PulseCategory.values.map((c) => ShadOption(value: c, child: Text(c.label))).toList(),
-        selectedOptionBuilder: (context, value) => Text(value.label),
-        onChanged: (value) {
-          if (value != null) setState(() => _category = value);
-        },
-      ),
-      const SizedBox(height: 8),
-      ShadInput(controller: _title, placeholder: const Text('Title')),
-      const SizedBox(height: 8),
-      ShadInput(controller: _description, placeholder: const Text('What happened?')),
-      const SizedBox(height: 8),
-      ShadInput(controller: _region, placeholder: const Text('Region (e.g. BC, ON)')),
-      const SizedBox(height: 8),
-      ShadInput(
-          controller: _impact,
-          placeholder: const Text('Estimated impact (CAD)'),
-          keyboardType: TextInputType.number),
-      const SizedBox(height: 12),
-      ShadButton(onPressed: _submit, child: const Text('Submit Report')),
-    ]);
+    // [Issue #790] This form's Column (5 fields + button) is hosted inside a
+    // showModalBottomSheet, which hands it unbounded/shrinking height once
+    // the keyboard opens — wrap in SingleChildScrollView so it scrolls
+    // instead of overflowing.
+    return SingleChildScrollView(
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ShadSelect<PulseCategory>(
+          initialValue: _category,
+          options: PulseCategory.values.map((c) => ShadOption(value: c, child: Text(c.label))).toList(),
+          selectedOptionBuilder: (context, value) => Text(value.label),
+          onChanged: (value) {
+            if (value != null) setState(() => _category = value);
+          },
+        ),
+        const SizedBox(height: 8),
+        ShadInput(controller: _title, placeholder: const Text('Title')),
+        const SizedBox(height: 8),
+        ShadInput(controller: _description, placeholder: const Text('What happened?')),
+        const SizedBox(height: 8),
+        ShadInput(controller: _region, placeholder: const Text('Region (e.g. BC, ON)')),
+        const SizedBox(height: 8),
+        ShadInput(
+            controller: _impact,
+            placeholder: const Text('Estimated impact (CAD)'),
+            keyboardType: TextInputType.number),
+        const SizedBox(height: 12),
+        ShadButton(onPressed: _submit, child: const Text('Submit Report')),
+      ]),
+    );
   }
 }

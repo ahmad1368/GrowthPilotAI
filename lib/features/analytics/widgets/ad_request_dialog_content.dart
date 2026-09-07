@@ -39,13 +39,13 @@ class _AdRequestDialogContentState extends State<AdRequestDialogContent> {
         _manualPackage ?? RecommendAdPackage.call(_categoryController.text);
     return ShadDialog.alert(
       title: const Text('Request Advertising Package'),
-      description: AdRequestFields(
+      description: SingleChildScrollView(child: AdRequestFields(
         merchantNameController: _merchantNameController,
         categoryController: _categoryController,
         selectedPackage: selected,
         onPackageChanged: (t) => setState(() => _manualPackage = t),
         onCategoryChanged: () => setState(() {}),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

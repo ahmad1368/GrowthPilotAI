@@ -29,7 +29,7 @@ class _MerchantTagDialogContentState extends State<MerchantTagDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Bulk-Tag Merchants'),
-      description: StatefulBuilder(builder: (context, setLocalState) {
+      description: SingleChildScrollView(child: StatefulBuilder(builder: (context, setLocalState) {
         return MerchantTagFields(
           merchants: widget.merchants,
           selectedBusinessIds: _selectedBusinessIds,
@@ -39,7 +39,7 @@ class _MerchantTagDialogContentState extends State<MerchantTagDialogContent> {
                   ? _selectedBusinessIds.remove(id)
                   : _selectedBusinessIds.add(id)),
         );
-      }),
+      })),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -13,8 +13,12 @@ Future<void> showLanguagePickerSheet(BuildContext context) {
     builder: (context) => SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        // [Issue #790] A non-scrollControlled showModalBottomSheet caps at
+        // ~56% of screen height; 7 stacked language rows can exceed that on
+        // smaller phones. shrinkWrap lets the ListView size to its content
+        // while still becoming scrollable if it doesn't fit.
+        child: ListView(
+          shrinkWrap: true,
           children: [
             for (final locale in AppLocale.values)
               LanguageOptionTile(

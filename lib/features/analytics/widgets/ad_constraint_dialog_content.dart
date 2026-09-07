@@ -28,7 +28,8 @@ class _AdConstraintDialogContentState extends State<AdConstraintDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Configure Campaign Limits'),
-      description: AdConstraintFields(form: _form, onChanged: () => setState(() {})),
+      description: SingleChildScrollView(
+          child: AdConstraintFields(form: _form, onChanged: () => setState(() {}))),
       actions: [
         ShadButton.outline(
             onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),

@@ -26,10 +26,10 @@ class _MarketingCampaignDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('New Marketing Campaign'),
-      description: MarketingCampaignFormBody(
+      description: SingleChildScrollView(child: MarketingCampaignFormBody(
         form: _form,
         onChanged: () => setState(() {}),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

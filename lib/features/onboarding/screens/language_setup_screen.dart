@@ -29,26 +29,32 @@ class LanguageSetupScreen extends StatelessWidget {
     final suggested = DetectSystemAppLocale.call();
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
+      // [Issue #790] 7 stacked LanguageOptionTiles plus a title/subtitle in
+      // a non-scrollable Column directly in the Scaffold body can overflow
+      // the bottom on smaller screens. Matches the SafeArea > Center >
+      // SingleChildScrollView pattern already used in login_screen.dart.
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('onboarding_welcome_title'.tr, style: theme.textTheme.headlineSmall),
-              const SizedBox(height: 8),
-              Text('onboarding_welcome_subtitle'.tr,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.7))),
-              const SizedBox(height: 24),
-              for (final locale in AppLocale.values)
-                LanguageOptionTile(
-                  locale: locale,
-                  isSuggested: locale == suggested,
-                  onTap: () => _select(locale),
-                ),
-            ],
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('onboarding_welcome_title'.tr, style: theme.textTheme.headlineSmall),
+                const SizedBox(height: 8),
+                Text('onboarding_welcome_subtitle'.tr,
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: theme.colorScheme.onSurface.withValues(alpha: 0.7))),
+                const SizedBox(height: 24),
+                for (final locale in AppLocale.values)
+                  LanguageOptionTile(
+                    locale: locale,
+                    isSuggested: locale == suggested,
+                    onTap: () => _select(locale),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

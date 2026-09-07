@@ -66,7 +66,7 @@ class _MerchantConfigDialogContentState
       title: Text(widget.existing == null
           ? 'Add Merchant Profile'
           : 'Edit Merchant Profile'),
-      description: MerchantConfigFields(
+      description: SingleChildScrollView(child: MerchantConfigFields(
         businessNameController: _businessNameController,
         businessIdController: _businessIdController,
         commissionType: _commissionType,
@@ -75,7 +75,7 @@ class _MerchantConfigDialogContentState
         commissionFixedAmountController: _commissionFixedAmountController,
         transactionCapController: _transactionCapController,
         notesController: _notesController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

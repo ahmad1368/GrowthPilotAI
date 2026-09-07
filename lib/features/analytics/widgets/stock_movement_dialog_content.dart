@@ -34,13 +34,13 @@ class _StockMovementDialogContentState extends State<StockMovementDialogContent>
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Record Stock Movement'),
-      description: StockMovementFields(
+      description: SingleChildScrollView(child: StockMovementFields(
         items: widget.items,
         selectedItem: _selectedItem, onItemChanged: (v) => setState(() => _selectedItem = v),
         type: _type, onTypeChanged: (v) => setState(() => _type = v ?? _type),
         channel: _channel, onChannelChanged: (v) => setState(() => _channel = v ?? _channel),
         quantityController: _quantityController,
-      ),
+      )),
       actions: [
         StockDialogActions(
             onCancel: () => Navigator.of(context).pop(), onSubmit: _submit, submitLabel: 'Save'),

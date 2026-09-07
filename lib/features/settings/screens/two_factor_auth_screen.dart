@@ -49,7 +49,11 @@ class _TwoFactorAuthScreenState extends State<TwoFactorAuthScreen> {
           );
         }
 
-        return Padding(
+        // [Issue #790] This branch adds a multi-line secret + text field +
+        // error text below the enrollment button; once the keyboard opens
+        // for the 6-digit code, this non-scrollable Column can overflow the
+        // bottom of the screen. Wrap in SingleChildScrollView.
+        return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             if (_provisioningUri == null)

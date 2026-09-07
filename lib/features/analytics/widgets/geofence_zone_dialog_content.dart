@@ -52,14 +52,14 @@ class _GeofenceZoneDialogContentState extends State<GeofenceZoneDialogContent> {
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: Text(widget.existing == null ? 'Add Geofence Zone' : 'Edit Geofence Zone'),
-      description: GeofenceZoneFields(
+      description: SingleChildScrollView(child: GeofenceZoneFields(
         featureNameController: _featureNameController,
         centerLatController: _centerLatController,
         centerLngController: _centerLngController,
         radiusKmController: _radiusKmController,
         isEnabled: _isEnabled,
         onEnabledChanged: (v) => setState(() => _isEnabled = v),
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

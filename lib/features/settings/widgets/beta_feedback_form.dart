@@ -27,23 +27,28 @@ class _BetaFeedbackFormState extends State<BetaFeedbackForm> {
   @override
   Widget build(BuildContext context) {
     final colors = ShadTheme.of(context).colorScheme;
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        children: List.generate(5, (i) {
-          final value = i + 1;
-          return IconButton(
-            icon: Icon(value <= _rating ? Icons.star_rounded : Icons.star_border_rounded, color: colors.primary),
-            onPressed: () => setState(() => _rating = value),
-          );
-        }),
-      ),
-      const SizedBox(height: 8),
-      ShadInput(controller: _commentController, placeholder: const Text('What should we improve?')),
-      const SizedBox(height: 12),
-      ShadButton(
-        onPressed: () => widget.onSubmit(_rating, _commentController.text),
-        child: const Text('Send Feedback'),
-      ),
-    ]);
+    // [Issue #790] Hosted in a (non-isScrollControlled) showModalBottomSheet
+    // capped at ~56% of screen height; once the keyboard opens for the
+    // comment field, this can overflow. Wrap in SingleChildScrollView.
+    return SingleChildScrollView(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          children: List.generate(5, (i) {
+            final value = i + 1;
+            return IconButton(
+              icon: Icon(value <= _rating ? Icons.star_rounded : Icons.star_border_rounded, color: colors.primary),
+              onPressed: () => setState(() => _rating = value),
+            );
+          }),
+        ),
+        const SizedBox(height: 8),
+        ShadInput(controller: _commentController, placeholder: const Text('What should we improve?')),
+        const SizedBox(height: 12),
+        ShadButton(
+          onPressed: () => widget.onSubmit(_rating, _commentController.text),
+          child: const Text('Send Feedback'),
+        ),
+      ]),
+    );
   }
 }

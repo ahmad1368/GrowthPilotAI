@@ -39,11 +39,11 @@ class _ScheduledTaskDialogContentState extends State<ScheduledTaskDialogContent>
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Schedule Task'),
-      description: ScheduledTaskFields(
+      description: SingleChildScrollView(child: ScheduledTaskFields(
         taskNameController: _taskNameController,
         targetSegmentController: _targetSegmentController,
         intervalMinutesController: _intervalMinutesController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -62,7 +62,7 @@ class _MerchantPartnershipDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Merchant Partnership'),
-      description: MerchantPartnershipFields(
+      description: SingleChildScrollView(child: MerchantPartnershipFields(
         partnerNameController: _partnerNameController,
         partnerCategoryController: _partnerCategoryController,
         overlapScoreController: _overlapScoreController,
@@ -70,7 +70,7 @@ class _MerchantPartnershipDialogContentState
         referralCountController: _referralCountController,
         partneredAt: _partneredAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -50,7 +50,7 @@ class _MerchantBranchDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Branch Snapshot'),
-      description: MerchantBranchFields(
+      description: SingleChildScrollView(child: MerchantBranchFields(
         branchNameController: _branchNameController,
         salesTotalController: _salesTotalController,
         status: _status,
@@ -59,7 +59,7 @@ class _MerchantBranchDialogContentState
         },
         reportedAt: _reportedAt,
         onPickDate: _pickDate,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),

@@ -39,11 +39,11 @@ class _TrafficSteeringDialogContentState
   Widget build(BuildContext context) {
     return ShadDialog.alert(
       title: const Text('Log Steering Directive'),
-      description: TrafficSteeringFields(
+      description: SingleChildScrollView(child: TrafficSteeringFields(
         targetNameController: _targetNameController,
         destinationLabelController: _destinationLabelController,
         redirectCountController: _redirectCountController,
-      ),
+      )),
       actions: [
         ShadButton.outline(
           onPressed: () => Navigator.of(context).pop(),
