@@ -16,12 +16,20 @@ class AiChatRootOverlay extends StatelessWidget {
     Get.put(AiChatController(), permanent: true);
     final controller = Get.find<AiChatController>();
 
+    // [Issue #796] HomeLayout's floating bottom nav bar (HomeBottomNav) sits
+    // inset by a 20px bottom margin plus its own ~56px BottomNavigationBar
+    // height. A plain `bottom: 16` here (measured from the raw screen edge)
+    // put the FAB right on top of the nav bar's last item. This offset
+    // clears it with a small gap; screens without the nav bar just get a
+    // FAB sitting a bit higher than the very edge, which is harmless.
+    const fabBottomOffset = 96.0;
+
     return Stack(children: [
       child,
-      const Positioned(right: 16, bottom: 16, child: AiChatFab()),
+      const Positioned(right: 16, bottom: fabBottomOffset, child: AiChatFab()),
       Positioned(
         right: 16,
-        bottom: 16,
+        bottom: fabBottomOffset,
         child: Obx(() => controller.isOpen.value && !controller.isMinimized.value
             ? const AiChatWindow()
             : const SizedBox.shrink()),
