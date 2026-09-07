@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:growth_pilot_ai/business/validate_local_login.dart';
+import 'package:growth_pilot_ai/business/validate_login.dart';
+import 'package:growth_pilot_ai/core/constants/auth_storage_keys.dart';
 import 'package:growth_pilot_ai/core/constants/demo_credentials.dart';
 import 'package:growth_pilot_ai/services/secure_storage_service.dart';
 
@@ -12,8 +13,6 @@ import 'package:growth_pilot_ai/services/secure_storage_service.dart';
 /// both the debug-prefill and release-empty branches are directly
 /// testable without needing to flip a compile-time constant.
 class LoginController extends GetxController {
-  static const _storageKey = 'is_logged_in';
-
   LoginController({bool autoFillForDebug = kDebugMode})
       : _autoFillForDebug = autoFillForDebug;
 
@@ -28,20 +27,20 @@ class LoginController extends GetxController {
   bool isLoggedIn = false;
 
   Future<void> restore() async {
-    final stored = await SecureStorageService.readData(_storageKey);
+    final stored = await SecureStorageService.readData(AuthStorageKeys.isLoggedIn);
     isLoggedIn = stored == 'true';
   }
 
   Future<bool> login() async {
     final valid =
-        ValidateLocalLogin.call(emailController.text, passwordController.text);
+        await ValidateLogin.call(emailController.text, passwordController.text);
     if (!valid) {
       errorMessage.value = 'Invalid email or password';
       return false;
     }
     errorMessage.value = null;
     isLoggedIn = true;
-    await SecureStorageService.writeData(_storageKey, 'true');
+    await SecureStorageService.writeData(AuthStorageKeys.isLoggedIn, 'true');
     return true;
   }
 
