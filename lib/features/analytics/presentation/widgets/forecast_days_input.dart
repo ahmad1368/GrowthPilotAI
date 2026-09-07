@@ -31,7 +31,16 @@ class _ForecastDaysInputState extends State<ForecastDaysInput> {
   void _handleChanged(String text) {
     final parsed = int.tryParse(text);
     if (parsed == null) return;
-    widget.onChanged(parsed.clamp(ForecastDaysInput.minDays, ForecastDaysInput.maxDays));
+    final clamped = parsed.clamp(ForecastDaysInput.minDays, ForecastDaysInput.maxDays);
+    widget.onChanged(clamped);
+    // Snap the field itself to the clamped value too — otherwise it kept
+    // showing e.g. "999" while every computed value used 90.
+    if (clamped != parsed) {
+      _controller.value = TextEditingValue(
+        text: '$clamped',
+        selection: TextSelection.collapsed(offset: '$clamped'.length),
+      );
+    }
   }
 
   @override
