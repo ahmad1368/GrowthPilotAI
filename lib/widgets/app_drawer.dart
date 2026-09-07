@@ -49,13 +49,13 @@ class AppDrawer extends StatelessWidget {
                       _buildDrawerItem(
                         context,
                         icon: Icons.dashboard_rounded,
-                        title: "Dashboard",
+                        title: 'drawer_dashboard'.tr,
                         onTap: () => Navigator.pop(context),
                       ),
                       _buildDrawerItem(
                         context,
                         icon: Icons.analytics_rounded,
-                        title: "Growth Metrics",
+                        title: 'drawer_growth_metrics'.tr,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed('/forecast');
@@ -64,7 +64,7 @@ class AppDrawer extends StatelessWidget {
                       _buildDrawerItem(
                         context,
                         icon: Icons.rule_rounded,
-                        title: "Category Mapping",
+                        title: 'drawer_category_mapping'.tr,
                         onTap: () {
                           Navigator.pop(context);
                           Get.toNamed('/category-mapping');
@@ -73,17 +73,17 @@ class AppDrawer extends StatelessWidget {
                       _buildDrawerItem(
                         context,
                         icon: Icons.cloud_done_rounded,
-                        title: "Azure Status",
+                        title: 'drawer_azure_status'.tr,
                         // [Issue #802] No real Azure integration exists in
                         // this app to report genuine status for — a simple
                         // "Coming Soon" placeholder instead of a fabricated
                         // status indicator, or the previous no-op.
-                        onTap: () => _showComingSoon(context, title: "Azure Status"),
+                        onTap: () => _showComingSoon(context, title: 'drawer_azure_status'.tr),
                       ),
                       _buildDrawerItem(
                         context,
                         icon: Icons.security_rounded,
-                        title: "Security Center",
+                        title: 'drawer_security_center'.tr,
                         // [Issue #804] Wires up the previously-unwired
                         // Issue #186 security-audit-log viewer.
                         onTap: () {
@@ -97,7 +97,7 @@ class AppDrawer extends StatelessWidget {
                         _buildDrawerItem(
                           context,
                           icon: Icons.settings_input_component_rounded,
-                          title: "Connection Settings",
+                          title: 'drawer_connection_settings'.tr,
                           color: Colors
                               .orangeAccent, // تغییر رنگ برای تمایز در حالت Dev
                           onTap: () {
@@ -111,7 +111,7 @@ class AppDrawer extends StatelessWidget {
                       _buildDrawerItem(
                         context,
                         icon: Icons.logout_rounded,
-                        title: "Logout",
+                        title: 'drawer_logout'.tr,
                         color: Colors.redAccent,
                         onTap: () {
                           // منطق خروج
@@ -124,7 +124,7 @@ class AppDrawer extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
-                    "GrowthPilot AI v1.0.8",
+                    "${'app_name'.tr} v1.0.8",
                     style: theme.textTheme.bodySmall?.copyWith(
                       fontSize: 10,
                       color: onSurface.withValues(alpha: 0.4),
@@ -202,11 +202,11 @@ class AppDrawer extends StatelessWidget {
     Get.dialog(
       ShadDialog.alert(
         title: Text(title),
-        description: const Text('Coming Soon'),
+        description: Text('common_coming_soon'.tr),
         actions: [
           ShadButton(
             onPressed: () => Get.back(),
-            child: const Text('OK'),
+            child: Text('common_ok'.tr),
           ),
         ],
       ),
