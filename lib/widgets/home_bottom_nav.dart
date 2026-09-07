@@ -53,13 +53,13 @@ class HomeBottomNav extends StatelessWidget {
                 Icons.grid_view_rounded,
                 color: Theme.of(context).iconTheme.color,
               ),
-              label: 'Home'),
+              label: 'nav_home'.tr),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.bar_chart_rounded,
               color: Theme.of(context).iconTheme.color,
             ),
-            label: 'Insights',
+            label: 'nav_insights'.tr,
           ),
           BottomNavigationBarItem(
               icon: Icon(
@@ -67,20 +67,20 @@ class HomeBottomNav extends StatelessWidget {
                 size: 28,
                 color: Theme.of(context).iconTheme.color,
               ),
-              label: 'Scan'),
+              label: 'nav_scan'.tr),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_rounded,
               color: Theme.of(context).iconTheme.color,
             ),
-            label: 'Profile',
+            label: 'nav_profile'.tr,
           ),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.settings_rounded,
                 color: Theme.of(context).iconTheme.color,
               ),
-              label: 'Settings'),
+              label: 'nav_settings'.tr),
         ],
       ),
     );
