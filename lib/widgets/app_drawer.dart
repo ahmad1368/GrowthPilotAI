@@ -5,6 +5,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../pages/settings_page.dart'; // اضافه کردن فایل تنظیمات
+import '../features/settings/screens/security_center_screen.dart';
 
 /// Flat drawer — replaces the former OmniGlassPanel/AdaptiveText wrapper
 /// with a card-colored container (matches HomeBottomNav's pattern). Also
@@ -83,7 +84,12 @@ class AppDrawer extends StatelessWidget {
                         context,
                         icon: Icons.security_rounded,
                         title: "Security Center",
-                        onTap: () {},
+                        // [Issue #804] Wires up the previously-unwired
+                        // Issue #186 security-audit-log viewer.
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.to(() => const SecurityCenterScreen());
+                        },
                       ),
                       // --- بخش هوشمند: فقط در حالت Debug نمایش داده شود ---
                       if (kDebugMode) ...[
