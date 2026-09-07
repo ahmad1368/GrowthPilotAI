@@ -27,25 +27,36 @@ class _LegalAcceptanceStepState extends State<LegalAcceptanceStep> {
     // every other shadcn_ui-consuming screen in this app already uses.
     return ShadTheme(
       data: AppShadTheme.build(Theme.of(context).brightness),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LegalAcceptanceCheckbox(checked: _checked, onChanged: (v) => setState(() => _checked = v)),
-            const SizedBox(height: 16),
-            ShadButton(
-              enabled: _checked,
-              onPressed: _checked
-                  ? () {
-                      widget.controller.accept(dataUsageConsent: true);
-                      widget.onAccepted();
-                    }
-                  : null,
-              child: const Text('Continue'),
+      // [Issue #792] Unlike every other full-screen gate widget
+      // in this app (e.g. LoginScreen), this step returned bare content
+      // with no Scaffold — under GetMaterialApp's AnimatedSwitcher/Navigator
+      // transition it could receive unbounded height and crash with
+      // "RenderCustomMultiChildLayoutBox object was given an infinite size
+      // during layout" / a bottom overflow. Scaffold > SafeArea >
+      // SingleChildScrollView mirrors LoginScreen's established pattern.
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LegalAcceptanceCheckbox(checked: _checked, onChanged: (v) => setState(() => _checked = v)),
+                const SizedBox(height: 16),
+                ShadButton(
+                  enabled: _checked,
+                  onPressed: _checked
+                      ? () {
+                          widget.controller.accept(dataUsageConsent: true);
+                          widget.onAccepted();
+                        }
+                      : null,
+                  child: const Text('Continue'),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
