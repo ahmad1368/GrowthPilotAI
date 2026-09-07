@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // اضافه شده برای ناوبری راحت
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../pages/settings_page.dart'; // اضافه کردن فایل تنظیمات
@@ -72,7 +73,11 @@ class AppDrawer extends StatelessWidget {
                         context,
                         icon: Icons.cloud_done_rounded,
                         title: "Azure Status",
-                        onTap: () {},
+                        // [Issue #802] No real Azure integration exists in
+                        // this app to report genuine status for — a simple
+                        // "Coming Soon" placeholder instead of a fabricated
+                        // status indicator, or the previous no-op.
+                        onTap: () => _showComingSoon(context, title: "Azure Status"),
                       ),
                       _buildDrawerItem(
                         context,
@@ -174,6 +179,26 @@ class AppDrawer extends StatelessWidget {
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       onTap: onTap,
+    );
+  }
+
+  /// [Issue #802] Honest placeholder for drawer entries with no real
+  /// feature behind them yet — closes the drawer first so the dialog
+  /// isn't shown stacked underneath it.
+  void _showComingSoon(BuildContext context, {required String title}) {
+    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (context) => ShadDialog.alert(
+        title: Text(title),
+        description: const Text('Coming Soon'),
+        actions: [
+          ShadButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 }
