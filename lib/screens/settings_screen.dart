@@ -90,7 +90,17 @@ class SettingsScreen extends StatelessWidget {
                         color:
                             theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                   ),
-                  trailing: const ThemeToggle(),
+                  // [Issue #794/#800 investigation] ListTile computes its
+                  // trailing widget's intrinsic width to lay itself out;
+                  // ThemeToggle's outer Container only declares a minWidth
+                  // (no explicit/max width), which made that computation
+                  // blow up ("Trailing widget consumes the entire tile
+                  // width"), cascading into a full render-tree crash the
+                  // first time this screen actually got rendered. A fixed-
+                  // width SizedBox gives ListTile a definite width to work
+                  // with without touching ThemeToggle itself (it lays out
+                  // fine in every other, non-ListTile context).
+                  trailing: const SizedBox(width: 60, child: ThemeToggle()),
                 ),
               ),
 
