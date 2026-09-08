@@ -3,11 +3,16 @@ import 'package:get/get.dart';
 import 'package:growth_pilot_ai/controllers/founding_member_controller.dart';
 import 'package:growth_pilot_ai/features/settings/widgets/beta_feedback_form.dart';
 
-/// Floating "Feedback" button visible only to Founding Members/beta
-/// testers (Issue #169 AC: "widget is only visible to users with the
-/// BETA_TESTER flag" — this app has no separate role/flag system, so
-/// Founding Member status stands in; see PR notes), reachable from
-/// any screen via [BetaFeedbackRootOverlay].
+/// Floating "Feedback" button (Issue #169), reachable from any screen via
+/// [BetaFeedbackRootOverlay].
+///
+/// [Issue #829] Used to hide entirely unless the local user already held
+/// a Founding Member spot — on a fresh install, or after any full app-data
+/// reset, that record doesn't exist yet, so the icon silently vanished
+/// with no placeholder or explanation, breaking the fixed floating-icon
+/// stack this app deliberately keeps. Submission itself was never gated
+/// on Founding Member status (only a daily rate limit, still enforced
+/// below) — only visibility was, so this always renders now.
 class BetaFeedbackFab extends StatelessWidget {
   const BetaFeedbackFab({super.key});
 
@@ -16,15 +21,11 @@ class BetaFeedbackFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FoundingMemberController>();
-    return Obx(() {
-      controller.spotsRemaining.value; // re-check membership whenever a spot is claimed
-      if (controller.spotFor(_businessId) == null) return const SizedBox.shrink();
-      return FloatingActionButton.small(
-        heroTag: 'betaFeedbackFab',
-        onPressed: () => _openSheet(context, controller),
-        child: const Icon(Icons.feedback_outlined),
-      );
-    });
+    return FloatingActionButton.small(
+      heroTag: 'betaFeedbackFab',
+      onPressed: () => _openSheet(context, controller),
+      child: const Icon(Icons.feedback_outlined),
+    );
   }
 
   void _openSheet(BuildContext context, FoundingMemberController controller) {
