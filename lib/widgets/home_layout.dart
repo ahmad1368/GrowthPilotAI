@@ -13,6 +13,7 @@ import 'notification_badge.dart';
 import 'home_logic.dart';
 import 'notification_sheet.dart';
 import '../pages/insight_page.dart';
+import '../pages/profile_placeholder_page.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -80,8 +81,22 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
             // so this wires the tab to the same real Insights screen the
             // Home tab already shows, rather than adding a second
             // half-built one.
+            // [Issue #815] That left Home and Insights visually identical
+            // (neither passed a title/icon to InsightPage), so switching
+            // tabs looked like nothing happened — this gives Insights its
+            // own header so the two are visibly distinct.
             case 1:
-              return InsightPage(controller: scrollController);
+              return InsightPage(
+                controller: scrollController,
+                title: 'nav_insights'.tr,
+                icon: Icons.bar_chart_rounded,
+              );
+            // [Issue #815] Profile had no case of its own and silently fell
+            // through to the same HomeBody/InsightPage content as Home —
+            // an honest "coming soon" placeholder instead, since no real
+            // profile feature exists yet.
+            case 3:
+              return const ProfilePlaceholderPage();
             default:
               return HomeBody(controller: scrollController);
           }
