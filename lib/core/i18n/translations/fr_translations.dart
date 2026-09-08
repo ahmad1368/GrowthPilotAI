@@ -19,7 +19,6 @@ const Map<String, String> frTranslations = {
   'onboarding_continue': 'Continuer',
   'nav_insights': 'Aperçus',
   'nav_scan': 'Scanner',
-  'nav_profile': 'Profil',
   'nav_marketplace': 'Marché',
   'drawer_dashboard': 'Tableau de bord',
   'drawer_profile': 'Profil',

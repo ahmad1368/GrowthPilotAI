@@ -13,7 +13,6 @@ import 'notification_badge.dart';
 import 'home_logic.dart';
 import 'notification_sheet.dart';
 import '../pages/insight_page.dart';
-import '../pages/profile_placeholder_page.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -91,12 +90,11 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
                 title: 'nav_insights'.tr,
                 icon: Icons.bar_chart_rounded,
               );
-            // [Issue #815] Profile had no case of its own and silently fell
-            // through to the same HomeBody/InsightPage content as Home —
-            // an honest "coming soon" placeholder instead, since no real
-            // profile feature exists yet.
-            case 3:
-              return const ProfilePlaceholderPage();
+            // [Issue #831] Profile's old case 3 (a "coming soon"
+            // placeholder, #815) is gone — Profile is a real drawer-only
+            // screen now (#826), and index 3 is intercepted by
+            // NavigationController.handleNavigation for Marketplace
+            // before currentIndex ever reaches this switch.
             default:
               return HomeBody(controller: scrollController);
           }

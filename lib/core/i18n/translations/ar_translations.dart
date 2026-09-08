@@ -19,7 +19,6 @@ const Map<String, String> arTranslations = {
   'onboarding_continue': 'متابعة',
   'nav_insights': 'الرؤى',
   'nav_scan': 'مسح',
-  'nav_profile': 'الملف الشخصي',
   'nav_marketplace': 'السوق',
   'drawer_dashboard': 'لوحة التحكم',
   'drawer_profile': 'الملف الشخصي',

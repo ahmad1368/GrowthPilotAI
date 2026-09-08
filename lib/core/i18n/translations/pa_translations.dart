@@ -19,7 +19,6 @@ const Map<String, String> paTranslations = {
   'onboarding_continue': 'ਜਾਰੀ ਰੱਖੋ',
   'nav_insights': 'ਸੂਝਾਂ',
   'nav_scan': 'ਸਕੈਨ',
-  'nav_profile': 'ਪ੍ਰੋਫਾਈਲ',
   'nav_marketplace': 'ਬਾਜ਼ਾਰ',
   'drawer_dashboard': 'ਡੈਸ਼ਬੋਰਡ',
   'drawer_profile': 'ਪ੍ਰੋਫਾਈਲ',

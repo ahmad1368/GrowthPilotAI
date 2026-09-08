@@ -68,18 +68,13 @@ class HomeBottomNav extends StatelessWidget {
                 color: Theme.of(context).iconTheme.color,
               ),
               label: 'nav_scan'.tr),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_rounded,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            label: 'nav_profile'.tr,
-          ),
           // [Issue #821] Was Settings, duplicating the top-app-bar gear
           // icon (AppShellBar, unchanged) that already opens '/settings' —
           // swapped for Marketplace, which previously had no entry point
           // of its own at all (buried inside the Business Compass
           // dashboard among unrelated report widgets).
+          // [Issue #831] Now index 3 (was 4) — Profile was removed above,
+          // and NavigationController.handleNavigation shifted to match.
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.storefront_rounded,
