@@ -20,6 +20,7 @@ const Map<String, String> faTranslations = {
   'nav_insights': 'بینش‌ها',
   'nav_scan': 'اسکن',
   'nav_marketplace': 'بازارچه',
+  'appbar_growth_metrics_tooltip': 'معیارهای رشد',
   'drawer_dashboard': 'داشبورد',
   'drawer_profile': 'پروفایل',
   'profile_screen_title': 'پروفایل',
