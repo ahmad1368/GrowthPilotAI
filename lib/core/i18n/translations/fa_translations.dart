@@ -22,6 +22,7 @@ const Map<String, String> faTranslations = {
   'nav_profile': 'پروفایل',
   'drawer_dashboard': 'داشبورد',
   'drawer_growth_metrics': 'معیارهای رشد',
+  'drawer_business_compass': 'انبارداری و حسابداری',
   'drawer_category_mapping': 'نگاشت دسته‌بندی',
   'drawer_azure_status': 'وضعیت Azure',
   'drawer_security_center': 'مرکز امنیت',

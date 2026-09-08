@@ -22,6 +22,7 @@ const Map<String, String> paTranslations = {
   'nav_profile': 'ਪ੍ਰੋਫਾਈਲ',
   'drawer_dashboard': 'ਡੈਸ਼ਬੋਰਡ',
   'drawer_growth_metrics': 'ਵਿਕਾਸ ਮੈਟ੍ਰਿਕਸ',
+  'drawer_business_compass': 'ਵਸਤੂ ਅਤੇ ਲੇਖਾ',
   'drawer_category_mapping': 'ਸ਼੍ਰੇਣੀ ਮੈਪਿੰਗ',
   'drawer_azure_status': 'Azure ਸਥਿਤੀ',
   'drawer_security_center': 'ਸੁਰੱਖਿਆ ਕੇਂਦਰ',

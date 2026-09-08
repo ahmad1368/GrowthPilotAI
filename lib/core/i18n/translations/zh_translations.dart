@@ -22,6 +22,7 @@ const Map<String, String> zhTranslations = {
   'nav_profile': '我的',
   'drawer_dashboard': '仪表盘',
   'drawer_growth_metrics': '增长指标',
+  'drawer_business_compass': '库存与财务',
   'drawer_category_mapping': '分类映射',
   'drawer_azure_status': 'Azure 状态',
   'drawer_security_center': '安全中心',
