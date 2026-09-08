@@ -272,6 +272,10 @@ class ScannerWorkflow {
         ));
   }
 
+  // [Issue #816] Was a 20px inline icon squeezed next to plain title text —
+  // too plain for a failure state the user hits often (cancel/retry). A
+  // centered colored icon badge + theme-styled title/body follows the same
+  // "big icon, bold title, muted body" pattern as GlobalErrorView.
   void _showStatusPanel({
     required String title,
     required String message,
@@ -279,39 +283,58 @@ class ScannerWorkflow {
     required BuildContext context,
     required Function(String) onSave,
   }) {
+    final theme = Theme.of(context);
+    final onSurface = theme.colorScheme.onSurface;
+
     Get.dialog(
       barrierDismissible: false,
       Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: ShadCard(
-            title: Row(
-              children: [
-                Icon(icon, size: 20),
-                const SizedBox(width: 8),
-                Expanded(child: Text(title)),
-              ],
-            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(message, textAlign: TextAlign.center),
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: Colors.orangeAccent.withValues(alpha: 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, size: 32, color: Colors.orangeAccent),
+                ),
                 const SizedBox(height: 16),
-                ShadButton(
-                  onPressed: () {
-                    Get.back();
-                    start(context, onSave);
-                  },
-                  child: const Text("اسکن مجدد سند"),
+                Text(title,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                Text(message,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: 14, color: onSurface.withValues(alpha: 0.7))),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ShadButton(
+                    onPressed: () {
+                      Get.back();
+                      start(context, onSave);
+                    },
+                    child: const Text("اسکن مجدد سند"),
+                  ),
                 ),
                 const SizedBox(height: 8),
-                ShadButton.outline(
-                  onPressed: () {
-                    Get.back();
-                    if (Get.isDialogOpen == true) Get.back();
-                  },
-                  child: const Text("انصراف"),
+                SizedBox(
+                  width: double.infinity,
+                  child: ShadButton.outline(
+                    onPressed: () {
+                      Get.back();
+                      if (Get.isDialogOpen == true) Get.back();
+                    },
+                    child: const Text("انصراف"),
+                  ),
                 ),
               ],
             ),
