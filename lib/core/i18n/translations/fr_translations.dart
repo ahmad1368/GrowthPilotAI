@@ -20,6 +20,7 @@ const Map<String, String> frTranslations = {
   'nav_insights': 'Aperçus',
   'nav_scan': 'Scanner',
   'nav_profile': 'Profil',
+  'nav_marketplace': 'Marché',
   'drawer_dashboard': 'Tableau de bord',
   'drawer_growth_metrics': 'Indicateurs de croissance',
   'drawer_business_compass': 'Inventaire et comptabilité',

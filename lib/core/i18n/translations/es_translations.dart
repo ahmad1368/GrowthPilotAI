@@ -20,6 +20,7 @@ const Map<String, String> esTranslations = {
   'nav_insights': 'Información',
   'nav_scan': 'Escanear',
   'nav_profile': 'Perfil',
+  'nav_marketplace': 'Mercado',
   'drawer_dashboard': 'Panel',
   'drawer_growth_metrics': 'Métricas de crecimiento',
   'drawer_business_compass': 'Inventario y contabilidad',

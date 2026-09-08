@@ -20,6 +20,7 @@ const Map<String, String> arTranslations = {
   'nav_insights': 'الرؤى',
   'nav_scan': 'مسح',
   'nav_profile': 'الملف الشخصي',
+  'nav_marketplace': 'السوق',
   'drawer_dashboard': 'لوحة التحكم',
   'drawer_growth_metrics': 'مقاييس النمو',
   'drawer_business_compass': 'المخزون والمحاسبة',
