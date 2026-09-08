@@ -63,6 +63,19 @@ class AppDrawer extends StatelessWidget {
                       ),
                       _buildDrawerItem(
                         context,
+                        icon: Icons.warehouse_rounded,
+                        title: 'drawer_business_compass'.tr,
+                        // [Issue #818] BusinessCompassScreen ('/business-compass')
+                        // hosts every inventory/accounting report widget built
+                        // across #84, #111, #113-116, #355, #435-#447 — none of
+                        // it was reachable from any menu, only a deep link.
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.toNamed('/business-compass');
+                        },
+                      ),
+                      _buildDrawerItem(
+                        context,
                         icon: Icons.rule_rounded,
                         title: 'drawer_category_mapping'.tr,
                         onTap: () {

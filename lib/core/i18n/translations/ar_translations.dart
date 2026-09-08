@@ -22,6 +22,7 @@ const Map<String, String> arTranslations = {
   'nav_profile': 'الملف الشخصي',
   'drawer_dashboard': 'لوحة التحكم',
   'drawer_growth_metrics': 'مقاييس النمو',
+  'drawer_business_compass': 'المخزون والمحاسبة',
   'drawer_category_mapping': 'تخطيط الفئات',
   'drawer_azure_status': 'حالة Azure',
   'drawer_security_center': 'مركز الأمان',

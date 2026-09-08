@@ -23,6 +23,7 @@ const Map<String, String> enTranslations = {
   'nav_profile': 'Profile',
   'drawer_dashboard': 'Dashboard',
   'drawer_growth_metrics': 'Growth Metrics',
+  'drawer_business_compass': 'Business Compass',
   'drawer_category_mapping': 'Category Mapping',
   'drawer_azure_status': 'Azure Status',
   'drawer_security_center': 'Security Center',

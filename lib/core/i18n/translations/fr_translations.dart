@@ -22,6 +22,7 @@ const Map<String, String> frTranslations = {
   'nav_profile': 'Profil',
   'drawer_dashboard': 'Tableau de bord',
   'drawer_growth_metrics': 'Indicateurs de croissance',
+  'drawer_business_compass': 'Inventaire et comptabilité',
   'drawer_category_mapping': 'Mappage des catégories',
   'drawer_azure_status': 'État Azure',
   'drawer_security_center': 'Centre de sécurité',
