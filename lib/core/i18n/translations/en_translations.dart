@@ -20,7 +20,6 @@ const Map<String, String> enTranslations = {
   'onboarding_continue': 'Continue',
   'nav_insights': 'Insights',
   'nav_scan': 'Scan',
-  'nav_profile': 'Profile',
   'nav_marketplace': 'Marketplace',
   'drawer_dashboard': 'Dashboard',
   'drawer_profile': 'Profile',

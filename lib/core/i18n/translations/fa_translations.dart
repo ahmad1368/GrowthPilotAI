@@ -19,7 +19,6 @@ const Map<String, String> faTranslations = {
   'onboarding_continue': 'ادامه',
   'nav_insights': 'بینش‌ها',
   'nav_scan': 'اسکن',
-  'nav_profile': 'پروفایل',
   'nav_marketplace': 'بازارچه',
   'drawer_dashboard': 'داشبورد',
   'drawer_profile': 'پروفایل',

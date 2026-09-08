@@ -19,12 +19,14 @@ class NavigationController extends GetxController {
         //   colorText: Colors.cyanAccent,
         // );
       });
-    } else if (index == 4) {
+    } else if (index == 3) {
       // [Issue #821] Was Settings (still reachable via the unchanged
       // top-app-bar gear icon, #794/#800) — now Marketplace, a full
       // pushed route ('/business-compass', where the marketplace report
       // widgets live) rather than tab-swappable body content, same
       // pattern Settings used and Scan (index 2) still uses above.
+      // [Issue #831] Index shifted from 4 to 3 — the Profile tab that
+      // used to sit at index 3 was removed (Profile is drawer-only now).
       Get.toNamed('/business-compass');
     } else {
       currentIndex.value = index;
