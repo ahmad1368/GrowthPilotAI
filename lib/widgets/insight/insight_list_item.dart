@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
+import 'package:growth_pilot_ai/core/theme/insight_category_style.dart';
+import 'package:growth_pilot_ai/widgets/insight/insight_card_content.dart';
 import '../../models/insight_model.dart';
 
-/// Flat insight item — replaces the former OmniGlassPanel title/description
-/// card with a plain flat container (matches AppDrawer/NotificationSheet's
-/// pattern).
+/// [Issue #837] Redesigned into a card with a category-colored accent bar
+/// and an actual efficiency ring (previously parsed but never rendered).
 class InsightListItem extends StatelessWidget {
   final InsightModel data;
   final bool isSelected;
@@ -21,6 +22,8 @@ class InsightListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
+    final visual = InsightCategoryStyle.forCategory(data.category);
+    final percent = (double.tryParse(data.efficiency.replaceAll('%', '')) ?? 0) / 100;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -28,38 +31,30 @@ class InsightListItem extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(20),
+          clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: AppDesignTokens.card(theme.brightness),
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: isSelected
-                  ? Colors.blueAccent
-                  : onSurface.withValues(alpha: 0.08),
+              color: isSelected ? visual.color : onSurface.withValues(alpha: 0.08),
               width: isSelected ? 2 : 1,
             ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(Icons.auto_graph_rounded,
-                  color: onSurface.withValues(alpha: 0.9), size: 24),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(data.title,
-                        style: theme.textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w800)),
-                    const SizedBox(height: 6),
-                    Text(data.description,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                            color: onSurface.withValues(alpha: 0.7))),
-                  ],
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(width: 4, color: visual.color),
+                Expanded(
+                  child: InsightCardContent(
+                    data: data,
+                    visual: visual,
+                    percent: percent,
+                    descriptionColor: onSurface.withValues(alpha: 0.7),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

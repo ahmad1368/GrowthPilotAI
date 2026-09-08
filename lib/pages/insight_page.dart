@@ -4,6 +4,8 @@ import '../controllers/transaction_controller.dart';
 import '../core/theme/app_design_tokens.dart';
 import '../utils/ui_helper.dart';
 import '../widgets/insight/insight_list_item.dart';
+import '../widgets/insight/insight_stats_header.dart';
+import '../core/theme/insight_category_style.dart';
 import '../models/insight_model.dart';
 
 class InsightPage extends StatefulWidget {
@@ -28,13 +30,16 @@ class _InsightPageState extends State<InsightPage> {
   final controller = Get.find<TransactionController>();
   int? selectedIndex;
 
+  // [Issue #837] Cycles through InsightCategoryStyle's known categories so
+  // the list visually varies instead of every card sharing one look.
   final List<InsightModel> dummyInsights = List.generate(
     15,
     (i) => InsightModel(
         id: i,
         title: "تحلیل جدید هوشمند شماره ${i + 1}",
         description: "الگوهای مصرفی و جزئیات تراکنش‌های اخیر.",
-        efficiency: "85%"),
+        efficiency: "${60 + (i * 7) % 40}%",
+        category: InsightCategoryStyle.orderedCategories[i % InsightCategoryStyle.orderedCategories.length]),
   );
 
   @override
@@ -76,7 +81,15 @@ class _InsightPageState extends State<InsightPage> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.fromLTRB(20, topInset + 20, 20, 0),
-        child: _buildTitleRow(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTitleRow(),
+            const SizedBox(height: 16),
+            InsightStatsHeader(insights: dummyInsights),
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
     );
   }
