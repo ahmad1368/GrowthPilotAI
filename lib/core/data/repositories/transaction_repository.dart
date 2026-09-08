@@ -27,6 +27,10 @@ class TransactionRepository {
 
   bool delete(int id) => _box.remove(id);
 
+  /// [Issue #839] Test/dev-only seed data replacement — not a general
+  /// data-wipe API, just lets _seedTestData() start from a clean slate.
+  void removeAll() => _box.removeAll();
+
   /// Issue #14 AC: ordered by date descending, matching every other query
   /// method in this repository (getByDateRange/search/watchAll).
   List<TransactionEntity> getAll() {
