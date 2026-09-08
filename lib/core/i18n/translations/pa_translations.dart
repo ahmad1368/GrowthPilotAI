@@ -20,6 +20,7 @@ const Map<String, String> paTranslations = {
   'nav_insights': 'ਸੂਝਾਂ',
   'nav_scan': 'ਸਕੈਨ',
   'nav_profile': 'ਪ੍ਰੋਫਾਈਲ',
+  'nav_marketplace': 'ਬਾਜ਼ਾਰ',
   'drawer_dashboard': 'ਡੈਸ਼ਬੋਰਡ',
   'drawer_growth_metrics': 'ਵਿਕਾਸ ਮੈਟ੍ਰਿਕਸ',
   'drawer_business_compass': 'ਵਸਤੂ ਅਤੇ ਲੇਖਾ',

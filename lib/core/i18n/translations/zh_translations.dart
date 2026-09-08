@@ -20,6 +20,7 @@ const Map<String, String> zhTranslations = {
   'nav_insights': '洞察',
   'nav_scan': '扫描',
   'nav_profile': '我的',
+  'nav_marketplace': '市场',
   'drawer_dashboard': '仪表盘',
   'drawer_growth_metrics': '增长指标',
   'drawer_business_compass': '库存与财务',

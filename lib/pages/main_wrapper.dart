@@ -20,12 +20,12 @@ class NavigationController extends GetxController {
         // );
       });
     } else if (index == 4) {
-      // [Issue #800] Settings is a full pushed route elsewhere in this app
-      // (the '/settings' GetPage, also opened by the top-bar icon per
-      // #794) — not tab-swappable body content — so this pushes it
-      // instead of setting currentIndex, mirroring how Scan (index 2) is
-      // handled above rather than being treated as a body-swap tab.
-      Get.toNamed('/settings');
+      // [Issue #821] Was Settings (still reachable via the unchanged
+      // top-app-bar gear icon, #794/#800) — now Marketplace, a full
+      // pushed route ('/business-compass', where the marketplace report
+      // widgets live) rather than tab-swappable body content, same
+      // pattern Settings used and Scan (index 2) still uses above.
+      Get.toNamed('/business-compass');
     } else {
       currentIndex.value = index;
     }

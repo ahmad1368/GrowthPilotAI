@@ -21,6 +21,7 @@ const Map<String, String> enTranslations = {
   'nav_insights': 'Insights',
   'nav_scan': 'Scan',
   'nav_profile': 'Profile',
+  'nav_marketplace': 'Marketplace',
   'drawer_dashboard': 'Dashboard',
   'drawer_growth_metrics': 'Growth Metrics',
   'drawer_business_compass': 'Business Compass',
