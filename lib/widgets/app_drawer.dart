@@ -6,6 +6,7 @@ import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 import 'package:growth_pilot_ai/utils/ui_helper.dart';
 import '../pages/settings_page.dart'; // اضافه کردن فایل تنظیمات
 import '../features/settings/screens/security_center_screen.dart';
+import '../features/profile/screens/profile_screen.dart';
 
 /// Flat drawer — replaces the former OmniGlassPanel/AdaptiveText wrapper
 /// with a card-colored container (matches HomeBottomNav's pattern). Also
@@ -51,6 +52,18 @@ class AppDrawer extends StatelessWidget {
                         icon: Icons.dashboard_rounded,
                         title: 'drawer_dashboard'.tr,
                         onTap: () => Navigator.pop(context),
+                      ),
+                      _buildDrawerItem(
+                        context,
+                        icon: Icons.person_rounded,
+                        title: 'drawer_profile'.tr,
+                        // [Issue #826] Display name, birth date, and
+                        // business type — see ProfileScreen's own doc
+                        // comment for what's explicitly deferred.
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.to(() => const ProfileScreen());
+                        },
                       ),
                       _buildDrawerItem(
                         context,
