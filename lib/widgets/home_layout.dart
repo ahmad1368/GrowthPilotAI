@@ -51,7 +51,7 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       extendBody: true,
       drawer: const AppDrawer(),
       appBar: AppShellBar(
-        title: "GrowthPilot AI",
+        titleIcon: Icons.trending_up_rounded,
         opacity: appBarOpacity,
         actions: [
           const Padding(
