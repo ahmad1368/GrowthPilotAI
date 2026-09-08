@@ -7,13 +7,15 @@ import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
 /// [HomeLogic.appBarOpacity]). Replaces the Glassmorphism-era GlassAppBar/
 /// DynamicAppBar — no BackdropFilter/blur per the current design system.
 class AppShellBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
+  final IconData? titleIcon;
   final double opacity;
   final List<Widget>? actions;
 
   const AppShellBar({
     super.key,
-    required this.title,
+    this.title,
+    this.titleIcon,
     required this.opacity,
     this.actions,
   });
@@ -33,8 +35,11 @@ class AppShellBar extends StatelessWidget implements PreferredSizeWidget {
       // matches the app bar's own foreground, not the fading background.
       systemOverlayStyle:
           isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
-      title: Text(title,
-          style: TextStyle(fontWeight: FontWeight.bold, color: foreground)),
+      // [Issue #825] Plain "GrowthPilot AI" text looked unpolished against
+      // the rest of the flat design — an icon (or nothing) in its place.
+      title: title != null
+          ? Text(title!, style: TextStyle(fontWeight: FontWeight.bold, color: foreground))
+          : (titleIcon != null ? Icon(titleIcon, color: foreground) : null),
       actions: actions,
     );
   }
