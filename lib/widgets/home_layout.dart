@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../business/queue_intelligence_update_notification.dart';
 import '../controllers/intelligence_status_controller.dart';
 import '../controllers/transaction_controller.dart';
 import '../core/theme/app_background_pattern.dart';
@@ -8,7 +9,6 @@ import 'app_drawer.dart';
 import 'app_shell_bar.dart';
 import 'home_body.dart';
 import 'home_bottom_nav.dart';
-import 'intelligence_status_badge.dart';
 import 'notification_badge.dart';
 import 'home_logic.dart';
 import 'notification_sheet.dart';
@@ -23,12 +23,39 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
+  late final IntelligenceStatusController _intelligenceController;
+  late final NavigationController _navControl;
+
   @override
   void initState() {
     super.initState();
     initLogic(() {
       if (mounted) setState(() {});
     });
+
+    // [Issue #833] Was re-registered on every build() — every scroll-driven
+    // appBarOpacity rebuild via HomeLogic re-put these, which is wasteful
+    // and would have fired the sync-once call below repeatedly.
+    Get.put(TransactionController());
+    _intelligenceController = Get.put(IntelligenceStatusController());
+    _navControl = Get.put(NavigationController());
+
+    _maybeSyncIntelligence();
+  }
+
+  // [Issue #833] Nothing ever called IntelligenceStatusController.sync(),
+  // so its state stayed permanently hardcoded to "Update required" (its
+  // initial value) forever. An empty bundles map is enough to let
+  // syncIfDue record a real lastSyncedAt and resolve a real state instead
+  // of the hardcoded default — populating actual per-sector bundles is
+  // separate, larger follow-up work (see the issue). If still required
+  // after syncing, surface it as a notification, not a permanent banner.
+  Future<void> _maybeSyncIntelligence() async {
+    await _intelligenceController.sync(const {});
+    if (!mounted) return;
+    if (QueueIntelligenceUpdateNotification.call(_intelligenceController.state.value, notifications)) {
+      setState(() {});
+    }
   }
 
   @override
@@ -39,13 +66,6 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(TransactionController());
-    Get.put(IntelligenceStatusController());
-
-    // پیدا کردن کنترلر ناوبری که در مراحل قبل ساختیم
-    // اگر MainWrapper را هنوز در خروجی اصلی قرار ندادید، اینجا این خط را بگذارید:
-    final navControl = Get.put(NavigationController());
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -54,10 +74,6 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
         titleIcon: Icons.trending_up_rounded,
         opacity: appBarOpacity,
         actions: [
-          const Padding(
-            padding: EdgeInsets.only(right: 8),
-            child: IntelligenceStatusBadge(),
-          ),
           NotificationBadge(count: unreadCount, onTap: _openNotifications),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
@@ -74,7 +90,7 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       // [Issue #784] پس‌زمینه‌ی برند شده پشت محتوای اصلی برنامه
       body: AppBackgroundPattern(
         child: Obx(() {
-          switch (navControl.currentIndex.value) {
+          switch (_navControl.currentIndex.value) {
             // [Issue #798] Was unconditionally HomeBody for every index —
             // the "Insights" bottom-nav tab did nothing. Note: HomeBody
             // itself already just renders InsightPage (see home_body.dart),
@@ -105,7 +121,7 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
 
       // اصلاح بخش خطا: حذف onTap و استفاده از Obx
       bottomNavigationBar: Obx(() => HomeBottomNav(
-            currentIndex: navControl.currentIndex.value,
+            currentIndex: _navControl.currentIndex.value,
             // دیگر پارامتر onTap نمی‌دهیم چون داخل خودِ HomeBottomNav تعریف شده است
           )),
     );
