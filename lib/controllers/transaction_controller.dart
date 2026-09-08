@@ -9,6 +9,7 @@ import '../core/data/entities/transaction_entity.dart';
 import '../core/data/entities/category_entity.dart';
 import '../core/data/entities/vendor_entity.dart';
 import '../services/environment_service.dart';
+import '../objectbox.g.dart';
 
 class TransactionController extends GetxController {
   // ۱. لیست‌های مشاهده‌گر
@@ -111,221 +112,209 @@ class TransactionController extends GetxController {
         "Search performed for: '$query'. Results: ${results.length}");
   }
 
-  /// ایجاد داده‌های واقعی‌نما برای سناریوی فرضی یک کسب‌وکار کوچک در ونکوور
-  /// هدف: پوشش دادن تمام مسیرهای Repository (بازه تاریخ، جستجو، فیلتر بر اساس
-  /// دسته/نوع، وضعیت‌های Sync و روابط ToOne) برای تست صحت برنامه.
+  /// [Issue #839] داده‌های واقعی‌نما برای سناریوی یک شرکت تولید و نصب هندریل
+  /// و شیشه محافظ بالکن ساختمان‌های بلندمرتبه در ونکوور. جایگزین سناریوی
+  /// قبلی (شرکت مشاوره فناوری) — هر بار اجرای برنامه، داده‌های قبلی پاک و
+  /// این مجموعه دوباره درج می‌شود (این متد فقط برای داده‌ی تست/توسعه است، نه
+  /// یک الگوی عمومی پاک‌سازی داده). هدف: پوشش تمام مسیرهای Repository (بازه
+  /// تاریخ، جستجو، فیلتر دسته/نوع، وضعیت‌های Sync، روابط ToOne).
   void _seedTestData() {
-    if (_repository.getAll().isNotEmpty) return;
-
     final objectBoxInstance = Get.find<ObjectBox>();
     final categoryBox = objectBoxInstance.store.box<CategoryEntity>();
     final vendorBox = objectBoxInstance.store.box<VendorEntity>();
 
+    _repository.removeAll();
+    categoryBox.removeAll();
+    vendorBox.removeAll();
+
     final now = DateTime.now();
-
-    // ۱. دسته‌بندی‌ها
-    final catSoftware = CategoryEntity(
-        name: "Software & SaaS", icon: "laptop_mac", color: 0xFF2196F3);
-    final catMarketing =
-        CategoryEntity(name: "Marketing", icon: "campaign", color: 0xFFFF9800);
-    final catUtilities =
-        CategoryEntity(name: "Utilities", icon: "bolt", color: 0xFFFFC107);
-    final catOffice = CategoryEntity(
-        name: "Office Supplies", icon: "chair", color: 0xFF795548);
-    final catTravel =
-        CategoryEntity(name: "Travel", icon: "flight", color: 0xFF9C27B0);
-    final catIncome = CategoryEntity(
-        name: "Client Payment", icon: "payments", color: 0xFF4CAF50);
-    final catEquipment =
-        CategoryEntity(name: "Equipment", icon: "devices", color: 0xFF607D8B);
-
-    categoryBox.putMany([
-      catSoftware,
-      catMarketing,
-      catUtilities,
-      catOffice,
-      catTravel,
-      catIncome,
-      catEquipment,
-    ]);
-
-    // ۲. فروشندگان / مشتریان (با شماره مالیاتی HST برای نمونه‌های کانادایی)
-    final vGoogle = VendorEntity(name: "Google Cloud");
-    final vAzure = VendorEntity(name: "Microsoft Azure");
-    final vMeta = VendorEntity(name: "Meta Ads");
-    final vHydro = VendorEntity(name: "BC Hydro", taxId: "123456789RT0001");
-    final vTelus =
-        VendorEntity(name: "Telus Business", taxId: "987654321RT0001");
-    final vStaples =
-        VendorEntity(name: "Staples Canada", taxId: "555666777RT0001");
-    final vAirCanada = VendorEntity(name: "Air Canada");
-    final vNorthwind =
-        VendorEntity(name: "Northwind Traders Inc.", taxId: "111222333RT0001");
-    final vVanTech = VendorEntity(
-        name: "Vancouver Tech Solutions", taxId: "444555666RT0001");
-
-    vendorBox.putMany([
-      vGoogle,
-      vAzure,
-      vMeta,
-      vHydro,
-      vTelus,
-      vStaples,
-      vAirCanada,
-      vNorthwind,
-      vVanTech,
-    ]);
-
-    // ۳. تراکنش‌ها: ترکیبی از هزینه/درآمد، بازه‌های زمانی مختلف
-    // (داخل و خارج از ۳۰ روز اخیر)، وضعیت‌های Sync متفاوت و یادداشت‌ها
-    final items = <TransactionEntity>[
-      TransactionEntity(
-        description: "اشتراک ماهانه Google Cloud",
-        amount: 89.50,
-        date: now,
-        dbType: 0,
-        dbSyncStatus: 1, // pending
-      )
-        ..category.target = catSoftware
-        ..vendor.target = vGoogle,
-      TransactionEntity(
-        description: "دریافت وجه پروژه از Northwind Traders",
-        amount: 4500.00,
-        date: now.subtract(const Duration(days: 2)),
-        dbType: 1,
-        dbSyncStatus: 0, // synced
-      )
-        ..category.target = catIncome
-        ..vendor.target = vNorthwind,
-      TransactionEntity(
-        description: "قبض برق دفتر کار (BC Hydro)",
-        amount: 142.35,
-        date: now.subtract(const Duration(days: 3)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catUtilities
-        ..vendor.target = vHydro,
-      TransactionEntity(
-        description: "کمپین تبلیغاتی Meta Ads",
-        amount: 310.00,
-        date: now.subtract(const Duration(days: 4)),
-        dbType: 0,
-        dbSyncStatus: 1,
-      )
-        ..category.target = catMarketing
-        ..vendor.target = vMeta,
-      TransactionEntity(
-        description: "خرید صندلی اداری از Staples",
-        amount: 219.99,
-        date: now.subtract(const Duration(days: 6)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catOffice
-        ..vendor.target = vStaples,
-      TransactionEntity(
-        description: "اینترنت دفتر (Telus Business)",
-        amount: 95.00,
-        date: now.subtract(const Duration(days: 10)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catUtilities
-        ..vendor.target = vTelus,
-      TransactionEntity(
-        description: "بلیط هواپیما - جلسه با مشتری در تورنتو",
-        amount: 486.20,
-        date: now.subtract(const Duration(days: 12)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..memo = "سفر کاری - قابل کسر مالیاتی"
-        ..category.target = catTravel
-        ..vendor.target = vAirCanada,
-      TransactionEntity(
-        description: "دریافت وجه مشاوره از Vancouver Tech Solutions",
-        amount: 7800.00,
-        date: now.subtract(const Duration(days: 15)),
-        dbType: 1,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catIncome
-        ..vendor.target = vVanTech,
-      TransactionEntity(
-        description: "هاست سرور روی Microsoft Azure",
-        amount: 154.75,
-        date: now.subtract(const Duration(days: 18)),
-        dbType: 0,
-        dbSyncStatus: 2, // error - برای تست حالت خطای Sync
-      )
-        ..category.target = catSoftware
-        ..vendor.target = vAzure,
-      TransactionEntity(
-        description: "خرید لپ‌تاپ جدید برای تیم توسعه",
-        amount: 2100.00,
-        date: now.subtract(const Duration(days: 20)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..memo = "دارایی ثابت - استهلاک ۳ ساله"
-        ..category.target = catEquipment,
-      TransactionEntity(
-        description: "تبلیغات Google Ads",
-        amount: 275.40,
-        date: now.subtract(const Duration(days: 25)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catMarketing
-        ..vendor.target = vGoogle,
-      TransactionEntity(
-        description: "دریافت وجه پروژه کوچک از مشتری جدید",
-        amount: 350.00,
-        date: now.subtract(const Duration(days: 28)),
-        dbType: 1,
-        dbSyncStatus: 1,
-      )..category.target = catIncome,
-      TransactionEntity(
-        description: "لوازم اداری متفرقه از Staples",
-        amount: 63.10,
-        date: now.subtract(const Duration(days: 29)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catOffice
-        ..vendor.target = vStaples,
-      // خارج از بازه ۳۰ روز اخیر - برای اطمینان از صحت فیلتر تاریخ در _loadLocalData
-      TransactionEntity(
-        description: "قرارداد سالانه هاست Google Cloud (سال قبل)",
-        amount: 980.00,
-        date: now.subtract(const Duration(days: 35)),
-        dbType: 0,
-        dbSyncStatus: 0,
-      )
-        ..category.target = catSoftware
-        ..vendor.target = vGoogle,
-      TransactionEntity(
-        description: "دریافت وجه قرارداد سالانه از مشتری قدیمی",
-        amount: 12000.00,
-        date: now.subtract(const Duration(days: 45)),
-        dbType: 1,
-        dbSyncStatus: 0,
-      )..category.target = catIncome,
-      TransactionEntity(
-        description: "بازگشت وجه اشتباه واریزی به فروشنده",
-        amount: 25.00,
-        date: now.subtract(const Duration(hours: 3)),
-        dbType: 0,
-        dbSyncStatus: 1,
-      )..memo = "نیازمند پیگیری با حسابداری",
-    ];
+    final categories = _seedCategories(categoryBox);
+    final vendors = _seedVendors(vendorBox);
+    final items = _buildHandrailGlassTransactions(now, categories, vendors);
 
     for (final item in items) {
       _repository.insert(item);
     }
     OmniLogger.info(
-        "Realistic scenario test data seeded into ObjectBox (${items.length} transactions, "
-        "${categoryBox.count()} categories, ${vendorBox.count()} vendors).");
+        "Handrail/balcony-glass scenario test data seeded into ObjectBox (${items.length} "
+        "transactions, ${categoryBox.count()} categories, ${vendorBox.count()} vendors).");
+  }
+
+  Map<String, CategoryEntity> _seedCategories(Box<CategoryEntity> categoryBox) {
+    final categories = {
+      'materials': CategoryEntity(
+          name: "Aluminum & Steel Stock", icon: "construction", color: 0xFF607D8B),
+      'glass': CategoryEntity(name: "Tempered Glass Supply", icon: "window", color: 0xFF03A9F4),
+      'labor': CategoryEntity(name: "Installation Labor", icon: "engineering", color: 0xFFFF9800),
+      'equipment': CategoryEntity(name: "Equipment & Tools", icon: "handyman", color: 0xFF795548),
+      'utilities': CategoryEntity(name: "Utilities", icon: "bolt", color: 0xFFFFC107),
+      'marketing': CategoryEntity(name: "Marketing", icon: "campaign", color: 0xFFE91E63),
+      'income': CategoryEntity(name: "Client Payment", icon: "payments", color: 0xFF4CAF50),
+      'insurance': CategoryEntity(name: "Permits & Insurance", icon: "verified", color: 0xFF9C27B0),
+      'delivery': CategoryEntity(
+          name: "Delivery & Crane Rental", icon: "local_shipping", color: 0xFF009688),
+    };
+    categoryBox.putMany(categories.values.toList());
+    return categories;
+  }
+
+  Map<String, VendorEntity> _seedVendors(Box<VendorEntity> vendorBox) {
+    final vendors = {
+      'alumform': VendorEntity(name: "AlumForm Metal Supply", taxId: "222333444RT0001"),
+      'guardian': VendorEntity(name: "Guardian Glass Works", taxId: "555777999RT0001"),
+      'hydro': VendorEntity(name: "BC Hydro", taxId: "123456789RT0001"),
+      'telus': VendorEntity(name: "Telus Business", taxId: "987654321RT0001"),
+      'crane': VendorEntity(name: "Crane & Rigging Co."),
+      'worksafe': VendorEntity(name: "WorkSafeBC", taxId: "666888111RT0001"),
+      'google': VendorEntity(name: "Google Ads"),
+      'skyline': VendorEntity(name: "Skyline Tower Developments Inc.", taxId: "111222333RT0001"),
+      'harbourview': VendorEntity(name: "Harbourview Construction Group", taxId: "444555666RT0001"),
+      'metro': VendorEntity(name: "Metro Highrise Builders Ltd.", taxId: "777888999RT0001"),
+    };
+    vendorBox.putMany(vendors.values.toList());
+    return vendors;
+  }
+
+  // ترکیبی از هزینه/درآمد، بازه‌های زمانی مختلف (داخل و خارج از ۳۰ روز اخیر)،
+  // وضعیت‌های Sync متفاوت (شامل یک حالت error) و یادداشت‌ها.
+  List<TransactionEntity> _buildHandrailGlassTransactions(
+      DateTime now, Map<String, CategoryEntity> cat, Map<String, VendorEntity> v) {
+    return [
+      TransactionEntity(
+          description: "پرداخت مرحله‌ای پروژه هندریل - Skyline Tower Developments",
+          amount: 18500.00,
+          date: now,
+          dbType: 1,
+          dbSyncStatus: 1)
+        ..category.target = cat['income']
+        ..vendor.target = v['skyline'],
+      TransactionEntity(
+          description: "خرید پروفیل آلومینیوم هندریل",
+          amount: 3240.50,
+          date: now.subtract(const Duration(days: 2)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['materials']
+        ..vendor.target = v['alumform'],
+      TransactionEntity(
+          description: "دستمزد تیم نصب هندریل - پروژه Skyline Tower",
+          amount: 5120.00,
+          date: now.subtract(const Duration(days: 2)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['labor'],
+      TransactionEntity(
+          description: "قبض برق کارگاه (BC Hydro)",
+          amount: 312.80,
+          date: now.subtract(const Duration(days: 3)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['utilities']
+        ..vendor.target = v['hydro'],
+      TransactionEntity(
+          description: "کمپین تبلیغاتی شیشه بالکن مسکونی",
+          amount: 420.00,
+          date: now.subtract(const Duration(days: 4)),
+          dbType: 0,
+          dbSyncStatus: 1)
+        ..category.target = cat['marketing']
+        ..vendor.target = v['google'],
+      TransactionEntity(
+          description: "سفارش پنل‌های شیشه سکوریت",
+          amount: 9875.00,
+          date: now.subtract(const Duration(days: 6)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['glass']
+        ..vendor.target = v['guardian'],
+      TransactionEntity(
+          description: "اینترنت و تلفن کارگاه (Telus Business)",
+          amount: 110.00,
+          date: now.subtract(const Duration(days: 10)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['utilities']
+        ..vendor.target = v['telus'],
+      TransactionEntity(
+          description: "اجاره جرثقیل برای نصب در طبقات بالا",
+          amount: 1650.00,
+          date: now.subtract(const Duration(days: 12)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..memo = "دسترسی سایت کار - قابل کسر مالیاتی"
+        ..category.target = cat['delivery']
+        ..vendor.target = v['crane'],
+      TransactionEntity(
+          description: "پرداخت مرحله‌ای پروژه - Harbourview Construction Group",
+          amount: 24300.00,
+          date: now.subtract(const Duration(days: 15)),
+          dbType: 1,
+          dbSyncStatus: 0)
+        ..category.target = cat['income']
+        ..vendor.target = v['harbourview'],
+      TransactionEntity(
+          description: "حق بیمه سالانه WorkSafeBC",
+          amount: 1980.00,
+          date: now.subtract(const Duration(days: 18)),
+          dbType: 0,
+          dbSyncStatus: 2)
+        ..category.target = cat['insurance']
+        ..vendor.target = v['worksafe'],
+      TransactionEntity(
+          description: "خرید دستگاه برش و پرداخت لبه شیشه",
+          amount: 6800.00,
+          date: now.subtract(const Duration(days: 20)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..memo = "دارایی ثابت - استهلاک ۵ ساله"
+        ..category.target = cat['equipment'],
+      TransactionEntity(
+          description: "تبلیغات Google Ads برای پروژه‌های تجاری",
+          amount: 355.20,
+          date: now.subtract(const Duration(days: 25)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['marketing']
+        ..vendor.target = v['google'],
+      TransactionEntity(
+          description: "دریافت وجه تعمیر هندریل بالکن مسکونی کوچک",
+          amount: 890.00,
+          date: now.subtract(const Duration(days: 28)),
+          dbType: 1,
+          dbSyncStatus: 1)
+        ..category.target = cat['income'],
+      TransactionEntity(
+          description: "خرید یراق‌آلات استیل ضدزنگ",
+          amount: 540.75,
+          date: now.subtract(const Duration(days: 29)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['materials']
+        ..vendor.target = v['alumform'],
+      // خارج از بازه ۳۰ روز اخیر - برای تست فیلتر تاریخ در _loadLocalData
+      TransactionEntity(
+          description: "قرارداد سالانه تأمین شیشه (سال قبل)",
+          amount: 15200.00,
+          date: now.subtract(const Duration(days: 35)),
+          dbType: 0,
+          dbSyncStatus: 0)
+        ..category.target = cat['glass']
+        ..vendor.target = v['guardian'],
+      TransactionEntity(
+          description: "پرداخت قرارداد سالانه - Metro Highrise Builders",
+          amount: 52000.00,
+          date: now.subtract(const Duration(days: 45)),
+          dbType: 1,
+          dbSyncStatus: 0)
+        ..category.target = cat['income']
+        ..vendor.target = v['metro'],
+      TransactionEntity(
+          description: "بازگشت وجه واریزی اضافه به تأمین‌کننده",
+          amount: 180.00,
+          date: now.subtract(const Duration(hours: 3)),
+          dbType: 0,
+          dbSyncStatus: 1)
+        ..memo = "نیازمند پیگیری با حسابداری",
+    ];
   }
 }
