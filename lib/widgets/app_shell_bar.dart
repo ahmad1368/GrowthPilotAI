@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:growth_pilot_ai/core/theme/app_design_tokens.dart';
+import 'package:growth_pilot_ai/widgets/app_shell_title_icon.dart';
 
 /// Scroll-adaptive app bar (Issue #6): fades from transparent to the flat
 /// theme surface color as [opacity] rises with scroll offset (see
-/// [HomeLogic.appBarOpacity]). Replaces the Glassmorphism-era GlassAppBar/
-/// DynamicAppBar — no BackdropFilter/blur per the current design system.
+/// [HomeLogic.appBarOpacity]). Flat, no BackdropFilter/blur.
 class AppShellBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final IconData? titleIcon;
+  final VoidCallback? onTitleIconTap;
   final double opacity;
   final List<Widget>? actions;
 
@@ -16,6 +17,7 @@ class AppShellBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.title,
     this.titleIcon,
+    this.onTitleIconTap,
     required this.opacity,
     this.actions,
   });
@@ -31,15 +33,16 @@ class AppShellBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       backgroundColor: Color.lerp(surface.withValues(alpha: 0), surface, opacity),
       iconTheme: IconThemeData(color: foreground),
-      // Issue #6 AC: status bar icons must stay legible across the fade —
-      // matches the app bar's own foreground, not the fading background.
+      // Issue #6 AC: status bar icons stay legible across the fade.
       systemOverlayStyle:
           isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
-      // [Issue #825] Plain "GrowthPilot AI" text looked unpolished against
-      // the rest of the flat design — an icon (or nothing) in its place.
+      // #825: text title replaced with an (optionally tappable, #835) icon.
       title: title != null
           ? Text(title!, style: TextStyle(fontWeight: FontWeight.bold, color: foreground))
-          : (titleIcon != null ? Icon(titleIcon, color: foreground) : null),
+          : (titleIcon != null
+              ? AppShellTitleIcon(
+                  icon: titleIcon!, foreground: foreground, onTap: onTitleIconTap)
+              : null),
       actions: actions,
     );
   }

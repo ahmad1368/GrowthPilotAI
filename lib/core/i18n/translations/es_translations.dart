@@ -21,6 +21,7 @@ const Map<String, String> esTranslations = {
   'nav_scan': 'Escanear',
   'nav_profile': 'Perfil',
   'nav_marketplace': 'Mercado',
+  'appbar_growth_metrics_tooltip': 'Métricas de crecimiento',
   'drawer_dashboard': 'Panel',
   'drawer_profile': 'Perfil',
   'profile_screen_title': 'Perfil',

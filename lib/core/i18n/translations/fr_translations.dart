@@ -21,6 +21,7 @@ const Map<String, String> frTranslations = {
   'nav_scan': 'Scanner',
   'nav_profile': 'Profil',
   'nav_marketplace': 'Marché',
+  'appbar_growth_metrics_tooltip': 'Indicateurs de croissance',
   'drawer_dashboard': 'Tableau de bord',
   'drawer_profile': 'Profil',
   'profile_screen_title': 'Profil',

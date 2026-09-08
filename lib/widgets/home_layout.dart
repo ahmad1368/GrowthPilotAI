@@ -52,6 +52,9 @@ class _HomeLayoutState extends State<HomeLayout> with HomeLogic {
       drawer: const AppDrawer(),
       appBar: AppShellBar(
         titleIcon: Icons.trending_up_rounded,
+        // [Issue #835] Was purely decorative — taps now open Growth
+        // Metrics, matching what the "trending up" icon actually means.
+        onTitleIconTap: () => Get.toNamed('/forecast'),
         opacity: appBarOpacity,
         actions: [
           const Padding(

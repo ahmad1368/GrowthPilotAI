@@ -21,6 +21,7 @@ const Map<String, String> paTranslations = {
   'nav_scan': 'ਸਕੈਨ',
   'nav_profile': 'ਪ੍ਰੋਫਾਈਲ',
   'nav_marketplace': 'ਬਾਜ਼ਾਰ',
+  'appbar_growth_metrics_tooltip': 'ਵਿਕਾਸ ਮੈਟ੍ਰਿਕਸ',
   'drawer_dashboard': 'ਡੈਸ਼ਬੋਰਡ',
   'drawer_profile': 'ਪ੍ਰੋਫਾਈਲ',
   'profile_screen_title': 'ਪ੍ਰੋਫਾਈਲ',

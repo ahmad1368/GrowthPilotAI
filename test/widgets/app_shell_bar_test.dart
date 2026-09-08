@@ -51,4 +51,36 @@ void main() {
       expect(appBar.systemOverlayStyle, SystemUiOverlayStyle.light);
     });
   });
+
+  // Covers Issue #835: the app-bar title icon used to be purely decorative.
+  group('AppShellBar title icon', () {
+    testWidgets('tapping the title icon fires onTitleIconTap', (tester) async {
+      var tapped = false;
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          appBar: AppShellBar(
+            titleIcon: Icons.trending_up_rounded,
+            onTitleIconTap: () => tapped = true,
+            opacity: 1.0,
+          ),
+        ),
+      ));
+
+      await tester.tap(find.byIcon(Icons.trending_up_rounded));
+      await tester.pump();
+
+      expect(tapped, isTrue);
+    });
+
+    testWidgets('renders without a tap handler when none is given', (tester) async {
+      await tester.pumpWidget(const MaterialApp(
+        home: Scaffold(
+          appBar: AppShellBar(titleIcon: Icons.trending_up_rounded, opacity: 1.0),
+        ),
+      ));
+
+      expect(find.byIcon(Icons.trending_up_rounded), findsOneWidget);
+    });
+  });
 }
